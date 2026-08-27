@@ -1,0 +1,3 @@
+# Dev-only. These never need to be on the server.
+_shared/
+_tools/
