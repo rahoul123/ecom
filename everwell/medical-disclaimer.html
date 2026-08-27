@@ -1,0 +1,251 @@
+<!doctype html>
+<!--
+  Medical Disclaimer | Everwell
+  Static site. No build step, no server. Upload this folder as-is via FTP.
+  Brand identity, products and Shopify redirect links all live in js/brand-config.js.
+-->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+
+<title>Medical Disclaimer | Everwell</title>
+<meta name="description" content="Important health information about the content on the Everwell website.">
+<link rel="canonical" href="https://everwell-placeholder.com/medical-disclaimer.html">
+<!-- REMOVE BEFORE LAUNCH: keeps placeholder content out of search results -->
+<meta name="robots" content="noindex, nofollow">
+
+<!-- Open Graph / social + ad previews -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Everwell">
+<meta property="og:title" content="Medical Disclaimer | Everwell">
+<meta property="og:description" content="Important health information about the content on the Everwell website.">
+<meta property="og:url" content="https://everwell-placeholder.com/medical-disclaimer.html">
+<meta property="og:image" content="https://everwell-placeholder.com/images/og-default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/base.css?v=1f0d56be">
+<link rel="stylesheet" href="css/brand.css?v=1f0d56be">
+
+<!--
+  Load order matters. brand-config.js first (data), theme-init.js second
+  (applies colours before first paint), then site.js (renderers), then
+  tracking.js (inert until you add pixel IDs). All synchronous and tiny —
+  that is what lets inline render calls run during parse with zero layout shift.
+-->
+<script src="js/brand-config.js?v=1f0d56be"></script>
+<script src="js/theme-init.js?v=1f0d56be"></script>
+<script src="js/site.js?v=1f0d56be"></script>
+<script src="js/tracking.js?v=1f0d56be"></script>
+<script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
+
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<!-- ===== HEADER — duplicated in every .html file. Change it in _shared/partials/header.html
+     and re-run `node _tools/generate.js`, or find-and-replace across all pages. ===== -->
+<div class="announcement">
+  <span data-brand-announcement>Free discreet shipping on orders over $50</span>
+</div>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="header-logo" href="index.html">
+      <!-- [[PLACEHOLDER: logo]] — replace images/logo.svg, or point BRAND.logo elsewhere -->
+      <img data-brand-logo src="images/logo.svg" alt="Everwell" width="148" height="40">
+    </a>
+
+    <nav class="header-nav" aria-label="Main">
+      <a href="index.html">Home</a>
+
+      <!-- Shop: the link goes to every product; the dropdown splits by category.
+           Categories are built from PRODUCTS at runtime — see Site.renderShopMenu(). -->
+      <div class="nav-item" id="shop-nav-item">
+        <a class="nav-trigger" href="shop.html" aria-expanded="false" aria-haspopup="true" aria-controls="shop-menu">
+          Shop
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </a>
+        <div class="nav-menu" id="shop-menu">
+          <div class="nav-menu__grid" id="shop-menu-grid"></div>
+          <a class="nav-menu__all" href="shop.html">
+            <span>View all products</span>
+            <span id="shop-menu-count"></span>
+          </a>
+        </div>
+      </div>
+
+      <a href="index.html#how-it-works">How it works</a>
+      <a href="about.html">About</a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="btn btn--primary btn--sm" href="shop.html">Shop all products</a>
+
+      <!-- Cart icon is a shop link: checkout lives on the Shopify store, not here. -->
+      <a class="icon-btn" href="shop.html" aria-label="View all products">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+      </a>
+
+      <button type="button" class="icon-btn nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-nav" id="mobile-nav">
+  <div class="mobile-nav__scrim"></div>
+  <div class="mobile-nav__panel" role="dialog" aria-modal="true" aria-label="Menu">
+    <div class="mobile-nav__head">
+      <img data-brand-logo src="images/logo.svg" alt="Everwell" width="130" height="35">
+      <button type="button" class="icon-btn mobile-nav__close" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <nav class="mobile-nav__links" aria-label="Mobile">
+      <a href="index.html">Home</a>
+
+      <!-- Tap the text for all products; tap the chevron to open the categories. -->
+      <div class="mobile-nav__row">
+        <a href="shop.html">Shop</a>
+        <button type="button" class="mobile-nav__sub-toggle" aria-expanded="false" aria-controls="mobile-shop-menu" aria-label="Show product categories">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+      </div>
+      <div class="mobile-nav__sub" id="mobile-shop-menu"><div></div></div>
+
+      <a href="index.html#how-it-works">How it works</a>
+      <a href="about.html">About</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="mobile-nav__foot">
+      <a class="btn btn--primary btn--block" href="shop.html">Shop all products</a>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+<section class="page-head">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span aria-hidden="true">/</span>
+      <span>Medical Disclaimer</span>
+    </nav>
+    <h1>Medical Disclaimer</h1>
+    <p>Last updated: <span class="is-placeholder">[[PLACEHOLDER: date]]</span></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="placeholder-note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L14.7 3.9a2 2 0 00-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+      <div>
+        <strong>PLACEHOLDER — replace with reviewed legal copy before launch.</strong>
+        Everything below is generic filler written to show the page structure. It is not legal
+        advice, has not been reviewed, and must be replaced with copy prepared for your
+        jurisdiction and business model before you accept a single order or run a single ad.
+      </div>
+    </div>
+
+    <article class="prose is-placeholder">
+      
+<h2>1. No medical advice</h2>
+<p>[[PLACEHOLDER]] The content on this website, including product descriptions, articles and answers to frequently asked questions, is provided for general information only. It is not medical advice, and it is not a substitute for consultation with a qualified healthcare professional.</p>
+
+<h2>2. Always consult a professional</h2>
+<p>[[PLACEHOLDER]] Always seek the advice of your physician, pharmacist or another qualified healthcare provider with any questions you have about a medical condition, a medicine, or a health goal. Never disregard professional medical advice, or delay seeking it, because of something you have read on this website.</p>
+
+<h2>3. In an emergency</h2>
+<p>[[PLACEHOLDER]] If you think you may be experiencing a medical emergency, contact your local emergency services immediately. Do not rely on this website for urgent care.</p>
+
+<h2>4. No doctor-patient relationship</h2>
+<p>[[PLACEHOLDER]] Using this website, reading its content or contacting us does not create a doctor-patient or any other clinical relationship.</p>
+
+<h2>5. Individual results vary</h2>
+<p>[[PLACEHOLDER]] Any experiences described on this website are individual accounts. They are not a prediction of the results any other person will have, and nothing on this site should be read as a promise of a particular outcome.</p>
+
+<h2>6. Products and regulatory status</h2>
+<p>[[PLACEHOLDER: this section must be written to match the actual regulatory status of your products in every market you sell to.]] Statements on this website about products have not necessarily been evaluated by any regulatory authority. Products presented here are not intended to diagnose, treat, cure or prevent any disease unless expressly stated and authorised.</p>
+
+<h2>7. Interactions, allergies and existing conditions</h2>
+<p>[[PLACEHOLDER]] Speak to a healthcare professional before using any new product if you are pregnant or breastfeeding, are taking prescription medicine, have a known allergy, or have an existing medical condition.</p>
+
+<h2>8. Third-party content</h2>
+<p>[[PLACEHOLDER]] This website may link to third-party websites and resources. We do not control and are not responsible for the accuracy of health information published on those sites.</p>
+
+<h2>9. Changes</h2>
+<p>[[PLACEHOLDER]] We may update this disclaimer. The date at the top of this page shows when it was last revised.</p>
+
+<h2>10. Contact</h2>
+<p>[[PLACEHOLDER]] Questions about this disclaimer can be sent to <span data-brand-email>our support email</span>.</p>
+
+    </article>
+  </div>
+</section>
+</main>
+
+<!-- ===== FOOTER — duplicated in every .html file. Change it in _shared/partials/footer.html
+     and re-run `node _tools/generate.js`, or find-and-replace across all pages. ===== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img data-brand-logo src="images/logo-light.svg" alt="Everwell" width="148" height="40">
+        <p data-brand-tagline>Everyday health essentials, all in one place.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <!-- Filled from PRODUCTS by site.js so it tracks your live categories. -->
+        <ul id="footer-categories">
+          <li><a href="shop.html">All products</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About us</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms-of-service.html">Terms of Service</a></li>
+          <li><a href="shipping-refund-policy.html">Shipping &amp; Refunds</a></li>
+          <li><a href="medical-disclaimer.html">Medical Disclaimer</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="footer-disclaimer is-placeholder" data-brand-disclaimer>[[PLACEHOLDER: health disclaimer — replace with reviewed legal copy before launch.]]</p>
+
+    <div class="footer-bottom">
+      <p style="margin:0">&copy; <span data-year>2025</span> <span data-brand-entity>Everwell Health Ltd</span>. All rights reserved.</p>
+      <ul>
+        <li><a href="privacy-policy.html">Privacy</a></li>
+        <li><a href="terms-of-service.html">Terms</a></li>
+        <li><a href="medical-disclaimer.html">Disclaimer</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,351 @@
+<!doctype html>
+<!--
+  Clearpath — For the hours that decide the rest of your day.
+  Static site. No build step, no server. Upload this folder as-is via FTP.
+  Brand identity, products and Shopify redirect links all live in js/brand-config.js.
+-->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+
+<title>Clearpath — For the hours that decide the rest of your day.</title>
+<meta name="description" content="[[PLACEHOLDER]] Clearpath: sleep & calm products with clear labelling, discreet packaging and straightforward support.">
+<link rel="canonical" href="https://clearpath-placeholder.com/">
+<!-- REMOVE BEFORE LAUNCH: keeps placeholder content out of search results -->
+<meta name="robots" content="noindex, nofollow">
+
+<!-- Open Graph / social + ad previews -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Clearpath">
+<meta property="og:title" content="Clearpath — For the hours that decide the rest of your day.">
+<meta property="og:description" content="[[PLACEHOLDER]] Clearpath: sleep & calm products with clear labelling, discreet packaging and straightforward support.">
+<meta property="og:url" content="https://clearpath-placeholder.com/">
+<meta property="og:image" content="https://clearpath-placeholder.com/images/og-default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/base.css?v=1f0d56be">
+<link rel="stylesheet" href="css/brand.css?v=1f0d56be">
+
+<!--
+  Load order matters. brand-config.js first (data), theme-init.js second
+  (applies colours before first paint), then site.js (renderers), then
+  tracking.js (inert until you add pixel IDs). All synchronous and tiny —
+  that is what lets inline render calls run during parse with zero layout shift.
+-->
+<script src="js/brand-config.js?v=1f0d56be"></script>
+<script src="js/theme-init.js?v=1f0d56be"></script>
+<script src="js/site.js?v=1f0d56be"></script>
+<script src="js/tracking.js?v=1f0d56be"></script>
+<script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Clearpath",
+  "url": "https://clearpath-placeholder.com/",
+  "logo": "https://clearpath-placeholder.com/images/logo.svg",
+  "description": "For the hours that decide the rest of your day.",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer support",
+    "email": "support@clearpath-placeholder.com",
+    "telephone": "+1 (555) 010-7734"
+  }
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<!-- ===== HEADER — duplicated in every .html file. Change it in _shared/partials/header.html
+     and re-run `node _tools/generate.js`, or find-and-replace across all pages. ===== -->
+<div class="announcement">
+  <span data-brand-announcement>Free discreet shipping over $50</span>
+</div>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="header-logo" href="index.html">
+      <!-- [[PLACEHOLDER: logo]] — replace images/logo.svg, or point BRAND.logo elsewhere -->
+      <img data-brand-logo src="images/logo.svg" alt="Clearpath" width="148" height="40">
+    </a>
+
+    <nav class="header-nav" aria-label="Main">
+      <a href="index.html">Home</a>
+
+      <!-- Shop: the link goes to every product; the dropdown splits by category.
+           Categories are built from PRODUCTS at runtime — see Site.renderShopMenu(). -->
+      <div class="nav-item" id="shop-nav-item">
+        <a class="nav-trigger" href="shop.html" aria-expanded="false" aria-haspopup="true" aria-controls="shop-menu">
+          Shop
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </a>
+        <div class="nav-menu" id="shop-menu">
+          <div class="nav-menu__grid" id="shop-menu-grid"></div>
+          <a class="nav-menu__all" href="shop.html">
+            <span>View all products</span>
+            <span id="shop-menu-count"></span>
+          </a>
+        </div>
+      </div>
+
+      <a href="index.html#how-it-works">How it works</a>
+      <a href="about.html">About</a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="btn btn--primary btn--sm" href="shop.html">Get started</a>
+
+      <!-- Cart icon is a shop link: checkout lives on the Shopify store, not here. -->
+      <a class="icon-btn" href="shop.html" aria-label="View all products">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+      </a>
+
+      <button type="button" class="icon-btn nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-nav" id="mobile-nav">
+  <div class="mobile-nav__scrim"></div>
+  <div class="mobile-nav__panel" role="dialog" aria-modal="true" aria-label="Menu">
+    <div class="mobile-nav__head">
+      <img data-brand-logo src="images/logo.svg" alt="Clearpath" width="130" height="35">
+      <button type="button" class="icon-btn mobile-nav__close" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <nav class="mobile-nav__links" aria-label="Mobile">
+      <a href="index.html">Home</a>
+
+      <!-- Tap the text for all products; tap the chevron to open the categories. -->
+      <div class="mobile-nav__row">
+        <a href="shop.html">Shop</a>
+        <button type="button" class="mobile-nav__sub-toggle" aria-expanded="false" aria-controls="mobile-shop-menu" aria-label="Show product categories">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+      </div>
+      <div class="mobile-nav__sub" id="mobile-shop-menu"><div></div></div>
+
+      <a href="index.html#how-it-works">How it works</a>
+      <a href="about.html">About</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="mobile-nav__foot">
+      <a class="btn btn--primary btn--block" href="shop.html">Get started</a>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow is-placeholder">Sleep & calm</span>
+      <h1 class="is-placeholder">Better evenings, quieter nights.</h1>
+      <p class="hero__lede is-placeholder">[[PLACEHOLDER]] A small range built around the end of the day, with clear labels and no promises we cannot stand behind.</p>
+
+      <div class="btn-row">
+        <a class="btn btn--primary btn--lg" href="shop.html">Get started</a>
+        <a class="btn btn--secondary btn--lg" href="index.html#how-it-works">How it works</a>
+      </div>
+
+      <div class="hero__proof" id="hero-proof"></div>
+      <script>
+        (function () {
+          document.getElementById('hero-proof').innerHTML = BRAND.heroProof.map(function (t) {
+            return '<span class="hero__proof-item">' + Site.icon('check') + Site.esc(t) + '</span>';
+          }).join('');
+        })();
+      </script>
+    </div>
+
+    <div class="hero__media is-placeholder">
+      <!-- [[PLACEHOLDER: hero image]] — replace images/hero.svg with a real 1200x1020 photo -->
+      <img src="images/hero.svg" alt="[[PLACEHOLDER: hero image]]" width="1200" height="1020" fetchpriority="high" decoding="async">
+      <div class="hero__card">
+        <span class="testimonial__avatar" aria-hidden="true">★</span>
+        <span>
+          <strong>Rated 4.7/5</strong>
+          <span>[[PLACEHOLDER]] from 1,800+ reviews</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="strip">
+  <div class="container">
+    <div class="strip__grid" id="value-props"></div>
+    <script>
+      (function () {
+        document.getElementById('value-props').innerHTML = BRAND.valueProps.map(function (v) {
+          return '<div class="strip__item">' + Site.icon(v.icon) + '<span>' + Site.esc(v.text) + '</span></div>';
+        }).join('');
+      })();
+    </script>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Shop by need</span>
+      <h2>Find what you came for</h2>
+    </div>
+    <div class="category-grid" id="categories"></div>
+    <script>Site.renderCategories('#categories');</script>
+  </div>
+</section>
+
+<section class="section section--soft" id="how-it-works">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">How it works</span>
+      <h2 class="is-placeholder">Simple from the start</h2>
+      <p class="is-placeholder">[[PLACEHOLDER]] No appointments, no waiting rooms, no fuss.</p>
+    </div>
+    <div class="steps" id="steps"></div>
+    <script>Site.renderSteps('#steps');</script>
+    <div class="btn-row" style="justify-content:center;margin-top:2.5rem">
+      <a class="btn btn--primary btn--lg" href="shop.html">Get started</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Best sellers</span>
+      <h2 class="is-placeholder">For the evening routine</h2>
+      <p class="is-placeholder">[[PLACEHOLDER]] The products people reach for first.</p>
+    </div>
+    <div class="product-grid product-grid--4" id="featured-products"></div>
+    <script>Site.renderProducts('#featured-products', { featured: true, limit: 8 });</script>
+    <div class="btn-row" style="justify-content:center;margin-top:2.5rem">
+      <a class="btn btn--secondary btn--lg" href="shop.html">View all products</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--soft">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="is-placeholder">Built to be worth trusting</h2>
+      <p class="is-placeholder">[[PLACEHOLDER]] The things we think matter most when you are buying something for your health.</p>
+    </div>
+    <div class="trust-grid" id="trust-badges"></div>
+    <script>Site.renderTrust('#trust-badges');</script>
+    <p class="text-center text-muted mt-2" style="font-size:0.8125rem">
+      [[PLACEHOLDER: trust badge icons and claims — replace with badges you can actually substantiate before launch.]]
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Reviews</span>
+      <h2 class="is-placeholder">What people say</h2>
+      <p class="is-placeholder">[[PLACEHOLDER]] Fictional reviews shown for layout purposes only.</p>
+    </div>
+    <div class="testimonial-grid" id="testimonials"></div>
+    <script>Site.renderTestimonials('#testimonials', 3);</script>
+    <p class="text-center text-muted mt-2" style="font-size:0.8125rem">
+      [[PLACEHOLDER: all testimonials are fictional. Replace with real, attributable reviews or remove this section.]]
+    </p>
+  </div>
+</section>
+
+<section class="section section--soft">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">FAQ</span>
+      <h2>Questions, answered</h2>
+    </div>
+    <div class="accordion" id="faq-teaser"></div>
+    <script>Site.renderFaq('#faq-teaser', 5);</script>
+    <div class="btn-row" style="justify-content:center;margin-top:2rem">
+      <a class="btn btn--secondary" href="faq.html">See all questions</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="cta-banner">
+      <h2 class="is-placeholder">Start tonight</h2>
+      <p class="is-placeholder">[[PLACEHOLDER]] Pick one product, check out securely, and it arrives in plain packaging.</p>
+      <div class="btn-row">
+        <a class="btn btn--light btn--lg" href="shop.html">Get started</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ===== FOOTER — duplicated in every .html file. Change it in _shared/partials/footer.html
+     and re-run `node _tools/generate.js`, or find-and-replace across all pages. ===== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img data-brand-logo src="images/logo-light.svg" alt="Clearpath" width="148" height="40">
+        <p data-brand-tagline>For the hours that decide the rest of your day.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <!-- Filled from PRODUCTS by site.js so it tracks your live categories. -->
+        <ul id="footer-categories">
+          <li><a href="shop.html">All products</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About us</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms-of-service.html">Terms of Service</a></li>
+          <li><a href="shipping-refund-policy.html">Shipping &amp; Refunds</a></li>
+          <li><a href="medical-disclaimer.html">Medical Disclaimer</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="footer-disclaimer is-placeholder" data-brand-disclaimer>[[PLACEHOLDER: health disclaimer — replace with reviewed legal copy before launch.]]</p>
+
+    <div class="footer-bottom">
+      <p style="margin:0">&copy; <span data-year>2025</span> <span data-brand-entity>Clearpath Wellbeing Ltd</span>. All rights reserved.</p>
+      <ul>
+        <li><a href="privacy-policy.html">Privacy</a></li>
+        <li><a href="terms-of-service.html">Terms</a></li>
+        <li><a href="medical-disclaimer.html">Disclaimer</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

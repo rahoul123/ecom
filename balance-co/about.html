@@ -1,0 +1,287 @@
+<!doctype html>
+<!--
+  About us | Balance Co
+  Static site. No build step, no server. Upload this folder as-is via FTP.
+  Brand identity, products and Shopify redirect links all live in js/brand-config.js.
+-->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+
+<title>About us | Balance Co</title>
+<meta name="description" content="[[PLACEHOLDER]] Why Balance Co exists, how we choose what to sell, and what we will not claim.">
+<link rel="canonical" href="https://balance-co-placeholder.com/about.html">
+<!-- REMOVE BEFORE LAUNCH: keeps placeholder content out of search results -->
+<meta name="robots" content="noindex, nofollow">
+
+<!-- Open Graph / social + ad previews -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Balance Co">
+<meta property="og:title" content="About us | Balance Co">
+<meta property="og:description" content="[[PLACEHOLDER]] Why Balance Co exists, how we choose what to sell, and what we will not claim.">
+<meta property="og:url" content="https://balance-co-placeholder.com/about.html">
+<meta property="og:image" content="https://balance-co-placeholder.com/images/og-default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/base.css?v=1f0d56be">
+<link rel="stylesheet" href="css/brand.css?v=1f0d56be">
+
+<!--
+  Load order matters. brand-config.js first (data), theme-init.js second
+  (applies colours before first paint), then site.js (renderers), then
+  tracking.js (inert until you add pixel IDs). All synchronous and tiny —
+  that is what lets inline render calls run during parse with zero layout shift.
+-->
+<script src="js/brand-config.js?v=1f0d56be"></script>
+<script src="js/theme-init.js?v=1f0d56be"></script>
+<script src="js/site.js?v=1f0d56be"></script>
+<script src="js/tracking.js?v=1f0d56be"></script>
+<script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
+
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<!-- ===== HEADER — duplicated in every .html file. Change it in _shared/partials/header.html
+     and re-run `node _tools/generate.js`, or find-and-replace across all pages. ===== -->
+<div class="announcement">
+  <span data-brand-announcement>Free shipping over $50 · Plain packaging on every order</span>
+</div>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="header-logo" href="index.html">
+      <!-- [[PLACEHOLDER: logo]] — replace images/logo.svg, or point BRAND.logo elsewhere -->
+      <img data-brand-logo src="images/logo.svg" alt="Balance Co" width="148" height="40">
+    </a>
+
+    <nav class="header-nav" aria-label="Main">
+      <a href="index.html">Home</a>
+
+      <!-- Shop: the link goes to every product; the dropdown splits by category.
+           Categories are built from PRODUCTS at runtime — see Site.renderShopMenu(). -->
+      <div class="nav-item" id="shop-nav-item">
+        <a class="nav-trigger" href="shop.html" aria-expanded="false" aria-haspopup="true" aria-controls="shop-menu">
+          Shop
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </a>
+        <div class="nav-menu" id="shop-menu">
+          <div class="nav-menu__grid" id="shop-menu-grid"></div>
+          <a class="nav-menu__all" href="shop.html">
+            <span>View all products</span>
+            <span id="shop-menu-count"></span>
+          </a>
+        </div>
+      </div>
+
+      <a href="index.html#how-it-works">How it works</a>
+      <a href="about.html">About</a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="btn btn--primary btn--sm" href="shop.html">Take the quiz</a>
+
+      <!-- Cart icon is a shop link: checkout lives on the Shopify store, not here. -->
+      <a class="icon-btn" href="shop.html" aria-label="View all products">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+      </a>
+
+      <button type="button" class="icon-btn nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-nav" id="mobile-nav">
+  <div class="mobile-nav__scrim"></div>
+  <div class="mobile-nav__panel" role="dialog" aria-modal="true" aria-label="Menu">
+    <div class="mobile-nav__head">
+      <img data-brand-logo src="images/logo.svg" alt="Balance Co" width="130" height="35">
+      <button type="button" class="icon-btn mobile-nav__close" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <nav class="mobile-nav__links" aria-label="Mobile">
+      <a href="index.html">Home</a>
+
+      <!-- Tap the text for all products; tap the chevron to open the categories. -->
+      <div class="mobile-nav__row">
+        <a href="shop.html">Shop</a>
+        <button type="button" class="mobile-nav__sub-toggle" aria-expanded="false" aria-controls="mobile-shop-menu" aria-label="Show product categories">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+      </div>
+      <div class="mobile-nav__sub" id="mobile-shop-menu"><div></div></div>
+
+      <a href="index.html#how-it-works">How it works</a>
+      <a href="about.html">About</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="mobile-nav__foot">
+      <a class="btn btn--primary btn--block" href="shop.html">Take the quiz</a>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+<section class="page-head">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span aria-hidden="true">/</span>
+      <span>About</span>
+    </nav>
+    <h1 class="is-placeholder">We are not interested in quick fixes</h1>
+    <p class="is-placeholder">[[PLACEHOLDER]] Balance Co exists for people who want support, not a transformation promise.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container split">
+    <div>
+      <span class="eyebrow">Our story</span>
+      <h2 class="is-placeholder">A category that needed calming down</h2>
+      <div class="is-placeholder">
+        <p>[[PLACEHOLDER]] Weight management is the loudest shelf in the shop. Before-and-after photos, countdowns, numbers that nobody can back up.</p>
+        <p>[[PLACEHOLDER]] We built Balance Co to be the quiet option. Clear labels, honest language, and no claims about what your body will do.</p>
+        <p>[[PLACEHOLDER]] What we sell is support for a routine. The routine is still yours, and we would rather say that plainly.</p>
+      </div>
+      <p class="text-muted" style="font-size:0.8125rem">
+        [[PLACEHOLDER: brand story — replace with the real founding story before launch.]]
+      </p>
+    </div>
+    <div class="split__media is-placeholder">
+      <!-- [[PLACEHOLDER: team or lifestyle photo]] -->
+      <img src="images/about.svg" alt="[[PLACEHOLDER: about image]]" width="800" height="600" loading="lazy" decoding="async">
+    </div>
+  </div>
+</section>
+
+<section class="section section--soft">
+  <div class="container">
+    <div class="section-head">
+      <h2>What we stand for</h2>
+    </div>
+    <div class="trust-grid" id="about-values"></div>
+    <script>
+      document.getElementById('about-values').innerHTML = BRAND.values.map(function (v) {
+        return '<div class="trust-badge is-placeholder">' +
+          '<span class="trust-badge__icon">' + Site.icon(v.icon) + '</span>' +
+          '<h4>' + Site.esc(v.title) + '</h4><p>' + Site.esc(v.text) + '</p></div>';
+      }).join('');
+    </script>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="stat-row is-placeholder" id="about-stats"></div>
+    <script>
+      document.getElementById('about-stats').innerHTML = BRAND.stats.map(function (s) {
+        return '<div class="stat"><span class="stat__num">' + Site.esc(s.value) + '</span>' +
+          '<span class="stat__label">' + Site.esc(s.label) + '</span></div>';
+      }).join('');
+    </script>
+    <p class="text-center text-muted mt-2" style="font-size:0.8125rem">
+      [[PLACEHOLDER: these figures are invented. Remove them or replace with numbers you can evidence — ad reviewers do check.]]
+    </p>
+  </div>
+</section>
+
+<section class="section section--soft">
+  <div class="container split split--reverse">
+    <div class="split__media is-placeholder">
+      <!-- [[PLACEHOLDER: secondary lifestyle photo]] -->
+      <img src="images/about-2.svg" alt="[[PLACEHOLDER: about image]]" width="800" height="600" loading="lazy" decoding="async">
+    </div>
+    <div>
+      <span class="eyebrow">How we work</span>
+      <h2 class="is-placeholder">What we will and will not say</h2>
+      <p class="is-placeholder">[[PLACEHOLDER]] We hold our own copy to the same standard we would want as customers.</p>
+      <ul class="benefit-list mt-2" id="about-points"></ul>
+      <script>
+        document.getElementById('about-points').innerHTML = BRAND.aboutPoints.map(function (t) {
+          return '<li>' + Site.icon('check') + '<span>' + Site.esc(t) + '</span></li>';
+        }).join('');
+      </script>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="cta-banner">
+      <h2 class="is-placeholder">Start where you are</h2>
+      <p class="is-placeholder">[[PLACEHOLDER]] Take the two-minute quiz and we will point you at a sensible first step.</p>
+      <div class="btn-row">
+        <a class="btn btn--light btn--lg" href="shop.html">Take the quiz</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ===== FOOTER — duplicated in every .html file. Change it in _shared/partials/footer.html
+     and re-run `node _tools/generate.js`, or find-and-replace across all pages. ===== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img data-brand-logo src="images/logo-light.svg" alt="Balance Co" width="148" height="40">
+        <p data-brand-tagline>Support for the goals you set yourself.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <!-- Filled from PRODUCTS by site.js so it tracks your live categories. -->
+        <ul id="footer-categories">
+          <li><a href="shop.html">All products</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About us</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms-of-service.html">Terms of Service</a></li>
+          <li><a href="shipping-refund-policy.html">Shipping &amp; Refunds</a></li>
+          <li><a href="medical-disclaimer.html">Medical Disclaimer</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="footer-disclaimer is-placeholder" data-brand-disclaimer>[[PLACEHOLDER: health disclaimer — replace with reviewed legal copy before launch.]]</p>
+
+    <div class="footer-bottom">
+      <p style="margin:0">&copy; <span data-year>2025</span> <span data-brand-entity>Balance Co Wellness Ltd</span>. All rights reserved.</p>
+      <ul>
+        <li><a href="privacy-policy.html">Privacy</a></li>
+        <li><a href="terms-of-service.html">Terms</a></li>
+        <li><a href="medical-disclaimer.html">Disclaimer</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

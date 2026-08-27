@@ -1,0 +1,73 @@
+<section class="page-head">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span aria-hidden="true">/</span>
+      <a href="shop.html">Shop</a>
+      <span aria-hidden="true">/</span>
+      <span>{{CAT_NAME}}</span>
+    </nav>
+    <h1>{{CAT_NAME}}</h1>
+    <p class="is-placeholder">{{CAT_INTRO}}</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="shop-toolbar">
+      <span class="shop-toolbar__count" id="category-count">&nbsp;</span>
+      <label class="visually-hidden" for="category-sort">Sort by</label>
+      <select class="select" id="category-sort">
+        <option value="featured">Featured</option>
+        <option value="price-asc">Price: low to high</option>
+        <option value="price-desc">Price: high to low</option>
+        <option value="rating">Top rated</option>
+      </select>
+    </div>
+
+    <div class="product-grid product-grid--4" id="category-grid"></div>
+    <script>
+      Site.renderCategoryPage({{CAT_NAME_JS}});
+      document.getElementById('category-sort').addEventListener('change', function () {
+        Site.renderCategoryPage({{CAT_NAME_JS}}, this.value);
+      });
+    </script>
+  </div>
+</section>
+
+<section class="section section--soft">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Good to know</span>
+      <h2 class="is-placeholder">{{CAT_POINTS_HEADING}}</h2>
+    </div>
+    <div class="steps">
+      {{CAT_POINTS}}
+    </div>
+    <p class="text-center text-muted mt-2" style="font-size:0.8125rem">
+      [[PLACEHOLDER: category copy — replace with reviewed, claim-free wording before launch.]]
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>Browse other categories</h2>
+    </div>
+    <div class="category-grid" id="other-categories"></div>
+    <script>Site.renderCategories('#other-categories', { exclude: {{CAT_NAME_JS}} });</script>
+  </div>
+</section>
+
+<section class="section section--soft">
+  <div class="container">
+    <div class="cta-banner">
+      <h2 class="is-placeholder">{{copy.ctaHeading}}</h2>
+      <p class="is-placeholder">{{copy.ctaLede}}</p>
+      <div class="btn-row">
+        <a class="btn btn--light btn--lg" href="shop.html">View all products</a>
+      </div>
+    </div>
+  </div>
+</section>

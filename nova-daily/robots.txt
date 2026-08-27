@@ -1,0 +1,10 @@
+# Nova Daily
+# WHILE THIS SITE IS A PLACEHOLDER, crawling is blocked here and every page
+# also carries a noindex tag. Remove BOTH before launch.
+User-agent: *
+Disallow: /
+
+# Launch configuration — swap the block above for this:
+# User-agent: *
+# Allow: /
+# Sitemap: https://nova-daily-placeholder.com/sitemap.xml

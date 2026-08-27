@@ -1,0 +1,61 @@
+<section class="page-head">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span aria-hidden="true">/</span>
+      <span>Shop</span>
+    </nav>
+    <h1>Shop all products</h1>
+    <p class="is-placeholder">{{copy.shopLede}}</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="shop-layout">
+
+      <aside>
+        <button type="button" class="btn btn--secondary btn--block filters-toggle" id="filters-toggle" aria-expanded="false" aria-controls="filters">
+          Filters
+        </button>
+        <div class="filters" id="filters"></div>
+        <script>
+          Site.renderFilters('#filters');
+          document.getElementById('filters-toggle').addEventListener('click', function () {
+            var open = document.getElementById('filters').classList.toggle('is-open');
+            this.setAttribute('aria-expanded', open ? 'true' : 'false');
+          });
+        </script>
+      </aside>
+
+      <div>
+        <div class="shop-toolbar">
+          <span class="shop-toolbar__count" id="shop-count">&nbsp;</span>
+          <label class="visually-hidden" for="shop-sort">Sort by</label>
+          <select class="select" id="shop-sort">
+            <option value="featured">Featured</option>
+            <option value="price-asc">Price: low to high</option>
+            <option value="price-desc">Price: high to low</option>
+            <option value="rating">Top rated</option>
+          </select>
+        </div>
+
+        <div class="active-filters" id="active-filters"></div>
+
+        <div class="product-grid" id="shop-grid"></div>
+        <script>
+          Site.renderShop();
+          document.getElementById('shop-sort').addEventListener('change', function () {
+            Site.setSort(this.value);
+          });
+        </script>
+
+        <p class="text-muted mt-3" style="font-size:0.8125rem">
+          [[PLACEHOLDER: product photos, names, prices and descriptions are all dummy data.
+          Edit them in <code>js/brand-config.js</code>.]]
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>

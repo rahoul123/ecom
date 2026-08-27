@@ -1,0 +1,23 @@
+<section class="section">
+  <div class="container text-center" style="max-width:560px">
+    <span class="eyebrow">404</span>
+    <h1>We couldn't find that page</h1>
+    <p class="text-muted">
+      The link may be out of date, or the page may have moved. Everything we sell is on the shop page.
+    </p>
+    <div class="btn-row" style="justify-content:center;margin-top:2rem">
+      <a class="btn btn--primary btn--lg" href="shop.html">Browse products</a>
+      <a class="btn btn--secondary btn--lg" href="index.html">Back to home</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--soft">
+  <div class="container">
+    <div class="section-head">
+      <h2>Popular products</h2>
+    </div>
+    <div class="product-grid product-grid--4" id="notfound-products"></div>
+    <script>Site.renderProducts('#notfound-products', { featured: true, limit: 4 });</script>
+  </div>
+</section>

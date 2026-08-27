@@ -1,0 +1,144 @@
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow is-placeholder">{{copy.heroEyebrow}}</span>
+      <h1 class="is-placeholder">{{copy.heroH1}}</h1>
+      <p class="hero__lede is-placeholder">{{copy.heroLede}}</p>
+
+      <div class="btn-row">
+        <a class="btn btn--primary btn--lg" href="shop.html">{{copy.primaryCta}}</a>
+        <a class="btn btn--secondary btn--lg" href="index.html#how-it-works">How it works</a>
+      </div>
+
+      <div class="hero__proof" id="hero-proof"></div>
+      <script>
+        (function () {
+          document.getElementById('hero-proof').innerHTML = BRAND.heroProof.map(function (t) {
+            return '<span class="hero__proof-item">' + Site.icon('check') + Site.esc(t) + '</span>';
+          }).join('');
+        })();
+      </script>
+    </div>
+
+    <div class="hero__media is-placeholder">
+      <!-- [[PLACEHOLDER: hero image]] — replace images/hero.svg with a real 1200x1020 photo -->
+      <img src="images/hero.svg" alt="[[PLACEHOLDER: hero image]]" width="1200" height="1020" fetchpriority="high" decoding="async">
+      <div class="hero__card">
+        <span class="testimonial__avatar" aria-hidden="true">★</span>
+        <span>
+          <strong>{{copy.heroCardTitle}}</strong>
+          <span>{{copy.heroCardText}}</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="strip">
+  <div class="container">
+    <div class="strip__grid" id="value-props"></div>
+    <script>
+      (function () {
+        document.getElementById('value-props').innerHTML = BRAND.valueProps.map(function (v) {
+          return '<div class="strip__item">' + Site.icon(v.icon) + '<span>' + Site.esc(v.text) + '</span></div>';
+        }).join('');
+      })();
+    </script>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Shop by need</span>
+      <h2>Find what you came for</h2>
+    </div>
+    <div class="category-grid" id="categories"></div>
+    <script>Site.renderCategories('#categories');</script>
+  </div>
+</section>
+
+<section class="section section--soft" id="how-it-works">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">How it works</span>
+      <h2 class="is-placeholder">{{copy.stepsHeading}}</h2>
+      <p class="is-placeholder">{{copy.stepsLede}}</p>
+    </div>
+    <div class="steps" id="steps"></div>
+    <script>Site.renderSteps('#steps');</script>
+    <div class="btn-row" style="justify-content:center;margin-top:2.5rem">
+      <a class="btn btn--primary btn--lg" href="shop.html">{{copy.primaryCta}}</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Best sellers</span>
+      <h2 class="is-placeholder">{{copy.featuredHeading}}</h2>
+      <p class="is-placeholder">{{copy.featuredLede}}</p>
+    </div>
+    <div class="product-grid product-grid--4" id="featured-products"></div>
+    <script>Site.renderProducts('#featured-products', { featured: true, limit: 8 });</script>
+    <div class="btn-row" style="justify-content:center;margin-top:2.5rem">
+      <a class="btn btn--secondary btn--lg" href="shop.html">View all products</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--soft">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="is-placeholder">{{copy.trustHeading}}</h2>
+      <p class="is-placeholder">{{copy.trustLede}}</p>
+    </div>
+    <div class="trust-grid" id="trust-badges"></div>
+    <script>Site.renderTrust('#trust-badges');</script>
+    <p class="text-center text-muted mt-2" style="font-size:0.8125rem">
+      [[PLACEHOLDER: trust badge icons and claims — replace with badges you can actually substantiate before launch.]]
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Reviews</span>
+      <h2 class="is-placeholder">{{copy.reviewsHeading}}</h2>
+      <p class="is-placeholder">{{copy.reviewsLede}}</p>
+    </div>
+    <div class="testimonial-grid" id="testimonials"></div>
+    <script>Site.renderTestimonials('#testimonials', 3);</script>
+    <p class="text-center text-muted mt-2" style="font-size:0.8125rem">
+      [[PLACEHOLDER: all testimonials are fictional. Replace with real, attributable reviews or remove this section.]]
+    </p>
+  </div>
+</section>
+
+<section class="section section--soft">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">FAQ</span>
+      <h2>Questions, answered</h2>
+    </div>
+    <div class="accordion" id="faq-teaser"></div>
+    <script>Site.renderFaq('#faq-teaser', 5);</script>
+    <div class="btn-row" style="justify-content:center;margin-top:2rem">
+      <a class="btn btn--secondary" href="faq.html">See all questions</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="cta-banner">
+      <h2 class="is-placeholder">{{copy.ctaHeading}}</h2>
+      <p class="is-placeholder">{{copy.ctaLede}}</p>
+      <div class="btn-row">
+        <a class="btn btn--light btn--lg" href="shop.html">{{copy.primaryCta}}</a>
+      </div>
+    </div>
+  </div>
+</section>

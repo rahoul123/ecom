@@ -1,0 +1,94 @@
+<section class="page-head">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span aria-hidden="true">/</span>
+      <span>Contact</span>
+    </nav>
+    <h1>Get in touch</h1>
+    <p class="is-placeholder">{{copy.contactLede}}</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container contact-layout">
+
+    <div>
+      <div class="placeholder-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L14.7 3.9a2 2 0 00-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+        <div>
+          <strong>[[PLACEHOLDER: this form does not send anything yet.]]</strong>
+          Static hosting has no server to receive a form post. See <code>README.md</code> &rarr;
+          &ldquo;Making the contact form actually send&rdquo; for the two options.
+        </div>
+      </div>
+
+      <p id="contact-result" class="form-note" hidden></p>
+
+      <form class="form" id="contact-form" novalidate>
+        <div class="field">
+          <label for="cf-name">Your name</label>
+          <input class="input" type="text" id="cf-name" name="name" autocomplete="name" required>
+          <span class="field__error"></span>
+        </div>
+
+        <div class="field">
+          <label for="cf-email">Email address</label>
+          <input class="input" type="email" id="cf-email" name="email" autocomplete="email" required>
+          <span class="field__error"></span>
+        </div>
+
+        <div class="field">
+          <label for="cf-subject">Subject</label>
+          <select id="cf-subject" name="subject">
+            <option>Question about a product</option>
+            <option>Order or delivery</option>
+            <option>Returns and refunds</option>
+            <option>Something else</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="cf-message">Message</label>
+          <textarea class="textarea" id="cf-message" name="message" required></textarea>
+          <span class="field__error"></span>
+          <span class="hint">Please don't include sensitive health information in this form.</span>
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--lg">Send message</button>
+      </form>
+    </div>
+
+    <aside class="contact-card">
+      <h3 style="margin-top:0">Other ways to reach us</h3>
+      <dl>
+        <div>
+          <dt>Email</dt>
+          <dd><a data-brand-email href="#">email</a></dd>
+        </div>
+        <div>
+          <dt>Phone</dt>
+          <dd><a data-brand-phone href="#">phone</a></dd>
+        </div>
+        <div>
+          <dt>Support hours</dt>
+          <dd data-brand-hours>hours</dd>
+        </div>
+        <div>
+          <dt>Address</dt>
+          <dd class="is-placeholder" data-brand-address>address</dd>
+        </div>
+      </dl>
+
+      <hr>
+
+      <h4>Looking for something faster?</h4>
+      <p class="text-muted" style="font-size:0.875rem">
+        Most delivery and returns questions are answered on our
+        <a href="faq.html">FAQ page</a> and in the
+        <a href="shipping-refund-policy.html">shipping &amp; refund policy</a>.
+      </p>
+    </aside>
+
+  </div>
+</section>

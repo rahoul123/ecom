@@ -1,0 +1,32 @@
+<section class="page-head">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span aria-hidden="true">/</span>
+      <span>FAQ</span>
+    </nav>
+    <h1>Frequently asked questions</h1>
+    <p class="is-placeholder">{{copy.faqLede}}</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="accordion accordion--wide" id="faq-all" style="max-width:860px;margin-inline:auto"></div>
+    <script>
+      Site.renderFaq('#faq-all');
+      Site.emitFaqSchema();
+    </script>
+
+    <div style="max-width:860px;margin:3rem auto 0">
+      <div class="contact-card text-center">
+        <h3>Still have a question?</h3>
+        <p class="text-muted">Our support team is happy to help.</p>
+        <div class="btn-row" style="justify-content:center;margin-top:1.25rem">
+          <a class="btn btn--primary" href="contact.html">Contact us</a>
+          <a class="btn btn--secondary" data-brand-email href="#">email</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

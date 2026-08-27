@@ -1,0 +1,298 @@
+<!doctype html>
+<!--
+  Product | Nova Daily
+  Static site. No build step, no server. Upload this folder as-is via FTP.
+  Brand identity, products and Shopify redirect links all live in js/brand-config.js.
+-->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fffdfa">
+
+<title>Product | Nova Daily</title>
+<meta name="description" content="[[PLACEHOLDER]] Product details, benefits and ingredients from Nova Daily.">
+<link rel="canonical" href="https://nova-daily-placeholder.com/product.html">
+<!-- REMOVE BEFORE LAUNCH: keeps placeholder content out of search results -->
+<meta name="robots" content="noindex, nofollow">
+
+<!-- Open Graph / social + ad previews -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Nova Daily">
+<meta property="og:title" content="Product | Nova Daily">
+<meta property="og:description" content="[[PLACEHOLDER]] Product details, benefits and ingredients from Nova Daily.">
+<meta property="og:url" content="https://nova-daily-placeholder.com/product.html">
+<meta property="og:image" content="https://nova-daily-placeholder.com/images/og-default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/base.css?v=1f0d56be">
+<link rel="stylesheet" href="css/brand.css?v=1f0d56be">
+
+<!--
+  Load order matters. brand-config.js first (data), theme-init.js second
+  (applies colours before first paint), then site.js (renderers), then
+  tracking.js (inert until you add pixel IDs). All synchronous and tiny —
+  that is what lets inline render calls run during parse with zero layout shift.
+-->
+<script src="js/brand-config.js?v=1f0d56be"></script>
+<script src="js/theme-init.js?v=1f0d56be"></script>
+<script src="js/site.js?v=1f0d56be"></script>
+<script src="js/tracking.js?v=1f0d56be"></script>
+<script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
+
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<!-- ===== HEADER — duplicated in every .html file. Change it in _shared/partials/header.html
+     and re-run `node _tools/generate.js`, or find-and-replace across all pages. ===== -->
+<div class="announcement">
+  <span data-brand-announcement>Free shipping over $50 · Subscribe and save 15%</span>
+</div>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="header-logo" href="index.html">
+      <!-- [[PLACEHOLDER: logo]] — replace images/logo.svg, or point BRAND.logo elsewhere -->
+      <img data-brand-logo src="images/logo.svg" alt="Nova Daily" width="148" height="40">
+    </a>
+
+    <nav class="header-nav" aria-label="Main">
+      <a href="index.html">Home</a>
+
+      <!-- Shop: the link goes to every product; the dropdown splits by category.
+           Categories are built from PRODUCTS at runtime — see Site.renderShopMenu(). -->
+      <div class="nav-item" id="shop-nav-item">
+        <a class="nav-trigger" href="shop.html" aria-expanded="false" aria-haspopup="true" aria-controls="shop-menu">
+          Shop
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </a>
+        <div class="nav-menu" id="shop-menu">
+          <div class="nav-menu__grid" id="shop-menu-grid"></div>
+          <a class="nav-menu__all" href="shop.html">
+            <span>View all products</span>
+            <span id="shop-menu-count"></span>
+          </a>
+        </div>
+      </div>
+
+      <a href="index.html#how-it-works">How it works</a>
+      <a href="about.html">About</a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="btn btn--primary btn--sm" href="shop.html">Build your routine</a>
+
+      <!-- Cart icon is a shop link: checkout lives on the Shopify store, not here. -->
+      <a class="icon-btn" href="shop.html" aria-label="View all products">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+      </a>
+
+      <button type="button" class="icon-btn nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-nav" id="mobile-nav">
+  <div class="mobile-nav__scrim"></div>
+  <div class="mobile-nav__panel" role="dialog" aria-modal="true" aria-label="Menu">
+    <div class="mobile-nav__head">
+      <img data-brand-logo src="images/logo.svg" alt="Nova Daily" width="130" height="35">
+      <button type="button" class="icon-btn mobile-nav__close" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <nav class="mobile-nav__links" aria-label="Mobile">
+      <a href="index.html">Home</a>
+
+      <!-- Tap the text for all products; tap the chevron to open the categories. -->
+      <div class="mobile-nav__row">
+        <a href="shop.html">Shop</a>
+        <button type="button" class="mobile-nav__sub-toggle" aria-expanded="false" aria-controls="mobile-shop-menu" aria-label="Show product categories">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+      </div>
+      <div class="mobile-nav__sub" id="mobile-shop-menu"><div></div></div>
+
+      <a href="index.html#how-it-works">How it works</a>
+      <a href="about.html">About</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="mobile-nav__foot">
+      <a class="btn btn--primary btn--block" href="shop.html">Build your routine</a>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+<section class="section section--tight" id="pdp-section">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span aria-hidden="true">/</span>
+      <a href="shop.html">Shop</a>
+      <span aria-hidden="true">/</span>
+      <span id="pdp-breadcrumb-name">Product</span>
+    </nav>
+
+    <div class="pdp" id="pdp">
+      <div class="pdp__gallery">
+        <!-- [[PLACEHOLDER: product photography]] — swap image paths in js/brand-config.js -->
+        <div class="pdp__main-image is-placeholder" id="pdp-main-image"></div>
+        <div class="pdp__thumbs" id="pdp-thumbs"></div>
+      </div>
+
+      <div class="pdp__info">
+        <span class="product-card__cat" id="pdp-category"></span>
+        <h1 id="pdp-title">&nbsp;</h1>
+        <div class="rating-line" id="pdp-rating"></div>
+        <p class="pdp__lede" id="pdp-lede"></p>
+
+        <div class="pdp__price" id="pdp-price"></div>
+        <div class="pdp__options" id="pdp-options"></div>
+        <div class="pdp__buy" id="pdp-buy"></div>
+
+        <div class="pdp__reassure" id="pdp-reassure"></div>
+        <script>
+          document.getElementById('pdp-reassure').innerHTML = BRAND.productReassurance.map(function (r) {
+            return '<div>' + Site.icon(r.icon) + '<span>' + Site.esc(r.text) + '</span></div>';
+          }).join('');
+        </script>
+
+        <h3>Benefits</h3>
+        <ul class="benefit-list" id="pdp-benefits"></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--soft">
+  <div class="container">
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>How it works</h3>
+        <p id="pdp-how"></p>
+      </div>
+      <div class="info-card">
+        <h3>About this product</h3>
+        <p id="pdp-description"></p>
+      </div>
+      <div class="info-card">
+        <h3>Key ingredients</h3>
+        <ul class="benefit-list" id="pdp-ingredients"></ul>
+      </div>
+      <div class="info-card">
+        <h3>Shipping &amp; returns</h3>
+        <p class="is-placeholder">[[PLACEHOLDER]] Free shipping over $50, plain outer packaging, and a 30-day return window on unopened items.</p>
+        <p><a class="btn btn--ghost" href="shipping-refund-policy.html">Read the full policy &rarr;</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Fills everything above from PRODUCTS using the ?p= slug, and sets title /
+     meta / Product JSON-LD. Placed here so the above renders during parse. -->
+<script>Site.renderProduct();</script>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Reviews</span>
+      <h2>What customers say</h2>
+    </div>
+    <div class="testimonial-grid" id="pdp-reviews"></div>
+    <script>Site.renderTestimonials('#pdp-reviews', 3);</script>
+    <p class="text-center text-muted mt-2" style="font-size:0.8125rem">
+      [[PLACEHOLDER: fictional reviews. Replace with a real review source before launch.]]
+    </p>
+  </div>
+</section>
+
+<section class="section section--soft">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">FAQ</span>
+      <h2>Common questions</h2>
+    </div>
+    <div class="accordion" id="pdp-faq"></div>
+    <script>Site.renderFaq('#pdp-faq', 6);</script>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>You might also like</h2>
+    </div>
+    <div class="product-grid product-grid--4" id="pdp-related"></div>
+  </div>
+</section>
+
+<div class="sticky-buy" id="sticky-buy"></div>
+
+<script>Site.renderProductExtras();</script>
+</main>
+
+<!-- ===== FOOTER — duplicated in every .html file. Change it in _shared/partials/footer.html
+     and re-run `node _tools/generate.js`, or find-and-replace across all pages. ===== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img data-brand-logo src="images/logo-light.svg" alt="Nova Daily" width="148" height="40">
+        <p data-brand-tagline>The daily basics, done properly.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <!-- Filled from PRODUCTS by site.js so it tracks your live categories. -->
+        <ul id="footer-categories">
+          <li><a href="shop.html">All products</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About us</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms-of-service.html">Terms of Service</a></li>
+          <li><a href="shipping-refund-policy.html">Shipping &amp; Refunds</a></li>
+          <li><a href="medical-disclaimer.html">Medical Disclaimer</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="footer-disclaimer is-placeholder" data-brand-disclaimer>[[PLACEHOLDER: health disclaimer — replace with reviewed legal copy before launch.]]</p>
+
+    <div class="footer-bottom">
+      <p style="margin:0">&copy; <span data-year>2025</span> <span data-brand-entity>Nova Daily Nutrition Inc.</span>. All rights reserved.</p>
+      <ul>
+        <li><a href="privacy-policy.html">Privacy</a></li>
+        <li><a href="terms-of-service.html">Terms</a></li>
+        <li><a href="medical-disclaimer.html">Disclaimer</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

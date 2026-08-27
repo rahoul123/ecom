@@ -1,0 +1,48 @@
+/* ==========================================================================
+   BRAND.CSS — Nova Daily
+   Static fallback for the brand tokens. js/brand-config.js is the live source:
+   theme-init.js reads BRAND.colors and overrides these before first paint.
+
+   These values exist so crawlers and JS-disabled browsers still see the brand.
+   If you change a colour, change it in js/brand-config.js — then optionally
+   mirror it here so the two never disagree.
+   ========================================================================== */
+
+:root {
+  --color-bg: #fffdfa;
+  --color-surface: #faf3e9;
+  --color-soft: #f8f1e6;
+  --color-text: #2a2318;
+  --color-heading: #1f1a12;
+  --color-muted: #7a6b56;
+  --color-border: #ece0cd;
+  --color-border-strong: #d8c5a8;
+  --color-accent: #a06a1f;
+  --color-accent-hover: #835616;
+  --color-accent-tint: #f6ead6;
+  --color-on-accent: #ffffff;
+  --color-footer-bg: #1f1a12;
+  --color-footer-text: #ddd0bb;
+  --color-star: #c98a2e;
+
+  --color-error: #b3261e;
+  --color-warn: #a15c00;
+  --color-warn-bg: #fff8ea;
+  --color-warn-border: #f0dfbe;
+
+  --font-heading: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'Manrope', 'Segoe UI', system-ui, sans-serif;
+  --weight-heading: 600;
+  --tracking-heading: -0.5px;
+
+  --page-width: 1240px;
+  --radius: 10px;
+  --radius-lg: 12px;
+  --radius-sm: 8px;
+  --radius-btn: 6px;
+  --logo-width: 152px;
+
+  --shadow-sm: 0 1px 3px rgba(16, 20, 25, 0.07);
+  --shadow: 0 1px 2px rgba(16, 20, 25, 0.04), 0 6px 20px rgba(16, 20, 25, 0.06);
+  --shadow-lg: 0 12px 38px rgba(16, 20, 25, 0.12);
+}

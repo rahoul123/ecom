@@ -1,0 +1,48 @@
+/* ==========================================================================
+   BRAND.CSS — Clearpath
+   Static fallback for the brand tokens. js/brand-config.js is the live source:
+   theme-init.js reads BRAND.colors and overrides these before first paint.
+
+   These values exist so crawlers and JS-disabled browsers still see the brand.
+   If you change a colour, change it in js/brand-config.js — then optionally
+   mirror it here so the two never disagree.
+   ========================================================================== */
+
+:root {
+  --color-bg: #ffffff;
+  --color-surface: #f4f6fb;
+  --color-soft: #eef0f8;
+  --color-text: #1b2333;
+  --color-heading: #141a28;
+  --color-muted: #5d6782;
+  --color-border: #dfe3ef;
+  --color-border-strong: #c3cade;
+  --color-accent: #4a5aa0;
+  --color-accent-hover: #3a477f;
+  --color-accent-tint: #e8ebf7;
+  --color-on-accent: #ffffff;
+  --color-footer-bg: #141a28;
+  --color-footer-text: #c5cbdd;
+  --color-star: #d9a02e;
+
+  --color-error: #b3261e;
+  --color-warn: #a15c00;
+  --color-warn-bg: #fff8ea;
+  --color-warn-border: #f0dfbe;
+
+  --font-heading: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+  --weight-heading: 600;
+  --tracking-heading: -1.2px;
+
+  --page-width: 1240px;
+  --radius: 16px;
+  --radius-lg: 20px;
+  --radius-sm: 8px;
+  --radius-btn: 999px;
+  --logo-width: 146px;
+
+  --shadow-sm: 0 1px 3px rgba(16, 20, 25, 0.07);
+  --shadow: 0 1px 2px rgba(16, 20, 25, 0.04), 0 6px 20px rgba(16, 20, 25, 0.06);
+  --shadow-lg: 0 12px 38px rgba(16, 20, 25, 0.12);
+}

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 40" width="176" height="40" role="img" aria-label="Nova Daily">
+  <!-- [[PLACEHOLDER LOGO]] Replace with the real brand mark at this path. -->
+  <rect x="0" y="8" width="26" height="26" rx="8" fill="#a06a1f"/>
+  <circle cx="13" cy="21" r="5.5" fill="#fffdfa"/>
+  <text x="36" y="28" font-family="'Playfair Display', Georgia, 'Times New Roman', serif" font-size="20"
+        font-weight="600" letter-spacing="-0.5" fill="#1f1a12">Nova Daily</text>
+</svg>

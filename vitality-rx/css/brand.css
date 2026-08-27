@@ -1,0 +1,48 @@
+/* ==========================================================================
+   BRAND.CSS — Vitality Rx
+   Static fallback for the brand tokens. js/brand-config.js is the live source:
+   theme-init.js reads BRAND.colors and overrides these before first paint.
+
+   These values exist so crawlers and JS-disabled browsers still see the brand.
+   If you change a colour, change it in js/brand-config.js — then optionally
+   mirror it here so the two never disagree.
+   ========================================================================== */
+
+:root {
+  --color-bg: #ffffff;
+  --color-surface: #f4f7f7;
+  --color-soft: #eef4f3;
+  --color-text: #0f2d3d;
+  --color-heading: #0b2331;
+  --color-muted: #5a7280;
+  --color-border: #dde7e8;
+  --color-border-strong: #c3d3d5;
+  --color-accent: #0e7c66;
+  --color-accent-hover: #0a5f4e;
+  --color-accent-tint: #e2f1ed;
+  --color-on-accent: #ffffff;
+  --color-footer-bg: #0b2331;
+  --color-footer-text: #c2d4d9;
+  --color-star: #e0a12c;
+
+  --color-error: #b3261e;
+  --color-warn: #a15c00;
+  --color-warn-bg: #fff8ea;
+  --color-warn-border: #f0dfbe;
+
+  --font-heading: 'Sora', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --weight-heading: 600;
+  --tracking-heading: -1.5px;
+
+  --page-width: 1240px;
+  --radius: 14px;
+  --radius-lg: 18px;
+  --radius-sm: 8px;
+  --radius-btn: 999px;
+  --logo-width: 150px;
+
+  --shadow-sm: 0 1px 3px rgba(16, 20, 25, 0.07);
+  --shadow: 0 1px 2px rgba(16, 20, 25, 0.04), 0 6px 20px rgba(16, 20, 25, 0.06);
+  --shadow-lg: 0 12px 38px rgba(16, 20, 25, 0.12);
+}

@@ -1,0 +1,95 @@
+<section class="page-head">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span aria-hidden="true">/</span>
+      <span>About</span>
+    </nav>
+    <h1 class="is-placeholder">{{copy.aboutH1}}</h1>
+    <p class="is-placeholder">{{copy.aboutLede}}</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container split">
+    <div>
+      <span class="eyebrow">Our story</span>
+      <h2 class="is-placeholder">{{copy.aboutStoryHeading}}</h2>
+      <div class="is-placeholder">
+        <p>{{copy.aboutStory1}}</p>
+        <p>{{copy.aboutStory2}}</p>
+        <p>{{copy.aboutStory3}}</p>
+      </div>
+      <p class="text-muted" style="font-size:0.8125rem">
+        [[PLACEHOLDER: brand story — replace with the real founding story before launch.]]
+      </p>
+    </div>
+    <div class="split__media is-placeholder">
+      <!-- [[PLACEHOLDER: team or lifestyle photo]] -->
+      <img src="images/about.svg" alt="[[PLACEHOLDER: about image]]" width="800" height="600" loading="lazy" decoding="async">
+    </div>
+  </div>
+</section>
+
+<section class="section section--soft">
+  <div class="container">
+    <div class="section-head">
+      <h2>What we stand for</h2>
+    </div>
+    <div class="trust-grid" id="about-values"></div>
+    <script>
+      document.getElementById('about-values').innerHTML = BRAND.values.map(function (v) {
+        return '<div class="trust-badge is-placeholder">' +
+          '<span class="trust-badge__icon">' + Site.icon(v.icon) + '</span>' +
+          '<h4>' + Site.esc(v.title) + '</h4><p>' + Site.esc(v.text) + '</p></div>';
+      }).join('');
+    </script>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="stat-row is-placeholder" id="about-stats"></div>
+    <script>
+      document.getElementById('about-stats').innerHTML = BRAND.stats.map(function (s) {
+        return '<div class="stat"><span class="stat__num">' + Site.esc(s.value) + '</span>' +
+          '<span class="stat__label">' + Site.esc(s.label) + '</span></div>';
+      }).join('');
+    </script>
+    <p class="text-center text-muted mt-2" style="font-size:0.8125rem">
+      [[PLACEHOLDER: these figures are invented. Remove them or replace with numbers you can evidence — ad reviewers do check.]]
+    </p>
+  </div>
+</section>
+
+<section class="section section--soft">
+  <div class="container split split--reverse">
+    <div class="split__media is-placeholder">
+      <!-- [[PLACEHOLDER: secondary lifestyle photo]] -->
+      <img src="images/about-2.svg" alt="[[PLACEHOLDER: about image]]" width="800" height="600" loading="lazy" decoding="async">
+    </div>
+    <div>
+      <span class="eyebrow">How we work</span>
+      <h2 class="is-placeholder">{{copy.aboutHowHeading}}</h2>
+      <p class="is-placeholder">{{copy.aboutHowText}}</p>
+      <ul class="benefit-list mt-2" id="about-points"></ul>
+      <script>
+        document.getElementById('about-points').innerHTML = BRAND.aboutPoints.map(function (t) {
+          return '<li>' + Site.icon('check') + '<span>' + Site.esc(t) + '</span></li>';
+        }).join('');
+      </script>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="cta-banner">
+      <h2 class="is-placeholder">{{copy.ctaHeading}}</h2>
+      <p class="is-placeholder">{{copy.ctaLede}}</p>
+      <div class="btn-row">
+        <a class="btn btn--light btn--lg" href="shop.html">{{copy.primaryCta}}</a>
+      </div>
+    </div>
+  </div>
+</section>
