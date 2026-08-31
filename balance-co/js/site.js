@@ -584,30 +584,34 @@ var Site = (function () {
   }
 
   /**
-   * Builds the header "Shop" dropdown and the mobile drawer submenu from the
-   * categories present in PRODUCTS. Add a product in a new category and it
-   * appears in both menus with no markup change.
+   * Categories mega menu: the category list, and a live preview of the products
+   * in whichever category is hovered. Also fills the mobile drawer submenu.
+   * Everything is derived from PRODUCTS, so a new category needs no markup change.
    */
-  function renderShopMenu() {
+  function renderCategoryMenu() {
     var cats = categoryList();
+    if (!cats.length) return;
     var icons = (BRAND.categoryIcons) || {};
 
-    var grid = el('#shop-menu-grid');
-    if (grid) {
-      grid.innerHTML = cats.map(function (c) {
-        return '<a class="nav-menu__link" href="' + categoryHref(c.name) + '">' +
-          '<span class="nav-menu__icon">' + icon(icons[c.name] || 'leaf') + '</span>' +
-          '<span class="nav-menu__text">' +
-            '<span class="nav-menu__name">' + esc(c.name) + '</span>' +
-            '<span class="nav-menu__count">' + c.count + ' products</span>' +
+    var list = el('#mega-cats');
+    if (list) {
+      list.innerHTML = cats.map(function (c, i) {
+        return '<a class="nav-mega__cat' + (i === 0 ? ' is-active' : '') + '" ' +
+          'href="' + categoryHref(c.name) + '" data-cat="' + esc(c.name) + '">' +
+          '<span class="nav-mega__cat-icon">' + icon(icons[c.name] || 'leaf') + '</span>' +
+          '<span class="nav-mega__cat-text">' +
+            '<span class="nav-mega__cat-name">' + esc(c.name) + '</span>' +
+            '<span class="nav-mega__cat-count">' + c.count + ' products</span>' +
           '</span></a>';
       }).join('');
     }
 
-    var total = el('#shop-menu-count');
+    var total = el('#mega-total');
     if (total) total.textContent = PRODUCTS.length + ' items';
 
-    var mobile = el('#mobile-shop-menu');
+    megaPreview(cats[0].name);
+
+    var mobile = el('#mobile-categories-menu');
     if (mobile && mobile.firstElementChild) {
       mobile.firstElementChild.innerHTML =
         '<a href="shop.html"><span>All products</span>' +
@@ -619,37 +623,81 @@ var Site = (function () {
     }
   }
 
-  /* Desktop: hover or keyboard focus opens it, click still navigates to shop.html. */
-  function initShopMenu() {
-    var item = el('#shop-nav-item');
-    if (!item) return;
-    var trigger = el('.nav-trigger', item);
+  /* Fills the right-hand side of the mega menu with one category's products. */
+  function megaPreview(catName) {
+    var host = el('#mega-products');
+    if (!host) return;
 
-    var open = function () {
-      item.classList.add('is-open');
-      trigger.setAttribute('aria-expanded', 'true');
-    };
-    var close = function () {
-      item.classList.remove('is-open');
-      trigger.setAttribute('aria-expanded', 'false');
-    };
+    var items = PRODUCTS.filter(function (p) { return p.category === catName; }).slice(0, 3);
 
-    item.addEventListener('mouseenter', open);
-    item.addEventListener('mouseleave', close);
-    item.addEventListener('focusin', open);
-    item.addEventListener('focusout', function (ev) {
-      if (!item.contains(ev.relatedTarget)) close();
-    });
-    document.addEventListener('keydown', function (ev) {
-      if (ev.key === 'Escape' && item.classList.contains('is-open')) {
-        close();
-        trigger.focus();
+    host.innerHTML = items.map(function (p) {
+      var onSale = p.compareAt && p.compareAt > p.price;
+      return '<a class="nav-mini" href="product.html?p=' + esc(p.slug) + '">' +
+        '<span class="nav-mini__media">' +
+          '<img src="' + esc(p.image) + '" alt="" width="200" height="200" loading="lazy" decoding="async">' +
+        '</span>' +
+        '<span class="nav-mini__name">' + esc(p.name) + '</span>' +
+        '<span class="nav-mini__price">' + money(p.price) +
+          (onSale ? '<s>' + money(p.compareAt) + '</s>' : '') + '</span></a>';
+    }).join('');
+
+    var title = el('#mega-panel-title');
+    if (title) title.textContent = catName;
+
+    var link = el('#mega-panel-link');
+    if (link) {
+      link.href = categoryHref(catName);
+      link.innerHTML = 'See all ' + esc(catName) + ' →';
+    }
+  }
+
+  /* Desktop: hover or keyboard focus opens it; clicking the trigger still
+     navigates to the shop. Hovering a category swaps the product preview. */
+  function initCategoryMenu() {
+    var item = el('#categories-nav-item');
+
+    if (item) {
+      var trigger = el('.nav-trigger', item);
+
+      var open = function () {
+        item.classList.add('is-open');
+        trigger.setAttribute('aria-expanded', 'true');
+      };
+      var close = function () {
+        item.classList.remove('is-open');
+        trigger.setAttribute('aria-expanded', 'false');
+      };
+
+      item.addEventListener('mouseenter', open);
+      item.addEventListener('mouseleave', close);
+      item.addEventListener('focusin', open);
+      item.addEventListener('focusout', function (ev) {
+        if (!item.contains(ev.relatedTarget)) close();
+      });
+      document.addEventListener('keydown', function (ev) {
+        if (ev.key === 'Escape' && item.classList.contains('is-open')) {
+          close();
+          trigger.focus();
+        }
+      });
+
+      var cats = el('#mega-cats');
+      if (cats) {
+        var swap = function (ev) {
+          var link = ev.target.closest('.nav-mega__cat');
+          if (!link) return;
+          els('.nav-mega__cat', cats).forEach(function (a) { a.classList.remove('is-active'); });
+          link.classList.add('is-active');
+          megaPreview(link.getAttribute('data-cat'));
+        };
+        cats.addEventListener('mouseover', swap);
+        cats.addEventListener('focusin', swap);
       }
-    });
+    }
 
     /* Mobile drawer submenu */
     var toggle = el('.mobile-nav__sub-toggle');
-    var panel = el('#mobile-shop-menu');
+    var panel = el('#mobile-categories-menu');
     if (toggle && panel) {
       toggle.addEventListener('click', function () {
         var isOpen = panel.classList.toggle('is-open');
@@ -810,9 +858,9 @@ var Site = (function () {
 
   function init() {
     applyBrandChrome();
-    renderShopMenu();
+    renderCategoryMenu();
     initHeader();
-    initShopMenu();
+    initCategoryMenu();
     initAccordions();
     initStickyBuy();
     initForms();
@@ -846,7 +894,7 @@ var Site = (function () {
     renderShop: renderShop,
     renderFilters: renderFilters,
     renderCategories: renderCategories,
-    renderShopMenu: renderShopMenu,
+    renderCategoryMenu: renderCategoryMenu,
     renderCategoryPage: renderCategoryPage,
     removeCategory: removeCategory,
     renderProduct: renderProduct,

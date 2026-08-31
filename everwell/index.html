@@ -32,8 +32,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="css/base.css?v=1f0d56be">
-<link rel="stylesheet" href="css/brand.css?v=1f0d56be">
+<link rel="stylesheet" href="css/base.css?v=c40a362f">
+<link rel="stylesheet" href="css/brand.css?v=c40a362f">
 
 <!--
   Load order matters. brand-config.js first (data), theme-init.js second
@@ -41,10 +41,10 @@
   tracking.js (inert until you add pixel IDs). All synchronous and tiny —
   that is what lets inline render calls run during parse with zero layout shift.
 -->
-<script src="js/brand-config.js?v=1f0d56be"></script>
-<script src="js/theme-init.js?v=1f0d56be"></script>
-<script src="js/site.js?v=1f0d56be"></script>
-<script src="js/tracking.js?v=1f0d56be"></script>
+<script src="js/brand-config.js?v=c40a362f"></script>
+<script src="js/theme-init.js?v=c40a362f"></script>
+<script src="js/site.js?v=c40a362f"></script>
+<script src="js/tracking.js?v=c40a362f"></script>
 <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
 <script type="application/ld+json">
 {
@@ -81,19 +81,34 @@
     <nav class="header-nav" aria-label="Main">
       <a href="index.html">Home</a>
 
-      <!-- Shop: the link goes to every product; the dropdown splits by category.
-           Categories are built from PRODUCTS at runtime — see Site.renderShopMenu(). -->
-      <div class="nav-item" id="shop-nav-item">
-        <a class="nav-trigger" href="shop.html" aria-expanded="false" aria-haspopup="true" aria-controls="shop-menu">
-          Shop
+      <!-- Shop is a plain link to every product. -->
+      <a href="shop.html">Shop</a>
+
+      <!-- Categories: mega menu. Category list on the left, and the products of
+           whichever category is hovered on the right. Both are built from
+           PRODUCTS at runtime — see Site.renderCategoryMenu(). -->
+      <div class="nav-item" id="categories-nav-item">
+        <a class="nav-trigger" href="shop.html" aria-expanded="false" aria-haspopup="true" aria-controls="categories-menu">
+          Categories
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
         </a>
-        <div class="nav-menu" id="shop-menu">
-          <div class="nav-menu__grid" id="shop-menu-grid"></div>
-          <a class="nav-menu__all" href="shop.html">
-            <span>View all products</span>
-            <span id="shop-menu-count"></span>
-          </a>
+        <div class="nav-menu nav-menu--mega" id="categories-menu">
+          <div class="nav-mega">
+            <div>
+              <div class="nav-mega__cats" id="mega-cats"></div>
+              <a class="nav-mega__all" href="shop.html">
+                <span>View all products</span>
+                <span id="mega-total"></span>
+              </a>
+            </div>
+            <div class="nav-mega__panel">
+              <div class="nav-mega__panel-head">
+                <h4 class="nav-mega__panel-title" id="mega-panel-title"></h4>
+                <a class="nav-mega__panel-link" id="mega-panel-link" href="shop.html">See all &rarr;</a>
+              </div>
+              <div class="nav-mega__products" id="mega-products"></div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -129,14 +144,16 @@
     <nav class="mobile-nav__links" aria-label="Mobile">
       <a href="index.html">Home</a>
 
+      <a href="shop.html">Shop</a>
+
       <!-- Tap the text for all products; tap the chevron to open the categories. -->
       <div class="mobile-nav__row">
-        <a href="shop.html">Shop</a>
-        <button type="button" class="mobile-nav__sub-toggle" aria-expanded="false" aria-controls="mobile-shop-menu" aria-label="Show product categories">
+        <a href="shop.html">Categories</a>
+        <button type="button" class="mobile-nav__sub-toggle" aria-expanded="false" aria-controls="mobile-categories-menu" aria-label="Show product categories">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
         </button>
       </div>
-      <div class="mobile-nav__sub" id="mobile-shop-menu"><div></div></div>
+      <div class="mobile-nav__sub" id="mobile-categories-menu"><div></div></div>
 
       <a href="index.html#how-it-works">How it works</a>
       <a href="about.html">About</a>

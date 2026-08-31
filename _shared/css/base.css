@@ -1465,3 +1465,143 @@ main { flex: 1; }
 .mobile-nav__sub a:last-child { padding-bottom: 1rem; }
 .mobile-nav__sub a:hover { color: var(--color-accent); }
 .mobile-nav__sub .nav-menu__count { flex-shrink: 0; }
+
+/* --------------------------------------------------------------------------
+   24. Categories mega menu — category list on the left, live product
+       preview on the right. Hovering a category swaps the products shown.
+   -------------------------------------------------------------------------- */
+
+.nav-menu--mega {
+  width: min(94vw, 780px);
+  padding: 1rem;
+}
+
+.nav-mega {
+  display: grid;
+  grid-template-columns: 236px 1fr;
+  gap: 1.25rem;
+}
+
+.nav-mega__cats {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-right: 1.25rem;
+  border-right: 1px solid var(--color-border);
+}
+
+.nav-mega__cat {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.55rem 0.6rem;
+  border-radius: var(--radius-sm);
+  transition: background-color 0.14s ease;
+}
+.nav-mega__cat:hover,
+.nav-mega__cat.is-active {
+  background: var(--color-accent-tint);
+  color: var(--color-accent);
+}
+
+.nav-mega__cat-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px; height: 30px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--color-soft);
+  color: var(--color-accent);
+}
+.nav-mega__cat.is-active .nav-mega__cat-icon { background: var(--color-bg); }
+.nav-mega__cat-icon svg { width: 15px; height: 15px; }
+
+.nav-mega__cat-text { min-width: 0; flex: 1; }
+.nav-mega__cat-name {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.nav-mega__cat-count { font-size: 0.75rem; color: var(--color-muted); }
+.nav-mega__cat.is-active .nav-mega__cat-count { color: inherit; opacity: 0.75; }
+
+.nav-mega__all {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+  padding: 0.7rem 0.6rem 0.2rem;
+  border-top: 1px solid var(--color-border);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+/* Right-hand product preview */
+.nav-mega__panel { display: flex; flex-direction: column; }
+
+.nav-mega__panel-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.nav-mega__panel-title {
+  font-family: var(--font-heading);
+  font-size: 0.9375rem;
+  font-weight: var(--weight-heading);
+  letter-spacing: var(--tracking-heading);
+  margin: 0;
+}
+.nav-mega__panel-link { font-size: 0.8125rem; font-weight: 600; color: var(--color-accent); }
+
+.nav-mega__products {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.nav-mini {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.5rem;
+  border-radius: var(--radius-sm);
+  transition: background-color 0.14s ease;
+}
+.nav-mini:hover { background: var(--color-soft); color: var(--color-text); }
+
+.nav-mini__media {
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--color-surface);
+}
+.nav-mini__media img { width: 100%; height: 100%; object-fit: cover; }
+
+.nav-mini__name {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.nav-mini__price { font-size: 0.8125rem; color: var(--color-muted); }
+.nav-mini__price s { opacity: 0.65; margin-left: 0.25rem; }
+
+/* Below 1100px the preview column is too tight — drop to categories only. */
+@media (max-width: 1099px) {
+  .nav-menu--mega { width: min(94vw, 460px); }
+  .nav-mega { grid-template-columns: 1fr; }
+  .nav-mega__cats { padding-right: 0; border-right: 0; }
+  .nav-mega__panel { display: none; }
+}
