@@ -682,9 +682,10 @@ hr { border: 0; border-top: 1px solid var(--color-border); margin: 2.5rem 0; }
   animation: heroFloat 9.5s ease-in-out infinite 1.2s;
 }
 
+/* --py is written by the parallax loop; the float rides on top of it. */
 @keyframes heroFloat {
-  0%, 100% { translate: 0 0; }
-  50% { translate: 0 -12px; }
+  0%, 100% { translate: 0 var(--py, 0px); }
+  50% { translate: 0 calc(var(--py, 0px) - 12px); }
 }
 @media (prefers-reduced-motion: reduce) {
   .hero__pack { animation: none !important; }
@@ -1715,239 +1716,73 @@ body.show-placeholders .is-placeholder { outline: 2px dashed var(--color-warn); 
 .stat__label { font-size: var(--fs-xs); color: var(--color-muted); }
 
 /* --------------------------------------------------------------------------
-   27. Scroll reveal
+   27. Scroll motion — reveal, stagger, parallax, progress
+   All of it is opt-in per element and switched off wholesale for visitors
+   who prefer reduced motion.
    -------------------------------------------------------------------------- */
+
+/* --- Reveal on enter --- */
 
 .js [data-reveal] {
   opacity: 0;
-  transform: translateY(22px);
+  transform: translateY(26px);
   transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
               transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: opacity, transform;
 }
 .js [data-reveal].is-revealed { opacity: 1; transform: none; will-change: auto; }
 
+/* --- Staggered children (cards animating in one after another) --- */
+
+.js [data-stagger] > * {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--i, 0) * 70ms);
+}
+.js [data-stagger].is-revealed > * { opacity: 1; transform: none; }
+
+/* --- Parallax --- */
+
+[data-parallax] { translate: 0 var(--py, 0px); }
+/* The hero packs animate `translate` themselves, so they read --py from the
+   keyframes instead — see heroFloat. */
+.hero__pack[data-parallax] { translate: unset; }
+
+/* --- Scroll progress bar --- */
+
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  z-index: 200;
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-alt));
+  pointer-events: none;
+}
+
+/* --- Image reveal on scroll, where the browser supports it natively --- */
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .spotlight__media img,
+    .split__media img {
+      animation: scrollZoom linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 70%;
+    }
+    @keyframes scrollZoom {
+      from { scale: 1.12; }
+      to { scale: 1; }
+    }
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .js [data-reveal] { opacity: 1; transform: none; transition: none; }
+  .js [data-reveal],
+  .js [data-stagger] > * { opacity: 1; transform: none; transition: none; }
+  [data-parallax] { translate: none; }
+  .scroll-progress { display: none; }
 }
-
-/* --------------------------------------------------------------------------
-   28. Promo / offer banner — full-width contrasting strip
-   -------------------------------------------------------------------------- */
-
-.promo {
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(120deg, var(--color-heading) 0%, #1d2318 100%);
-  color: #fff;
-}
-.promo::before {
-  content: "";
-  position: absolute;
-  top: -60%; right: -4%;
-  width: 520px; height: 520px;
-  border-radius: 50%;
-  background: var(--color-accent);
-  opacity: 0.22;
-}
-.promo__inner {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 1.75rem;
-  align-items: flex-start;
-  padding-block: clamp(2.5rem, 6vw, 4.5rem);
-}
-@media (min-width: 820px) {
-  .promo__inner { flex-direction: row; align-items: center; justify-content: space-between; gap: 3rem; }
-}
-.promo__tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  margin-bottom: 1rem;
-  padding: 0.35rem 0.85rem;
-  border-radius: 999px;
-  background: var(--color-accent-alt);
-  color: #fff;
-  font-size: 0.6875rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-.promo h2 { color: #fff; margin-bottom: 0.6rem; max-width: 18ch; }
-.promo p { color: rgba(255, 255, 255, 0.78); max-width: 46ch; margin: 0; font-size: var(--fs-lead); }
-.promo__code {
-  display: inline-block;
-  margin-top: 1.15rem;
-  padding: 0.55rem 1rem;
-  border: 1.5px dashed rgba(255, 255, 255, 0.4);
-  border-radius: 12px;
-  font-family: var(--font-heading);
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  color: #fff;
-}
-
-/* --------------------------------------------------------------------------
-   29. Shop by goal
-   -------------------------------------------------------------------------- */
-
-.goals { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
-@media (min-width: 900px) { .goals { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem; } }
-
-.goal {
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
-  padding: 2rem 1.6rem;
-  border-radius: 24px;
-  background: var(--goal-tint, var(--color-soft));
-  border: 1px solid transparent;
-  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
-}
-.goal:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 24px 46px -22px rgba(15, 18, 13, 0.35);
-  color: var(--color-text);
-}
-
-.goal__icon {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 52px; height: 52px;
-  margin-bottom: 0.4rem;
-  border-radius: 17px;
-  background: var(--color-bg);
-  color: var(--goal-deep, var(--color-accent));
-}
-.goal__icon svg { width: 24px; height: 24px; }
-
-.goal h3 { font-size: 1.125rem; margin: 0; }
-.goal p { font-size: var(--fs-sm); color: var(--color-muted); margin: 0; flex: 1; }
-.goal__link {
-  display: inline-flex; align-items: center; gap: 0.35rem;
-  margin-top: 0.5rem;
-  font-size: var(--fs-xs);
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--goal-deep, var(--color-accent));
-}
-.goal:hover .goal__link { gap: 0.6rem; }
-
-/* --------------------------------------------------------------------------
-   30. Best-seller spotlight
-   -------------------------------------------------------------------------- */
-
-.spotlight {
-  display: grid;
-  gap: 2rem;
-  align-items: center;
-  padding: clamp(1.5rem, 4vw, 3rem);
-  border-radius: 36px;
-  background: var(--spot-tint, var(--color-soft));
-}
-@media (min-width: 900px) { .spotlight { grid-template-columns: 1fr 1fr; gap: 4rem; padding: 3.5rem; } }
-
-.spotlight__media {
-  position: relative;
-  aspect-ratio: 1/1;
-  border-radius: 28px;
-  overflow: hidden;
-  background: var(--color-bg);
-}
-.spotlight__media img { width: 100%; height: 100%; object-fit: cover; }
-
-.spotlight__flag {
-  position: absolute;
-  top: 16px; left: 16px;
-  padding: 0.4rem 0.85rem;
-  border-radius: 999px;
-  background: var(--color-accent-alt);
-  color: #fff;
-  font-size: 0.6875rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.spotlight__body h2 { font-size: clamp(1.75rem, 3.4vw, 2.5rem); margin-bottom: 0.75rem; }
-.spotlight__lede { color: var(--color-muted); font-size: var(--fs-lead); margin-bottom: 1.25rem; }
-.spotlight__specs {
-  list-style: none; padding: 0; margin: 0 0 1.75rem;
-  display: grid; gap: 0.7rem;
-}
-.spotlight__specs li { display: flex; align-items: flex-start; gap: 0.65rem; font-size: 0.9375rem; margin: 0; }
-.spotlight__specs svg { width: 19px; height: 19px; color: var(--color-accent); flex-shrink: 0; margin-top: 2px; }
-
-/* --------------------------------------------------------------------------
-   31. Sale badge on product cards
-   -------------------------------------------------------------------------- */
-
-.product-card__save {
-  position: absolute;
-  top: 14px; right: 14px;
-  padding: 0.35rem 0.6rem;
-  border-radius: 999px;
-  background: var(--color-accent-alt);
-  color: #fff;
-  font-size: 0.6875rem;
-  font-weight: 800;
-  letter-spacing: 0.03em;
-}
-
-/* --------------------------------------------------------------------------
-   32. Newsletter (footer)
-   -------------------------------------------------------------------------- */
-
-.newsletter {
-  display: grid;
-  gap: 1.5rem;
-  padding: clamp(1.75rem, 4vw, 2.75rem);
-  margin-bottom: 3rem;
-  border-radius: 28px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-}
-@media (min-width: 820px) { .newsletter { grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; } }
-
-.newsletter h3 { color: var(--color-bg); font-size: 1.375rem; margin-bottom: 0.4rem; }
-.newsletter p { font-size: var(--fs-sm); opacity: 0.72; margin: 0; }
-
-.newsletter__form { display: flex; flex-wrap: wrap; gap: 0.65rem; }
-.newsletter__form input {
-  flex: 1 1 200px;
-  min-width: 0;
-  padding: 0.9rem 1.2rem;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--color-bg);
-  font-size: var(--fs-sm);
-}
-.newsletter__form input::placeholder { color: rgba(255, 255, 255, 0.45); }
-.newsletter__form input:focus {
-  outline: none;
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px rgba(76, 140, 27, 0.25);
-}
-.newsletter__note { font-size: var(--fs-xs); opacity: 0.55; margin-top: 0.75rem; }
-
-/* --------------------------------------------------------------------------
-   33. Rating pill (hero trust)
-   -------------------------------------------------------------------------- */
-
-.rating-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin-bottom: 1.5rem;
-  padding: 0.5rem 1rem 0.5rem 0.6rem;
-  border-radius: 999px;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  font-size: var(--fs-xs);
-  font-weight: 600;
-}
-.rating-pill .stars svg { width: 14px; height: 14px; }

@@ -954,7 +954,7 @@ var Site = (function () {
     if (n) host.setAttribute('style', '--spot-tint:var(--cat-' + n + '-tint)');
 
     host.innerHTML =
-      '<div class="spotlight__media">' +
+      '<div class="spotlight__media" data-parallax="0.05">' +
         '<img src="' + esc(p.image) + '" alt="' + esc(p.imageAlt || p.name) +
         '" width="800" height="800" loading="lazy" decoding="async">' +
         (onSale ? '<span class="spotlight__flag">Save ' + save + '%</span>' : '') +
@@ -1003,8 +1003,11 @@ var Site = (function () {
     if (!picks.length) return;
 
     var slots = ['main', 'a', 'b'];
+    /* Different speeds give the stage depth as the page scrolls. */
+    var speeds = [0.05, 0.11, 0.08];
     var packs = picks.slice(0, 3).map(function (p, i) {
       return '<a class="hero__pack hero__pack--' + slots[i] + '" ' +
+        'data-parallax="' + speeds[i] + '" ' +
         'href="product.html?p=' + esc(p.slug) + '" aria-label="' + esc(p.name) + '">' +
         '<img src="' + esc(p.image) + '" alt="' + esc(p.imageAlt || p.name) +
         '" width="800" height="800" ' + (i === 0 ? 'fetchpriority="high"' : 'loading="lazy"') +
@@ -1022,7 +1025,7 @@ var Site = (function () {
         '<span><strong>Free shipping</strong><span>on orders over $50</span></span>' +
       '</div>';
 
-    host.innerHTML = '<div class="hero__disc"></div>' + packs + chips;
+    host.innerHTML = '<div class="hero__disc" data-parallax="-0.04"></div>' + packs + chips;
   }
 
   function renderTrust(selector) {
@@ -1170,20 +1173,42 @@ var Site = (function () {
     });
   }
 
+  /* ------------------------------------------------------------------ */
+  /* Scroll motion. One rAF loop drives parallax and the progress bar; an
+     IntersectionObserver drives reveals. Everything below no-ops when the
+     visitor prefers reduced motion.                                        */
+  /* ------------------------------------------------------------------ */
+
+  function prefersReducedMotion() {
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+
   /**
-   * Fades sections in as they scroll into view. Marks every section that is
-   * not already on screen, so the first viewport paints instantly with no
-   * flash. Does nothing when the browser lacks IntersectionObserver or the
-   * visitor prefers reduced motion.
+   * Fades sections in as they scroll into view, and staggers the children of
+   * any [data-stagger] container. Only marks what is currently below the fold,
+   * so the first screen paints instantly with no flash.
    */
   function initReveal() {
-    if (!('IntersectionObserver' in window)) return;
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!('IntersectionObserver' in window) || prefersReducedMotion()) return;
 
+    var vh = window.innerHeight;
     var targets = els('section, .cta-banner').filter(function (n) {
-      return n.getBoundingClientRect().top > window.innerHeight * 0.9;
+      return n.getBoundingClientRect().top > vh * 0.9;
     });
-    if (!targets.length) return;
+
+    /* Grids whose cards should arrive one after another. */
+    var staggers = els('.product-grid, .category-grid, .goals, .steps, .trust-grid, .bento')
+      .filter(function (n) { return n.getBoundingClientRect().top > vh * 0.9; });
+
+    staggers.forEach(function (grid) {
+      grid.setAttribute('data-stagger', '');
+      els(':scope > *', grid).forEach(function (child, i) {
+        child.style.setProperty('--i', i);
+      });
+    });
+
+    var all = targets.concat(staggers);
+    if (!all.length) return;
 
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
@@ -1193,10 +1218,101 @@ var Site = (function () {
       });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
 
-    targets.forEach(function (n) {
-      n.setAttribute('data-reveal', '');
-      observer.observe(n);
+    targets.forEach(function (n) { n.setAttribute('data-reveal', ''); });
+    all.forEach(function (n) { observer.observe(n); });
+  }
+
+  /**
+   * Parallax and the top progress bar, both driven from one scroll handler.
+   * Elements opt in with data-parallax="<speed>"; positive drifts against the
+   * scroll, negative with it. Skipped on narrow screens, where the effect is
+   * mostly wasted work.
+   */
+  function initScrollMotion() {
+    if (prefersReducedMotion()) return;
+
+    var bar = document.createElement('div');
+    bar.className = 'scroll-progress';
+    document.body.appendChild(bar);
+
+    var wide = window.innerWidth >= 768;
+    var items = wide ? els('[data-parallax]').map(function (n) {
+      return { el: n, speed: parseFloat(n.getAttribute('data-parallax')) || 0.08 };
+    }) : [];
+
+    var ticking = false;
+
+    function update() {
+      ticking = false;
+      var vh = window.innerHeight;
+
+      var doc = document.documentElement;
+      var max = doc.scrollHeight - vh;
+      bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, doc.scrollTop / max) : 0) + ')';
+
+      for (var i = 0; i < items.length; i++) {
+        var r = items[i].el.getBoundingClientRect();
+        if (r.bottom < -200 || r.top > vh + 200) continue;
+        var fromCentre = r.top + r.height / 2 - vh / 2;
+        items[i].el.style.setProperty('--py', (-fromCentre * items[i].speed).toFixed(1) + 'px');
+      }
+    }
+
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(update);
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    update();
+  }
+
+  /**
+   * Counts numbers up when they scroll into view. Keeps whatever prefix and
+   * suffix the label already has, so "10k+" and "4.8" both work.
+   */
+  function initCounters() {
+    if (!('IntersectionObserver' in window) || prefersReducedMotion()) return;
+
+    var nodes = els('[data-count], .stat__num, .bento__stat').filter(function (n) {
+      return /\d/.test(n.textContent);
     });
+    if (!nodes.length) return;
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        countUp(entry.target);
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.6 });
+
+    nodes.forEach(function (n) { observer.observe(n); });
+  }
+
+  function countUp(node) {
+    var raw = node.textContent.trim();
+    var match = raw.match(/^([^0-9]*)([0-9]+(?:[.,][0-9]+)?)(.*)$/);
+    if (!match) return;
+
+    var prefix = match[1];
+    var target = parseFloat(match[2].replace(',', ''));
+    var suffix = match[3];
+    var decimals = (match[2].split('.')[1] || '').length;
+    var start = null;
+    var duration = 1100;
+
+    function frame(now) {
+      if (start === null) start = now;
+      var t = Math.min(1, (now - start) / duration);
+      var eased = 1 - Math.pow(1 - t, 3);
+      node.textContent = prefix + (target * eased).toFixed(decimals) + suffix;
+      if (t < 1) window.requestAnimationFrame(frame);
+      else node.textContent = raw;
+    }
+    window.requestAnimationFrame(frame);
   }
 
   /* Dev aid: append ?showplaceholders=1 to outline every dummy block. */
@@ -1214,6 +1330,8 @@ var Site = (function () {
     initForms();
     initPlaceholderMode();
     initReveal();
+    initScrollMotion();
+    initCounters();
 
     /* Any element carrying data-buy triggers the Shopify redirect. Using a
        delegated listener keeps quoting out of generated markup. */
