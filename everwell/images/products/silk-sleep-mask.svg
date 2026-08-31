@@ -3,17 +3,17 @@
        Replace this file with real product photography at the same path (800x800). -->
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0.6" y2="1">
-      <stop offset="0%" stop-color="hsl(356.79999999999995 38% 92%)"/>
-      <stop offset="100%" stop-color="hsl(356.79999999999995 42% 84%)"/>
+      <stop offset="0%" stop-color="hsl(281.98230088495575 38% 92%)"/>
+      <stop offset="100%" stop-color="hsl(281.98230088495575 42% 84%)"/>
     </linearGradient>
     <linearGradient id="body" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="hsl(356.79999999999995 52% 58%)"/>
-      <stop offset="55%" stop-color="hsl(356.79999999999995 52% 46%)"/>
-      <stop offset="100%" stop-color="hsl(356.79999999999995 52% 34%)"/>
+      <stop offset="0%" stop-color="hsl(281.98230088495575 52% 58%)"/>
+      <stop offset="55%" stop-color="hsl(281.98230088495575 52% 46%)"/>
+      <stop offset="100%" stop-color="hsl(281.98230088495575 52% 34%)"/>
     </linearGradient>
     <radialGradient id="halo" cx="50%" cy="42%" r="52%">
-      <stop offset="0%" stop-color="hsl(356.79999999999995 46% 76%)" stop-opacity="0.95"/>
-      <stop offset="100%" stop-color="hsl(356.79999999999995 46% 76%)" stop-opacity="0"/>
+      <stop offset="0%" stop-color="hsl(281.98230088495575 46% 76%)" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="hsl(281.98230088495575 46% 76%)" stop-opacity="0"/>
     </radialGradient>
     <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
       <feGaussianBlur stdDeviation="18"/>
@@ -22,20 +22,20 @@
 
   <rect width="800" height="800" fill="url(#bg)"/>
   <circle cx="400" cy="376" r="250" fill="url(#halo)"/>
-  <circle cx="640" cy="150" r="96" fill="hsl(356.79999999999995 40% 88%)" opacity="0.55"/>
-  <circle cx="150" cy="654" r="62" fill="hsl(356.79999999999995 40% 88%)" opacity="0.45"/>
+  <circle cx="640" cy="150" r="96" fill="hsl(281.98230088495575 40% 88%)" opacity="0.55"/>
+  <circle cx="150" cy="654" r="62" fill="hsl(281.98230088495575 40% 88%)" opacity="0.45"/>
 
-  <ellipse cx="400" cy="612" rx="176" ry="30" fill="hsl(356.79999999999995 52% 20%)" opacity="0.22" filter="url(#soft)"/>
+  <ellipse cx="400" cy="612" rx="176" ry="30" fill="hsl(281.98230088495575 52% 20%)" opacity="0.22" filter="url(#soft)"/>
 
   
     <path d="M226 372 q174 -96 348 0 q34 88 -26 132 q-148 74 -296 0 q-60 -44 -26 -132 z" fill="url(#body)"/>
-    <path d="M226 372 q88 -48 174 -60 v250 q-98 -8 -148 -58 q-60 -44 -26 -132 z" fill="hsl(356.79999999999995 52% 58%)" opacity="0.3"/>
-    <path d="M226 388 q-56 34 -70 96" stroke="hsl(356.79999999999995 52% 38%)" stroke-width="14" fill="none" stroke-linecap="round"/>
-    <path d="M574 388 q56 34 70 96" stroke="hsl(356.79999999999995 52% 38%)" stroke-width="14" fill="none" stroke-linecap="round"/>
+    <path d="M226 372 q88 -48 174 -60 v250 q-98 -8 -148 -58 q-60 -44 -26 -132 z" fill="hsl(281.98230088495575 52% 58%)" opacity="0.3"/>
+    <path d="M226 388 q-56 34 -70 96" stroke="hsl(281.98230088495575 52% 38%)" stroke-width="14" fill="none" stroke-linecap="round"/>
+    <path d="M574 388 q56 34 70 96" stroke="hsl(281.98230088495575 52% 38%)" stroke-width="14" fill="none" stroke-linecap="round"/>
     <rect x="330" y="418" width="140" height="70" rx="10" fill="#fff" opacity="0.9"/>
 
   <text x="400" y="690" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif"
-        font-size="27" font-weight="600" letter-spacing="-0.4" fill="hsl(356.79999999999995 46% 16%)">Silk Sleep Mask</text>
+        font-size="27" font-weight="600" letter-spacing="-0.4" fill="hsl(281.98230088495575 46% 16%)">Silk Sleep Mask</text>
   <text x="400" y="762" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif"
-        font-size="14" letter-spacing="1.6" fill="hsl(356.79999999999995 42% 24%)" opacity="0.5">PLACEHOLDER IMAGE</text>
+        font-size="14" letter-spacing="1.6" fill="hsl(281.98230088495575 42% 24%)" opacity="0.5">PLACEHOLDER IMAGE</text>
 </svg>

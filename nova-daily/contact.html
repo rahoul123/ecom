@@ -32,8 +32,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="css/base.css?v=9e7bb78a">
-<link rel="stylesheet" href="css/brand.css?v=9e7bb78a">
+<link rel="stylesheet" href="css/base.css?v=02b7b46a">
+<link rel="stylesheet" href="css/brand.css?v=02b7b46a">
 
 <!--
   Load order matters. brand-config.js first (data), theme-init.js second
@@ -41,10 +41,10 @@
   tracking.js (inert until you add pixel IDs). All synchronous and tiny —
   that is what lets inline render calls run during parse with zero layout shift.
 -->
-<script src="js/brand-config.js?v=9e7bb78a"></script>
-<script src="js/theme-init.js?v=9e7bb78a"></script>
-<script src="js/site.js?v=9e7bb78a"></script>
-<script src="js/tracking.js?v=9e7bb78a"></script>
+<script src="js/brand-config.js?v=02b7b46a"></script>
+<script src="js/theme-init.js?v=02b7b46a"></script>
+<script src="js/site.js?v=02b7b46a"></script>
+<script src="js/tracking.js?v=02b7b46a"></script>
 <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
 
 </head>
@@ -252,6 +252,22 @@
      and re-run `node _tools/generate.js`, or find-and-replace across all pages. ===== -->
 <footer class="site-footer">
   <div class="container">
+    <!-- Newsletter. No backend on static hosting — see README "contact form". -->
+    <div class="newsletter">
+      <div>
+        <h3>[[PLACEHOLDER]] Get 15% off your first order</h3>
+        <p>Occasional emails about new products and offers. Unsubscribe anytime.</p>
+      </div>
+      <div>
+        <form class="newsletter__form" id="newsletter-form" novalidate>
+          <label class="visually-hidden" for="nl-email">Email address</label>
+          <input type="email" id="nl-email" name="email" placeholder="you@example.com" autocomplete="email" required>
+          <button type="submit" class="btn btn--primary">Sign up</button>
+        </form>
+        <p class="newsletter__note">[[PLACEHOLDER: this form does not send yet. Connect a form service — see README.]]</p>
+      </div>
+    </div>
+
     <div class="footer-grid">
       <div class="footer-brand">
         <img data-brand-logo src="images/logo-light.svg" alt="Nova Daily" width="148" height="40">

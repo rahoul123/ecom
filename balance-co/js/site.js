@@ -130,6 +130,8 @@ var Site = (function () {
           /* [[PLACEHOLDER: product photo]] — swap image path in brand-config.js */
           '<img src="' + esc(p.image) + '" alt="' + esc(p.imageAlt || p.name) + '" width="600" height="600" loading="lazy" decoding="async">' +
           (p.badge ? '<span class="product-card__badge">' + esc(p.badge) + '</span>' : '') +
+          (onSale ? '<span class="product-card__save">-' +
+            Math.round((1 - p.price / p.compareAt) * 100) + '%</span>' : '') +
         '</a>' +
         '<div class="product-card__body">' +
           '<span class="product-card__cat">' + esc(p.category) + '</span>' +
@@ -767,6 +769,72 @@ var Site = (function () {
       }).join('');
   }
 
+  /** Shop-by-goal grid. Each goal links into a category. */
+  function renderGoals(selector) {
+    var host = el(selector);
+    if (!host) return;
+    var goals = BRAND.goals || [];
+    if (!goals.length) return;
+
+    host.innerHTML = goals.map(function (g) {
+      var n = (BRAND.categoryIndex && BRAND.categoryIndex[g.category]) || 0;
+      var vars = n ? ' style="--goal-tint:var(--cat-' + n + '-tint);--goal-deep:var(--cat-' + n + '-deep)"' : '';
+      return '<a class="goal is-placeholder" href="' + categoryHref(g.category) + '"' + vars + '>' +
+        '<span class="goal__icon">' + icon(g.icon || 'leaf') + '</span>' +
+        '<h3>' + esc(g.title) + '</h3>' +
+        '<p>' + esc(g.text) + '</p>' +
+        '<span class="goal__link">Shop ' + esc(g.title) + ' &rarr;</span></a>';
+    }).join('');
+  }
+
+  /**
+   * Best-seller spotlight: one product given the full-width treatment.
+   * Uses BRAND.spotlightSlug, else the highest-rated featured product.
+   */
+  function renderSpotlight(selector) {
+    var host = el(selector);
+    if (!host) return;
+
+    var p = (BRAND.spotlightSlug && productBySlug(BRAND.spotlightSlug)) ||
+      PRODUCTS.filter(function (x) { return x.featured; })
+        .sort(function (a, b) { return b.rating - a.rating; })[0] || PRODUCTS[0];
+    if (!p) return;
+
+    var onSale = p.compareAt && p.compareAt > p.price;
+    var save = onSale ? Math.round((1 - p.price / p.compareAt) * 100) : 0;
+    var cta = esc(BRAND.copy && BRAND.copy.buyCta ? BRAND.copy.buyCta : 'Buy now');
+    var n = (BRAND.categoryIndex && BRAND.categoryIndex[p.category]) || 0;
+    if (n) host.setAttribute('style', '--spot-tint:var(--cat-' + n + '-tint)');
+
+    host.innerHTML =
+      '<div class="spotlight__media">' +
+        '<img src="' + esc(p.image) + '" alt="' + esc(p.imageAlt || p.name) +
+        '" width="800" height="800" loading="lazy" decoding="async">' +
+        (onSale ? '<span class="spotlight__flag">Save ' + save + '%</span>' : '') +
+      '</div>' +
+      '<div class="spotlight__body">' +
+        '<span class="eyebrow">Best seller</span>' +
+        '<h2>' + esc(p.name) + '</h2>' +
+        '<div class="rating-line" style="margin-bottom:1rem">' + stars(p.rating) +
+          '<span>' + esc(p.reviewCount) + ' reviews</span></div>' +
+        '<p class="spotlight__lede">' + esc(p.shortBenefit) + '</p>' +
+        '<ul class="spotlight__specs">' +
+          p.benefits.slice(0, 3).map(function (b) {
+            return '<li>' + icon('check') + '<span>' + esc(b) + '</span></li>';
+          }).join('') +
+        '</ul>' +
+        '<div class="pdp__price" style="margin-block:0 1.5rem">' +
+          '<span class="price__now">' + money(p.price) + '</span>' +
+          (onSale ? '<span class="price__was">' + money(p.compareAt) + '</span>' +
+            '<span class="pdp__save">Save ' + save + '%</span>' : '') +
+        '</div>' +
+        '<div class="btn-row">' +
+          '<button type="button" class="btn btn--primary btn--lg" data-buy="' + esc(p.slug) + '">' + cta + '</button>' +
+          '<a class="btn btn--secondary btn--lg" href="product.html?p=' + esc(p.slug) + '">See details</a>' +
+        '</div>' +
+      '</div>';
+  }
+
   function renderTrust(selector) {
     var host = el(selector);
     if (!host) return;
@@ -957,6 +1025,13 @@ var Site = (function () {
     initPlaceholderMode();
     initReveal();
 
+    /* Any element carrying data-buy triggers the Shopify redirect. Using a
+       delegated listener keeps quoting out of generated markup. */
+    document.addEventListener('click', function (ev) {
+      var buy = ev.target.closest('[data-buy]');
+      if (buy) goToCheckout(buy.getAttribute('data-buy'), ev);
+    });
+
     /* Removing an active filter chip on the shop page. */
     document.addEventListener('click', function (ev) {
       var btn = ev.target.closest('[data-remove-category]');
@@ -995,6 +1070,8 @@ var Site = (function () {
     renderFaq: renderFaq,
     emitFaqSchema: emitFaqSchema,
     renderTrust: renderTrust,
+    renderGoals: renderGoals,
+    renderSpotlight: renderSpotlight,
     renderMarquee: renderMarquee,
     renderBento: renderBento,
     renderCompare: renderCompare,

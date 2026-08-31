@@ -2,13 +2,13 @@
   <!-- [[PLACEHOLDER IMAGE]] Additional product angle. Replace with a real photo (800x800). -->
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0.7" y2="1">
-      <stop offset="0%" stop-color="hsl(262.79999999999995 36% 93%)"/>
-      <stop offset="100%" stop-color="hsl(262.79999999999995 40% 86%)"/>
+      <stop offset="0%" stop-color="hsl(187.98230088495575 36% 93%)"/>
+      <stop offset="100%" stop-color="hsl(187.98230088495575 40% 86%)"/>
     </linearGradient>
   </defs>
   <rect width="800" height="800" fill="url(#bg)"/>
-  <circle cx="400" cy="400" r="206" fill="none" stroke="hsl(262.79999999999995 44% 72%)" stroke-width="26" opacity="0.5"/>
-  <circle cx="400" cy="400" r="114" fill="hsl(262.79999999999995 46% 76%)" opacity="0.75"/>
+  <circle cx="400" cy="400" r="206" fill="none" stroke="hsl(187.98230088495575 44% 72%)" stroke-width="26" opacity="0.5"/>
+  <circle cx="400" cy="400" r="114" fill="hsl(187.98230088495575 46% 76%)" opacity="0.75"/>
   <text x="400" y="742" text-anchor="middle" font-family="system-ui, sans-serif"
-        font-size="15" letter-spacing="1.6" fill="hsl(262.79999999999995 42% 26%)" opacity="0.55">PLACEHOLDER — VIEW 2</text>
+        font-size="15" letter-spacing="1.6" fill="hsl(187.98230088495575 42% 26%)" opacity="0.55">PLACEHOLDER — VIEW 2</text>
 </svg>

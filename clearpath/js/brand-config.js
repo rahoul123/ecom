@@ -165,6 +165,15 @@ var BRAND = {
     "them": true
   }
 ],
+  goals: [],
+  spotlightSlug: "",
+  promo: {
+  "tag": "Limited offer",
+  "heading": "[[PLACEHOLDER]] 15% off your first order",
+  "text": "[[PLACEHOLDER]] Applies to everything in the range. One use per customer.",
+  "code": "WELCOME15",
+  "cta": "Shop the offer"
+},
   valueProps: [
   {
     "icon": "clock",

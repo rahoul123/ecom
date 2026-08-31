@@ -2,8 +2,8 @@
   <!-- [[PLACEHOLDER IMAGE]] Abstract brand composition. Replace with real photography (800x600). -->
   <defs>
     <linearGradient id="g" x1="0" y1="0" x2="0.8" y2="1">
-      <stop offset="0%" stop-color="hsl(168.79999999999995 59.42857142857143% 64.58823529411765%)"/>
-      <stop offset="100%" stop-color="hsl(186.79999999999995 65.42857142857143% 52.58823529411765%)"/>
+      <stop offset="0%" stop-color="hsl(93.98230088495575 55.66467065868264% 76.74509803921569%)"/>
+      <stop offset="100%" stop-color="hsl(111.98230088495575 61.66467065868264% 64.74509803921569%)"/>
     </linearGradient>
     <filter id="blur" x="-25%" y="-25%" width="150%" height="150%">
       <feGaussianBlur stdDeviation="33"/>
@@ -11,13 +11,13 @@
   </defs>
   <rect width="800" height="600" fill="url(#g)"/>
   <g filter="url(#blur)">
-  <circle cx="624" cy="494" r="175" fill="hsl(168.79999999999995 65.42857142857143% 42.58823529411765%)" opacity="0.30"/>
-  <circle cx="132" cy="125" r="80" fill="hsl(194.79999999999995 65.42857142857143% 47.58823529411765%)" opacity="0.36"/>
-  <circle cx="264" cy="224" r="106" fill="hsl(220.79999999999995 65.42857142857143% 52.58823529411765%)" opacity="0.42"/>
-  <circle cx="396" cy="323" r="131" fill="hsl(246.79999999999995 65.42857142857143% 57.58823529411765%)" opacity="0.48"/>
-  <circle cx="527" cy="422" r="157" fill="hsl(272.79999999999995 65.42857142857143% 62.58823529411765%)" opacity="0.54"/>
+  <circle cx="624" cy="494" r="175" fill="hsl(93.98230088495575 61.66467065868264% 54.745098039215684%)" opacity="0.30"/>
+  <circle cx="132" cy="125" r="80" fill="hsl(119.98230088495575 61.66467065868264% 59.745098039215684%)" opacity="0.36"/>
+  <circle cx="264" cy="224" r="106" fill="hsl(145.98230088495575 61.66467065868264% 64.74509803921569%)" opacity="0.42"/>
+  <circle cx="396" cy="323" r="131" fill="hsl(171.98230088495575 61.66467065868264% 69.74509803921569%)" opacity="0.48"/>
+  <circle cx="527" cy="422" r="157" fill="hsl(197.98230088495575 61.66467065868264% 74.74509803921569%)" opacity="0.54"/>
   </g>
   <text x="400" y="574" text-anchor="middle" font-family="system-ui, sans-serif"
         font-size="12" letter-spacing="1.8"
-        fill="hsl(168.79999999999995 63.42857142857143% 0%)" opacity="0.45">PLACEHOLDER IMAGE</text>
+        fill="hsl(93.98230088495575 59.66467065868264% 8.745098039215684%)" opacity="0.45">PLACEHOLDER IMAGE</text>
 </svg>

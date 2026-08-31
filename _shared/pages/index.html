@@ -1,6 +1,11 @@
 <section class="hero">
   <div class="container hero-grid">
     <div>
+      <span class="rating-pill is-placeholder" id="hero-rating"></span>
+      <script>
+        document.getElementById('hero-rating').innerHTML =
+          Site.stars(4.8) + '<span>4.8 / 5 &middot; [[PLACEHOLDER]] 6,200+ reviews</span>';
+      </script>
       <span class="eyebrow is-placeholder">{{copy.heroEyebrow}}</span>
       <h1 class="is-placeholder">{{copy.heroH1}}</h1>
       <p class="hero__lede is-placeholder">{{copy.heroLede}}</p>
@@ -61,6 +66,17 @@
   </div>
 </section>
 
+<section class="section section--tight">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Shop by goal</span>
+      <h2>Start with what you are working on</h2>
+    </div>
+    <div class="goals" id="goals"></div>
+    <script>Site.renderGoals('#goals');</script>
+  </div>
+</section>
+
 <section class="section section--soft" id="how-it-works">
   <div class="container">
     <div class="section-head">
@@ -88,6 +104,25 @@
     <div class="btn-row" style="justify-content:center;margin-top:2.5rem">
       <a class="btn btn--secondary btn--lg" href="shop.html">View all products</a>
     </div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="spotlight" id="spotlight"></div>
+    <script>Site.renderSpotlight('#spotlight');</script>
+  </div>
+</section>
+
+<section class="promo">
+  <div class="container promo__inner">
+    <div>
+      <span class="promo__tag" data-promo-tag>{{PROMO_TAG}}</span>
+      <h2 class="is-placeholder" data-promo-heading>{{PROMO_HEADING}}</h2>
+      <p class="is-placeholder" data-promo-text>{{PROMO_TEXT}}</p>
+      <span class="promo__code" data-promo-code>{{PROMO_CODE}}</span>
+    </div>
+    <a class="btn btn--light btn--lg" href="shop.html" data-promo-cta>{{PROMO_CTA}}</a>
   </div>
 </section>
 

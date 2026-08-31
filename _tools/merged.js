@@ -173,7 +173,7 @@ module.exports = {
   domain: 'everwell-placeholder.com',
   legalEntity: 'Everwell Health Ltd',
   tagline: 'Everyday health essentials, all in one place.',
-  announcement: 'Free discreet shipping on orders over $50',
+  announcement: '[[PLACEHOLDER]] Flat 15% off your first order — code WELCOME15 · Free shipping over $50',
   niche: 'Health & wellness',
 
   fonts: {
@@ -185,18 +185,17 @@ module.exports = {
   },
 
   colors: {
-    /* Warm cream base rather than pure white — reads more premium and stops
-       the page looking like a default template. */
-    background: '#fcfaf7', surface: '#f4f0e9', soft: '#efeae1',
-    text: '#16211d', heading: '#0d1713', muted: '#5f6b64',
-    border: '#e4ddd2', borderStrong: '#cfc5b6',
-    accent: '#0f5a4c', accentHover: '#0a453a', accentTint: '#e2ede9', onAccent: '#fcfaf7',
-    /* Used sparingly: sale badges, underlines, the odd highlight. */
-    accentAlt: '#d97757', accentAltTint: '#faeae3',
-    footerBg: '#0d1713', footerText: '#c5d2cb', star: '#d9a02e'
+    /* Supplement-store palette: clean white, a confident fresh green for
+       actions, and orange reserved for sale tags and savings. */
+    background: '#ffffff', surface: '#f7f8f5', soft: '#f2f5ee',
+    text: '#1a1d18', heading: '#0f120d', muted: '#5c6357',
+    border: '#e5e8df', borderStrong: '#cdd3c3',
+    accent: '#4c8c1b', accentHover: '#3c7014', accentTint: '#eef6e4', onAccent: '#ffffff',
+    accentAlt: '#e8590c', accentAltTint: '#fdefe6',
+    footerBg: '#12150f', footerText: '#c9d1c2', star: '#f5a524'
   },
 
-  style: { radius: '16px', radiusLarge: '28px', buttonRadius: '999px', cardStyle: 'bordered', logoWidth: '152px' },
+  style: { radius: '14px', radiusLarge: '24px', buttonRadius: '999px', cardStyle: 'bordered', logoWidth: '152px' },
 
   /* Icon per category tile on the homepage. Names come from site.js ICONS. */
   categoryIcons: {
@@ -262,6 +261,26 @@ module.exports = {
     { icon: 'chat', title: 'Real support', text: '[[PLACEHOLDER]] A person replies within one business day.' },
     { icon: 'refresh', title: 'Change anytime', text: '[[PLACEHOLDER]] Pause, skip or cancel a repeat order yourself.' }
   ],
+
+  /* Shop-by-goal grid — the entry point most people actually use. */
+  goals: [
+    { icon: 'user', title: 'Daily basics', text: '[[PLACEHOLDER]] The everyday foundation most routines are missing.', category: 'Daily Supplements' },
+    { icon: 'leaf', title: 'Skin', text: '[[PLACEHOLDER]] A short routine that layers together, morning and night.', category: 'Skincare' },
+    { icon: 'clock', title: 'Sleep', text: '[[PLACEHOLDER]] Built for the last few hours of the day.', category: 'Sleep & Calm' },
+    { icon: 'refresh', title: 'Weight', text: '[[PLACEHOLDER]] Support alongside habits you are already working on.', category: 'Weight Management' }
+  ],
+
+  /* Which product gets the full-width spotlight treatment. */
+  spotlightSlug: 'daily-multi',
+
+  /* Mid-page offer strip. */
+  promo: {
+    tag: 'Limited offer',
+    heading: '[[PLACEHOLDER]] 15% off your first order',
+    text: '[[PLACEHOLDER]] Applies to everything in the shop, including bundles. One use per customer.',
+    code: 'WELCOME15',
+    cta: 'Shop the offer'
+  },
 
   compareOther: 'Typical pharmacy',
   compare: [

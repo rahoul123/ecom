@@ -8,7 +8,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#fcfaf7">
+<meta name="theme-color" content="#ffffff">
 
 <title>Page not found | Everwell</title>
 <meta name="description" content="Page not found.">
@@ -32,8 +32,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="css/base.css?v=9e7bb78a">
-<link rel="stylesheet" href="css/brand.css?v=9e7bb78a">
+<link rel="stylesheet" href="css/base.css?v=02b7b46a">
+<link rel="stylesheet" href="css/brand.css?v=02b7b46a">
 
 <!--
   Load order matters. brand-config.js first (data), theme-init.js second
@@ -41,10 +41,10 @@
   tracking.js (inert until you add pixel IDs). All synchronous and tiny —
   that is what lets inline render calls run during parse with zero layout shift.
 -->
-<script src="js/brand-config.js?v=9e7bb78a"></script>
-<script src="js/theme-init.js?v=9e7bb78a"></script>
-<script src="js/site.js?v=9e7bb78a"></script>
-<script src="js/tracking.js?v=9e7bb78a"></script>
+<script src="js/brand-config.js?v=02b7b46a"></script>
+<script src="js/theme-init.js?v=02b7b46a"></script>
+<script src="js/site.js?v=02b7b46a"></script>
+<script src="js/tracking.js?v=02b7b46a"></script>
 <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
 
 </head>
@@ -53,7 +53,7 @@
 <!-- ===== HEADER — duplicated in every .html file. Change it in _shared/partials/header.html
      and re-run `node _tools/generate.js`, or find-and-replace across all pages. ===== -->
 <div class="announcement">
-  <span data-brand-announcement>Free discreet shipping on orders over $50</span>
+  <span data-brand-announcement>[[PLACEHOLDER]] Flat 15% off your first order — code WELCOME15 · Free shipping over $50</span>
 </div>
 
 <header class="site-header">
@@ -181,6 +181,22 @@
      and re-run `node _tools/generate.js`, or find-and-replace across all pages. ===== -->
 <footer class="site-footer">
   <div class="container">
+    <!-- Newsletter. No backend on static hosting — see README "contact form". -->
+    <div class="newsletter">
+      <div>
+        <h3>[[PLACEHOLDER]] Get 15% off your first order</h3>
+        <p>Occasional emails about new products and offers. Unsubscribe anytime.</p>
+      </div>
+      <div>
+        <form class="newsletter__form" id="newsletter-form" novalidate>
+          <label class="visually-hidden" for="nl-email">Email address</label>
+          <input type="email" id="nl-email" name="email" placeholder="you@example.com" autocomplete="email" required>
+          <button type="submit" class="btn btn--primary">Sign up</button>
+        </form>
+        <p class="newsletter__note">[[PLACEHOLDER: this form does not send yet. Connect a form service — see README.]]</p>
+      </div>
+    </div>
+
     <div class="footer-grid">
       <div class="footer-brand">
         <img data-brand-logo src="images/logo-light.svg" alt="Everwell" width="148" height="40">

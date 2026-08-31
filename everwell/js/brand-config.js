@@ -21,33 +21,33 @@
 var BRAND = {
   name: "Everwell",
   tagline: "Everyday health essentials, all in one place.",
-  announcement: "Free discreet shipping on orders over $50",
+  announcement: "[[PLACEHOLDER]] Flat 15% off your first order — code WELCOME15 · Free shipping over $50",
   logo: 'images/logo.svg',
 
   /* ---- Colours. theme-init.js applies these before first paint. -------- */
   colors: {
-  "background": "#fcfaf7",
-  "surface": "#f4f0e9",
-  "soft": "#efeae1",
-  "text": "#16211d",
-  "heading": "#0d1713",
-  "muted": "#5f6b64",
-  "border": "#e4ddd2",
-  "borderStrong": "#cfc5b6",
-  "accent": "#0f5a4c",
-  "accentHover": "#0a453a",
-  "accentTint": "#e2ede9",
-  "onAccent": "#fcfaf7",
-  "accentAlt": "#d97757",
-  "accentAltTint": "#faeae3",
-  "footerBg": "#0d1713",
-  "footerText": "#c5d2cb",
-  "star": "#d9a02e"
+  "background": "#ffffff",
+  "surface": "#f7f8f5",
+  "soft": "#f2f5ee",
+  "text": "#1a1d18",
+  "heading": "#0f120d",
+  "muted": "#5c6357",
+  "border": "#e5e8df",
+  "borderStrong": "#cdd3c3",
+  "accent": "#4c8c1b",
+  "accentHover": "#3c7014",
+  "accentTint": "#eef6e4",
+  "onAccent": "#ffffff",
+  "accentAlt": "#e8590c",
+  "accentAltTint": "#fdefe6",
+  "footerBg": "#12150f",
+  "footerText": "#c9d1c2",
+  "star": "#f5a524"
 },
 
   style: {
-  "radius": "16px",
-  "radiusLarge": "28px",
+  "radius": "14px",
+  "radiusLarge": "24px",
   "buttonRadius": "999px",
   "cardStyle": "bordered",
   "logoWidth": "152px"
@@ -186,6 +186,40 @@ var BRAND = {
     "them": true
   }
 ],
+  goals: [
+  {
+    "icon": "user",
+    "title": "Daily basics",
+    "text": "[[PLACEHOLDER]] The everyday foundation most routines are missing.",
+    "category": "Daily Supplements"
+  },
+  {
+    "icon": "leaf",
+    "title": "Skin",
+    "text": "[[PLACEHOLDER]] A short routine that layers together, morning and night.",
+    "category": "Skincare"
+  },
+  {
+    "icon": "clock",
+    "title": "Sleep",
+    "text": "[[PLACEHOLDER]] Built for the last few hours of the day.",
+    "category": "Sleep & Calm"
+  },
+  {
+    "icon": "refresh",
+    "title": "Weight",
+    "text": "[[PLACEHOLDER]] Support alongside habits you are already working on.",
+    "category": "Weight Management"
+  }
+],
+  spotlightSlug: "daily-multi",
+  promo: {
+  "tag": "Limited offer",
+  "heading": "[[PLACEHOLDER]] 15% off your first order",
+  "text": "[[PLACEHOLDER]] Applies to everything in the shop, including bundles. One use per customer.",
+  "code": "WELCOME15",
+  "cta": "Shop the offer"
+},
   valueProps: [
   {
     "icon": "truck",

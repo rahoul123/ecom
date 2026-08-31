@@ -77,6 +77,14 @@ const common = {
     { icon: 'refresh', title: 'Change anytime', text: '[[PLACEHOLDER]] Pause, skip or cancel yourself.' }
   ],
 
+  promo: {
+    tag: 'Limited offer',
+    heading: '[[PLACEHOLDER]] 15% off your first order',
+    text: '[[PLACEHOLDER]] Applies to everything in the range. One use per customer.',
+    code: 'WELCOME15',
+    cta: 'Shop the offer'
+  },
+
   compareOther: 'Typical pharmacy',
   compare: [
     { label: 'Full ingredient quantities on the label', us: true, them: false },
