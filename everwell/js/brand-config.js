@@ -1598,41 +1598,68 @@ var PRODUCTS = [
 var TESTIMONIALS = [
   {
     "name": "Daniel R.",
-    "meta": "[[PLACEHOLDER]] Verified customer",
+    "role": "Verified customer",
     "rating": 5,
-    "quote": "[[PLACEHOLDER]] Ordering was simple and it turned up faster than I expected. The packaging was completely plain, which I appreciated."
+    "quote": "[[PLACEHOLDER]] Ordering was simple and it turned up faster than I expected. The packaging was completely plain, which I appreciated.",
+    "avatar": "images/avatars/avatar-1.svg"
   },
   {
     "name": "Priya S.",
-    "meta": "[[PLACEHOLDER]] Verified customer",
+    "role": "Verified customer",
     "rating": 5,
-    "quote": "[[PLACEHOLDER]] I like being able to get my skincare and my supplements in one place instead of three different checkouts."
+    "quote": "[[PLACEHOLDER]] I like getting my skincare and my supplements in one place instead of three different checkouts.",
+    "avatar": "images/avatars/avatar-2.svg"
   },
   {
     "name": "Rachel K.",
-    "meta": "[[PLACEHOLDER]] Verified customer",
+    "role": "Verified customer",
     "rating": 5,
-    "quote": "[[PLACEHOLDER]] What sold me was the absence of hype. It reads like a normal shop, not a pitch."
+    "quote": "[[PLACEHOLDER]] What sold me was the absence of hype. It reads like a normal shop, not a pitch.",
+    "avatar": "images/avatars/avatar-3.svg"
   },
   {
     "name": "Sam O.",
-    "meta": "[[PLACEHOLDER]] Verified customer",
+    "role": "Verified customer",
     "rating": 5,
-    "quote": "[[PLACEHOLDER]] I asked for a batch certificate and they sent it the same day. That told me a lot."
+    "quote": "[[PLACEHOLDER]] I asked for a batch certificate and they sent it the same day. That told me a lot.",
+    "avatar": "images/avatars/avatar-4.svg"
   },
   {
     "name": "Adam F.",
-    "meta": "[[PLACEHOLDER]] Verified customer",
+    "role": "Verified customer",
     "rating": 4,
-    "quote": "[[PLACEHOLDER]] Straightforward to order and easy to pause. Support replied the next morning."
+    "quote": "[[PLACEHOLDER]] Straightforward to order and easy to pause. Support replied the next morning.",
+    "avatar": "images/avatars/avatar-5.svg"
   },
   {
     "name": "Elena M.",
-    "meta": "[[PLACEHOLDER]] Verified customer",
+    "role": "Verified customer",
     "rating": 5,
-    "quote": "[[PLACEHOLDER]] Clear labels, quick delivery, and the packaging gives nothing away."
+    "quote": "[[PLACEHOLDER]] Clear labels, quick delivery, and the packaging gives nothing away.",
+    "avatar": "images/avatars/avatar-6.svg"
+  },
+  {
+    "name": "Tom A.",
+    "role": "Verified customer",
+    "rating": 5,
+    "quote": "[[PLACEHOLDER]] Being able to see every quantity on the label is the reason I switched.",
+    "avatar": "images/avatars/avatar-7.svg"
+  },
+  {
+    "name": "Nadia B.",
+    "role": "Verified customer",
+    "rating": 4,
+    "quote": "[[PLACEHOLDER]] Easy to pause when I went travelling and just as easy to restart. No phone calls.",
+    "avatar": "images/avatars/avatar-8.svg"
   }
 ];
+
+/* Shown above the reviews. Replace with real aggregate numbers, or delete the
+   block from index.html — invented ratings must not reach structured data. */
+var REVIEWS_SUMMARY = {
+  "rating": 4.8,
+  "count": "[[PLACEHOLDER: 6,200]]"
+};
 
 var FAQS = [
   {

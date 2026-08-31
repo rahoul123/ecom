@@ -562,23 +562,33 @@ var PRODUCTS = [
 var TESTIMONIALS = [
   {
     "name": "Rachel K.",
-    "meta": "[[PLACEHOLDER]] Verified customer",
+    "role": "[[PLACEHOLDER]] Verified customer",
     "rating": 5,
-    "quote": "[[PLACEHOLDER]] The thing that sold me was the absence of hype. It reads like a normal shop, not a pitch."
+    "quote": "[[PLACEHOLDER]] The thing that sold me was the absence of hype. It reads like a normal shop, not a pitch.",
+    "avatar": "images/avatars/avatar-1.svg"
   },
   {
     "name": "Tom A.",
-    "meta": "[[PLACEHOLDER]] Verified customer",
+    "role": "[[PLACEHOLDER]] Verified customer",
     "rating": 4,
-    "quote": "[[PLACEHOLDER]] Easy to pause when I went travelling and just as easy to restart. No phone calls."
+    "quote": "[[PLACEHOLDER]] Easy to pause when I went travelling and just as easy to restart. No phone calls.",
+    "avatar": "images/avatars/avatar-2.svg"
   },
   {
     "name": "Nadia B.",
-    "meta": "[[PLACEHOLDER]] Verified customer",
+    "role": "[[PLACEHOLDER]] Verified customer",
     "rating": 5,
-    "quote": "[[PLACEHOLDER]] Clear labels, quick delivery, and the packaging gives nothing away."
+    "quote": "[[PLACEHOLDER]] Clear labels, quick delivery, and the packaging gives nothing away.",
+    "avatar": "images/avatars/avatar-3.svg"
   }
 ];
+
+/* Shown above the reviews. Replace with real aggregate numbers, or delete the
+   block from index.html — invented ratings must not reach structured data. */
+var REVIEWS_SUMMARY = {
+  "rating": 4.8,
+  "count": "[[PLACEHOLDER: review count]]"
+};
 
 var FAQS = [
   {

@@ -365,7 +365,13 @@ var PRODUCTS = ${j(products)};
 
 /* ========================================================================== */
 
-var TESTIMONIALS = ${j(brand.testimonials)};
+var TESTIMONIALS = ${j((brand.testimonials || []).map((t, i) => Object.assign({}, t, {
+    avatar: imageMap['@avatar-' + i] || ('images/avatars/avatar-' + (i + 1) + '.svg')
+  })))};
+
+/* Shown above the reviews. Replace with real aggregate numbers, or delete the
+   block from index.html — invented ratings must not reach structured data. */
+var REVIEWS_SUMMARY = ${j(brand.reviewsSummary || { rating: 4.8, count: '[[PLACEHOLDER: review count]]' })};
 
 var FAQS = ${j(common.faqs)};
 `;
@@ -437,6 +443,20 @@ function resolveImages(brand, dir, imageCats) {
     } else {
       write(path.join(dir, 'images', 'products', p.slug + '.svg'), img.product(brand, p, imageCats));
       map[p.slug] = 'images/products/' + p.slug + '.svg';
+    }
+  });
+
+  /* Reviewer avatars, one per testimonial. */
+  (brand.testimonials || []).forEach((t, i) => {
+    const photo = findPhoto(brand.slug, 'avatar-' + (i + 1));
+    if (photo) {
+      fs.mkdirSync(path.join(dir, 'images', 'avatars'), { recursive: true });
+      fs.copyFileSync(photo.path, path.join(dir, 'images', 'avatars', 'avatar-' + (i + 1) + photo.ext));
+      map['@avatar-' + i] = 'images/avatars/avatar-' + (i + 1) + photo.ext;
+      realPhotos++;
+    } else {
+      write(path.join(dir, 'images', 'avatars', 'avatar-' + (i + 1) + '.svg'), img.avatar(brand, i));
+      map['@avatar-' + i] = 'images/avatars/avatar-' + (i + 1) + '.svg';
     }
   });
 

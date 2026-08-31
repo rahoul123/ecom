@@ -173,8 +173,26 @@
       <h2 class="is-placeholder">{{copy.reviewsHeading}}</h2>
       <p class="is-placeholder">{{copy.reviewsLede}}</p>
     </div>
-    <div class="testimonial-grid" id="testimonials"></div>
-    <script>Site.renderTestimonials('#testimonials', 3);</script>
+
+    <div class="reviews-summary is-placeholder" id="reviews-summary"></div>
+    <script>Site.renderReviewsSummary('#reviews-summary');</script>
+
+    <div class="slider" id="reviews-slider">
+      <div class="testimonial-slider slider__track" id="testimonials"></div>
+      <div class="slider__controls">
+        <button type="button" class="slider__arrow" data-slider-prev aria-label="Previous reviews">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <div class="slider__dots" role="tablist" aria-label="Review pages"></div>
+        <button type="button" class="slider__arrow" data-slider-next aria-label="Next reviews">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+    <script>
+      Site.renderTestimonials('#testimonials');
+      Site.initSlider('#reviews-slider');
+    </script>
     <p class="text-center text-muted mt-2" style="font-size:0.8125rem">
       [[PLACEHOLDER: all testimonials are fictional. Replace with real, attributable reviews or remove this section.]]
     </p>

@@ -564,23 +564,33 @@ var PRODUCTS = [
 var TESTIMONIALS = [
   {
     "name": "Priya S.",
-    "meta": "[[PLACEHOLDER]] Verified customer",
+    "role": "[[PLACEHOLDER]] Verified customer",
     "rating": 5,
-    "quote": "[[PLACEHOLDER]] I went from seven products to three and my routine is genuinely easier to stick to now."
+    "quote": "[[PLACEHOLDER]] I went from seven products to three and my routine is genuinely easier to stick to now.",
+    "avatar": "images/avatars/avatar-1.svg"
   },
   {
     "name": "Elena M.",
-    "meta": "[[PLACEHOLDER]] Verified customer",
+    "role": "[[PLACEHOLDER]] Verified customer",
     "rating": 5,
-    "quote": "[[PLACEHOLDER]] The texture is lovely and the ingredient list is printed where I can actually find it."
+    "quote": "[[PLACEHOLDER]] The texture is lovely and the ingredient list is printed where I can actually find it.",
+    "avatar": "images/avatars/avatar-2.svg"
   },
   {
     "name": "Josie W.",
-    "meta": "[[PLACEHOLDER]] Verified customer",
+    "role": "[[PLACEHOLDER]] Verified customer",
     "rating": 4,
-    "quote": "[[PLACEHOLDER]] Packaging is beautiful without being wasteful. Delivery was quick."
+    "quote": "[[PLACEHOLDER]] Packaging is beautiful without being wasteful. Delivery was quick.",
+    "avatar": "images/avatars/avatar-3.svg"
   }
 ];
+
+/* Shown above the reviews. Replace with real aggregate numbers, or delete the
+   block from index.html — invented ratings must not reach structured data. */
+var REVIEWS_SUMMARY = {
+  "rating": 4.8,
+  "count": "[[PLACEHOLDER: review count]]"
+};
 
 var FAQS = [
   {

@@ -562,23 +562,33 @@ var PRODUCTS = [
 var TESTIMONIALS = [
   {
     "name": "Daniel R.",
-    "meta": "[[PLACEHOLDER]] Verified customer",
+    "role": "[[PLACEHOLDER]] Verified customer",
     "rating": 5,
-    "quote": "[[PLACEHOLDER]] Ordering was simple and it turned up faster than I expected. The packaging was completely plain, which I appreciated."
+    "quote": "[[PLACEHOLDER]] Ordering was simple and it turned up faster than I expected. The packaging was completely plain, which I appreciated.",
+    "avatar": "images/avatars/avatar-1.svg"
   },
   {
     "name": "Marcus T.",
-    "meta": "[[PLACEHOLDER]] Verified customer",
+    "role": "[[PLACEHOLDER]] Verified customer",
     "rating": 5,
-    "quote": "[[PLACEHOLDER]] I like that the label actually tells you what is in it. No mystery blend, no fine print I needed a magnifying glass for."
+    "quote": "[[PLACEHOLDER]] I like that the label actually tells you what is in it. No mystery blend, no fine print I needed a magnifying glass for.",
+    "avatar": "images/avatars/avatar-2.svg"
   },
   {
     "name": "Omar J.",
-    "meta": "[[PLACEHOLDER]] Verified customer",
+    "role": "[[PLACEHOLDER]] Verified customer",
     "rating": 4,
-    "quote": "[[PLACEHOLDER]] Support answered my question the same day. Straightforward to reorder when I ran low."
+    "quote": "[[PLACEHOLDER]] Support answered my question the same day. Straightforward to reorder when I ran low.",
+    "avatar": "images/avatars/avatar-3.svg"
   }
 ];
+
+/* Shown above the reviews. Replace with real aggregate numbers, or delete the
+   block from index.html — invented ratings must not reach structured data. */
+var REVIEWS_SUMMARY = {
+  "rating": 4.8,
+  "count": "[[PLACEHOLDER: review count]]"
+};
 
 var FAQS = [
   {

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="Reviewer photo placeholder">
+  <!-- [[PLACEHOLDER IMAGE]] Reviewer photo. Replace with a real, permissioned photo. -->
+  <defs>
+    <clipPath id="c"><circle cx="60" cy="60" r="60"/></clipPath>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="hsl(93.98230088495575 26% 86%)"/>
+      <stop offset="100%" stop-color="hsl(93.98230088495575 30% 76%)"/>
+    </linearGradient>
+  </defs>
+  <g clip-path="url(#c)">
+    <rect width="120" height="120" fill="url(#bg)"/>
+    <circle cx="60" cy="46" r="21" fill="hsl(93.98230088495575 34% 54%)"/>
+    <path d="M14 120 a46 42 0 0 1 92 0 z" fill="hsl(93.98230088495575 34% 48%)"/>
+  </g>
+</svg>

@@ -180,9 +180,9 @@ const brands = [
       { title: 'Delivered discreetly', text: '[[PLACEHOLDER]] Your order arrives in plain outer packaging, on a schedule you control.' }
     ],
     testimonials: [
-      { name: 'Daniel R.', meta: '[[PLACEHOLDER]] Verified customer', rating: 5, quote: '[[PLACEHOLDER]] Ordering was simple and it turned up faster than I expected. The packaging was completely plain, which I appreciated.' },
-      { name: 'Marcus T.', meta: '[[PLACEHOLDER]] Verified customer', rating: 5, quote: '[[PLACEHOLDER]] I like that the label actually tells you what is in it. No mystery blend, no fine print I needed a magnifying glass for.' },
-      { name: 'Omar J.', meta: '[[PLACEHOLDER]] Verified customer', rating: 4, quote: '[[PLACEHOLDER]] Support answered my question the same day. Straightforward to reorder when I ran low.' }
+      { name: 'Daniel R.', role: '[[PLACEHOLDER]] Verified customer', rating: 5, quote: '[[PLACEHOLDER]] Ordering was simple and it turned up faster than I expected. The packaging was completely plain, which I appreciated.' },
+      { name: 'Marcus T.', role: '[[PLACEHOLDER]] Verified customer', rating: 5, quote: '[[PLACEHOLDER]] I like that the label actually tells you what is in it. No mystery blend, no fine print I needed a magnifying glass for.' },
+      { name: 'Omar J.', role: '[[PLACEHOLDER]] Verified customer', rating: 4, quote: '[[PLACEHOLDER]] Support answered my question the same day. Straightforward to reorder when I ran low.' }
     ],
 
     products: [
@@ -294,9 +294,9 @@ const brands = [
       { title: 'Adjust as you go', text: '[[PLACEHOLDER]] Change or pause deliveries whenever you like — no phone call required.' }
     ],
     testimonials: [
-      { name: 'Priya S.', meta: '[[PLACEHOLDER]] Verified customer', rating: 5, quote: '[[PLACEHOLDER]] I went from seven products to three and my routine is genuinely easier to stick to now.' },
-      { name: 'Elena M.', meta: '[[PLACEHOLDER]] Verified customer', rating: 5, quote: '[[PLACEHOLDER]] The texture is lovely and the ingredient list is printed where I can actually find it.' },
-      { name: 'Josie W.', meta: '[[PLACEHOLDER]] Verified customer', rating: 4, quote: '[[PLACEHOLDER]] Packaging is beautiful without being wasteful. Delivery was quick.' }
+      { name: 'Priya S.', role: '[[PLACEHOLDER]] Verified customer', rating: 5, quote: '[[PLACEHOLDER]] I went from seven products to three and my routine is genuinely easier to stick to now.' },
+      { name: 'Elena M.', role: '[[PLACEHOLDER]] Verified customer', rating: 5, quote: '[[PLACEHOLDER]] The texture is lovely and the ingredient list is printed where I can actually find it.' },
+      { name: 'Josie W.', role: '[[PLACEHOLDER]] Verified customer', rating: 4, quote: '[[PLACEHOLDER]] Packaging is beautiful without being wasteful. Delivery was quick.' }
     ],
 
     products: [
@@ -408,9 +408,9 @@ const brands = [
       { title: 'Delivered on your schedule', text: '[[PLACEHOLDER]] Choose how often it arrives. Pause or cancel whenever you want.' }
     ],
     testimonials: [
-      { name: 'Rachel K.', meta: '[[PLACEHOLDER]] Verified customer', rating: 5, quote: '[[PLACEHOLDER]] The thing that sold me was the absence of hype. It reads like a normal shop, not a pitch.' },
-      { name: 'Tom A.', meta: '[[PLACEHOLDER]] Verified customer', rating: 4, quote: '[[PLACEHOLDER]] Easy to pause when I went travelling and just as easy to restart. No phone calls.' },
-      { name: 'Nadia B.', meta: '[[PLACEHOLDER]] Verified customer', rating: 5, quote: '[[PLACEHOLDER]] Clear labels, quick delivery, and the packaging gives nothing away.' }
+      { name: 'Rachel K.', role: '[[PLACEHOLDER]] Verified customer', rating: 5, quote: '[[PLACEHOLDER]] The thing that sold me was the absence of hype. It reads like a normal shop, not a pitch.' },
+      { name: 'Tom A.', role: '[[PLACEHOLDER]] Verified customer', rating: 4, quote: '[[PLACEHOLDER]] Easy to pause when I went travelling and just as easy to restart. No phone calls.' },
+      { name: 'Nadia B.', role: '[[PLACEHOLDER]] Verified customer', rating: 5, quote: '[[PLACEHOLDER]] Clear labels, quick delivery, and the packaging gives nothing away.' }
     ],
 
     products: [
@@ -522,9 +522,9 @@ const brands = [
       { title: 'It arrives, quietly', text: '[[PLACEHOLDER]] Plain outer packaging, on the schedule you picked.' }
     ],
     testimonials: [
-      { name: 'Grace L.', meta: '[[PLACEHOLDER]] Verified customer', rating: 5, quote: '[[PLACEHOLDER]] First supplement brand where I could actually work out how much of each thing I was taking.' },
-      { name: 'Sam O.', meta: '[[PLACEHOLDER]] Verified customer', rating: 5, quote: '[[PLACEHOLDER]] I asked for the batch certificate and they sent it the same day. That told me a lot.' },
-      { name: 'Ines D.', meta: '[[PLACEHOLDER]] Verified customer', rating: 4, quote: '[[PLACEHOLDER]] Subscription is genuinely easy to change, which is rarer than it should be.' }
+      { name: 'Grace L.', role: '[[PLACEHOLDER]] Verified customer', rating: 5, quote: '[[PLACEHOLDER]] First supplement brand where I could actually work out how much of each thing I was taking.' },
+      { name: 'Sam O.', role: '[[PLACEHOLDER]] Verified customer', rating: 5, quote: '[[PLACEHOLDER]] I asked for the batch certificate and they sent it the same day. That told me a lot.' },
+      { name: 'Ines D.', role: '[[PLACEHOLDER]] Verified customer', rating: 4, quote: '[[PLACEHOLDER]] Subscription is genuinely easy to change, which is rarer than it should be.' }
     ],
 
     products: [
@@ -636,9 +636,9 @@ const brands = [
       { title: 'Delivered to your door', text: '[[PLACEHOLDER]] Plain outer packaging, on a schedule you can change at any time.' }
     ],
     testimonials: [
-      { name: 'Adam F.', meta: '[[PLACEHOLDER]] Verified customer', rating: 5, quote: '[[PLACEHOLDER]] The whole thing is calm — the site, the packaging, the emails. It suits what they sell.' },
-      { name: 'Maya H.', meta: '[[PLACEHOLDER]] Verified customer', rating: 4, quote: '[[PLACEHOLDER]] Straightforward to order and easy to pause. Support replied the next morning.' },
-      { name: 'Ben C.', meta: '[[PLACEHOLDER]] Verified customer', rating: 5, quote: '[[PLACEHOLDER]] Appreciated that they told me to check with my GP rather than just taking the order.' }
+      { name: 'Adam F.', role: '[[PLACEHOLDER]] Verified customer', rating: 5, quote: '[[PLACEHOLDER]] The whole thing is calm — the site, the packaging, the emails. It suits what they sell.' },
+      { name: 'Maya H.', role: '[[PLACEHOLDER]] Verified customer', rating: 4, quote: '[[PLACEHOLDER]] Straightforward to order and easy to pause. Support replied the next morning.' },
+      { name: 'Ben C.', role: '[[PLACEHOLDER]] Verified customer', rating: 5, quote: '[[PLACEHOLDER]] Appreciated that they told me to check with my GP rather than just taking the order.' }
     ],
 
     products: [

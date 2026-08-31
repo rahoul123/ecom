@@ -461,20 +461,110 @@ var Site = (function () {
 
   /* ------------------------------------------------- testimonials and FAQ */
 
+  function testimonialCard(t, i) {
+    return '<figure class="testimonial is-placeholder">' +
+      stars(t.rating) +
+      '<blockquote class="testimonial__quote">' + esc(t.quote) + '</blockquote>' +
+      '<figcaption class="testimonial__who">' +
+        '<span class="testimonial__avatar">' +
+          '<img src="' + esc(t.avatar || ('images/avatars/avatar-' + (i + 1) + '.svg')) +
+          '" alt="" width="96" height="96" loading="lazy" decoding="async">' +
+        '</span>' +
+        '<span>' +
+          '<span class="testimonial__name">' + esc(t.name) + '</span>' +
+          '<span class="testimonial__meta">' + esc(t.role || t.meta) + '</span>' +
+        '</span>' +
+        (t.verified === false ? '' :
+          '<span class="testimonial__verified">' + icon('check') + 'Verified</span>') +
+      '</figcaption></figure>';
+  }
+
   function renderTestimonials(selector, limit) {
     var host = el(selector);
     if (!host) return;
     var list = limit ? TESTIMONIALS.slice(0, limit) : TESTIMONIALS;
-    host.innerHTML = list.map(function (t) {
-      return '<figure class="testimonial is-placeholder">' +
-        stars(t.rating) +
-        '<blockquote class="testimonial__quote">' + esc(t.quote) + '</blockquote>' +
-        '<figcaption class="testimonial__who">' +
-          '<span class="testimonial__avatar" aria-hidden="true">' + esc(t.name.charAt(0)) + '</span>' +
-          '<span><span class="testimonial__name">' + esc(t.name) + '</span>' +
-          '<span class="testimonial__meta">' + esc(t.meta) + '</span></span>' +
-        '</figcaption></figure>';
-    }).join('');
+    host.innerHTML = list.map(testimonialCard).join('');
+  }
+
+  /** Aggregate score block above the reviews. */
+  function renderReviewsSummary(selector) {
+    var host = el(selector);
+    if (!host) return;
+    var r = (typeof REVIEWS_SUMMARY !== 'undefined' && REVIEWS_SUMMARY) || { rating: 4.8, count: '' };
+    host.innerHTML =
+      '<span class="reviews-summary__score"><b>' + esc(r.rating) + '</b><span>/ 5</span></span>' +
+      stars(r.rating) +
+      '<span class="reviews-summary__count">Based on ' + esc(r.count) + ' reviews</span>';
+  }
+
+  /**
+   * Scroll-snap slider. Works without JS (it stays a horizontally scrollable
+   * track); JS only adds the arrows and dots. One "page" is one visible column.
+   */
+  function initSlider(root) {
+    var wrap = el(root);
+    if (!wrap) return;
+    var track = el('.slider__track', wrap);
+    var prev = el('[data-slider-prev]', wrap);
+    var next = el('[data-slider-next]', wrap);
+    var dotHost = el('.slider__dots', wrap);
+    if (!track) return;
+
+    function step() {
+      var first = track.firstElementChild;
+      if (!first) return track.clientWidth;
+      var gap = parseFloat(getComputedStyle(track).columnGap || '0') || 0;
+      return first.getBoundingClientRect().width + gap;
+    }
+
+    function pages() {
+      return Math.max(1, Math.ceil(track.scrollWidth / Math.max(1, track.clientWidth)));
+    }
+
+    function current() {
+      return Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
+    }
+
+    function sync() {
+      var i = current();
+      var max = pages() - 1;
+      if (prev) prev.disabled = track.scrollLeft <= 4;
+      if (next) next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
+      if (dotHost) {
+        els('.slider__dot', dotHost).forEach(function (d, n) {
+          d.classList.toggle('is-active', n === Math.min(i, max));
+          d.setAttribute('aria-current', n === Math.min(i, max) ? 'true' : 'false');
+        });
+      }
+    }
+
+    function buildDots() {
+      if (!dotHost) return;
+      var n = pages();
+      if (n < 2) { dotHost.innerHTML = ''; return; }
+      dotHost.innerHTML = '';
+      for (var i = 0; i < n; i++) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'slider__dot';
+        b.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+        b.dataset.page = String(i);
+        dotHost.appendChild(b);
+      }
+      dotHost.addEventListener('click', function (ev) {
+        var dot = ev.target.closest('.slider__dot');
+        if (!dot) return;
+        track.scrollTo({ left: Number(dot.dataset.page) * track.clientWidth, behavior: 'smooth' });
+      });
+    }
+
+    if (prev) prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: 'smooth' }); });
+    if (next) next.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: 'smooth' }); });
+    track.addEventListener('scroll', sync, { passive: true });
+    window.addEventListener('resize', function () { buildDots(); sync(); });
+
+    buildDots();
+    sync();
   }
 
   function renderFaq(selector, limit) {
@@ -1067,6 +1157,8 @@ var Site = (function () {
     renderProductExtras: renderProductExtras,
     setSort: setSort,
     renderTestimonials: renderTestimonials,
+    renderReviewsSummary: renderReviewsSummary,
+    initSlider: initSlider,
     renderFaq: renderFaq,
     emitFaqSchema: emitFaqSchema,
     renderTrust: renderTrust,

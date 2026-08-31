@@ -228,6 +228,34 @@ function angle(brand, category, n, categories) {
 `;
 }
 
+/* ------------------------------------------------------------ avatars ---- */
+
+/**
+ * Circular reviewer avatar. An abstract silhouette on a tinted disc — clearly
+ * a placeholder, but it reads as a person at 42px, which a letter does not.
+ */
+function avatar(brand, index) {
+  const base = hexToHsl(brand.colors.accent);
+  const c = { h: (base.h + index * 61) % 360, s: 34, l: 52 };
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="Reviewer photo placeholder">
+  <!-- [[PLACEHOLDER IMAGE]] Reviewer photo. Replace with a real, permissioned photo. -->
+  <defs>
+    <clipPath id="c"><circle cx="60" cy="60" r="60"/></clipPath>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="${hsl(c, 34, -8)}"/>
+      <stop offset="100%" stop-color="${hsl(c, 24, -4)}"/>
+    </linearGradient>
+  </defs>
+  <g clip-path="url(#c)">
+    <rect width="120" height="120" fill="url(#bg)"/>
+    <circle cx="60" cy="46" r="21" fill="${hsl(c, 2)}"/>
+    <path d="M14 120 a46 42 0 0 1 92 0 z" fill="${hsl(c, -4)}"/>
+  </g>
+</svg>
+`;
+}
+
 /* ---------------------------------------------------------- lifestyle ---- */
 
 /** Abstract brand composition for the hero and about sections. */
@@ -379,4 +407,4 @@ function ogImage(brand) {
   ]);
 }
 
-module.exports = { product, angle, scene, logo, favicon, ogImage, formOf };
+module.exports = { product, angle, scene, avatar, logo, favicon, ogImage, formOf };
