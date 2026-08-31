@@ -342,6 +342,7 @@ var BRAND = {
   compareOther: ${JSON.stringify(brand.compareOther || common.compareOther || 'Typical pharmacy')},
   compare: ${j(brand.compare || common.compare || [])},
   goals: ${j(brand.goals || [])},
+  heroProducts: ${j(brand.heroProducts || [])},
   spotlightSlug: ${JSON.stringify(brand.spotlightSlug || '')},
   promo: ${j(brand.promo || common.promo || {})},
   valueProps: ${j(brand.valueProps)},
@@ -416,7 +417,9 @@ function resolveImages(brand, dir, imageCats) {
   }
 
   /* Hero and about artwork. */
-  [['hero', 1200, 1020, 7], ['about', 800, 600, 23], ['about-2', 800, 600, 41]].forEach((spec) => {
+  /* The hero is product-led now (see Site.renderHeroStage), so no hero image
+     is generated. Only the about-page artwork needs a scene. */
+  [['about', 800, 600, 23], ['about-2', 800, 600, 41]].forEach((spec) => {
     const key = spec[0];
     const photo = findPhoto(brand.slug, key);
     if (photo) {
@@ -517,7 +520,7 @@ function buildBrand(brand) {
     PROMO_TEXT: (brand.promo || common.promo || {}).text || '[[PLACEHOLDER: offer detail]]',
     PROMO_CODE: (brand.promo || common.promo || {}).code || 'CODE',
     PROMO_CTA: (brand.promo || common.promo || {}).cta || 'Shop now',
-    HERO_IMG: imageMap['@hero'] || 'images/hero.svg',
+    HERO_OFFER: brand.heroOffer || '[[PLACEHOLDER: hero offer line]]',
     ABOUT_IMG: imageMap['@about'] || 'images/about.svg',
     ABOUT2_IMG: imageMap['@about-2'] || 'images/about-2.svg',
     LOGO_IMG: imageMap['@logo'] || 'images/logo.svg',

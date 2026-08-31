@@ -579,6 +579,49 @@ var Site = (function () {
 
     buildDots();
     sync();
+
+    /* ---- autoplay ----
+       Advances one card at a time and wraps at the end. Pauses while the
+       pointer is over it, while anything inside has focus, while the visitor
+       is dragging it, and whenever the slider is off screen. Skipped entirely
+       for visitors who prefer reduced motion. */
+    var delay = Number(wrap.getAttribute('data-autoplay')) || 0;
+    if (!delay) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var timer = null;
+    var paused = false;
+
+    function advance() {
+      if (paused) return;
+      var atEnd = track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
+      if (atEnd) track.scrollTo({ left: 0, behavior: 'smooth' });
+      else track.scrollBy({ left: step(), behavior: 'smooth' });
+    }
+
+    function start() { if (!timer) timer = setInterval(advance, delay); }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+
+    wrap.addEventListener('mouseenter', function () { paused = true; });
+    wrap.addEventListener('mouseleave', function () { paused = false; });
+    wrap.addEventListener('focusin', function () { paused = true; });
+    wrap.addEventListener('focusout', function () {
+      if (!wrap.contains(document.activeElement)) paused = false;
+    });
+    track.addEventListener('pointerdown', function () { paused = true; });
+    document.addEventListener('pointerup', function () { paused = false; });
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) stop(); else start();
+    });
+
+    /* Only run while the slider is actually on screen. */
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) start(); else stop();
+      }, { threshold: 0.2 }).observe(wrap);
+    } else {
+      start();
+    }
   }
 
   function renderFaq(selector, limit) {
@@ -939,6 +982,49 @@ var Site = (function () {
       '</div>';
   }
 
+  /**
+   * Hero stage: three product packs arranged on a tinted disc, plus two
+   * floating chips. Uses the real product artwork rather than an abstract
+   * image, so the hero matches the rest of the shop.
+   */
+  function renderHeroStage(selector) {
+    var host = el(selector);
+    if (!host) return;
+
+    var picks = (BRAND.heroProducts || [])
+      .map(productBySlug)
+      .filter(Boolean);
+
+    if (picks.length < 3) {
+      var featured = PRODUCTS.filter(function (p) { return p.featured; });
+      var pool = featured.length >= 3 ? featured : PRODUCTS;
+      picks = pool.slice(0, 3);
+    }
+    if (!picks.length) return;
+
+    var slots = ['main', 'a', 'b'];
+    var packs = picks.slice(0, 3).map(function (p, i) {
+      return '<a class="hero__pack hero__pack--' + slots[i] + '" ' +
+        'href="product.html?p=' + esc(p.slug) + '" aria-label="' + esc(p.name) + '">' +
+        '<img src="' + esc(p.image) + '" alt="' + esc(p.imageAlt || p.name) +
+        '" width="800" height="800" ' + (i === 0 ? 'fetchpriority="high"' : 'loading="lazy"') +
+        ' decoding="async"></a>';
+    }).join('');
+
+    var r = (typeof REVIEWS_SUMMARY !== 'undefined' && REVIEWS_SUMMARY) || {};
+    var chips =
+      '<div class="hero__chip hero__chip--rating">' +
+        stars(r.rating || 4.8, 'sm') +
+        '<span><strong>' + esc(r.rating || 4.8) + '/5</strong>' +
+        '<span>' + esc(r.count || '') + ' reviews</span></span>' +
+      '</div>' +
+      '<div class="hero__chip hero__chip--ship">' + icon('truck') +
+        '<span><strong>Free shipping</strong><span>on orders over $50</span></span>' +
+      '</div>';
+
+    host.innerHTML = '<div class="hero__disc"></div>' + packs + chips;
+  }
+
   function renderTrust(selector) {
     var host = el(selector);
     if (!host) return;
@@ -1176,6 +1262,7 @@ var Site = (function () {
     renderFaq: renderFaq,
     emitFaqSchema: emitFaqSchema,
     renderTrust: renderTrust,
+    renderHeroStage: renderHeroStage,
     renderGoals: renderGoals,
     renderSpotlight: renderSpotlight,
     renderMarquee: renderMarquee,

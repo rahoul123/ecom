@@ -32,8 +32,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="css/base.css?v=8d124fb3">
-<link rel="stylesheet" href="css/brand.css?v=8d124fb3">
+<link rel="stylesheet" href="css/base.css?v=26d9f6d1">
+<link rel="stylesheet" href="css/brand.css?v=26d9f6d1">
 
 <!--
   Load order matters. brand-config.js first (data), theme-init.js second
@@ -41,10 +41,10 @@
   tracking.js (inert until you add pixel IDs). All synchronous and tiny —
   that is what lets inline render calls run during parse with zero layout shift.
 -->
-<script src="js/brand-config.js?v=8d124fb3"></script>
-<script src="js/theme-init.js?v=8d124fb3"></script>
-<script src="js/site.js?v=8d124fb3"></script>
-<script src="js/tracking.js?v=8d124fb3"></script>
+<script src="js/brand-config.js?v=26d9f6d1"></script>
+<script src="js/theme-init.js?v=26d9f6d1"></script>
+<script src="js/site.js?v=26d9f6d1"></script>
+<script src="js/tracking.js?v=26d9f6d1"></script>
 <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
 <script type="application/ld+json">
 {
@@ -170,12 +170,10 @@
 <section class="hero">
   <div class="container hero-grid">
     <div>
-      <span class="rating-pill is-placeholder" id="hero-rating"></span>
-      <script>
-        document.getElementById('hero-rating').innerHTML =
-          Site.stars(4.8) + '<span>4.8 / 5 &middot; [[PLACEHOLDER]] 6,200+ reviews</span>';
-      </script>
-      <span class="eyebrow is-placeholder">Weight management support</span>
+      <span class="hero__offer is-placeholder">
+        <b>WELCOME15</b> [[PLACEHOLDER: hero offer line]]
+      </span>
+
       <h1 class="is-placeholder">Steady beats drastic.</h1>
       <p class="hero__lede is-placeholder">[[PLACEHOLDER]] Products built to sit alongside the habits you are already working on, with clear labels and no pressure to buy the whole range.</p>
 
@@ -186,25 +184,15 @@
 
       <div class="hero__proof" id="hero-proof"></div>
       <script>
-        (function () {
-          document.getElementById('hero-proof').innerHTML = BRAND.heroProof.map(function (t) {
-            return '<span class="hero__proof-item">' + Site.icon('check') + Site.esc(t) + '</span>';
-          }).join('');
-        })();
+        document.getElementById('hero-proof').innerHTML = BRAND.heroProof.map(function (t) {
+          return '<span class="hero__proof-item">' + Site.icon('check') + Site.esc(t) + '</span>';
+        }).join('');
       </script>
     </div>
 
-    <div class="hero__media is-placeholder">
-      <!-- [[PLACEHOLDER: hero image]] — replace images/hero.svg with a real 1200x1020 photo -->
-      <img src="images/hero.svg" alt="[[PLACEHOLDER: hero image]]" width="1200" height="1020" fetchpriority="high" decoding="async">
-      <div class="hero__card">
-        <span class="testimonial__avatar" aria-hidden="true">★</span>
-        <span>
-          <strong>Rated 4.8/5</strong>
-          <span>[[PLACEHOLDER]] by 3,100+ customers</span>
-        </span>
-      </div>
-    </div>
+    <!-- Product-led stage: real product artwork, not a stock abstract. -->
+    <div class="hero__stage" id="hero-stage"></div>
+    <script>Site.renderHeroStage('#hero-stage');</script>
   </div>
 </section>
 
@@ -343,7 +331,7 @@
       <p class="is-placeholder">[[PLACEHOLDER]] Fictional reviews shown for layout purposes only.</p>
     </div>
 
-    <div class="slider" id="reviews-slider">
+    <div class="slider" id="reviews-slider" data-autoplay="4500">
       <div class="slider__track" id="testimonials"></div>
       <div class="slider__controls">
         <button type="button" class="slider__arrow" data-slider-prev aria-label="Previous reviews">

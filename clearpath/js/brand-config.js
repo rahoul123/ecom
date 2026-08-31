@@ -166,6 +166,7 @@ var BRAND = {
   }
 ],
   goals: [],
+  heroProducts: [],
   spotlightSlug: "",
   promo: {
   "tag": "Limited offer",

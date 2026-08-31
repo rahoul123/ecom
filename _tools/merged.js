@@ -288,6 +288,10 @@ module.exports = {
     { icon: 'refresh', title: 'Weight', text: '[[PLACEHOLDER]] Support alongside habits you are already working on.', category: 'Weight Management' }
   ],
 
+  /* The three packs shown in the hero stage (main, left, right). */
+  heroProducts: ['daily-multi', 'gentle-gel-cleanser', 'night-capsules'],
+  heroOffer: '[[PLACEHOLDER]] 15% off your first order',
+
   /* Which product gets the full-width spotlight treatment. */
   spotlightSlug: 'daily-multi',
 

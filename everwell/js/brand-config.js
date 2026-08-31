@@ -212,6 +212,11 @@ var BRAND = {
     "category": "Weight Management"
   }
 ],
+  heroProducts: [
+  "daily-multi",
+  "gentle-gel-cleanser",
+  "night-capsules"
+],
   spotlightSlug: "daily-multi",
   promo: {
   "tag": "Limited offer",

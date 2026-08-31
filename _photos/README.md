@@ -12,7 +12,6 @@ _photos/
 └── everwell/                     ← the site slug (folder name of the site)
     ├── daily-foundation.jpg      ← product slug + extension
     ├── gentle-gel-cleanser.png
-    ├── hero.jpg                  ← homepage hero        (1200 x 1020)
     ├── about.jpg                 ← about page image     (800 x 600)
     ├── about-2.jpg               ← about page image 2   (800 x 600)
     ├── og-default.jpg            ← social share image   (1200 x 630)
@@ -49,3 +48,10 @@ paths in `brand-config.js` and the HTML for you. Nothing else to change.
 **Do not** take photos from competitor websites. Product photography is
 copyrighted; using it risks a takedown, and Google Merchant Center and Meta
 both reject listings using imagery the seller does not own.
+
+## A note on the hero
+
+The homepage hero is **product-led** — it composes three product images on a
+tinted disc rather than using a single hero photograph. Which three is set by
+`heroProducts` in `_tools/merged.js`. So there is no `hero.jpg` slot: drop in
+real product photos and the hero picks them up automatically.
