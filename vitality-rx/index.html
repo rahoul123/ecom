@@ -32,8 +32,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="css/base.css?v=9da4555f">
-<link rel="stylesheet" href="css/brand.css?v=9da4555f">
+<link rel="stylesheet" href="css/base.css?v=9e7bb78a">
+<link rel="stylesheet" href="css/brand.css?v=9e7bb78a">
 
 <!--
   Load order matters. brand-config.js first (data), theme-init.js second
@@ -41,10 +41,10 @@
   tracking.js (inert until you add pixel IDs). All synchronous and tiny —
   that is what lets inline render calls run during parse with zero layout shift.
 -->
-<script src="js/brand-config.js?v=9da4555f"></script>
-<script src="js/theme-init.js?v=9da4555f"></script>
-<script src="js/site.js?v=9da4555f"></script>
-<script src="js/tracking.js?v=9da4555f"></script>
+<script src="js/brand-config.js?v=9e7bb78a"></script>
+<script src="js/theme-init.js?v=9e7bb78a"></script>
+<script src="js/site.js?v=9e7bb78a"></script>
+<script src="js/tracking.js?v=9e7bb78a"></script>
 <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
 <script type="application/ld+json">
 {
@@ -203,6 +203,9 @@
   </div>
 </section>
 
+<div class="marquee" id="marquee" aria-label="What we offer"></div>
+<script>Site.renderMarquee('#marquee');</script>
+
 <section class="strip">
   <div class="container">
     <div class="strip__grid" id="value-props"></div>
@@ -257,7 +260,7 @@
   </div>
 </section>
 
-<section class="section section--soft">
+<section class="section">
   <div class="container">
     <div class="section-head">
       <h2 class="is-placeholder">Built to be worth trusting</h2>
@@ -267,6 +270,32 @@
     <script>Site.renderTrust('#trust-badges');</script>
     <p class="text-center text-muted mt-2" style="font-size:0.8125rem">
       [[PLACEHOLDER: trust badge icons and claims — replace with badges you can actually substantiate before launch.]]
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Why us</span>
+      <h2>What you get either way</h2>
+      <p class="is-placeholder">[[PLACEHOLDER]] The things that apply to every order, whichever part of the range you buy from.</p>
+    </div>
+    <div class="bento" id="bento"></div>
+    <script>Site.renderBento('#bento');</script>
+  </div>
+</section>
+
+<section class="section section--soft">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Compare</span>
+      <h2>How we differ</h2>
+    </div>
+    <div class="compare is-placeholder" id="compare"></div>
+    <script>Site.renderCompare('#compare');</script>
+    <p class="text-center text-muted mt-2" style="font-size:0.8125rem">
+      [[PLACEHOLDER: comparison claims — only keep rows you can actually stand behind.]]
     </p>
   </div>
 </section>

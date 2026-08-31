@@ -34,6 +34,9 @@
   </div>
 </section>
 
+<div class="marquee" id="marquee" aria-label="What we offer"></div>
+<script>Site.renderMarquee('#marquee');</script>
+
 <section class="strip">
   <div class="container">
     <div class="strip__grid" id="value-props"></div>
@@ -88,7 +91,7 @@
   </div>
 </section>
 
-<section class="section section--soft">
+<section class="section">
   <div class="container">
     <div class="section-head">
       <h2 class="is-placeholder">{{copy.trustHeading}}</h2>
@@ -98,6 +101,32 @@
     <script>Site.renderTrust('#trust-badges');</script>
     <p class="text-center text-muted mt-2" style="font-size:0.8125rem">
       [[PLACEHOLDER: trust badge icons and claims — replace with badges you can actually substantiate before launch.]]
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Why us</span>
+      <h2>What you get either way</h2>
+      <p class="is-placeholder">{{copy.bentoLede}}</p>
+    </div>
+    <div class="bento" id="bento"></div>
+    <script>Site.renderBento('#bento');</script>
+  </div>
+</section>
+
+<section class="section section--soft">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Compare</span>
+      <h2>How we differ</h2>
+    </div>
+    <div class="compare is-placeholder" id="compare"></div>
+    <script>Site.renderCompare('#compare');</script>
+    <p class="text-center text-muted mt-2" style="font-size:0.8125rem">
+      [[PLACEHOLDER: comparison claims — only keep rows you can actually stand behind.]]
     </p>
   </div>
 </section>

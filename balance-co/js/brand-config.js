@@ -64,6 +64,12 @@ var BRAND = {
   "Sleep": "sleep.html",
   "Bundles": "bundles.html"
 },
+  categoryIndex: {
+  "Daily support": 1,
+  "Nutrition": 2,
+  "Sleep": 3,
+  "Bundles": 4
+},
   categoryIcons: {},
 
   contact: {
@@ -100,6 +106,66 @@ var BRAND = {
   "No before-and-after photos",
   "Clear labelling",
   "Cancel anytime"
+],
+  marquee: [
+  "Free shipping over $50",
+  "Plain, unbranded packaging",
+  "30-day returns",
+  "Cancel anytime",
+  "Support replies in 24h",
+  "Full ingredient lists"
+],
+  bento: [
+  {
+    "icon": "shield",
+    "title": "Nothing hidden",
+    "text": "[[PLACEHOLDER]] Every quantity printed on the label. No proprietary blends.",
+    "wide": true
+  },
+  {
+    "stat": "30",
+    "title": "Day returns",
+    "text": "[[PLACEHOLDER]] On unopened items.",
+    "accent": true
+  },
+  {
+    "icon": "box",
+    "title": "Plain packaging",
+    "text": "[[PLACEHOLDER]] No branding on the outside of any parcel."
+  },
+  {
+    "icon": "chat",
+    "title": "Real support",
+    "text": "[[PLACEHOLDER]] A person replies within one business day."
+  },
+  {
+    "icon": "refresh",
+    "title": "Change anytime",
+    "text": "[[PLACEHOLDER]] Pause, skip or cancel yourself."
+  }
+],
+  compareOther: "Typical pharmacy",
+  compare: [
+  {
+    "label": "Full ingredient quantities on the label",
+    "us": true,
+    "them": false
+  },
+  {
+    "label": "Plain, unbranded outer packaging",
+    "us": true,
+    "them": false
+  },
+  {
+    "label": "Pause or cancel without a phone call",
+    "us": true,
+    "them": false
+  },
+  {
+    "label": "Delivered to your door",
+    "us": true,
+    "them": true
+  }
 ],
   valueProps: [
   {

@@ -120,8 +120,12 @@ var Site = (function () {
 
   function productCard(p) {
     var onSale = p.compareAt && p.compareAt > p.price;
+    /* Each card carries its category's tint, so a shop grid is colour-coded
+       rather than 30 identical white boxes. brand.css defines --cat-N-*. */
+    var n = (BRAND.categoryIndex && BRAND.categoryIndex[p.category]) || 0;
+    var tint = n ? ' style="--tint:var(--cat-' + n + '-tint);--deep:var(--cat-' + n + '-deep)"' : '';
     return '' +
-      '<article class="product-card">' +
+      '<article class="product-card"' + tint + '>' +
         '<a class="product-card__media" href="product.html?p=' + esc(p.slug) + '" aria-label="' + esc(p.name) + '">' +
           /* [[PLACEHOLDER: product photo]] — swap image path in brand-config.js */
           '<img src="' + esc(p.image) + '" alt="' + esc(p.imageAlt || p.name) + '" width="600" height="600" loading="lazy" decoding="async">' +
@@ -706,6 +710,63 @@ var Site = (function () {
     }
   }
 
+  /**
+   * Scrolling ticker under the hero. The items are duplicated once so the
+   * -50% keyframe loops seamlessly; screen readers only see the first copy.
+   */
+  function renderMarquee(selector) {
+    var host = el(selector);
+    if (!host) return;
+    var items = (BRAND.marquee || []).map(function (t) {
+      return '<span class="marquee__item">' + icon('check') + esc(t) + '</span>';
+    }).join('');
+    if (!items) return;
+    host.innerHTML = '<div class="marquee__track">' + items +
+      '<span aria-hidden="true" style="display:contents">' + items + '</span></div>';
+  }
+
+  /* Bento "why us" grid. */
+  function renderBento(selector) {
+    var host = el(selector);
+    if (!host) return;
+    host.innerHTML = (BRAND.bento || []).map(function (b) {
+      var cls = 'bento__cell' + (b.wide ? ' bento__cell--wide' : '') + (b.accent ? ' bento__cell--accent' : '');
+      return '<div class="' + cls + ' is-placeholder">' +
+        (b.stat
+          ? '<span class="bento__stat">' + esc(b.stat) + '</span>'
+          : '<span class="bento__icon">' + icon(b.icon || 'check') + '</span>') +
+        '<h3>' + esc(b.title) + '</h3><p>' + esc(b.text) + '</p></div>';
+    }).join('');
+  }
+
+  /* Us-vs-them comparison table. */
+  function renderCompare(selector) {
+    var host = el(selector);
+    if (!host) return;
+    var rows = BRAND.compare;
+    if (!rows || !rows.length) return;
+
+    var yes = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" ' +
+      'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>';
+    var no = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" ' +
+      'stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>';
+
+    host.innerHTML =
+      '<div class="compare__row compare__row--head">' +
+        '<span class="compare__cell"></span>' +
+        '<span class="compare__cell">' + esc(BRAND.name) + '</span>' +
+        '<span class="compare__cell">' + esc(BRAND.compareOther || 'Typical pharmacy') + '</span>' +
+      '</div>' +
+      rows.map(function (r) {
+        return '<div class="compare__row">' +
+          '<span class="compare__cell">' + esc(r.label) + '</span>' +
+          '<span class="compare__cell compare__yes">' + (r.us ? yes : no) + '</span>' +
+          '<span class="compare__cell ' + (r.them ? 'compare__yes' : 'compare__no') + '">' +
+            (r.them ? yes : no) + '</span>' +
+        '</div>';
+      }).join('');
+  }
+
   function renderTrust(selector) {
     var host = el(selector);
     if (!host) return;
@@ -934,6 +995,9 @@ var Site = (function () {
     renderFaq: renderFaq,
     emitFaqSchema: emitFaqSchema,
     renderTrust: renderTrust,
+    renderMarquee: renderMarquee,
+    renderBento: renderBento,
+    renderCompare: renderCompare,
     renderSteps: renderSteps
   };
 })();

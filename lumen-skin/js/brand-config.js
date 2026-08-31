@@ -65,6 +65,13 @@ var BRAND = {
   "Protect": "protect.html",
   "Sets": "sets.html"
 },
+  categoryIndex: {
+  "Cleanse": 1,
+  "Treat": 2,
+  "Moisturise": 3,
+  "Protect": 4,
+  "Sets": 5
+},
   categoryIcons: {},
 
   contact: {
@@ -101,6 +108,66 @@ var BRAND = {
   "Dermatologist-reviewed",
   "Cruelty-free",
   "Full ingredient lists"
+],
+  marquee: [
+  "Free shipping over $50",
+  "Plain, unbranded packaging",
+  "30-day returns",
+  "Cancel anytime",
+  "Support replies in 24h",
+  "Full ingredient lists"
+],
+  bento: [
+  {
+    "icon": "shield",
+    "title": "Nothing hidden",
+    "text": "[[PLACEHOLDER]] Every quantity printed on the label. No proprietary blends.",
+    "wide": true
+  },
+  {
+    "stat": "30",
+    "title": "Day returns",
+    "text": "[[PLACEHOLDER]] On unopened items.",
+    "accent": true
+  },
+  {
+    "icon": "box",
+    "title": "Plain packaging",
+    "text": "[[PLACEHOLDER]] No branding on the outside of any parcel."
+  },
+  {
+    "icon": "chat",
+    "title": "Real support",
+    "text": "[[PLACEHOLDER]] A person replies within one business day."
+  },
+  {
+    "icon": "refresh",
+    "title": "Change anytime",
+    "text": "[[PLACEHOLDER]] Pause, skip or cancel yourself."
+  }
+],
+  compareOther: "Typical pharmacy",
+  compare: [
+  {
+    "label": "Full ingredient quantities on the label",
+    "us": true,
+    "them": false
+  },
+  {
+    "label": "Plain, unbranded outer packaging",
+    "us": true,
+    "them": false
+  },
+  {
+    "label": "Pause or cancel without a phone call",
+    "us": true,
+    "them": false
+  },
+  {
+    "label": "Delivered to your door",
+    "us": true,
+    "them": true
+  }
 ],
   valueProps: [
   {

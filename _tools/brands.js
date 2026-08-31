@@ -60,6 +60,31 @@ const common = {
     { q: 'Where do you ship?', a: '[[PLACEHOLDER: list real destinations]] Shipping destinations and rates are shown at checkout.' }
   ],
 
+  marquee: [
+    'Free shipping over $50',
+    'Plain, unbranded packaging',
+    '30-day returns',
+    'Cancel anytime',
+    'Support replies in 24h',
+    'Full ingredient lists'
+  ],
+
+  bento: [
+    { icon: 'shield', title: 'Nothing hidden', text: '[[PLACEHOLDER]] Every quantity printed on the label. No proprietary blends.', wide: true },
+    { stat: '30', title: 'Day returns', text: '[[PLACEHOLDER]] On unopened items.', accent: true },
+    { icon: 'box', title: 'Plain packaging', text: '[[PLACEHOLDER]] No branding on the outside of any parcel.' },
+    { icon: 'chat', title: 'Real support', text: '[[PLACEHOLDER]] A person replies within one business day.' },
+    { icon: 'refresh', title: 'Change anytime', text: '[[PLACEHOLDER]] Pause, skip or cancel yourself.' }
+  ],
+
+  compareOther: 'Typical pharmacy',
+  compare: [
+    { label: 'Full ingredient quantities on the label', us: true, them: false },
+    { label: 'Plain, unbranded outer packaging', us: true, them: false },
+    { label: 'Pause or cancel without a phone call', us: true, them: false },
+    { label: 'Delivered to your door', us: true, them: true }
+  ],
+
   copy: {
     primaryCta: 'Shop now',
     shopLede: '[[PLACEHOLDER]] Browse the full range. Filter by category or price to narrow things down.',
@@ -68,7 +93,8 @@ const common = {
     shippingBlurb: '[[PLACEHOLDER]] Free shipping over $50, plain outer packaging, and a 30-day return window on unopened items.',
     trustHeading: 'Built to be worth trusting',
     trustLede: '[[PLACEHOLDER]] The things we think matter most when you are buying something for your health.',
-    reviewsLede: '[[PLACEHOLDER]] Fictional reviews shown for layout purposes only.'
+    reviewsLede: '[[PLACEHOLDER]] Fictional reviews shown for layout purposes only.',
+    bentoLede: '[[PLACEHOLDER]] The things that apply to every order, whichever part of the range you buy from.'
   }
 };
 

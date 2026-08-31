@@ -26,26 +26,28 @@ var BRAND = {
 
   /* ---- Colours. theme-init.js applies these before first paint. -------- */
   colors: {
-  "background": "#ffffff",
-  "surface": "#f4f7f8",
-  "soft": "#eff4f5",
-  "text": "#132228",
-  "heading": "#0d1a1f",
-  "muted": "#5b6d74",
-  "border": "#dde7e9",
-  "borderStrong": "#c2d1d4",
-  "accent": "#0e6f6c",
-  "accentHover": "#0a5451",
-  "accentTint": "#e3f0ef",
-  "onAccent": "#ffffff",
-  "footerBg": "#0d1a1f",
-  "footerText": "#c3d3d6",
-  "star": "#e0a12c"
+  "background": "#fcfaf7",
+  "surface": "#f4f0e9",
+  "soft": "#efeae1",
+  "text": "#16211d",
+  "heading": "#0d1713",
+  "muted": "#5f6b64",
+  "border": "#e4ddd2",
+  "borderStrong": "#cfc5b6",
+  "accent": "#0f5a4c",
+  "accentHover": "#0a453a",
+  "accentTint": "#e2ede9",
+  "onAccent": "#fcfaf7",
+  "accentAlt": "#d97757",
+  "accentAltTint": "#faeae3",
+  "footerBg": "#0d1713",
+  "footerText": "#c5d2cb",
+  "star": "#d9a02e"
 },
 
   style: {
-  "radius": "14px",
-  "radiusLarge": "18px",
+  "radius": "16px",
+  "radiusLarge": "28px",
   "buttonRadius": "999px",
   "cardStyle": "bordered",
   "logoWidth": "152px"
@@ -65,6 +67,14 @@ var BRAND = {
   "Daily Supplements": "daily-supplements.html",
   "Sleep & Calm": "sleep-calm.html",
   "Bundles": "bundles.html"
+},
+  categoryIndex: {
+  "Men's Health": 1,
+  "Skincare": 2,
+  "Weight Management": 3,
+  "Daily Supplements": 4,
+  "Sleep & Calm": 5,
+  "Bundles": 6
 },
   categoryIcons: {
   "Men's Health": "user",
@@ -109,6 +119,72 @@ var BRAND = {
   "Licensed providers",
   "Discreet packaging",
   "Cancel anytime"
+],
+  marquee: [
+  "Free shipping over $50",
+  "Plain, unbranded packaging",
+  "30-day returns",
+  "Third-party tested",
+  "Cancel anytime",
+  "Support replies in 24h",
+  "Full ingredient lists"
+],
+  bento: [
+  {
+    "icon": "shield",
+    "title": "Nothing hidden",
+    "text": "[[PLACEHOLDER]] Every quantity printed on the label. No proprietary blends anywhere in the range.",
+    "wide": true
+  },
+  {
+    "stat": "30",
+    "title": "Day returns",
+    "text": "[[PLACEHOLDER]] On unopened items, no questions.",
+    "accent": true
+  },
+  {
+    "icon": "box",
+    "title": "Plain packaging",
+    "text": "[[PLACEHOLDER]] No branding on the outside of any parcel."
+  },
+  {
+    "icon": "chat",
+    "title": "Real support",
+    "text": "[[PLACEHOLDER]] A person replies within one business day."
+  },
+  {
+    "icon": "refresh",
+    "title": "Change anytime",
+    "text": "[[PLACEHOLDER]] Pause, skip or cancel a repeat order yourself."
+  }
+],
+  compareOther: "Typical pharmacy",
+  compare: [
+  {
+    "label": "Full ingredient quantities on the label",
+    "us": true,
+    "them": false
+  },
+  {
+    "label": "Plain, unbranded outer packaging",
+    "us": true,
+    "them": false
+  },
+  {
+    "label": "Everything in one order",
+    "us": true,
+    "them": false
+  },
+  {
+    "label": "Pause or cancel without a phone call",
+    "us": true,
+    "them": false
+  },
+  {
+    "label": "Delivered to your door",
+    "us": true,
+    "them": true
+  }
 ],
   valueProps: [
   {

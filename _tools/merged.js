@@ -185,14 +185,18 @@ module.exports = {
   },
 
   colors: {
-    background: '#ffffff', surface: '#f4f7f8', soft: '#eff4f5',
-    text: '#132228', heading: '#0d1a1f', muted: '#5b6d74',
-    border: '#dde7e9', borderStrong: '#c2d1d4',
-    accent: '#0e6f6c', accentHover: '#0a5451', accentTint: '#e3f0ef', onAccent: '#ffffff',
-    footerBg: '#0d1a1f', footerText: '#c3d3d6', star: '#e0a12c'
+    /* Warm cream base rather than pure white — reads more premium and stops
+       the page looking like a default template. */
+    background: '#fcfaf7', surface: '#f4f0e9', soft: '#efeae1',
+    text: '#16211d', heading: '#0d1713', muted: '#5f6b64',
+    border: '#e4ddd2', borderStrong: '#cfc5b6',
+    accent: '#0f5a4c', accentHover: '#0a453a', accentTint: '#e2ede9', onAccent: '#fcfaf7',
+    /* Used sparingly: sale badges, underlines, the odd highlight. */
+    accentAlt: '#d97757', accentAltTint: '#faeae3',
+    footerBg: '#0d1713', footerText: '#c5d2cb', star: '#d9a02e'
   },
 
-  style: { radius: '14px', radiusLarge: '18px', buttonRadius: '999px', cardStyle: 'bordered', logoWidth: '152px' },
+  style: { radius: '16px', radiusLarge: '28px', buttonRadius: '999px', cardStyle: 'bordered', logoWidth: '152px' },
 
   /* Icon per category tile on the homepage. Names come from site.js ICONS. */
   categoryIcons: {
@@ -233,10 +237,40 @@ module.exports = {
     aboutStory3: '[[PLACEHOLDER]] The range grows slowly on purpose. If a product does not earn its place, it does not go on the shelf.',
     aboutHowHeading: 'How we choose what to sell',
     aboutHowText: '[[PLACEHOLDER]] Every product goes through the same review before it joins the shop, whichever category it lands in.',
-    shopLede: '[[PLACEHOLDER]] Everything we sell, in one grid. Filter by category or price to narrow it down.'
+    shopLede: '[[PLACEHOLDER]] Everything we sell, in one grid. Filter by category or price to narrow it down.',
+    bentoLede: '[[PLACEHOLDER]] The things that apply to every order, whichever part of the shop you buy from.'
   },
 
   heroProof: ['Licensed providers', 'Discreet packaging', 'Cancel anytime'],
+
+  /* Scrolling ticker under the hero. */
+  marquee: [
+    'Free shipping over $50',
+    'Plain, unbranded packaging',
+    '30-day returns',
+    'Third-party tested',
+    'Cancel anytime',
+    'Support replies in 24h',
+    'Full ingredient lists'
+  ],
+
+  /* Bento "why us" grid. One accent cell, one wide cell. */
+  bento: [
+    { icon: 'shield', title: 'Nothing hidden', text: '[[PLACEHOLDER]] Every quantity printed on the label. No proprietary blends anywhere in the range.', wide: true },
+    { stat: '30', title: 'Day returns', text: '[[PLACEHOLDER]] On unopened items, no questions.', accent: true },
+    { icon: 'box', title: 'Plain packaging', text: '[[PLACEHOLDER]] No branding on the outside of any parcel.' },
+    { icon: 'chat', title: 'Real support', text: '[[PLACEHOLDER]] A person replies within one business day.' },
+    { icon: 'refresh', title: 'Change anytime', text: '[[PLACEHOLDER]] Pause, skip or cancel a repeat order yourself.' }
+  ],
+
+  compareOther: 'Typical pharmacy',
+  compare: [
+    { label: 'Full ingredient quantities on the label', us: true, them: false },
+    { label: 'Plain, unbranded outer packaging', us: true, them: false },
+    { label: 'Everything in one order', us: true, them: false },
+    { label: 'Pause or cancel without a phone call', us: true, them: false },
+    { label: 'Delivered to your door', us: true, them: true }
+  ],
 
   valueProps: [
     { icon: 'truck', text: 'Free shipping over $50' },

@@ -24,6 +24,8 @@
   --color-footer-bg: #1f1a12;
   --color-footer-text: #ddd0bb;
   --color-star: #c98a2e;
+  --color-accent-alt: #a06a1f;
+  --color-accent-alt-tint: #f6ead6;
 
   --color-error: #b3261e;
   --color-warn: #a15c00;
@@ -42,6 +44,18 @@
   --radius-btn: 6px;
   --logo-width: 152px;
 
+  --cat-1: hsl(35 46% 42%);
+  --cat-1-tint: hsl(35 38% 94%);
+  --cat-1-deep: hsl(35 46% 26%);
+  --cat-2: hsl(82 46% 42%);
+  --cat-2-tint: hsl(82 38% 94%);
+  --cat-2-deep: hsl(82 46% 26%);
+  --cat-3: hsl(129 46% 42%);
+  --cat-3-tint: hsl(129 38% 94%);
+  --cat-3-deep: hsl(129 46% 26%);
+  --cat-4: hsl(176 46% 42%);
+  --cat-4-tint: hsl(176 38% 94%);
+  --cat-4-deep: hsl(176 46% 26%);
   --shadow-sm: 0 1px 3px rgba(16, 20, 25, 0.07);
   --shadow: 0 1px 2px rgba(16, 20, 25, 0.04), 0 6px 20px rgba(16, 20, 25, 0.06);
   --shadow-lg: 0 12px 38px rgba(16, 20, 25, 0.12);
