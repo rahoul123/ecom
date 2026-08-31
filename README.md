@@ -313,6 +313,19 @@ After editing the master copy in `_shared/`:
 node _tools/sync.js
 ```
 
+### Checking a build
+
+```bash
+node _tools/check.js            # every site
+node _tools/check.js everwell   # one
+```
+
+Verifies that every class the pages render has a CSS rule, that the stylesheet's
+braces balance, that every image path resolves, that every `Site.*` call is
+exported, and that no `{{tokens}}` are left unrendered. Run it after any edit to
+`_shared/` — a stylesheet edit once truncated five sections and the pages still
+looked fine until you scrolled to them.
+
 This copies those four files into all five folders and touches nothing else — not
 `brand-config.js`, not `brand.css`, not your images, not your HTML.
 
