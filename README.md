@@ -177,6 +177,12 @@ applied before first paint, so there's no flash of the old colour.
 
 ### Adding or removing a product
 
+**See [ADDING-PRODUCTS.md](ADDING-PRODUCTS.md) for the full walkthrough**, including
+the copy-paste block, what each field does, the image options, and how to add a
+product in a brand-new category.
+
+The short version:
+
 Add an object to `PRODUCTS`. That's the whole job — it appears in the shop grid, gains a working
 product page at `product.html?p=<slug>`, joins the category filter, and shows up in "you might
 also like". No new HTML file, no other edit.
