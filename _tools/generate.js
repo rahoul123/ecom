@@ -163,6 +163,10 @@ function brandCSS(brand) {
   --color-footer-text: ${c.footerText};
   --color-star: ${c.star};
   --color-accent-alt: ${c.accentAlt || c.accent};
+  /* Deeper accents used where white body text sits on the accent. The plain
+     accent measured 3.46:1 behind white body copy, which fails AA. */
+  --color-accent-deep: ${c.accentDeep || c.accentHover};
+  --color-accent-deeper: ${c.accentDeeper || c.accentHover};
   --color-accent-alt-tint: ${c.accentAltTint || c.accentTint};
 
   --color-error: #b3261e;

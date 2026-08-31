@@ -209,6 +209,9 @@ module.exports = {
     text: '#1a1d18', heading: '#0f120d', muted: '#5c6357',
     border: '#e5e8df', borderStrong: '#cdd3c3',
     accent: '#4c8c1b', accentHover: '#3c7014', accentTint: '#eef6e4', onAccent: '#ffffff',
+    /* Used only where white body text sits on the accent — measured to clear
+       4.5:1 at both ends of the gradient. */
+    accentDeep: '#3c7014', accentDeeper: '#2c5310',
     accentAlt: '#e8590c', accentAltTint: '#fdefe6',
     footerBg: '#12150f', footerText: '#c9d1c2', star: '#f5a524'
   },

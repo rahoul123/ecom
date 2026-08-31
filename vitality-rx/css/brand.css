@@ -25,6 +25,10 @@
   --color-footer-text: #c2d4d9;
   --color-star: #e0a12c;
   --color-accent-alt: #0e7c66;
+  /* Deeper accents used where white body text sits on the accent. The plain
+     accent measured 3.46:1 behind white body copy, which fails AA. */
+  --color-accent-deep: #0a5f4e;
+  --color-accent-deeper: #0a5f4e;
   --color-accent-alt-tint: #e2f1ed;
 
   --color-error: #b3261e;

@@ -38,6 +38,8 @@ var BRAND = {
   "accentHover": "#3c7014",
   "accentTint": "#eef6e4",
   "onAccent": "#ffffff",
+  "accentDeep": "#3c7014",
+  "accentDeeper": "#2c5310",
   "accentAlt": "#e8590c",
   "accentAltTint": "#fdefe6",
   "footerBg": "#12150f",
