@@ -38,6 +38,14 @@ const RENAMES = {
   'magnesium-evening': { slug: 'magnesium-complex', name: 'Magnesium Complex' }
 };
 
+/* Explicit pack shapes where the product name alone would guess wrong. */
+const IMAGE_FORMS = {
+  'post-training-recovery': 'pouch',   // a tub you scoop from
+  'vitamin-d3-k2': 'dropper',          // liquid drops, not capsules
+  'daily-spf-40': 'tube',
+  'hydration-sticks': 'box'
+};
+
 /* Homepage "best sellers" — a spread across categories, not 8 from one. */
 const FEATURED = [
   'daily-foundation', 'gentle-gel-cleanser', 'hydrating-serum', 'daily-balance-capsules',
@@ -65,6 +73,7 @@ function mergeProducts() {
           ? 'Bundles'
           : CATEGORY_OF[brand.slug],
         featured: FEATURED.includes(slug),
+        imageForm: IMAGE_FORMS[slug],
         /* Kept so you can trace a product back to the range it came from. */
         sourceBrand: brand.slug
       }));

@@ -851,6 +851,35 @@ var Site = (function () {
     });
   }
 
+  /**
+   * Fades sections in as they scroll into view. Marks every section that is
+   * not already on screen, so the first viewport paints instantly with no
+   * flash. Does nothing when the browser lacks IntersectionObserver or the
+   * visitor prefers reduced motion.
+   */
+  function initReveal() {
+    if (!('IntersectionObserver' in window)) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var targets = els('section, .cta-banner').filter(function (n) {
+      return n.getBoundingClientRect().top > window.innerHeight * 0.9;
+    });
+    if (!targets.length) return;
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-revealed');
+        observer.unobserve(entry.target);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+
+    targets.forEach(function (n) {
+      n.setAttribute('data-reveal', '');
+      observer.observe(n);
+    });
+  }
+
   /* Dev aid: append ?showplaceholders=1 to outline every dummy block. */
   function initPlaceholderMode() {
     if (qs('showplaceholders') === '1') document.body.classList.add('show-placeholders');
@@ -865,6 +894,7 @@ var Site = (function () {
     initStickyBuy();
     initForms();
     initPlaceholderMode();
+    initReveal();
 
     /* Removing an active filter chip on the shop page. */
     document.addEventListener('click', function (ev) {

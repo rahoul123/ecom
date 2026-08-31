@@ -1,28 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="About image 2">
-  <!-- [[PLACEHOLDER IMAGE]] Replace this file with real photography at the same path and dimensions. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="about-2">
+  <!-- [[PLACEHOLDER IMAGE]] Abstract brand composition. Replace with real photography (800x600). -->
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#eff4f5"/>
-      <stop offset="100%" stop-color="#f4f7f8"/>
+    <linearGradient id="g" x1="0" y1="0" x2="0.8" y2="1">
+      <stop offset="0%" stop-color="hsl(178.14432989690727 65.6% 68.50980392156863%)"/>
+      <stop offset="100%" stop-color="hsl(196.14432989690727 71.6% 56.50980392156863%)"/>
     </linearGradient>
-    <pattern id="hatch" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-      <line x1="0" y1="0" x2="0" y2="16" stroke="#0e6f6c" stroke-width="1" opacity="0.07"/>
-    </pattern>
+    <filter id="blur" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="33"/>
+    </filter>
   </defs>
-
   <rect width="800" height="600" fill="url(#g)"/>
-  <rect width="800" height="600" fill="url(#hatch)"/>
-
-  <circle cx="400" cy="246" r="78" fill="none" stroke="#0e6f6c" stroke-width="4.8" opacity="0.35"/>
-  <path d="M 367 246 h 66 M 400 213 v 66"
-        stroke="#0e6f6c" stroke-width="4.8" stroke-linecap="round" opacity="0.35"/>
-
-  <text x="400" y="366" text-anchor="middle"
-        font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="27" font-weight="600" fill="#5b6d74">
-    About image 2
-  </text>
-  <text x="400" y="405" text-anchor="middle"
-        font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="19.2" fill="#5b6d74" opacity="0.75">
-    PLACEHOLDER — secondary photo
-  </text>
+  <g filter="url(#blur)">
+  <circle cx="624" cy="494" r="175" fill="hsl(178.14432989690727 71.6% 46.50980392156863%)" opacity="0.30"/>
+  <circle cx="132" cy="125" r="80" fill="hsl(204.14432989690727 71.6% 51.50980392156863%)" opacity="0.36"/>
+  <circle cx="264" cy="224" r="106" fill="hsl(230.14432989690727 71.6% 56.50980392156863%)" opacity="0.42"/>
+  <circle cx="396" cy="323" r="131" fill="hsl(256.14432989690727 71.6% 61.50980392156863%)" opacity="0.48"/>
+  <circle cx="527" cy="422" r="157" fill="hsl(282.14432989690727 71.6% 66.50980392156863%)" opacity="0.54"/>
+  </g>
+  <text x="400" y="574" text-anchor="middle" font-family="system-ui, sans-serif"
+        font-size="12" letter-spacing="1.8"
+        fill="hsl(178.14432989690727 69.6% 0.5098039215686292%)" opacity="0.45">PLACEHOLDER IMAGE</text>
 </svg>

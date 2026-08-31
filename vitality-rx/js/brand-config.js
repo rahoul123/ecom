@@ -265,9 +265,9 @@ var PRODUCTS = [
     "image": "images/products/daily-foundation.svg",
     "gallery": [
       "images/products/daily-foundation.svg",
-      "images/products/_angle-2.svg",
-      "images/products/_angle-3.svg",
-      "images/products/_angle-4.svg"
+      "images/products/_angle-daily-essentials-2.svg",
+      "images/products/_angle-daily-essentials-3.svg",
+      "images/products/_angle-daily-essentials-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Daily Foundation]]",
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/daily-foundation"
@@ -307,9 +307,9 @@ var PRODUCTS = [
     "image": "images/products/evening-wind-down.svg",
     "gallery": [
       "images/products/evening-wind-down.svg",
-      "images/products/_angle-2.svg",
-      "images/products/_angle-3.svg",
-      "images/products/_angle-4.svg"
+      "images/products/_angle-sleep-recovery-2.svg",
+      "images/products/_angle-sleep-recovery-3.svg",
+      "images/products/_angle-sleep-recovery-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Evening Wind Down]]",
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/evening-wind-down"
@@ -349,9 +349,9 @@ var PRODUCTS = [
     "image": "images/products/focus-support.svg",
     "gallery": [
       "images/products/focus-support.svg",
-      "images/products/_angle-2.svg",
-      "images/products/_angle-3.svg",
-      "images/products/_angle-4.svg"
+      "images/products/_angle-daily-essentials-2.svg",
+      "images/products/_angle-daily-essentials-3.svg",
+      "images/products/_angle-daily-essentials-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Focus Support]]",
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/focus-support"
@@ -391,9 +391,9 @@ var PRODUCTS = [
     "image": "images/products/hair-thickening-serum.svg",
     "gallery": [
       "images/products/hair-thickening-serum.svg",
-      "images/products/_angle-2.svg",
-      "images/products/_angle-3.svg",
-      "images/products/_angle-4.svg"
+      "images/products/_angle-hair-skin-2.svg",
+      "images/products/_angle-hair-skin-3.svg",
+      "images/products/_angle-hair-skin-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Thickening Serum]]",
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/hair-thickening-serum"
@@ -433,9 +433,9 @@ var PRODUCTS = [
     "image": "images/products/post-training-recovery.svg",
     "gallery": [
       "images/products/post-training-recovery.svg",
-      "images/products/_angle-2.svg",
-      "images/products/_angle-3.svg",
-      "images/products/_angle-4.svg"
+      "images/products/_angle-sleep-recovery-2.svg",
+      "images/products/_angle-sleep-recovery-3.svg",
+      "images/products/_angle-sleep-recovery-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Post-Training Recovery]]",
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/post-training-recovery"
@@ -473,9 +473,9 @@ var PRODUCTS = [
     "image": "images/products/starter-bundle.svg",
     "gallery": [
       "images/products/starter-bundle.svg",
-      "images/products/_angle-2.svg",
-      "images/products/_angle-3.svg",
-      "images/products/_angle-4.svg"
+      "images/products/_angle-bundles-2.svg",
+      "images/products/_angle-bundles-3.svg",
+      "images/products/_angle-bundles-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of The Starter Bundle]]",
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/starter-bundle"

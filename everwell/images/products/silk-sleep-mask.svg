@@ -1,28 +1,41 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" role="img" aria-label="Silk Sleep Mask">
-  <!-- [[PLACEHOLDER IMAGE]] Replace this file with real photography at the same path and dimensions. -->
+  <!-- [[PLACEHOLDER IMAGE]] Stylised illustration, not a photograph.
+       Replace this file with real product photography at the same path (800x800). -->
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#eff4f5"/>
-      <stop offset="100%" stop-color="#f4f7f8"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0%" stop-color="hsl(6.144329896907209 38% 92%)"/>
+      <stop offset="100%" stop-color="hsl(6.144329896907209 42% 84%)"/>
     </linearGradient>
-    <pattern id="hatch" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-      <line x1="0" y1="0" x2="0" y2="16" stroke="#0e6f6c" stroke-width="1" opacity="0.07"/>
-    </pattern>
+    <linearGradient id="body" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="hsl(6.144329896907209 52% 58%)"/>
+      <stop offset="55%" stop-color="hsl(6.144329896907209 52% 46%)"/>
+      <stop offset="100%" stop-color="hsl(6.144329896907209 52% 34%)"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="50%" cy="42%" r="52%">
+      <stop offset="0%" stop-color="hsl(6.144329896907209 46% 76%)" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="hsl(6.144329896907209 46% 76%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
   </defs>
 
-  <rect width="800" height="800" fill="url(#g)"/>
-  <rect width="800" height="800" fill="url(#hatch)"/>
+  <rect width="800" height="800" fill="url(#bg)"/>
+  <circle cx="400" cy="376" r="250" fill="url(#halo)"/>
+  <circle cx="640" cy="150" r="96" fill="hsl(6.144329896907209 40% 88%)" opacity="0.55"/>
+  <circle cx="150" cy="654" r="62" fill="hsl(6.144329896907209 40% 88%)" opacity="0.45"/>
 
-  <circle cx="400" cy="328" r="104" fill="none" stroke="#0e6f6c" stroke-width="6.4" opacity="0.35"/>
-  <path d="M 356 328 h 88 M 400 284 v 88"
-        stroke="#0e6f6c" stroke-width="6.4" stroke-linecap="round" opacity="0.35"/>
+  <ellipse cx="400" cy="612" rx="176" ry="30" fill="hsl(6.144329896907209 52% 20%)" opacity="0.22" filter="url(#soft)"/>
 
-  <text x="400" y="488" text-anchor="middle"
-        font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="36" font-weight="600" fill="#5b6d74">
-    Silk Sleep Mask
-  </text>
-  <text x="400" y="540" text-anchor="middle"
-        font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="25.6" fill="#5b6d74" opacity="0.75">
-    PLACEHOLDER — product photo
-  </text>
+  
+    <path d="M226 372 q174 -96 348 0 q34 88 -26 132 q-148 74 -296 0 q-60 -44 -26 -132 z" fill="url(#body)"/>
+    <path d="M226 372 q88 -48 174 -60 v250 q-98 -8 -148 -58 q-60 -44 -26 -132 z" fill="hsl(6.144329896907209 52% 58%)" opacity="0.3"/>
+    <path d="M226 388 q-56 34 -70 96" stroke="hsl(6.144329896907209 52% 38%)" stroke-width="14" fill="none" stroke-linecap="round"/>
+    <path d="M574 388 q56 34 70 96" stroke="hsl(6.144329896907209 52% 38%)" stroke-width="14" fill="none" stroke-linecap="round"/>
+    <rect x="330" y="418" width="140" height="70" rx="10" fill="#fff" opacity="0.9"/>
+
+  <text x="400" y="690" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif"
+        font-size="27" font-weight="600" letter-spacing="-0.4" fill="hsl(6.144329896907209 46% 16%)">Silk Sleep Mask</text>
+  <text x="400" y="762" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif"
+        font-size="14" letter-spacing="1.6" fill="hsl(6.144329896907209 42% 24%)" opacity="0.5">PLACEHOLDER IMAGE</text>
 </svg>

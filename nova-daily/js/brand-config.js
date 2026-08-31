@@ -265,9 +265,9 @@ var PRODUCTS = [
     "image": "images/products/daily-multi.svg",
     "gallery": [
       "images/products/daily-multi.svg",
-      "images/products/_angle-2.svg",
-      "images/products/_angle-3.svg",
-      "images/products/_angle-4.svg"
+      "images/products/_angle-foundations-2.svg",
+      "images/products/_angle-foundations-3.svg",
+      "images/products/_angle-foundations-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Daily Multi]]",
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/daily-multi"
@@ -306,9 +306,9 @@ var PRODUCTS = [
     "image": "images/products/omega-3.svg",
     "gallery": [
       "images/products/omega-3.svg",
-      "images/products/_angle-2.svg",
-      "images/products/_angle-3.svg",
-      "images/products/_angle-4.svg"
+      "images/products/_angle-foundations-2.svg",
+      "images/products/_angle-foundations-3.svg",
+      "images/products/_angle-foundations-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Omega-3]]",
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/omega-3"
@@ -347,9 +347,9 @@ var PRODUCTS = [
     "image": "images/products/magnesium-evening.svg",
     "gallery": [
       "images/products/magnesium-evening.svg",
-      "images/products/_angle-2.svg",
-      "images/products/_angle-3.svg",
-      "images/products/_angle-4.svg"
+      "images/products/_angle-evening-2.svg",
+      "images/products/_angle-evening-3.svg",
+      "images/products/_angle-evening-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Magnesium Evening]]",
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/magnesium-evening"
@@ -388,9 +388,9 @@ var PRODUCTS = [
     "image": "images/products/vitamin-d3-k2.svg",
     "gallery": [
       "images/products/vitamin-d3-k2.svg",
-      "images/products/_angle-2.svg",
-      "images/products/_angle-3.svg",
-      "images/products/_angle-4.svg"
+      "images/products/_angle-foundations-2.svg",
+      "images/products/_angle-foundations-3.svg",
+      "images/products/_angle-foundations-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Vitamin D3 + K2]]",
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/vitamin-d3-k2"
@@ -430,9 +430,9 @@ var PRODUCTS = [
     "image": "images/products/greens-powder.svg",
     "gallery": [
       "images/products/greens-powder.svg",
-      "images/products/_angle-2.svg",
-      "images/products/_angle-3.svg",
-      "images/products/_angle-4.svg"
+      "images/products/_angle-blends-2.svg",
+      "images/products/_angle-blends-3.svg",
+      "images/products/_angle-blends-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Greens Powder]]",
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/greens-powder"
@@ -470,9 +470,9 @@ var PRODUCTS = [
     "image": "images/products/the-daily-three.svg",
     "gallery": [
       "images/products/the-daily-three.svg",
-      "images/products/_angle-2.svg",
-      "images/products/_angle-3.svg",
-      "images/products/_angle-4.svg"
+      "images/products/_angle-bundles-2.svg",
+      "images/products/_angle-bundles-3.svg",
+      "images/products/_angle-bundles-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of The Daily Three]]",
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/the-daily-three"

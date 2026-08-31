@@ -266,9 +266,9 @@ var PRODUCTS = [
     "image": "images/products/gentle-gel-cleanser.svg",
     "gallery": [
       "images/products/gentle-gel-cleanser.svg",
-      "images/products/_angle-2.svg",
-      "images/products/_angle-3.svg",
-      "images/products/_angle-4.svg"
+      "images/products/_angle-cleanse-2.svg",
+      "images/products/_angle-cleanse-3.svg",
+      "images/products/_angle-cleanse-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Gentle Gel Cleanser]]",
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/gentle-gel-cleanser"
@@ -308,9 +308,9 @@ var PRODUCTS = [
     "image": "images/products/hydrating-serum.svg",
     "gallery": [
       "images/products/hydrating-serum.svg",
-      "images/products/_angle-2.svg",
-      "images/products/_angle-3.svg",
-      "images/products/_angle-4.svg"
+      "images/products/_angle-treat-2.svg",
+      "images/products/_angle-treat-3.svg",
+      "images/products/_angle-treat-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Hydrating Serum]]",
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/hydrating-serum"
@@ -350,9 +350,9 @@ var PRODUCTS = [
     "image": "images/products/daily-moisturiser.svg",
     "gallery": [
       "images/products/daily-moisturiser.svg",
-      "images/products/_angle-2.svg",
-      "images/products/_angle-3.svg",
-      "images/products/_angle-4.svg"
+      "images/products/_angle-moisturise-2.svg",
+      "images/products/_angle-moisturise-3.svg",
+      "images/products/_angle-moisturise-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Daily Moisturiser]]",
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/daily-moisturiser"
@@ -392,9 +392,9 @@ var PRODUCTS = [
     "image": "images/products/daily-spf-40.svg",
     "gallery": [
       "images/products/daily-spf-40.svg",
-      "images/products/_angle-2.svg",
-      "images/products/_angle-3.svg",
-      "images/products/_angle-4.svg"
+      "images/products/_angle-protect-2.svg",
+      "images/products/_angle-protect-3.svg",
+      "images/products/_angle-protect-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Daily SPF 40]]",
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/daily-spf-40"
@@ -434,9 +434,9 @@ var PRODUCTS = [
     "image": "images/products/overnight-recovery-balm.svg",
     "gallery": [
       "images/products/overnight-recovery-balm.svg",
-      "images/products/_angle-2.svg",
-      "images/products/_angle-3.svg",
-      "images/products/_angle-4.svg"
+      "images/products/_angle-treat-2.svg",
+      "images/products/_angle-treat-3.svg",
+      "images/products/_angle-treat-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Overnight Recovery Balm]]",
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/overnight-recovery-balm"
@@ -474,9 +474,9 @@ var PRODUCTS = [
     "image": "images/products/the-core-routine.svg",
     "gallery": [
       "images/products/the-core-routine.svg",
-      "images/products/_angle-2.svg",
-      "images/products/_angle-3.svg",
-      "images/products/_angle-4.svg"
+      "images/products/_angle-sets-2.svg",
+      "images/products/_angle-sets-3.svg",
+      "images/products/_angle-sets-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of The Core Routine]]",
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/the-core-routine"

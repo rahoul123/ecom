@@ -265,9 +265,9 @@ var PRODUCTS = [
     "image": "images/products/daily-balance-capsules.svg",
     "gallery": [
       "images/products/daily-balance-capsules.svg",
-      "images/products/_angle-2.svg",
-      "images/products/_angle-3.svg",
-      "images/products/_angle-4.svg"
+      "images/products/_angle-daily-support-2.svg",
+      "images/products/_angle-daily-support-3.svg",
+      "images/products/_angle-daily-support-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Daily Balance Capsules]]",
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/daily-balance-capsules"
@@ -307,9 +307,9 @@ var PRODUCTS = [
     "image": "images/products/fibre-blend.svg",
     "gallery": [
       "images/products/fibre-blend.svg",
-      "images/products/_angle-2.svg",
-      "images/products/_angle-3.svg",
-      "images/products/_angle-4.svg"
+      "images/products/_angle-daily-support-2.svg",
+      "images/products/_angle-daily-support-3.svg",
+      "images/products/_angle-daily-support-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Daily Fibre Blend]]",
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/fibre-blend"
@@ -349,9 +349,9 @@ var PRODUCTS = [
     "image": "images/products/protein-shake-vanilla.svg",
     "gallery": [
       "images/products/protein-shake-vanilla.svg",
-      "images/products/_angle-2.svg",
-      "images/products/_angle-3.svg",
-      "images/products/_angle-4.svg"
+      "images/products/_angle-nutrition-2.svg",
+      "images/products/_angle-nutrition-3.svg",
+      "images/products/_angle-nutrition-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Protein Shake — Vanilla]]",
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/protein-shake-vanilla"
@@ -391,9 +391,9 @@ var PRODUCTS = [
     "image": "images/products/evening-calm.svg",
     "gallery": [
       "images/products/evening-calm.svg",
-      "images/products/_angle-2.svg",
-      "images/products/_angle-3.svg",
-      "images/products/_angle-4.svg"
+      "images/products/_angle-sleep-2.svg",
+      "images/products/_angle-sleep-3.svg",
+      "images/products/_angle-sleep-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Evening Calm]]",
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/evening-calm"
@@ -433,9 +433,9 @@ var PRODUCTS = [
     "image": "images/products/hydration-sticks.svg",
     "gallery": [
       "images/products/hydration-sticks.svg",
-      "images/products/_angle-2.svg",
-      "images/products/_angle-3.svg",
-      "images/products/_angle-4.svg"
+      "images/products/_angle-nutrition-2.svg",
+      "images/products/_angle-nutrition-3.svg",
+      "images/products/_angle-nutrition-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Hydration Sticks]]",
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/hydration-sticks"
@@ -473,9 +473,9 @@ var PRODUCTS = [
     "image": "images/products/balance-starter-kit.svg",
     "gallery": [
       "images/products/balance-starter-kit.svg",
-      "images/products/_angle-2.svg",
-      "images/products/_angle-3.svg",
-      "images/products/_angle-4.svg"
+      "images/products/_angle-bundles-2.svg",
+      "images/products/_angle-bundles-3.svg",
+      "images/products/_angle-bundles-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Balance Starter Kit]]",
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/balance-starter-kit"

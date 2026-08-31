@@ -1,28 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1020" width="1200" height="1020" role="img" aria-label="Hero image">
-  <!-- [[PLACEHOLDER IMAGE]] Replace this file with real photography at the same path and dimensions. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1020" width="1200" height="1020" role="img" aria-label="hero">
+  <!-- [[PLACEHOLDER IMAGE]] Abstract brand composition. Replace with real photography (1200x1020). -->
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#f8f1e6"/>
-      <stop offset="100%" stop-color="#faf3e9"/>
+    <linearGradient id="g" x1="0" y1="0" x2="0.8" y2="1">
+      <stop offset="0%" stop-color="hsl(34.883720930232585 55.5392670157068% 81.45098039215686%)"/>
+      <stop offset="100%" stop-color="hsl(52.883720930232585 61.5392670157068% 69.45098039215686%)"/>
     </linearGradient>
-    <pattern id="hatch" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-      <line x1="0" y1="0" x2="0" y2="16" stroke="#a06a1f" stroke-width="1" opacity="0.07"/>
-    </pattern>
+    <filter id="blur" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="56"/>
+    </filter>
   </defs>
-
   <rect width="1200" height="1020" fill="url(#g)"/>
-  <rect width="1200" height="1020" fill="url(#hatch)"/>
-
-  <circle cx="600" cy="418.2" r="132.6" fill="none" stroke="#a06a1f" stroke-width="8.16" opacity="0.35"/>
-  <path d="M 543.9 418.2 h 112.2 M 600 362.1 v 112.2"
-        stroke="#a06a1f" stroke-width="8.16" stroke-linecap="round" opacity="0.35"/>
-
-  <text x="600" y="622.2" text-anchor="middle"
-        font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="45.9" font-weight="600" fill="#7a6b56">
-    Hero image
-  </text>
-  <text x="600" y="688.5" text-anchor="middle"
-        font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="32.64" fill="#7a6b56" opacity="0.75">
-    PLACEHOLDER — 1200x1020 lifestyle photo
-  </text>
+  <g filter="url(#blur)">
+  <circle cx="603" cy="558" r="225" fill="hsl(34.883720930232585 61.5392670157068% 59.450980392156865%)" opacity="0.48"/>
+  <circle cx="801" cy="726" r="268" fill="hsl(60.883720930232585 61.5392670157068% 64.45098039215686%)" opacity="0.54"/>
+  <circle cx="999" cy="894" r="107" fill="hsl(86.88372093023258 61.5392670157068% 69.45098039215686%)" opacity="0.32"/>
+  <circle cx="260" cy="266" r="150" fill="hsl(112.88372093023258 61.5392670157068% 74.45098039215686%)" opacity="0.38"/>
+  <circle cx="458" cy="435" r="194" fill="hsl(138.88372093023258 61.5392670157068% 79.45098039215686%)" opacity="0.44"/>
+  </g>
+  <text x="600" y="994" text-anchor="middle" font-family="system-ui, sans-serif"
+        font-size="19" letter-spacing="1.8"
+        fill="hsl(34.883720930232585 59.5392670157068% 13.450980392156865%)" opacity="0.45">PLACEHOLDER IMAGE</text>
 </svg>

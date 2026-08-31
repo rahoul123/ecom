@@ -245,11 +245,45 @@ pages specifically.
 
 The master copies live in `_tools/legal.js` if you'd rather edit once and regenerate all five.
 
-### Placeholder images
+### Images
 
-Every image is a generated SVG with a visible "PLACEHOLDER — replace with a real photo" label,
-sized to the exact aspect ratio the real asset needs. Overwrite the file at the same path and
-the layout doesn't move. `og-default.png` is a real 1200x630 PNG (Open Graph won't accept SVG).
+Every image is a **generated illustration**, not a photograph. Products are drawn in the pack
+shape their name implies (bottle, dropper, jar, tube, pouch, tin, box, sleep mask, bundle) and
+tinted by category, so a 30-product grid reads like a real catalogue. Each file carries a
+`[[PLACEHOLDER IMAGE]]` comment and a small caption.
+
+#### Dropping in real photography
+
+Put a file in `_photos/<site>/` and it replaces the illustration on the next build. Nothing else
+to change — the build rewrites the paths in `brand-config.js` and the HTML for you.
+
+```
+_photos/everwell/
+├── daily-foundation.jpg     ← must match the product slug
+├── hero.jpg                 ← 1200 x 1020
+├── about.jpg   about-2.jpg  ← 800 x 600
+├── og-default.jpg           ← 1200 x 630
+└── logo.png
+```
+
+Accepted: `.jpg` `.jpeg` `.png` `.webp` `.avif`. Products should be **square**, 1000px or larger.
+
+```bash
+node _tools/generate.js everwell     # prints how many real photos it picked up
+```
+
+Add photos one at a time — anything without a matching file keeps its illustration.
+`_photos/` is dev-only and never uploaded. Full guide in `_photos/README.md`.
+
+#### Where to get images you may legally use
+
+Photograph the real products (best — your Shopify listings need the same shots anyway), or use
+**Unsplash / Pexels / Pixabay** (free, commercial use) or paid stock with a commercial licence.
+
+> Do not reuse photography from competitor sites. Product photography is copyrighted; it risks a
+> takedown, and Google Merchant Center and Meta both reject listings using imagery the seller
+> does not own — which would take the ad account down with it.
+
 
 ---
 
@@ -439,5 +473,6 @@ page / destination mismatch policies target, and Shopping ads generally expect t
 and the selling domain to match. Worth confirming with each platform before spend — if it turns
 out the checkout has to live on the same domain, the change is contained: `checkoutUrl` in
 `brand-config.js` is the only integration point, so it's a data edit, not a rebuild.
-#   e c o m  
+#   e c o m 
+ 
  

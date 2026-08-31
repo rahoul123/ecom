@@ -1,7 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 163 40" width="163" height="40" role="img" aria-label="Clearpath">
   <!-- [[PLACEHOLDER LOGO]] Replace with the real brand mark at this path. -->
-  <rect x="0" y="8" width="26" height="26" rx="8" fill="#e8ebf7"/>
-  <circle cx="13" cy="21" r="5.5" fill="#141a28"/>
-  <text x="36" y="28" font-family="'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif" font-size="20"
-        font-weight="600" letter-spacing="-0.5" fill="#c5cbdd">Clearpath</text>
+  <defs>
+    <linearGradient id="m" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e8ebf7"/>
+      <stop offset="100%" stop-color="#3a477f"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="7" width="28" height="28" rx="9" fill="url(#m)"/>
+  <path d="M8 21 l5 5 l8 -10" stroke="#141a28" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="38" y="28" font-family="'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif" font-size="20"
+        font-weight="600" letter-spacing="-0.6" fill="#c5cbdd">Clearpath</text>
 </svg>

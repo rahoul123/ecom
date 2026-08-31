@@ -46,6 +46,24 @@ const slugifyCategory = (name) => name
   .replace(/[^a-z0-9]+/g, '-')
   .replace(/^-+|-+$/g, '');
 
+/**
+ * Real photography drop-in.
+ * Put a file at  _photos/<site>/<product-slug>.jpg  (or .jpeg/.png/.webp/.avif)
+ * and it is used instead of the generated illustration. Also works for
+ * hero, about, about-2, og-default and logo.
+ * Nothing to configure — just drop the file in and re-run generate.js.
+ */
+const PHOTO_EXTS = ['.jpg', '.jpeg', '.png', '.webp', '.avif'];
+
+function findPhoto(siteSlug, name) {
+  const dir = path.join(ROOT, '_photos', siteSlug);
+  for (const ext of PHOTO_EXTS) {
+    const p = path.join(dir, name + ext);
+    if (fs.existsSync(p)) return { path: p, ext: ext };
+  }
+  return null;
+}
+
 /* Categories present in a site's products, in the site's declared order. */
 function categoriesOf(brand) {
   const seen = [];
@@ -171,7 +189,7 @@ function brandCSS(brand) {
 
 /* -------------------------------------------------------- brand-config.js */
 
-function brandConfig(brand) {
+function brandConfig(brand, imageMap) {
   const products = brand.products.map((p) => ({
     slug: p.slug,
     name: p.name,
@@ -192,12 +210,12 @@ function brandConfig(brand) {
     benefits: p.benefits,
     ingredients: p.ingredients,
     howItWorks: p.howItWorks,
-    image: `images/products/${p.slug}.svg`,
+    image: imageMap[p.slug] || `images/products/${p.slug}.svg`,
     gallery: [
-      `images/products/${p.slug}.svg`,
-      'images/products/_angle-2.svg',
-      'images/products/_angle-3.svg',
-      'images/products/_angle-4.svg'
+      imageMap[p.slug] || `images/products/${p.slug}.svg`,
+      `images/products/_angle-${slugifyCategory(p.category)}-2.svg`,
+      `images/products/_angle-${slugifyCategory(p.category)}-3.svg`,
+      `images/products/_angle-${slugifyCategory(p.category)}-4.svg`
     ],
     imageAlt: `[[PLACEHOLDER: product photo of ${p.name}]]`,
     checkoutUrl: `https://example-shopify-store.myshopify.com/products/${p.slug}`
@@ -307,9 +325,95 @@ var FAQS = ${j(common.faqs)};
 
 /* ------------------------------------------------------------------ build */
 
+/**
+ * Writes every image for a site and returns the paths the templates should use.
+ *
+ * For each slot we look for a real photo at _photos/<site>/<name>.<ext> first.
+ * If one exists it is copied in and its path is returned; otherwise we generate
+ * the placeholder illustration. That means dropping real photography into
+ * _photos/ and re-running this script is the entire "use real photos" workflow.
+ */
+function resolveImages(brand, dir, imageCats) {
+  const map = {};
+  let realPhotos = 0;
+
+  /* Brand marks. A real logo.svg / .png in _photos wins. */
+  const logoPhoto = findPhoto(brand.slug, 'logo');
+  if (logoPhoto) {
+    fs.mkdirSync(path.join(dir, 'images'), { recursive: true });
+    fs.copyFileSync(logoPhoto.path, path.join(dir, 'images', 'logo' + logoPhoto.ext));
+    map['@logo'] = 'images/logo' + logoPhoto.ext;
+    realPhotos++;
+  } else {
+    write(path.join(dir, 'images', 'logo.svg'), img.logo(brand, 'dark'));
+    map['@logo'] = 'images/logo.svg';
+  }
+  write(path.join(dir, 'images', 'logo-light.svg'), img.logo(brand, 'light'));
+  write(path.join(dir, 'favicon.svg'), img.favicon(brand));
+
+  const ogPhoto = findPhoto(brand.slug, 'og-default');
+  if (ogPhoto) {
+    fs.copyFileSync(ogPhoto.path, path.join(dir, 'images', 'og-default' + ogPhoto.ext));
+    map['@og'] = 'images/og-default' + ogPhoto.ext;
+    realPhotos++;
+  } else {
+    write(path.join(dir, 'images', 'og-default.png'), img.ogImage(brand));
+    map['@og'] = 'images/og-default.png';
+  }
+
+  /* Hero and about artwork. */
+  [['hero', 1200, 1020, 7], ['about', 800, 600, 23], ['about-2', 800, 600, 41]].forEach((spec) => {
+    const key = spec[0];
+    const photo = findPhoto(brand.slug, key);
+    if (photo) {
+      fs.copyFileSync(photo.path, path.join(dir, 'images', key + photo.ext));
+      map['@' + key] = 'images/' + key + photo.ext;
+      realPhotos++;
+    } else {
+      write(path.join(dir, 'images', key + '.svg'), img.scene(brand, spec[1], spec[2], spec[3], key));
+      map['@' + key] = 'images/' + key + '.svg';
+    }
+  });
+
+  /* Products. */
+  brand.products.forEach((p) => {
+    const photo = findPhoto(brand.slug, p.slug);
+    if (photo) {
+      fs.mkdirSync(path.join(dir, 'images', 'products'), { recursive: true });
+      fs.copyFileSync(photo.path, path.join(dir, 'images', 'products', p.slug + photo.ext));
+      map[p.slug] = 'images/products/' + p.slug + photo.ext;
+      /* Drop the illustration this photo replaces, so no stale file ships. */
+      const stale = path.join(dir, 'images', 'products', p.slug + '.svg');
+      if (photo.ext !== '.svg' && fs.existsSync(stale)) fs.rmSync(stale);
+      realPhotos++;
+    } else {
+      write(path.join(dir, 'images', 'products', p.slug + '.svg'), img.product(brand, p, imageCats));
+      map[p.slug] = 'images/products/' + p.slug + '.svg';
+    }
+  });
+
+  /* Extra gallery angles, one set per category so they match the product tint. */
+  imageCats.forEach((cat) => {
+    [2, 3, 4].forEach((n) => {
+      write(path.join(dir, 'images', 'products', '_angle-' + slugifyCategory(cat) + '-' + n + '.svg'),
+        img.angle(brand, cat, n, imageCats));
+    });
+  });
+
+  return { map: map, realPhotos: realPhotos };
+}
+
 function buildBrand(brand) {
   const dir = path.join(ROOT, brand.slug);
   const warnings = [];
+  const imageCats = categoriesOf(brand);
+
+  /* Resolve artwork first: a real photo dropped into _photos/<site>/ always
+     wins over a generated illustration, and brand-config.js needs the final
+     paths. resolveImages() returns { map, realPhotos }. */
+  const art = assetsOnly ? { map: {}, realPhotos: 0 } : resolveImages(brand, dir, imageCats);
+  const imageMap = art.map;
+  const realPhotos = art.realPhotos;
 
   /* --- css + js: always refreshed from _shared --- */
   write(path.join(dir, 'css', 'base.css'), read(SHARED, 'css', 'base.css'));
@@ -321,28 +425,10 @@ function buildBrand(brand) {
   /* --- brand-config.js: never clobber the user's edits --- */
   const cfgPath = path.join(dir, 'js', 'brand-config.js');
   if (!fs.existsSync(cfgPath) || forceConfig) {
-    write(cfgPath, brandConfig(brand));
+    write(cfgPath, brandConfig(brand, imageMap));
   }
 
-  if (assetsOnly) return { warnings, files: 0 };
-
-  /* --- images --- */
-  write(path.join(dir, 'images', 'logo.svg'), img.logo(brand, 'dark'));
-  write(path.join(dir, 'images', 'logo-light.svg'), img.logo(brand, 'light'));
-  write(path.join(dir, 'favicon.svg'), img.favicon(brand));
-  write(path.join(dir, 'images', 'og-default.png'), img.ogImage(brand));
-  write(path.join(dir, 'images', 'hero.svg'), img.placeholder(brand, 1200, 1020, 'Hero image', 'PLACEHOLDER — 1200x1020 lifestyle photo'));
-  write(path.join(dir, 'images', 'about.svg'), img.placeholder(brand, 800, 600, 'About image', 'PLACEHOLDER — team or lifestyle photo'));
-  write(path.join(dir, 'images', 'about-2.svg'), img.placeholder(brand, 800, 600, 'About image 2', 'PLACEHOLDER — secondary photo'));
-
-  brand.products.forEach((p) => {
-    write(path.join(dir, 'images', 'products', `${p.slug}.svg`),
-      img.placeholder(brand, 800, 800, p.name, 'PLACEHOLDER — product photo'));
-  });
-  [2, 3, 4].forEach((n) => {
-    write(path.join(dir, 'images', 'products', `_angle-${n}.svg`),
-      img.placeholder(brand, 800, 800, `Angle ${n}`, 'PLACEHOLDER — additional product shot'));
-  });
+  if (assetsOnly) return { warnings, files: 0, realPhotos: 0 };
 
   /* --- pages --- */
   const head = read(SHARED, 'partials', 'head.html');
@@ -358,6 +444,11 @@ function buildBrand(brand) {
     PRIMARY_CTA: brand.copy.primaryCta || common.copy.primaryCta,
     FONT_LINK: brand.fonts.link,
     ASSET_V: ASSET_VERSION,
+    HERO_IMG: imageMap['@hero'] || 'images/hero.svg',
+    ABOUT_IMG: imageMap['@about'] || 'images/about.svg',
+    ABOUT2_IMG: imageMap['@about-2'] || 'images/about-2.svg',
+    LOGO_IMG: imageMap['@logo'] || 'images/logo.svg',
+    OG_IMG: imageMap['@og'] || 'images/og-default.png',
     THEME_COLOR: brand.colors.background,
     DISCLAIMER: '[[PLACEHOLDER: health disclaimer — replace with reviewed legal copy before launch.]]',
     copy: Object.assign({}, common.copy, brand.copy)
@@ -479,7 +570,7 @@ ${urls.join('\n')}
 </urlset>
 `);
 
-  return { warnings, files: count };
+  return { warnings, files: count, realPhotos };
 }
 
 function orgSchema(brand) {
@@ -515,9 +606,9 @@ console.log(assetsOnly
 
 let allWarnings = [];
 targets.forEach((brand) => {
-  const { warnings, files } = buildBrand(brand);
+  const { warnings, files, realPhotos } = buildBrand(brand);
   allWarnings = allWarnings.concat(warnings.map((w) => `${brand.slug}/${w}`));
-  console.log(`  ${brand.slug.padEnd(14)} ${assetsOnly ? 'css + js refreshed' : files + ' pages'}`);
+  console.log(`  ${brand.slug.padEnd(14)} ${assetsOnly ? 'css + js refreshed' : files + ' pages'}${realPhotos ? '   ' + realPhotos + ' real photo' + (realPhotos === 1 ? '' : 's') : ''}`);
 });
 
 if (allWarnings.length) {
