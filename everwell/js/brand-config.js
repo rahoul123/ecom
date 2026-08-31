@@ -1598,56 +1598,56 @@ var PRODUCTS = [
 var TESTIMONIALS = [
   {
     "name": "Daniel R.",
-    "role": "Verified customer",
+    "role": "[[PLACEHOLDER]] Yoga Instructor",
     "rating": 5,
     "quote": "[[PLACEHOLDER]] Ordering was simple and it turned up faster than I expected. The packaging was completely plain, which I appreciated.",
     "avatar": "images/avatars/avatar-1.svg"
   },
   {
     "name": "Priya S.",
-    "role": "Verified customer",
+    "role": "[[PLACEHOLDER]] Nutritionist",
     "rating": 5,
     "quote": "[[PLACEHOLDER]] I like getting my skincare and my supplements in one place instead of three different checkouts.",
     "avatar": "images/avatars/avatar-2.svg"
   },
   {
     "name": "Rachel K.",
-    "role": "Verified customer",
+    "role": "[[PLACEHOLDER]] Marathon Runner",
     "rating": 5,
     "quote": "[[PLACEHOLDER]] What sold me was the absence of hype. It reads like a normal shop, not a pitch.",
     "avatar": "images/avatars/avatar-3.svg"
   },
   {
     "name": "Sam O.",
-    "role": "Verified customer",
+    "role": "[[PLACEHOLDER]] Physiotherapist",
     "rating": 5,
     "quote": "[[PLACEHOLDER]] I asked for a batch certificate and they sent it the same day. That told me a lot.",
     "avatar": "images/avatars/avatar-4.svg"
   },
   {
     "name": "Adam F.",
-    "role": "Verified customer",
+    "role": "[[PLACEHOLDER]] Personal Trainer",
     "rating": 4,
     "quote": "[[PLACEHOLDER]] Straightforward to order and easy to pause. Support replied the next morning.",
     "avatar": "images/avatars/avatar-5.svg"
   },
   {
     "name": "Elena M.",
-    "role": "Verified customer",
+    "role": "[[PLACEHOLDER]] Dietitian",
     "rating": 5,
     "quote": "[[PLACEHOLDER]] Clear labels, quick delivery, and the packaging gives nothing away.",
     "avatar": "images/avatars/avatar-6.svg"
   },
   {
     "name": "Tom A.",
-    "role": "Verified customer",
+    "role": "[[PLACEHOLDER]] Cyclist",
     "rating": 5,
     "quote": "[[PLACEHOLDER]] Being able to see every quantity on the label is the reason I switched.",
     "avatar": "images/avatars/avatar-7.svg"
   },
   {
     "name": "Nadia B.",
-    "role": "Verified customer",
+    "role": "[[PLACEHOLDER]] Pilates Instructor",
     "rating": 4,
     "quote": "[[PLACEHOLDER]] Easy to pause when I went travelling and just as easy to restart. No phone calls.",
     "avatar": "images/avatars/avatar-8.svg"
@@ -1658,7 +1658,13 @@ var TESTIMONIALS = [
    block from index.html — invented ratings must not reach structured data. */
 var REVIEWS_SUMMARY = {
   "rating": 4.8,
-  "count": "[[PLACEHOLDER: 6,200]]"
+  "count": "[[PLACEHOLDER: 6,200]]",
+  "promo": {
+    "pill": "Free",
+    "text": "[[PLACEHOLDER]] Shipping on orders over $50 —",
+    "linkText": "Read all reviews",
+    "href": "shop.html"
+  }
 };
 
 var FAQS = [

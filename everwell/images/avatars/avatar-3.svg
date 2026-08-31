@@ -1,15 +1,33 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="Reviewer photo placeholder">
-  <!-- [[PLACEHOLDER IMAGE]] Reviewer photo. Replace with a real, permissioned photo. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800" role="img" aria-label="Reviewer photo placeholder">
+  <!-- [[PLACEHOLDER IMAGE]] Reviewer portrait. Replace with a real photo (600x800, 3:4). -->
   <defs>
-    <clipPath id="c"><circle cx="60" cy="60" r="60"/></clipPath>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="hsl(215.98230088495575 26% 86%)"/>
-      <stop offset="100%" stop-color="hsl(215.98230088495575 30% 76%)"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0%" stop-color="hsl(215.98230088495575 22% 88%)"/>
+      <stop offset="100%" stop-color="hsl(215.98230088495575 26% 78%)"/>
     </linearGradient>
+    <linearGradient id="fig" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0%" stop-color="hsl(215.98230088495575 32% 60%)"/>
+      <stop offset="100%" stop-color="hsl(215.98230088495575 32% 44%)"/>
+    </linearGradient>
+    <filter id="sh" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="26"/>
+    </filter>
   </defs>
-  <g clip-path="url(#c)">
-    <rect width="120" height="120" fill="url(#bg)"/>
-    <circle cx="60" cy="46" r="21" fill="hsl(215.98230088495575 34% 54%)"/>
-    <path d="M14 120 a46 42 0 0 1 92 0 z" fill="hsl(215.98230088495575 34% 48%)"/>
-  </g>
+
+  <rect width="600" height="800" fill="url(#bg)"/>
+
+  <!-- suggestion of a room behind the figure -->
+  <rect x="52" y="96" width="150" height="112" rx="12" fill="hsl(215.98230088495575 24% 72%)" opacity="0.65"/>
+  <rect x="410" y="150" width="132" height="86" rx="12" fill="hsl(215.98230088495575 24% 72%)" opacity="0.5"/>
+  <rect x="0" y="628" width="600" height="172" fill="hsl(215.98230088495575 26% 68%)" opacity="0.7"/>
+
+  <ellipse cx="300" cy="700" rx="220" ry="46" fill="hsl(215.98230088495575 32% 32%)" opacity="0.2" filter="url(#sh)"/>
+
+  <!-- figure -->
+  <circle cx="300" cy="286" r="92" fill="url(#fig)"/>
+  <path d="M120 800 q0 -212 180 -212 q180 0 180 212 z" fill="url(#fig)"/>
+  <path d="M120 800 q0 -212 180 -212 v212 z" fill="hsl(215.98230088495575 32% 60%)" opacity="0.35"/>
+
+  <text x="300" y="770" text-anchor="middle" font-family="system-ui, sans-serif"
+        font-size="17" letter-spacing="1.8" fill="hsl(215.98230088495575 22% 26%)" opacity="0.5">PLACEHOLDER PHOTO</text>
 </svg>

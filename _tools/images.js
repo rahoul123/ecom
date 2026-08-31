@@ -231,27 +231,47 @@ function angle(brand, category, n, categories) {
 /* ------------------------------------------------------------ avatars ---- */
 
 /**
- * Circular reviewer avatar. An abstract silhouette on a tinted disc — clearly
- * a placeholder, but it reads as a person at 42px, which a letter does not.
+ * Reviewer portrait, 600x800. A stylised figure on a tinted interior, sized to
+ * sit as a tall panel on the right of a testimonial card. Clearly a
+ * placeholder; replace with a real, permissioned photo at the same path.
  */
 function avatar(brand, index) {
   const base = hexToHsl(brand.colors.accent);
-  const c = { h: (base.h + index * 61) % 360, s: 34, l: 52 };
+  const c = { h: (base.h + index * 61) % 360, s: 32, l: 52 };
+  const W = 600, H = 800;
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="Reviewer photo placeholder">
-  <!-- [[PLACEHOLDER IMAGE]] Reviewer photo. Replace with a real, permissioned photo. -->
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Reviewer photo placeholder">
+  <!-- [[PLACEHOLDER IMAGE]] Reviewer portrait. Replace with a real photo (600x800, 3:4). -->
   <defs>
-    <clipPath id="c"><circle cx="60" cy="60" r="60"/></clipPath>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="${hsl(c, 34, -8)}"/>
-      <stop offset="100%" stop-color="${hsl(c, 24, -4)}"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0%" stop-color="${hsl(c, 36, -10)}"/>
+      <stop offset="100%" stop-color="${hsl(c, 26, -6)}"/>
     </linearGradient>
+    <linearGradient id="fig" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0%" stop-color="${hsl(c, 8)}"/>
+      <stop offset="100%" stop-color="${hsl(c, -8)}"/>
+    </linearGradient>
+    <filter id="sh" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="26"/>
+    </filter>
   </defs>
-  <g clip-path="url(#c)">
-    <rect width="120" height="120" fill="url(#bg)"/>
-    <circle cx="60" cy="46" r="21" fill="${hsl(c, 2)}"/>
-    <path d="M14 120 a46 42 0 0 1 92 0 z" fill="${hsl(c, -4)}"/>
-  </g>
+
+  <rect width="${W}" height="${H}" fill="url(#bg)"/>
+
+  <!-- suggestion of a room behind the figure -->
+  <rect x="52" y="96" width="150" height="112" rx="12" fill="${hsl(c, 20, -8)}" opacity="0.65"/>
+  <rect x="410" y="150" width="132" height="86" rx="12" fill="${hsl(c, 20, -8)}" opacity="0.5"/>
+  <rect x="0" y="628" width="${W}" height="172" fill="${hsl(c, 16, -6)}" opacity="0.7"/>
+
+  <ellipse cx="300" cy="700" rx="220" ry="46" fill="${hsl(c, -20)}" opacity="0.2" filter="url(#sh)"/>
+
+  <!-- figure -->
+  <circle cx="300" cy="286" r="92" fill="url(#fig)"/>
+  <path d="M120 800 q0 -212 180 -212 q180 0 180 212 z" fill="url(#fig)"/>
+  <path d="M120 800 q0 -212 180 -212 v212 z" fill="${hsl(c, 8)}" opacity="0.35"/>
+
+  <text x="${W / 2}" y="770" text-anchor="middle" font-family="system-ui, sans-serif"
+        font-size="17" letter-spacing="1.8" fill="${hsl(c, -26, -10)}" opacity="0.5">PLACEHOLDER PHOTO</text>
 </svg>
 `;
 }

@@ -166,19 +166,16 @@
   </div>
 </section>
 
-<section class="section">
+<section class="section reviews">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow">Reviews</span>
+      <span class="eyebrow">Our testimonial</span>
       <h2 class="is-placeholder">{{copy.reviewsHeading}}</h2>
       <p class="is-placeholder">{{copy.reviewsLede}}</p>
     </div>
 
-    <div class="reviews-summary is-placeholder" id="reviews-summary"></div>
-    <script>Site.renderReviewsSummary('#reviews-summary');</script>
-
     <div class="slider" id="reviews-slider">
-      <div class="testimonial-slider slider__track" id="testimonials"></div>
+      <div class="slider__track" id="testimonials"></div>
       <div class="slider__controls">
         <button type="button" class="slider__arrow" data-slider-prev aria-label="Previous reviews">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
@@ -189,9 +186,12 @@
         </button>
       </div>
     </div>
+
+    <div class="reviews-footer is-placeholder" id="reviews-summary"></div>
     <script>
       Site.renderTestimonials('#testimonials');
       Site.initSlider('#reviews-slider');
+      Site.renderReviewsSummary('#reviews-summary');
     </script>
     <p class="text-center text-muted mt-2" style="font-size:0.8125rem">
       [[PLACEHOLDER: all testimonials are fictional. Replace with real, attributable reviews or remove this section.]]

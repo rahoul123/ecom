@@ -153,27 +153,36 @@ const categoryContent = {
 /* Two testimonials pulled from across the original five, so the merged store
    does not read as one niche. Still fictional. */
 const testimonials = [
-  { name: 'Daniel R.', role: 'Verified customer', rating: 5,
+  { name: 'Daniel R.', role: '[[PLACEHOLDER]] Yoga Instructor', rating: 5,
     quote: '[[PLACEHOLDER]] Ordering was simple and it turned up faster than I expected. The packaging was completely plain, which I appreciated.' },
-  { name: 'Priya S.', role: 'Verified customer', rating: 5,
+  { name: 'Priya S.', role: '[[PLACEHOLDER]] Nutritionist', rating: 5,
     quote: '[[PLACEHOLDER]] I like getting my skincare and my supplements in one place instead of three different checkouts.' },
-  { name: 'Rachel K.', role: 'Verified customer', rating: 5,
+  { name: 'Rachel K.', role: '[[PLACEHOLDER]] Marathon Runner', rating: 5,
     quote: '[[PLACEHOLDER]] What sold me was the absence of hype. It reads like a normal shop, not a pitch.' },
-  { name: 'Sam O.', role: 'Verified customer', rating: 5,
+  { name: 'Sam O.', role: '[[PLACEHOLDER]] Physiotherapist', rating: 5,
     quote: '[[PLACEHOLDER]] I asked for a batch certificate and they sent it the same day. That told me a lot.' },
-  { name: 'Adam F.', role: 'Verified customer', rating: 4,
+  { name: 'Adam F.', role: '[[PLACEHOLDER]] Personal Trainer', rating: 4,
     quote: '[[PLACEHOLDER]] Straightforward to order and easy to pause. Support replied the next morning.' },
-  { name: 'Elena M.', role: 'Verified customer', rating: 5,
+  { name: 'Elena M.', role: '[[PLACEHOLDER]] Dietitian', rating: 5,
     quote: '[[PLACEHOLDER]] Clear labels, quick delivery, and the packaging gives nothing away.' },
-  { name: 'Tom A.', role: 'Verified customer', rating: 5,
+  { name: 'Tom A.', role: '[[PLACEHOLDER]] Cyclist', rating: 5,
     quote: '[[PLACEHOLDER]] Being able to see every quantity on the label is the reason I switched.' },
-  { name: 'Nadia B.', role: 'Verified customer', rating: 4,
+  { name: 'Nadia B.', role: '[[PLACEHOLDER]] Pilates Instructor', rating: 4,
     quote: '[[PLACEHOLDER]] Easy to pause when I went travelling and just as easy to restart. No phone calls.' }
 ];
 
 /* Aggregate rating shown above the reviews. PLACEHOLDER numbers — these must
    NOT be fed to structured data until a real review source supplies them. */
-const reviewsSummary = { rating: 4.8, count: '[[PLACEHOLDER: 6,200]]' };
+const reviewsSummary = {
+  rating: 4.8,
+  count: '[[PLACEHOLDER: 6,200]]',
+  promo: {
+    pill: 'Free',
+    text: '[[PLACEHOLDER]] Shipping on orders over $50 —',
+    linkText: 'Read all reviews',
+    href: 'shop.html'
+  }
+};
 
 
 module.exports = {

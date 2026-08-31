@@ -461,22 +461,22 @@ var Site = (function () {
 
   /* ------------------------------------------------- testimonials and FAQ */
 
+  /* Split card: stars, quote and attribution on the left, portrait on the right. */
   function testimonialCard(t, i) {
     return '<figure class="testimonial is-placeholder">' +
-      stars(t.rating) +
-      '<blockquote class="testimonial__quote">' + esc(t.quote) + '</blockquote>' +
-      '<figcaption class="testimonial__who">' +
-        '<span class="testimonial__avatar">' +
-          '<img src="' + esc(t.avatar || ('images/avatars/avatar-' + (i + 1) + '.svg')) +
-          '" alt="" width="96" height="96" loading="lazy" decoding="async">' +
-        '</span>' +
-        '<span>' +
+      '<div class="testimonial__body">' +
+        stars(t.rating) +
+        '<blockquote class="testimonial__quote">&ldquo;' + esc(t.quote) + '</blockquote>' +
+        '<figcaption class="testimonial__who">' +
           '<span class="testimonial__name">' + esc(t.name) + '</span>' +
           '<span class="testimonial__meta">' + esc(t.role || t.meta) + '</span>' +
-        '</span>' +
-        (t.verified === false ? '' :
-          '<span class="testimonial__verified">' + icon('check') + 'Verified</span>') +
-      '</figcaption></figure>';
+        '</figcaption>' +
+      '</div>' +
+      '<div class="testimonial__photo">' +
+        '<img src="' + esc(t.avatar || ('images/avatars/avatar-' + (i + 1) + '.svg')) +
+        '" alt="" width="600" height="800" loading="lazy" decoding="async">' +
+      '</div>' +
+    '</figure>';
   }
 
   function renderTestimonials(selector, limit) {
@@ -486,15 +486,29 @@ var Site = (function () {
     host.innerHTML = list.map(testimonialCard).join('');
   }
 
-  /** Aggregate score block above the reviews. */
+  /**
+   * The line under the reviews slider: an optional promo strip, then the
+   * aggregate score. Numbers come from REVIEWS_SUMMARY and are placeholders
+   * until a real review source supplies them.
+   */
   function renderReviewsSummary(selector) {
     var host = el(selector);
     if (!host) return;
     var r = (typeof REVIEWS_SUMMARY !== 'undefined' && REVIEWS_SUMMARY) || { rating: 4.8, count: '' };
-    host.innerHTML =
-      '<span class="reviews-summary__score"><b>' + esc(r.rating) + '</b><span>/ 5</span></span>' +
-      stars(r.rating) +
-      '<span class="reviews-summary__count">Based on ' + esc(r.count) + ' reviews</span>';
+
+    var promo = r.promo
+      ? '<p class="reviews-promo">' +
+          (r.promo.pill ? '<span class="reviews-promo__pill">' + esc(r.promo.pill) + '</span>' : '') +
+          '<span>' + esc(r.promo.text) + '</span>' +
+          '<a href="' + esc(r.promo.href || 'shop.html') + '">' + esc(r.promo.linkText) + '</a>' +
+        '</p>'
+      : '';
+
+    host.innerHTML = promo +
+      '<p class="reviews-score">' +
+        '<span>' + esc(r.rating) + '/5</span>' + stars(r.rating) +
+        '<span>Our ' + esc(r.count) + ' Reviews</span>' +
+      '</p>';
   }
 
   /**

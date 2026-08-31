@@ -32,8 +32,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="css/base.css?v=49671327">
-<link rel="stylesheet" href="css/brand.css?v=49671327">
+<link rel="stylesheet" href="css/base.css?v=8d124fb3">
+<link rel="stylesheet" href="css/brand.css?v=8d124fb3">
 
 <!--
   Load order matters. brand-config.js first (data), theme-init.js second
@@ -41,10 +41,10 @@
   tracking.js (inert until you add pixel IDs). All synchronous and tiny —
   that is what lets inline render calls run during parse with zero layout shift.
 -->
-<script src="js/brand-config.js?v=49671327"></script>
-<script src="js/theme-init.js?v=49671327"></script>
-<script src="js/site.js?v=49671327"></script>
-<script src="js/tracking.js?v=49671327"></script>
+<script src="js/brand-config.js?v=8d124fb3"></script>
+<script src="js/theme-init.js?v=8d124fb3"></script>
+<script src="js/site.js?v=8d124fb3"></script>
+<script src="js/tracking.js?v=8d124fb3"></script>
 <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
 <script type="application/ld+json">
 {
@@ -335,19 +335,16 @@
   </div>
 </section>
 
-<section class="section">
+<section class="section reviews">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow">Reviews</span>
+      <span class="eyebrow">Our testimonial</span>
       <h2 class="is-placeholder">In their words</h2>
       <p class="is-placeholder">[[PLACEHOLDER]] Fictional reviews shown for layout purposes only.</p>
     </div>
 
-    <div class="reviews-summary is-placeholder" id="reviews-summary"></div>
-    <script>Site.renderReviewsSummary('#reviews-summary');</script>
-
     <div class="slider" id="reviews-slider">
-      <div class="testimonial-slider slider__track" id="testimonials"></div>
+      <div class="slider__track" id="testimonials"></div>
       <div class="slider__controls">
         <button type="button" class="slider__arrow" data-slider-prev aria-label="Previous reviews">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
@@ -358,9 +355,12 @@
         </button>
       </div>
     </div>
+
+    <div class="reviews-footer is-placeholder" id="reviews-summary"></div>
     <script>
       Site.renderTestimonials('#testimonials');
       Site.initSlider('#reviews-slider');
+      Site.renderReviewsSummary('#reviews-summary');
     </script>
     <p class="text-center text-muted mt-2" style="font-size:0.8125rem">
       [[PLACEHOLDER: all testimonials are fictional. Replace with real, attributable reviews or remove this section.]]

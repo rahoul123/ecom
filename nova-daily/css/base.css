@@ -931,30 +931,10 @@ hr { border: 0; border-top: 1px solid var(--color-border); margin: 2.5rem 0; }
 .trust-badge p { margin: 0; font-size: var(--fs-xs); color: var(--color-muted); }
 
 /* --------------------------------------------------------------------------
-   16. Testimonials — aggregate rating, cards, and a scroll-snap slider
+   16. Testimonials — split card (text left, portrait right) in a slider
    -------------------------------------------------------------------------- */
 
-.reviews-summary {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.35rem;
-  margin-bottom: 2.5rem;
-}
-.reviews-summary__score {
-  display: flex;
-  align-items: baseline;
-  gap: 0.3rem;
-  font-family: var(--font-heading);
-  font-weight: 700;
-  letter-spacing: var(--tracking-heading);
-  line-height: 1;
-  color: var(--color-heading);
-}
-.reviews-summary__score b { font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 700; }
-.reviews-summary__score span { font-size: 1.25rem; color: var(--color-muted); }
-.reviews-summary .stars svg { width: 20px; height: 20px; }
-.reviews-summary__count { font-size: var(--fs-sm); color: var(--color-muted); }
+.reviews { background: var(--color-surface); }
 
 /* Slider: scroll-snap track, no library. Arrows and dots drive scrollTo. */
 .slider { position: relative; }
@@ -962,7 +942,7 @@ hr { border: 0; border-top: 1px solid var(--color-border); margin: 2.5rem 0; }
 .slider__track {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: 86%;
+  grid-auto-columns: 88%;
   gap: 1.25rem;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
@@ -974,8 +954,7 @@ hr { border: 0; border-top: 1px solid var(--color-border); margin: 2.5rem 0; }
 .slider__track::-webkit-scrollbar { display: none; }
 .slider__track > * { scroll-snap-align: start; }
 
-@media (min-width: 700px) { .slider__track { grid-auto-columns: 48%; gap: 1.5rem; } }
-@media (min-width: 1000px) { .slider__track { grid-auto-columns: calc((100% - 3.5rem) / 3); gap: 1.75rem; } }
+@media (min-width: 900px) { .slider__track { grid-auto-columns: calc((100% - 1.75rem) / 2); gap: 1.75rem; } }
 
 .slider__controls {
   display: flex;
@@ -1016,76 +995,114 @@ hr { border: 0; border-top: 1px solid var(--color-border); margin: 2.5rem 0; }
 }
 .slider__dot.is-active { width: 26px; background: var(--color-accent); }
 
-/* Card */
+/* The card itself: copy on the left, a tall portrait filling the right. */
 .testimonial {
-  display: flex;
-  flex-direction: column;
-  gap: 1.15rem;
-  padding: 2.25rem;
-  background: var(--color-bg);
-  border: 1px solid var(--color-border);
-  border-radius: 28px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
   height: 100%;
+  background: var(--color-bg);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(15, 18, 13, 0.04), 0 10px 30px -18px rgba(15, 18, 13, 0.3);
   transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
 }
-.testimonial:hover { transform: translateY(-5px); box-shadow: 0 24px 48px -24px rgba(15, 18, 13, 0.28); }
+@media (min-width: 560px) { .testimonial { grid-template-columns: 1fr 0.62fr; } }
+.testimonial:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 8px rgba(15, 18, 13, 0.05), 0 26px 50px -22px rgba(15, 18, 13, 0.35);
+}
+
+.testimonial__body {
+  display: flex;
+  flex-direction: column;
+  padding: 1.75rem;
+  min-width: 0;
+}
+@media (min-width: 700px) { .testimonial__body { padding: 2.25rem; } }
+
+.testimonial .stars { margin-bottom: 1rem; }
+.testimonial .stars svg { width: 17px; height: 17px; }
 
 .testimonial__quote {
-  position: relative;
-  font-family: var(--font-heading);
   font-size: 1.0625rem;
   line-height: 1.55;
-  letter-spacing: -0.01em;
   color: var(--color-heading);
-  margin: 0;
-  flex: 1;
+  margin: 0 0 auto;
+  padding-bottom: 1.5rem;
 }
-.testimonial__quote::before {
-  content: "C";
-  display: block;
-  font-size: 3.5rem;
-  line-height: 0.7;
-  color: var(--color-accent);
-  opacity: 0.28;
-  margin-bottom: 0.35rem;
-}
+@media (min-width: 700px) { .testimonial__quote { font-size: 1.125rem; } }
 
-.testimonial__who {
+.testimonial__who { padding-top: 1.35rem; border-top: 1px solid var(--color-border); }
+.testimonial__name {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: var(--tracking-heading);
+  line-height: 1.3;
+  color: var(--color-heading);
+}
+.testimonial__meta { font-size: var(--fs-sm); color: var(--color-muted); }
+
+.testimonial__photo {
+  position: relative;
+  background: var(--color-surface);
+  min-height: 210px;
+  margin: 1.25rem 1.25rem 1.25rem 0;
+  border-radius: 14px;
+  overflow: hidden;
+}
+@media (max-width: 559px) { .testimonial__photo { margin: 0 1.75rem 1.75rem; aspect-ratio: 4/3; } }
+.testimonial__photo img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Promo line + aggregate score, sat under the slider. */
+.reviews-footer {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 0.85rem;
-  padding-top: 1.15rem;
-  border-top: 1px solid var(--color-border);
+  margin-top: 2.75rem;
+  text-align: center;
 }
-.testimonial__avatar {
-  width: 48px; height: 48px;
-  flex-shrink: 0;
-  border-radius: 50%;
-  overflow: hidden;
-  background: var(--color-surface);
-}
-.testimonial__avatar img { width: 100%; height: 100%; object-fit: cover; }
 
-.testimonial__name { font-size: 0.9375rem; font-weight: 700; display: block; line-height: 1.3; color: var(--color-heading); }
-.testimonial__meta { font-size: var(--fs-xs); color: var(--color-muted); }
-
-.testimonial__verified {
-  display: inline-flex;
+.reviews-promo {
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 0.25rem;
-  margin-left: auto;
-  padding: 0.25rem 0.55rem;
+  justify-content: center;
+  gap: 0.6rem;
+  font-size: 1rem;
+  color: var(--color-text);
+}
+.reviews-promo__pill {
+  padding: 0.28rem 0.8rem;
   border-radius: 999px;
-  background: var(--color-accent-tint);
-  color: var(--color-accent);
-  font-size: 0.6875rem;
+  background: var(--color-accent-alt);
+  color: #fff;
+  font-size: var(--fs-xs);
   font-weight: 700;
 }
-.testimonial__verified svg { width: 12px; height: 12px; }
+.reviews-promo a { font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+.reviews-promo a:hover { color: var(--color-accent); }
 
-/* Static grid fallback, still used on the product page. */
+.reviews-score {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: var(--tracking-heading);
+  color: var(--color-heading);
+  font-size: 1.25rem;
+}
+.reviews-score .stars svg { width: 21px; height: 21px; }
+
+/* Static grid, still used on the product page. */
 .testimonial-grid { display: grid; gap: 1.25rem; }
-@media (min-width: 768px) { .testimonial-grid { grid-template-columns: repeat(3, 1fr); gap: 1.75rem; } }
+@media (min-width: 900px) { .testimonial-grid { grid-template-columns: repeat(2, 1fr); gap: 1.75rem; } }
 
 /* --------------------------------------------------------------------------
    17. Accordion
