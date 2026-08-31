@@ -342,11 +342,10 @@ var BRAND = {
 
   heroProof: ${j(brand.heroProof)},
   marquee: ${j(brand.marquee || common.marquee || [])},
-  bento: ${j(brand.bento || common.bento || [])},
-  compareOther: ${JSON.stringify(brand.compareOther || common.compareOther || 'Typical pharmacy')},
-  compare: ${j(brand.compare || common.compare || [])},
   goals: ${j(brand.goals || [])},
   heroProducts: ${j(brand.heroProducts || [])},
+  newArrivals: ${j(brand.newArrivals || [])},
+  qualityPicks: ${j(brand.qualityPicks || [])},
   spotlightSlug: ${JSON.stringify(brand.spotlightSlug || '')},
   promo: ${j(brand.promo || common.promo || {})},
   valueProps: ${j(brand.valueProps)},

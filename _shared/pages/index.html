@@ -131,26 +131,32 @@
 <section class="section">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow">Why us</span>
-      <h2>What you get either way</h2>
-      <p class="is-placeholder">{{copy.bentoLede}}</p>
+      <span class="eyebrow">New arrivals</span>
+      <h2>Just landed</h2>
+      <p class="is-placeholder">{{copy.arrivalsLede}}</p>
     </div>
-    <div class="bento" id="bento"></div>
-    <script>Site.renderBento('#bento');</script>
+    <div class="arrivals" id="arrivals"></div>
+    <script>Site.renderArrivals('#arrivals');</script>
   </div>
 </section>
 
 <section class="section section--soft">
   <div class="container">
-    <div class="section-head">
-      <span class="eyebrow">Compare</span>
-      <h2>How we differ</h2>
+    <div class="picks">
+      <div>
+        <span class="eyebrow">Quality</span>
+        <h2>Discover our quality products</h2>
+        <p class="is-placeholder" style="color:var(--color-muted);font-size:var(--fs-lead);margin-top:0.75rem">
+          {{copy.picksLede}}
+        </p>
+        <div class="picks__list mt-2" id="picks"></div>
+        <div class="btn-row mt-3">
+          <a class="btn btn--primary btn--lg" href="shop.html">Shop all products</a>
+        </div>
+      </div>
+      <div class="picks__hero is-placeholder" id="picks-hero"></div>
     </div>
-    <div class="compare is-placeholder" id="compare"></div>
-    <script>Site.renderCompare('#compare');</script>
-    <p class="text-center text-muted mt-2" style="font-size:0.8125rem">
-      [[PLACEHOLDER: comparison claims — only keep rows you can actually stand behind.]]
-    </p>
+    <script>Site.renderPicks('#picks', '#picks-hero');</script>
   </div>
 </section>
 
@@ -209,6 +215,8 @@
       <div class="btn-row">
         <a class="btn btn--light btn--lg" href="shop.html">{{copy.primaryCta}}</a>
       </div>
+      <div class="cta-banner__packs" id="cta-packs"></div>
+      <script>Site.renderCtaPacks('#cta-packs');</script>
     </div>
   </div>
 </section>

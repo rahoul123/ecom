@@ -874,46 +874,105 @@ var Site = (function () {
       '<span aria-hidden="true" style="display:contents">' + items + '</span></div>';
   }
 
-  /* Bento "why us" grid. */
-  function renderBento(selector) {
+  /**
+   * New arrivals — three products at a larger size than the shop grid, with
+   * the image doing most of the work. Uses BRAND.newArrivals if set, else the
+   * products carrying a "New" badge, else the last three in the catalogue.
+   */
+  function renderArrivals(selector) {
     var host = el(selector);
     if (!host) return;
-    host.innerHTML = (BRAND.bento || []).map(function (b) {
-      var cls = 'bento__cell' + (b.wide ? ' bento__cell--wide' : '') + (b.accent ? ' bento__cell--accent' : '');
-      return '<div class="' + cls + ' is-placeholder">' +
-        (b.stat
-          ? '<span class="bento__stat">' + esc(b.stat) + '</span>'
-          : '<span class="bento__icon">' + icon(b.icon || 'check') + '</span>') +
-        '<h3>' + esc(b.title) + '</h3><p>' + esc(b.text) + '</p></div>';
+
+    var picks = (BRAND.newArrivals || []).map(productBySlug).filter(Boolean);
+    if (picks.length < 3) {
+      var flagged = PRODUCTS.filter(function (p) { return p.badge === 'New'; });
+      picks = flagged.length >= 3 ? flagged : PRODUCTS.slice(-3);
+    }
+
+    host.innerHTML = picks.slice(0, 3).map(function (p) {
+      var n = (BRAND.categoryIndex && BRAND.categoryIndex[p.category]) || 0;
+      var vars = n ? ' style="--tint:var(--cat-' + n + '-tint);--deep:var(--cat-' + n + '-deep)"' : '';
+      var onSale = p.compareAt && p.compareAt > p.price;
+
+      return '<article class="arrival"' + vars + '>' +
+        '<a class="arrival__media" href="product.html?p=' + esc(p.slug) + '" aria-label="' + esc(p.name) + '">' +
+          '<img src="' + esc(p.image) + '" alt="' + esc(p.imageAlt || p.name) +
+          '" width="800" height="720" loading="lazy" decoding="async">' +
+          '<span class="arrival__flag">' + esc(p.badge || 'New in') + '</span>' +
+        '</a>' +
+        '<div class="arrival__body">' +
+          '<span class="arrival__cat">' + esc(p.category) + '</span>' +
+          '<h3><a href="product.html?p=' + esc(p.slug) + '">' + esc(p.name) + '</a></h3>' +
+          '<p>' + esc(p.shortBenefit) + '</p>' +
+          '<div class="rating-line">' + stars(p.rating, 'sm') +
+            '<span>' + esc(p.reviewCount) + ' reviews</span></div>' +
+          '<div class="arrival__foot">' +
+            '<span class="price"><span class="price__now">' + money(p.price) + '</span>' +
+              (onSale ? '<span class="price__was">' + money(p.compareAt) + '</span>' : '') + '</span>' +
+            '<button type="button" class="btn btn--primary btn--sm" data-buy="' + esc(p.slug) + '">Shop now</button>' +
+          '</div>' +
+        '</div>' +
+      '</article>';
     }).join('');
   }
 
-  /* Us-vs-them comparison table. */
-  function renderCompare(selector) {
+  /**
+   * Quality picks — a short editorial list beside one large product visual.
+   * The list is the top-rated products; the hero is the first of them.
+   */
+  function renderPicks(listSelector, heroSelector) {
+    var list = el(listSelector);
+    if (!list) return;
+
+    var picks = (BRAND.qualityPicks || []).map(productBySlug).filter(Boolean);
+    if (picks.length < 3) {
+      picks = PRODUCTS.slice().sort(function (a, b) { return b.rating - a.rating; }).slice(0, 3);
+    }
+    picks = picks.slice(0, 3);
+
+    list.innerHTML = picks.map(function (p, i) {
+      return '<a class="pick" href="product.html?p=' + esc(p.slug) + '">' +
+        '<span class="pick__num">0' + (i + 1) + '</span>' +
+        '<span class="pick__thumb">' +
+          '<img src="' + esc(p.image) + '" alt="" width="140" height="140" loading="lazy" decoding="async">' +
+        '</span>' +
+        '<span class="pick__text">' +
+          '<h3>' + esc(p.name) + '</h3>' +
+          '<p>' + esc(p.shortBenefit) + '</p>' +
+        '</span>' +
+        '<span class="pick__price">' + money(p.price) + '</span>' +
+      '</a>';
+    }).join('');
+
+    var hero = el(heroSelector);
+    if (!hero) return;
+    var lead = picks[0];
+    var n = (BRAND.categoryIndex && BRAND.categoryIndex[lead.category]) || 0;
+    if (n) hero.setAttribute('style', '--tint:var(--cat-' + n + '-tint)');
+
+    hero.innerHTML =
+      '<img src="' + esc(lead.image) + '" alt="' + esc(lead.imageAlt || lead.name) +
+      '" width="800" height="864" loading="lazy" decoding="async">' +
+      '<span class="picks__hero-tag">' +
+        '<span>' +
+          '<strong>' + esc(lead.name) + '</strong>' +
+          '<span>' + esc(lead.reviewCount) + ' reviews &middot; ' + esc(lead.rating) + '/5</span>' +
+        '</span>' +
+        '<button type="button" class="btn btn--primary btn--sm" data-buy="' + esc(lead.slug) + '">Buy</button>' +
+      '</span>';
+  }
+
+  /** Three packs along the base of the CTA banner. */
+  function renderCtaPacks(selector) {
     var host = el(selector);
     if (!host) return;
-    var rows = BRAND.compare;
-    if (!rows || !rows.length) return;
+    var picks = PRODUCTS.filter(function (p) { return p.featured; }).slice(0, 3);
+    if (picks.length < 3) picks = PRODUCTS.slice(0, 3);
 
-    var yes = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" ' +
-      'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>';
-    var no = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" ' +
-      'stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>';
-
-    host.innerHTML =
-      '<div class="compare__row compare__row--head">' +
-        '<span class="compare__cell"></span>' +
-        '<span class="compare__cell">' + esc(BRAND.name) + '</span>' +
-        '<span class="compare__cell">' + esc(BRAND.compareOther || 'Typical pharmacy') + '</span>' +
-      '</div>' +
-      rows.map(function (r) {
-        return '<div class="compare__row">' +
-          '<span class="compare__cell">' + esc(r.label) + '</span>' +
-          '<span class="compare__cell compare__yes">' + (r.us ? yes : no) + '</span>' +
-          '<span class="compare__cell ' + (r.them ? 'compare__yes' : 'compare__no') + '">' +
-            (r.them ? yes : no) + '</span>' +
-        '</div>';
-      }).join('');
+    host.innerHTML = picks.map(function (p) {
+      return '<a class="cta-banner__pack" href="product.html?p=' + esc(p.slug) + '" aria-label="' + esc(p.name) + '">' +
+        '<img src="' + esc(p.image) + '" alt="" width="300" height="300" loading="lazy" decoding="async"></a>';
+    }).join('');
   }
 
   /** Shop-by-goal grid. Each goal links into a category. */
@@ -1384,8 +1443,9 @@ var Site = (function () {
     renderGoals: renderGoals,
     renderSpotlight: renderSpotlight,
     renderMarquee: renderMarquee,
-    renderBento: renderBento,
-    renderCompare: renderCompare,
+    renderArrivals: renderArrivals,
+    renderPicks: renderPicks,
+    renderCtaPacks: renderCtaPacks,
     renderSteps: renderSteps
   };
 })();

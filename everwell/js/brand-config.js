@@ -131,63 +131,6 @@ var BRAND = {
   "Support replies in 24h",
   "Full ingredient lists"
 ],
-  bento: [
-  {
-    "icon": "shield",
-    "title": "Nothing hidden",
-    "text": "[[PLACEHOLDER]] Every quantity printed on the label. No proprietary blends anywhere in the range.",
-    "wide": true
-  },
-  {
-    "stat": "30",
-    "title": "Day returns",
-    "text": "[[PLACEHOLDER]] On unopened items, no questions.",
-    "accent": true
-  },
-  {
-    "icon": "box",
-    "title": "Plain packaging",
-    "text": "[[PLACEHOLDER]] No branding on the outside of any parcel."
-  },
-  {
-    "icon": "chat",
-    "title": "Real support",
-    "text": "[[PLACEHOLDER]] A person replies within one business day."
-  },
-  {
-    "icon": "refresh",
-    "title": "Change anytime",
-    "text": "[[PLACEHOLDER]] Pause, skip or cancel a repeat order yourself."
-  }
-],
-  compareOther: "Typical pharmacy",
-  compare: [
-  {
-    "label": "Full ingredient quantities on the label",
-    "us": true,
-    "them": false
-  },
-  {
-    "label": "Plain, unbranded outer packaging",
-    "us": true,
-    "them": false
-  },
-  {
-    "label": "Everything in one order",
-    "us": true,
-    "them": false
-  },
-  {
-    "label": "Pause or cancel without a phone call",
-    "us": true,
-    "them": false
-  },
-  {
-    "label": "Delivered to your door",
-    "us": true,
-    "them": true
-  }
-],
   goals: [
   {
     "icon": "user",
@@ -218,6 +161,16 @@ var BRAND = {
   "daily-multi",
   "gentle-gel-cleanser",
   "night-capsules"
+],
+  newArrivals: [
+  "vitamin-d3-k2",
+  "daily-spf-40",
+  "magnesium-night"
+],
+  qualityPicks: [
+  "daily-multi",
+  "hydrating-serum",
+  "wind-down-tea"
 ],
   spotlightSlug: "daily-multi",
   promo: {

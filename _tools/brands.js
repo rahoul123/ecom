@@ -69,13 +69,6 @@ const common = {
     'Full ingredient lists'
   ],
 
-  bento: [
-    { icon: 'shield', title: 'Nothing hidden', text: '[[PLACEHOLDER]] Every quantity printed on the label. No proprietary blends.', wide: true },
-    { stat: '30', title: 'Day returns', text: '[[PLACEHOLDER]] On unopened items.', accent: true },
-    { icon: 'box', title: 'Plain packaging', text: '[[PLACEHOLDER]] No branding on the outside of any parcel.' },
-    { icon: 'chat', title: 'Real support', text: '[[PLACEHOLDER]] A person replies within one business day.' },
-    { icon: 'refresh', title: 'Change anytime', text: '[[PLACEHOLDER]] Pause, skip or cancel yourself.' }
-  ],
 
   promo: {
     tag: 'Limited offer',
@@ -85,13 +78,6 @@ const common = {
     cta: 'Shop the offer'
   },
 
-  compareOther: 'Typical pharmacy',
-  compare: [
-    { label: 'Full ingredient quantities on the label', us: true, them: false },
-    { label: 'Plain, unbranded outer packaging', us: true, them: false },
-    { label: 'Pause or cancel without a phone call', us: true, them: false },
-    { label: 'Delivered to your door', us: true, them: true }
-  ],
 
   copy: {
     primaryCta: 'Shop now',
@@ -102,7 +88,8 @@ const common = {
     trustHeading: 'Built to be worth trusting',
     trustLede: '[[PLACEHOLDER]] The things we think matter most when you are buying something for your health.',
     reviewsLede: '[[PLACEHOLDER]] Fictional reviews shown for layout purposes only.',
-    bentoLede: '[[PLACEHOLDER]] The things that apply to every order, whichever part of the range you buy from.'
+    arrivalsLede: '[[PLACEHOLDER]] The newest products in the range.',
+    picksLede: '[[PLACEHOLDER]] The three our customers rate highest.'
   }
 };
 

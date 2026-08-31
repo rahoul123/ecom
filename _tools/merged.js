@@ -258,7 +258,8 @@ module.exports = {
     aboutHowHeading: 'How we choose what to sell',
     aboutHowText: '[[PLACEHOLDER]] Every product goes through the same review before it joins the shop, whichever category it lands in.',
     shopLede: '[[PLACEHOLDER]] Everything we sell, in one grid. Filter by category or price to narrow it down.',
-    bentoLede: '[[PLACEHOLDER]] The things that apply to every order, whichever part of the shop you buy from.'
+    arrivalsLede: '[[PLACEHOLDER]] The three newest products in the shop, across skincare, supplements and sleep.',
+    picksLede: '[[PLACEHOLDER]] The three our customers rate highest, and the ones we would point a friend at first.'
   },
 
   heroProof: ['Licensed providers', 'Discreet packaging', 'Cancel anytime'],
@@ -275,13 +276,6 @@ module.exports = {
   ],
 
   /* Bento "why us" grid. One accent cell, one wide cell. */
-  bento: [
-    { icon: 'shield', title: 'Nothing hidden', text: '[[PLACEHOLDER]] Every quantity printed on the label. No proprietary blends anywhere in the range.', wide: true },
-    { stat: '30', title: 'Day returns', text: '[[PLACEHOLDER]] On unopened items, no questions.', accent: true },
-    { icon: 'box', title: 'Plain packaging', text: '[[PLACEHOLDER]] No branding on the outside of any parcel.' },
-    { icon: 'chat', title: 'Real support', text: '[[PLACEHOLDER]] A person replies within one business day.' },
-    { icon: 'refresh', title: 'Change anytime', text: '[[PLACEHOLDER]] Pause, skip or cancel a repeat order yourself.' }
-  ],
 
   /* Shop-by-goal grid — the entry point most people actually use. */
   goals: [
@@ -294,6 +288,10 @@ module.exports = {
   /* The three packs shown in the hero stage (main, left, right). */
   heroProducts: ['daily-multi', 'gentle-gel-cleanser', 'night-capsules'],
   heroOffer: '[[PLACEHOLDER]] 15% off your first order',
+
+  /* Products featured in the two editorial sections. */
+  newArrivals: ['vitamin-d3-k2', 'daily-spf-40', 'magnesium-night'],
+  qualityPicks: ['daily-multi', 'hydrating-serum', 'wind-down-tea'],
 
   /* Which product gets the full-width spotlight treatment. */
   spotlightSlug: 'daily-multi',
@@ -308,13 +306,6 @@ module.exports = {
   },
 
   compareOther: 'Typical pharmacy',
-  compare: [
-    { label: 'Full ingredient quantities on the label', us: true, them: false },
-    { label: 'Plain, unbranded outer packaging', us: true, them: false },
-    { label: 'Everything in one order', us: true, them: false },
-    { label: 'Pause or cancel without a phone call', us: true, them: false },
-    { label: 'Delivered to your door', us: true, them: true }
-  ],
 
   valueProps: [
     { icon: 'truck', text: 'Free shipping over $50' },
