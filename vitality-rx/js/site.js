@@ -1137,13 +1137,17 @@ var Site = (function () {
    * The collection band: every colour the shop sells, as swatch chips that
    * link to the product. Built from the products that carry a swatch.
    */
-  function renderSwatches(selector, category) {
+  /**
+   * The collection row: the product itself in every colour it comes in.
+   * Was a row of plain coloured circles, which looked like a colour picker
+   * rather than a shop — the product was never visible.
+   */
+  function renderCollection(selector, category) {
     var host = el(selector);
     if (!host) return;
 
-    /* These are the hero product's colours, not every colour in the shop —
-       otherwise a bundle in a near-identical shade shows up as a duplicate.
-       Defaults to the first category, which is the range the shop leads on. */
+    /* The hero product's colours, not every colour in the shop, so a bundle
+       in a near-identical shade does not show up as a duplicate. */
     var only = category || BRAND.swatchCategory ||
       (PRODUCTS[0] && PRODUCTS[0].category);
 
@@ -1158,12 +1162,22 @@ var Site = (function () {
     if (!list.length) return;
 
     host.innerHTML = list.map(function (p) {
-      return '<a class="swatch" href="product.html?p=' + esc(p.slug) + '" ' +
-        'style="--swatch:' + esc(p.swatch) + '">' +
-        '<span class="swatch__dot"></span>' +
-        '<span class="swatch__name">' + esc(p.colour) + '</span></a>';
+      var onSale = p.compareAt && p.compareAt > p.price;
+      return '<a class="colour-tile" href="product.html?p=' + esc(p.slug) + '" ' +
+        'style="--tile-tint:' + esc(p.tint || p.swatch) + ';--swatch:' + esc(p.swatch) + '">' +
+        '<span class="colour-tile__media">' +
+          '<img src="' + esc(p.image) + '" alt="' + esc(p.imageAlt || p.name) +
+          '" width="400" height="400" loading="lazy" decoding="async">' +
+          '<span class="colour-tile__chip"></span>' +
+        '</span>' +
+        '<span class="colour-tile__name">' + esc(p.colour) + '</span>' +
+        '<span class="colour-tile__price">' + money(p.price) +
+          (onSale ? '<s>' + money(p.compareAt) + '</s>' : '') + '</span>' +
+      '</a>';
     }).join('');
   }
+
+
 
   /**
    * The reasons-to-buy list beside a product shot. Reads the same
@@ -1582,7 +1596,7 @@ var Site = (function () {
     renderFeatures: renderFeatures,
     renderAwards: renderAwards,
     renderPress: renderPress,
-    renderSwatches: renderSwatches,
+    renderCollection: renderCollection,
     renderHeroStage: renderHeroStage,
     renderGoals: renderGoals,
     renderSpotlight: renderSpotlight,

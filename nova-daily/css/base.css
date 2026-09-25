@@ -2202,41 +2202,68 @@ body.show-placeholders .is-placeholder { outline: 2px dashed var(--color-warn); 
   text-wrap: pretty;
 }
 
-/* The swatch row: every colour the shop sells, as clickable chips. */
-.swatches {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.25rem 1.5rem;
-  margin-bottom: 2.5rem;
+/* The collection row: the actual product in every colour it comes in.
+   This was a row of plain coloured circles, which read as a colour picker
+   rather than a shop — you could not see what you were buying. */
+.collection__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 2.75rem;
 }
+@media (min-width: 620px) { .collection__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25rem; } }
+@media (min-width: 1080px) { .collection__grid { grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 0.9rem; } }
 
-.swatch {
+.colour-tile {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 0.6rem;
-  width: 76px;
-}
-.swatch__dot {
-  width: 58px; height: 58px;
-  border-radius: 50%;
-  background: var(--swatch, var(--color-surface));
-  box-shadow: inset 0 0 0 1px rgb(17 26 46 / 0.10), 0 6px 16px -8px rgb(17 26 46 / 0.45);
-  transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.24s ease;
-}
-.swatch:hover .swatch__dot {
-  transform: scale(1.12) translateY(-3px);
-  box-shadow: inset 0 0 0 1px rgb(17 26 46 / 0.14), 0 14px 26px -10px rgb(17 26 46 / 0.55);
-}
-.swatch__name {
-  font-size: var(--fs-xs);
-  font-weight: 600;
-  color: var(--color-heading);
   text-align: center;
-  line-height: 1.25;
 }
-.swatch:hover .swatch__name { color: var(--color-accent); }
+
+.colour-tile__media {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--tile-tint, var(--color-surface));
+  box-shadow: 0 1px 2px rgb(17 26 46 / 0.05), 0 10px 22px -14px rgb(17 26 46 / 0.4);
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease;
+}
+.colour-tile:hover .colour-tile__media {
+  transform: translateY(-6px);
+  box-shadow: 0 4px 8px rgb(17 26 46 / 0.06), 0 22px 40px -18px rgb(17 26 46 / 0.5);
+}
+.colour-tile__media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.colour-tile:hover .colour-tile__media img { transform: scale(1.07); }
+
+/* A small ring of the actual silk, so the colour still reads at tile size. */
+.colour-tile__chip {
+  position: absolute;
+  right: 8px; bottom: 8px;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--swatch, transparent);
+  box-shadow: 0 0 0 2px var(--color-bg), inset 0 0 0 1px rgb(17 26 46 / 0.14);
+}
+
+.colour-tile__name {
+  font-family: var(--font-heading);
+  font-size: 0.9375rem;
+  font-weight: var(--weight-heading);
+  letter-spacing: var(--tracking-heading);
+  line-height: 1.2;
+  color: var(--color-heading);
+  transition: color 0.2s ease;
+}
+.colour-tile:hover .colour-tile__name { color: var(--color-accent); }
+
+.colour-tile__price { font-size: var(--fs-xs); color: var(--color-muted); }
+.colour-tile__price s { opacity: 0.6; margin-left: 0.3rem; }
 
 /* --------------------------------------------------------------------------
    36. Colour dot on product cards
