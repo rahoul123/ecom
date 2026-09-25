@@ -1,33 +1,47 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800" role="img" aria-label="Reviewer photo placeholder">
   <!-- [[PLACEHOLDER IMAGE]] Reviewer portrait. Replace with a real photo (600x800, 3:4). -->
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="0.6" y2="1">
-      <stop offset="0%" stop-color="hsl(135.88429752066116 22% 88%)"/>
-      <stop offset="100%" stop-color="hsl(135.88429752066116 26% 78%)"/>
+    <linearGradient id="room" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0%" stop-color="hsl(46 14% 94%)"/>
+      <stop offset="100%" stop-color="hsl(46 14% 84%)"/>
     </linearGradient>
-    <linearGradient id="fig" x1="0" y1="0" x2="0.4" y2="1">
-      <stop offset="0%" stop-color="hsl(135.88429752066116 32% 60%)"/>
-      <stop offset="100%" stop-color="hsl(135.88429752066116 32% 44%)"/>
+    <linearGradient id="skin" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0%" stop-color="hsl(34 18% 75%)"/>
+      <stop offset="100%" stop-color="hsl(34 18% 62%)"/>
     </linearGradient>
-    <filter id="sh" x="-30%" y="-30%" width="160%" height="160%">
-      <feGaussianBlur stdDeviation="26"/>
-    </filter>
+    <linearGradient id="top" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0%" stop-color="hsl(46 14% 72%)"/>
+      <stop offset="100%" stop-color="hsl(46 14% 62%)"/>
+    </linearGradient>
+    <clipPath id="frame"><rect width="600" height="800"/></clipPath>
   </defs>
 
-  <rect width="600" height="800" fill="url(#bg)"/>
+  <g clip-path="url(#frame)">
+    <rect width="600" height="800" fill="url(#room)"/>
 
-  <!-- suggestion of a room behind the figure -->
-  <rect x="52" y="96" width="150" height="112" rx="12" fill="hsl(135.88429752066116 24% 72%)" opacity="0.65"/>
-  <rect x="410" y="150" width="132" height="86" rx="12" fill="hsl(135.88429752066116 24% 72%)" opacity="0.5"/>
-  <rect x="0" y="628" width="600" height="172" fill="hsl(135.88429752066116 26% 68%)" opacity="0.7"/>
+    <!-- a suggestion of a bedroom behind: headboard and a lamp -->
+    <rect x="70" y="150" width="460" height="330" rx="36" fill="hsl(46 14% 81%)" opacity="0.75"/>
+    <circle cx="486" cy="206" r="34" fill="hsl(46 14% 96%)" opacity="0.8"/>
 
-  <ellipse cx="300" cy="700" rx="220" ry="46" fill="hsl(135.88429752066116 32% 32%)" opacity="0.2" filter="url(#sh)"/>
+    <!-- shoulders -->
+    <path d="M132 800 q0 -206 168 -206 q168 0 168 206 z" fill="url(#top)"/>
+    <path d="M132 800 q0 -206 168 -206 v206 z" fill="hsl(46 14% 78%)" opacity="0.5"/>
 
-  <!-- figure -->
-  <circle cx="300" cy="286" r="92" fill="url(#fig)"/>
-  <path d="M120 800 q0 -212 180 -212 q180 0 180 212 z" fill="url(#fig)"/>
-  <path d="M120 800 q0 -212 180 -212 v212 z" fill="hsl(135.88429752066116 32% 60%)" opacity="0.35"/>
+    <!-- neck, then head over it -->
+    <rect x="266" y="410" width="68" height="112" rx="34" fill="hsl(34 18% 56%)"/>
+    <!-- hair behind -->
+    <path d="M196 386 q0 -142 104 -142 q104 0 104 142 q0 54 -20 84 q6 -104 -84 -104 q-90 0 -84 104 q-20 -30 -20 -84 z" fill="hsl(34 22% 34%)"/>
+    <ellipse cx="300" cy="378" rx="94" ry="106" fill="url(#skin)"/>
+    <!-- hair falling either side -->
+    <path d="M206 350 q-14 130 6 196 q-42 -34 -40 -128 q2 -52 34 -68 z" fill="hsl(34 22% 34%)"/>
+    <path d="M394 350 q14 130 -6 196 q42 -34 40 -128 q-2 -52 -34 -68 z" fill="hsl(34 22% 34%)"/>
 
-  <text x="300" y="770" text-anchor="middle" font-family="system-ui, sans-serif"
-        font-size="17" letter-spacing="1.8" fill="hsl(135.88429752066116 22% 26%)" opacity="0.5">PLACEHOLDER PHOTO</text>
+    <!-- the smallest hint of a face, kept abstract on purpose -->
+    <ellipse cx="266" cy="372" rx="8" ry="10" fill="hsl(34 18% 28%)" opacity="0.55"/>
+    <ellipse cx="334" cy="372" rx="8" ry="10" fill="hsl(34 18% 28%)" opacity="0.55"/>
+    <path d="M280 424 q20 14 40 0" stroke="hsl(34 18% 34%)" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.5"/>
+  </g>
+
+  <text x="300" y="772" text-anchor="middle" font-family="system-ui, sans-serif"
+        font-size="16" letter-spacing="1.8" fill="hsl(46 14% 44%)" opacity="0.45">PLACEHOLDER PHOTO</text>
 </svg>

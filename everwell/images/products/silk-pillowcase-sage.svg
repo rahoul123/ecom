@@ -3,17 +3,17 @@
        Replace this file with real product photography at the same path (800x800). -->
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0.6" y2="1">
-      <stop offset="0%" stop-color="hsl(101.24999999999994 3.0212765957446877% 100%)"/>
-      <stop offset="100%" stop-color="hsl(101.24999999999994 7.021276595744688% 100%)"/>
+      <stop offset="0%" stop-color="hsl(101.24999999999994 8% 69.56862745098039%)"/>
+      <stop offset="100%" stop-color="hsl(101.24999999999994 8% 61.56862745098039%)"/>
     </linearGradient>
     <linearGradient id="body" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="hsl(101.24999999999994 17.021276595744688% 93.56862745098039%)"/>
+      <stop offset="0%" stop-color="hsl(101.24999999999994 17.021276595744688% 89.56862745098039%)"/>
       <stop offset="55%" stop-color="hsl(101.24999999999994 17.021276595744688% 81.56862745098039%)"/>
-      <stop offset="100%" stop-color="hsl(101.24999999999994 17.021276595744688% 69.56862745098039%)"/>
+      <stop offset="100%" stop-color="hsl(101.24999999999994 17.021276595744688% 73.56862745098039%)"/>
     </linearGradient>
     <radialGradient id="halo" cx="50%" cy="42%" r="52%">
-      <stop offset="0%" stop-color="hsl(101.24999999999994 11.021276595744688% 100%)" stop-opacity="0.95"/>
-      <stop offset="100%" stop-color="hsl(101.24999999999994 11.021276595744688% 100%)" stop-opacity="0"/>
+      <stop offset="0%" stop-color="hsl(101.24999999999994 8% 72.56862745098039%)" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="hsl(101.24999999999994 8% 72.56862745098039%)" stop-opacity="0"/>
     </radialGradient>
     <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
       <feGaussianBlur stdDeviation="18"/>
@@ -22,21 +22,32 @@
 
   <rect width="800" height="800" fill="url(#bg)"/>
   <circle cx="400" cy="376" r="250" fill="url(#halo)"/>
-  <circle cx="640" cy="150" r="96" fill="hsl(101.24999999999994 5.021276595744688% 100%)" opacity="0.55"/>
-  <circle cx="150" cy="654" r="62" fill="hsl(101.24999999999994 5.021276595744688% 100%)" opacity="0.45"/>
+  <circle cx="640" cy="150" r="96" fill="hsl(101.24999999999994 8% 73.56862745098039%)" opacity="0.6"/>
+  <circle cx="150" cy="654" r="62" fill="hsl(101.24999999999994 8% 73.56862745098039%)" opacity="0.5"/>
 
   <ellipse cx="400" cy="612" rx="176" ry="30" fill="hsl(101.24999999999994 17.021276595744688% 55.56862745098039%)" opacity="0.22" filter="url(#soft)"/>
 
   
-    <path d="M168 250 h464 a26 26 0 0 1 26 26 v248 a26 26 0 0 1 -26 26 h-464 a26 26 0 0 1 -26 -26 v-248 a26 26 0 0 1 26 -26 z" fill="url(#body)"/>
-    <path d="M168 250 h180 q-44 150 0 300 h-180 a26 26 0 0 1 -26 -26 v-248 a26 26 0 0 1 26 -26 z" fill="hsl(101.24999999999994 17.021276595744688% 90.56862745098039%)" opacity="0.55"/>
-    <path d="M430 250 q62 150 0 300" stroke="hsl(101.24999999999994 17.021276595744688% 93.56862745098039%)" stroke-width="26" fill="none" opacity="0.5"/>
-    <path d="M520 250 q42 150 0 300" stroke="hsl(101.24999999999994 17.021276595744688% 74.56862745098039%)" stroke-width="12" fill="none" opacity="0.45"/>
-    <rect x="142" y="384" width="516" height="16" rx="8" fill="hsl(101.24999999999994 17.021276595744688% 69.56862745098039%)" opacity="0.32"/>
-    <circle cx="640" cy="392" r="9" fill="hsl(101.24999999999994 17.021276595744688% 61.56862745098039%)" opacity="0.5"/>
+    <!-- body, with a slight pillow curve rather than a flat rectangle -->
+    <path d="M160 268 q240 -26 480 0 q22 132 0 264 q-240 26 -480 0 q-22 -132 0 -264 z"
+          fill="url(#body)" stroke="hsl(101.24999999999994 17.021276595744688% 59.56862745098039%)" stroke-width="3" stroke-opacity="0.35"/>
 
-  <text x="400" y="690" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif"
-        font-size="27" font-weight="600" letter-spacing="-0.4" fill="hsl(101.24999999999994 11.021276595744688% 51.56862745098039%)">Silk Pillowcase — Sage</text>
+    <!-- drape: the lit left face and the shaded right one -->
+    <path d="M160 268 q120 -13 240 -18 q26 150 0 300 q-120 -5 -240 -18 q-22 -132 0 -264 z"
+          fill="hsl(101.24999999999994 17.021276595744688% 92.56862745098039%)" opacity="0.6"/>
+    <path d="M520 258 q62 136 0 292" stroke="hsl(101.24999999999994 17.021276595744688% 68.56862745098039%)" stroke-width="30" fill="none" opacity="0.28"/>
+
+    <!-- sheen, which is what makes silk read as silk -->
+    <path d="M300 256 q40 144 0 288" stroke="hsl(101.24999999999994 17.021276595744688% 100%)" stroke-width="44" fill="none" opacity="0.5"/>
+    <path d="M356 254 q26 146 0 292" stroke="hsl(101.24999999999994 17.021276595744688% 100%)" stroke-width="14" fill="none" opacity="0.45"/>
+
+    <!-- hidden zip along the lower edge, and the folded-back corner -->
+    <path d="M176 470 q232 24 452 0" stroke="hsl(101.24999999999994 17.021276595744688% 55.56862745098039%)" stroke-width="5" fill="none" opacity="0.4"/>
+    <path d="M640 268 q-84 10 -96 86 q66 8 96 -86 z" fill="hsl(101.24999999999994 17.021276595744688% 100%)" opacity="0.85"/>
+    <path d="M640 268 q-84 10 -96 86" stroke="hsl(101.24999999999994 17.021276595744688% 57.56862745098039%)" stroke-width="3" fill="none" opacity="0.4"/>
+
+  <text x="400" y="694" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif"
+        font-size="26" font-weight="600" letter-spacing="-0.3" fill="hsl(101.24999999999994 8% 13.568627450980387%)">Silk Pillowcase — Sage</text>
   <text x="400" y="762" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif"
-        font-size="14" letter-spacing="1.6" fill="hsl(101.24999999999994 7.021276595744688% 59.56862745098039%)" opacity="0.5">PLACEHOLDER IMAGE</text>
+        font-size="14" letter-spacing="1.6" fill="hsl(101.24999999999994 8% 25.568627450980387%)" opacity="0.5">PLACEHOLDER IMAGE</text>
 </svg>

@@ -88,12 +88,23 @@ const SHAPES = {
   /* A folded pillowcase seen at a slight angle, with a sheen band. */
   pillow(c) {
     return `
-    <path d="M168 250 h464 a26 26 0 0 1 26 26 v248 a26 26 0 0 1 -26 26 h-464 a26 26 0 0 1 -26 -26 v-248 a26 26 0 0 1 26 -26 z" fill="url(#body)"/>
-    <path d="M168 250 h180 q-44 150 0 300 h-180 a26 26 0 0 1 -26 -26 v-248 a26 26 0 0 1 26 -26 z" fill="${hsl(c, 9)}" opacity="0.55"/>
-    <path d="M430 250 q62 150 0 300" stroke="${hsl(c, 12)}" stroke-width="26" fill="none" opacity="0.5"/>
-    <path d="M520 250 q42 150 0 300" stroke="${hsl(c, -7)}" stroke-width="12" fill="none" opacity="0.45"/>
-    <rect x="142" y="384" width="516" height="16" rx="8" fill="${hsl(c, -12)}" opacity="0.32"/>
-    <circle cx="640" cy="392" r="9" fill="${hsl(c, -20)}" opacity="0.5"/>`;
+    <!-- body, with a slight pillow curve rather than a flat rectangle -->
+    <path d="M160 268 q240 -26 480 0 q22 132 0 264 q-240 26 -480 0 q-22 -132 0 -264 z"
+          fill="url(#body)" stroke="${hsl(c, -22)}" stroke-width="3" stroke-opacity="0.35"/>
+
+    <!-- drape: the lit left face and the shaded right one -->
+    <path d="M160 268 q120 -13 240 -18 q26 150 0 300 q-120 -5 -240 -18 q-22 -132 0 -264 z"
+          fill="${hsl(c, 11)}" opacity="0.6"/>
+    <path d="M520 258 q62 136 0 292" stroke="${hsl(c, -13)}" stroke-width="30" fill="none" opacity="0.28"/>
+
+    <!-- sheen, which is what makes silk read as silk -->
+    <path d="M300 256 q40 144 0 288" stroke="${hsl(c, 26)}" stroke-width="44" fill="none" opacity="0.5"/>
+    <path d="M356 254 q26 146 0 292" stroke="${hsl(c, 20)}" stroke-width="14" fill="none" opacity="0.45"/>
+
+    <!-- hidden zip along the lower edge, and the folded-back corner -->
+    <path d="M176 470 q232 24 452 0" stroke="${hsl(c, -26)}" stroke-width="5" fill="none" opacity="0.4"/>
+    <path d="M640 268 q-84 10 -96 86 q66 8 96 -86 z" fill="${hsl(c, 20)}" opacity="0.85"/>
+    <path d="M640 268 q-84 10 -96 86" stroke="${hsl(c, -24)}" stroke-width="3" fill="none" opacity="0.4"/>`;
   },
   /* Sleep mask: contoured body with a strap looping behind. */
   mask(c) {
@@ -217,22 +228,34 @@ function product(brand, prod, categories) {
   const shape = (SHAPES[form] || SHAPES.bottle)(c);
   const name = prod.name.length > 22 ? prod.name.slice(0, 21) + '…' : prod.name;
 
+  /* Separation is computed, not guessed. A pale silk gets a ground 16 points
+     darker; a dark one gets a ground 34 points lighter. Gold used to land on
+     the same lightness as its own plate and disappear. */
+  const plate = {
+    h: c.h,
+    s: Math.max(8, c.s - 12),
+    l: c.l > 62 ? Math.max(56, c.l - 16) : Math.min(90, c.l + 34)
+  };
+  /* Highlights shrink as the silk gets lighter, so ivory keeps its folds
+     instead of clipping to flat white. */
+  const lift = c.l > 84 ? 5 : c.l > 70 ? 8 : 12;
+
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" role="img" aria-label="${esc(prod.name)}">
   <!-- [[PLACEHOLDER IMAGE]] Stylised illustration, not a photograph.
        Replace this file with real product photography at the same path (800x800). -->
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0.6" y2="1">
-      <stop offset="0%" stop-color="${hsl(c, 46, -14)}"/>
-      <stop offset="100%" stop-color="${hsl(c, 38, -10)}"/>
+      <stop offset="0%" stop-color="${hsl(plate, 4)}"/>
+      <stop offset="100%" stop-color="${hsl(plate, -4)}"/>
     </linearGradient>
     <linearGradient id="body" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="${hsl(c, 12)}"/>
+      <stop offset="0%" stop-color="${hsl(c, lift)}"/>
       <stop offset="55%" stop-color="${hsl(c, 0)}"/>
-      <stop offset="100%" stop-color="${hsl(c, -12)}"/>
+      <stop offset="100%" stop-color="${hsl(c, -lift)}"/>
     </linearGradient>
     <radialGradient id="halo" cx="50%" cy="42%" r="52%">
-      <stop offset="0%" stop-color="${hsl(c, 30, -6)}" stop-opacity="0.95"/>
-      <stop offset="100%" stop-color="${hsl(c, 30, -6)}" stop-opacity="0"/>
+      <stop offset="0%" stop-color="${hsl(plate, 7)}" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="${hsl(plate, 7)}" stop-opacity="0"/>
     </radialGradient>
     <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
       <feGaussianBlur stdDeviation="18"/>
@@ -241,17 +264,17 @@ function product(brand, prod, categories) {
 
   <rect width="800" height="800" fill="url(#bg)"/>
   <circle cx="400" cy="376" r="250" fill="url(#halo)"/>
-  <circle cx="640" cy="150" r="96" fill="${hsl(c, 42, -12)}" opacity="0.55"/>
-  <circle cx="150" cy="654" r="62" fill="${hsl(c, 42, -12)}" opacity="0.45"/>
+  <circle cx="640" cy="150" r="96" fill="${hsl(plate, 8)}" opacity="0.6"/>
+  <circle cx="150" cy="654" r="62" fill="${hsl(plate, 8)}" opacity="0.5"/>
 
   <ellipse cx="400" cy="612" rx="176" ry="30" fill="${hsl(c, -26)}" opacity="0.22" filter="url(#soft)"/>
 
   ${shape}
 
-  <text x="400" y="690" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif"
-        font-size="27" font-weight="600" letter-spacing="-0.4" fill="${hsl(c, -30, -6)}">${esc(name)}</text>
+  <text x="400" y="694" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif"
+        font-size="26" font-weight="600" letter-spacing="-0.3" fill="${hsl(plate, -52)}">${esc(name)}</text>
   <text x="400" y="762" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif"
-        font-size="14" letter-spacing="1.6" fill="${hsl(c, -22, -10)}" opacity="0.5">PLACEHOLDER IMAGE</text>
+        font-size="14" letter-spacing="1.6" fill="${hsl(plate, -40)}" opacity="0.5">PLACEHOLDER IMAGE</text>
 </svg>
 `;
 }
@@ -284,42 +307,66 @@ function angle(brand, category, n, categories) {
  * placeholder; replace with a real, permissioned photo at the same path.
  */
 function avatar(brand, index) {
-  const base = hexToHsl(brand.colors.accent);
-  const c = { h: (base.h + index * 61) % 360, s: 32, l: 52 };
+  /* Warm neutrals rather than a rotated hue — six tones that read as skin and
+     fabric next to the silk palette, instead of green and tan blobs. */
+  const TONES = [
+    { h: 28, s: 22, l: 62 },
+    { h: 18, s: 26, l: 54 },
+    { h: 34, s: 18, l: 68 },
+    { h: 12, s: 22, l: 48 },
+    { h: 40, s: 20, l: 58 },
+    { h: 22, s: 16, l: 64 }
+  ];
+  const c = TONES[index % TONES.length];
+  const room = { h: (c.h + 12) % 360, s: 14, l: 90 };
   const W = 600, H = 800;
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Reviewer photo placeholder">
   <!-- [[PLACEHOLDER IMAGE]] Reviewer portrait. Replace with a real photo (600x800, 3:4). -->
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="0.6" y2="1">
-      <stop offset="0%" stop-color="${hsl(c, 36, -10)}"/>
-      <stop offset="100%" stop-color="${hsl(c, 26, -6)}"/>
+    <linearGradient id="room" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0%" stop-color="${hsl(room, 4)}"/>
+      <stop offset="100%" stop-color="${hsl(room, -6)}"/>
     </linearGradient>
-    <linearGradient id="fig" x1="0" y1="0" x2="0.4" y2="1">
-      <stop offset="0%" stop-color="${hsl(c, 8)}"/>
-      <stop offset="100%" stop-color="${hsl(c, -8)}"/>
+    <linearGradient id="skin" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0%" stop-color="${hsl(c, 7)}"/>
+      <stop offset="100%" stop-color="${hsl(c, -6)}"/>
     </linearGradient>
-    <filter id="sh" x="-30%" y="-30%" width="160%" height="160%">
-      <feGaussianBlur stdDeviation="26"/>
-    </filter>
+    <linearGradient id="top" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0%" stop-color="${hsl(room, -18)}"/>
+      <stop offset="100%" stop-color="${hsl(room, -28)}"/>
+    </linearGradient>
+    <clipPath id="frame"><rect width="${W}" height="${H}"/></clipPath>
   </defs>
 
-  <rect width="${W}" height="${H}" fill="url(#bg)"/>
+  <g clip-path="url(#frame)">
+    <rect width="${W}" height="${H}" fill="url(#room)"/>
 
-  <!-- suggestion of a room behind the figure -->
-  <rect x="52" y="96" width="150" height="112" rx="12" fill="${hsl(c, 20, -8)}" opacity="0.65"/>
-  <rect x="410" y="150" width="132" height="86" rx="12" fill="${hsl(c, 20, -8)}" opacity="0.5"/>
-  <rect x="0" y="628" width="${W}" height="172" fill="${hsl(c, 16, -6)}" opacity="0.7"/>
+    <!-- a suggestion of a bedroom behind: headboard and a lamp -->
+    <rect x="70" y="150" width="460" height="330" rx="36" fill="${hsl(room, -9)}" opacity="0.75"/>
+    <circle cx="486" cy="206" r="34" fill="${hsl(room, 6)}" opacity="0.8"/>
 
-  <ellipse cx="300" cy="700" rx="220" ry="46" fill="${hsl(c, -20)}" opacity="0.2" filter="url(#sh)"/>
+    <!-- shoulders -->
+    <path d="M132 800 q0 -206 168 -206 q168 0 168 206 z" fill="url(#top)"/>
+    <path d="M132 800 q0 -206 168 -206 v206 z" fill="${hsl(room, -12)}" opacity="0.5"/>
 
-  <!-- figure -->
-  <circle cx="300" cy="286" r="92" fill="url(#fig)"/>
-  <path d="M120 800 q0 -212 180 -212 q180 0 180 212 z" fill="url(#fig)"/>
-  <path d="M120 800 q0 -212 180 -212 v212 z" fill="${hsl(c, 8)}" opacity="0.35"/>
+    <!-- neck, then head over it -->
+    <rect x="266" y="410" width="68" height="112" rx="34" fill="${hsl(c, -12)}"/>
+    <!-- hair behind -->
+    <path d="M196 386 q0 -142 104 -142 q104 0 104 142 q0 54 -20 84 q6 -104 -84 -104 q-90 0 -84 104 q-20 -30 -20 -84 z" fill="${hsl(c, -34, 4)}"/>
+    <ellipse cx="300" cy="378" rx="94" ry="106" fill="url(#skin)"/>
+    <!-- hair falling either side -->
+    <path d="M206 350 q-14 130 6 196 q-42 -34 -40 -128 q2 -52 34 -68 z" fill="${hsl(c, -34, 4)}"/>
+    <path d="M394 350 q14 130 -6 196 q42 -34 40 -128 q-2 -52 -34 -68 z" fill="${hsl(c, -34, 4)}"/>
 
-  <text x="${W / 2}" y="770" text-anchor="middle" font-family="system-ui, sans-serif"
-        font-size="17" letter-spacing="1.8" fill="${hsl(c, -26, -10)}" opacity="0.5">PLACEHOLDER PHOTO</text>
+    <!-- the smallest hint of a face, kept abstract on purpose -->
+    <ellipse cx="266" cy="372" rx="8" ry="10" fill="${hsl(c, -40)}" opacity="0.55"/>
+    <ellipse cx="334" cy="372" rx="8" ry="10" fill="${hsl(c, -40)}" opacity="0.55"/>
+    <path d="M280 424 q20 14 40 0" stroke="${hsl(c, -34)}" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.5"/>
+  </g>
+
+  <text x="${W / 2}" y="772" text-anchor="middle" font-family="system-ui, sans-serif"
+        font-size="16" letter-spacing="1.8" fill="${hsl(room, -46)}" opacity="0.45">PLACEHOLDER PHOTO</text>
 </svg>
 `;
 }

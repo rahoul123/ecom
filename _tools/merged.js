@@ -325,6 +325,56 @@ module.exports = {
 
   heroProof: ['Free delivery over $75', '60-night trial', 'Gift-boxed'],
 
+  /* ---- Everything below was inheriting the old telehealth defaults, which
+     put a stethoscope and "licensed providers" on a pillowcase shop. ---- */
+
+  trustBadges: [
+    { icon: 'leaf', title: '22-momme mulberry silk', text: 'Silk on both sides, not one.' },
+    { icon: 'refresh', title: '60-night trial', text: 'Sleep on it. Send it back if it is not for you.' },
+    { icon: 'box', title: 'Gift-boxed as standard', text: 'Box and ribbon on every order.' },
+    { icon: 'truck', title: 'Free delivery over $75', text: 'Tracked, and quicker than the estimate.' }
+  ],
+
+  productReassurance: [
+    { icon: 'truck', text: 'Free delivery over $75' },
+    { icon: 'box', text: 'Arrives gift-boxed' },
+    { icon: 'refresh', text: '60 nights to change your mind' },
+    { icon: 'lock', text: 'Secure checkout' }
+  ],
+
+  values: [
+    { icon: 'leaf', title: 'One thing, done properly', text: 'A single pillowcase in ten colours, rather than a catalogue.' },
+    { icon: 'shield', title: 'Silk on both faces', text: 'Not silk on one side and cotton on the other, which is the usual trick.' },
+    { icon: 'refresh', title: 'Made to be washed', text: 'Cool delicate cycle at home. No dry cleaning, no hand washing.' },
+    { icon: 'chat', title: 'Support that answers', text: 'Real people, replying within one business day.' }
+  ],
+
+  aboutPoints: [
+    'Every piece is 22-momme mulberry silk',
+    'Hidden zip on every pillowcase',
+    'OEKO-TEX certified dyes',
+    'Sixty nights to change your mind'
+  ],
+
+  faqs: [
+    { q: 'What does 22-momme mean?', a: 'Momme measures the weight of silk. 22 is the point where it feels substantial and survives washing — thinner silk is cheaper to make and wears out faster.' },
+    { q: 'Which size do I need?', a: 'Standard fits most pillows. Queen is a little longer, King noticeably so. If your pillow is deep, size up — the case should slip on without stretching.' },
+    { q: 'How do I wash it?', a: 'Cool delicate cycle with a mild detergent, ideally in a mesh bag, then hang to dry. No tumble dryer, no bleach, no dry cleaning.' },
+    { q: 'Is it silk on both sides?', a: 'Yes. Both faces are the same 22-momme mulberry silk. Some pillowcases are silk on one side and cotton on the other — ours are not.' },
+    { q: 'What is the zip for?', a: 'It keeps the case on the pillow overnight and stops it working loose in the wash. It sits hidden along one edge.' },
+    { q: 'Can I try it first?', a: 'Sixty nights. Sleep on it, wash it, and if it is not for you send it back for a refund.' },
+    { q: 'Do the colours fade?', a: 'The dyes are OEKO-TEX certified and set for washing. Wash cool and dry out of direct sun and the colour holds.' },
+    { q: 'How long does delivery take?', a: '[[PLACEHOLDER: confirm real timings]] Orders are packed within a business day. Delivery estimates are shown at checkout, and every order is tracked.' }
+  ],
+
+  stats: [
+    { value: '230000', label: '[[PLACEHOLDER]] 5-star reviews', display: '230k+' },
+    { value: '4.9', label: 'Average rating' },
+    { value: '22', label: 'Momme mulberry silk' },
+    { value: '60', label: 'Night trial' }
+  ],
+
+
   /* The award strip under the hero — the most Blissy thing on the page. */
   awards: [
     { value: '230,000+', label: '[[PLACEHOLDER]] 5-star reviews' },

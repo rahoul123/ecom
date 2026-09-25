@@ -375,11 +375,11 @@ var BRAND = {
   promo: ${j(brand.promo || common.promo || {})},
   valueProps: ${j(brand.valueProps)},
   howItWorks: ${j(brand.howItWorks)},
-  trustBadges: ${j(common.trustBadges)},
-  productReassurance: ${j(common.productReassurance)},
-  values: ${j(common.values)},
-  stats: ${j(common.stats)},
-  aboutPoints: ${j(common.aboutPoints)}
+  trustBadges: ${j(brand.trustBadges || common.trustBadges)},
+  productReassurance: ${j(brand.productReassurance || common.productReassurance)},
+  values: ${j(brand.values || common.values)},
+  stats: ${j(brand.stats || common.stats)},
+  aboutPoints: ${j(brand.aboutPoints || common.aboutPoints)}
 };
 
 /* ==========================================================================
@@ -402,7 +402,7 @@ var TESTIMONIALS = ${j((brand.testimonials || []).map((t, i) => Object.assign({}
    block from index.html — invented ratings must not reach structured data. */
 var REVIEWS_SUMMARY = ${j(brand.reviewsSummary || { rating: 4.8, count: '[[PLACEHOLDER: review count]]' })};
 
-var FAQS = ${j(common.faqs)};
+var FAQS = ${j(brand.faqs || common.faqs)};
 `;
 }
 

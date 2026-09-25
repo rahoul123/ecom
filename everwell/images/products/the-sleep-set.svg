@@ -3,17 +3,17 @@
        Replace this file with real product photography at the same path (800x800). -->
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0.6" y2="1">
-      <stop offset="0%" stop-color="hsl(0 27.999999999999986% 100%)"/>
-      <stop offset="100%" stop-color="hsl(0 31.999999999999986% 100%)"/>
+      <stop offset="0%" stop-color="hsl(0 29.999999999999986% 68.3921568627451%)"/>
+      <stop offset="100%" stop-color="hsl(0 29.999999999999986% 60.3921568627451%)"/>
     </linearGradient>
     <linearGradient id="body" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="hsl(0 41.999999999999986% 92.3921568627451%)"/>
+      <stop offset="0%" stop-color="hsl(0 41.999999999999986% 88.3921568627451%)"/>
       <stop offset="55%" stop-color="hsl(0 41.999999999999986% 80.3921568627451%)"/>
-      <stop offset="100%" stop-color="hsl(0 41.999999999999986% 68.3921568627451%)"/>
+      <stop offset="100%" stop-color="hsl(0 41.999999999999986% 72.3921568627451%)"/>
     </linearGradient>
     <radialGradient id="halo" cx="50%" cy="42%" r="52%">
-      <stop offset="0%" stop-color="hsl(0 35.999999999999986% 100%)" stop-opacity="0.95"/>
-      <stop offset="100%" stop-color="hsl(0 35.999999999999986% 100%)" stop-opacity="0"/>
+      <stop offset="0%" stop-color="hsl(0 29.999999999999986% 71.3921568627451%)" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="hsl(0 29.999999999999986% 71.3921568627451%)" stop-opacity="0"/>
     </radialGradient>
     <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
       <feGaussianBlur stdDeviation="18"/>
@@ -22,8 +22,8 @@
 
   <rect width="800" height="800" fill="url(#bg)"/>
   <circle cx="400" cy="376" r="250" fill="url(#halo)"/>
-  <circle cx="640" cy="150" r="96" fill="hsl(0 29.999999999999986% 100%)" opacity="0.55"/>
-  <circle cx="150" cy="654" r="62" fill="hsl(0 29.999999999999986% 100%)" opacity="0.45"/>
+  <circle cx="640" cy="150" r="96" fill="hsl(0 29.999999999999986% 72.3921568627451%)" opacity="0.6"/>
+  <circle cx="150" cy="654" r="62" fill="hsl(0 29.999999999999986% 72.3921568627451%)" opacity="0.5"/>
 
   <ellipse cx="400" cy="612" rx="176" ry="30" fill="hsl(0 41.999999999999986% 54.3921568627451%)" opacity="0.22" filter="url(#soft)"/>
 
@@ -35,8 +35,8 @@
     <path d="M400 300 q-70 -66 -108 -22 q-26 32 40 40 z" fill="hsl(0 41.999999999999986% 66.3921568627451%)"/>
     <path d="M400 300 q70 -66 108 -22 q26 32 -40 40 z" fill="hsl(0 41.999999999999986% 66.3921568627451%)"/>
 
-  <text x="400" y="690" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif"
-        font-size="27" font-weight="600" letter-spacing="-0.4" fill="hsl(0 35.999999999999986% 50.3921568627451%)">The Sleep Set</text>
+  <text x="400" y="694" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif"
+        font-size="26" font-weight="600" letter-spacing="-0.3" fill="hsl(0 29.999999999999986% 12.392156862745097%)">The Sleep Set</text>
   <text x="400" y="762" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif"
-        font-size="14" letter-spacing="1.6" fill="hsl(0 31.999999999999986% 58.3921568627451%)" opacity="0.5">PLACEHOLDER IMAGE</text>
+        font-size="14" letter-spacing="1.6" fill="hsl(0 29.999999999999986% 24.392156862745097%)" opacity="0.5">PLACEHOLDER IMAGE</text>
 </svg>
