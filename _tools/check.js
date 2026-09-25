@@ -33,16 +33,24 @@ for (const site of sites) {
   console.log('\n' + site);
 
   const pages = fs.readdirSync(dir).filter((f) => f.endsWith('.html'));
-  const css = fs.readFileSync(path.join(dir, 'css', 'base.css'), 'utf8') +
-              fs.readFileSync(path.join(dir, 'css', 'brand.css'), 'utf8');
+  /* Every stylesheet the site ships, not just base + brand — admin.html has
+     its own, and a class defined there is not an unstyled class. */
+  const css = fs.readdirSync(path.join(dir, 'css'))
+    .filter((f) => f.endsWith('.css'))
+    .map((f) => fs.readFileSync(path.join(dir, 'css', f), 'utf8'))
+    .join('\n');
   const js = fs.readFileSync(path.join(dir, 'js', 'site.js'), 'utf8');
 
   /* 1. Every class the site renders should have a rule somewhere. */
   const used = new Set();
-  for (const f of pages.concat(['js/site.js'])) {
+  for (const f of pages.concat(['js/site.js', 'js/admin.js', 'js/checkout.js'])) {
     const text = fs.readFileSync(path.join(dir, f), 'utf8');
     for (const m of text.matchAll(/class=["']([^"']+)["']/g)) {
-      m[1].split(/\s+/).filter(Boolean).forEach((c) => used.add(c));
+      m[1].split(/\s+/).filter(Boolean)
+        /* A name left hanging on `--` is the start of a class the JS finishes
+           by concatenation, e.g. 'co-wallet--' + id. Not a real class. */
+        .filter((c) => !c.endsWith('--'))
+        .forEach((c) => used.add(c));
     }
   }
   const defined = new Set();

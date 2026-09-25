@@ -1,19 +1,49 @@
 # Adding a product
 
-Everything happens in **one file**: `everwell/js/brand-config.js`.
-
-Open it, find `var PRODUCTS = [`, and add an object to the array. That is the
-whole job — the product appears in the shop grid, the category filters, its
-category page, the mega menu counts, "you might also like", and it gets its own
-page at `product.html?p=<slug>`. Nothing else to touch.
-
-> **Add it at the END of the array, not the top.** Category order in the menu
-> and the homepage tiles follows the order categories first appear in
-> `PRODUCTS`. Inserting at the top moves that product's category to first place.
+There are two ways. Use the panel unless you have a reason not to.
 
 ---
 
-## Copy this block
+## The panel
+
+Open **`admin.html`** in a browser — on your live site (`yoursite.com/admin.html`)
+or by double-clicking the file on your computer.
+
+1. Press **Add product** and fill in the form. The card preview at the top is
+   the real product card, so what you see is what the shop will show.
+2. Press **Export products.js**. Your browser downloads `products.js`.
+3. Upload that file to the `js/` folder on your hosting, replacing the
+   `products.js` already there.
+4. Reload the shop.
+
+Your work is kept in the browser as you type, so you can close the tab and come
+back to it. It is *only* in that browser, though — nothing is saved to the site
+until you export and upload.
+
+**To edit later:** open the panel, press **Import**, and pick the `products.js`
+you exported last time. Edit, export again.
+
+**Photos.** Either upload your images to `images/products/` and point each
+product at its filename, or tick *Embed the photo* and the picture is carried
+inside `products.js` itself — no separate upload, but a bigger file. The panel
+tells you the size either way, and warns you if a path does not exist.
+
+**Is the panel a security hole?** No. Anyone who opens it edits their own copy
+in their own browser and changes nothing of yours. The only way anything reaches
+the site is somebody uploading a file to your hosting, which needs your FTP
+password. The page is set to `noindex` and is not linked from anywhere.
+
+---
+
+## By hand
+
+The panel writes `js/products.js`. You can write it yourself instead — it is a
+plain list. Or edit `js/brand-config.js`, which is what the site falls back to
+when `products.js` is empty.
+
+Either way the shape of one product is the same, and it is this:
+
+### The shape of a product
 
 Paste it as the last item in `PRODUCTS` (mind the comma after the previous `}`):
 
@@ -138,18 +168,24 @@ does not show — that is a cached `brand-config.js`.
 **Live:** commit and push. Vercel redeploys automatically.
 
 ```bash
-git add everwell/js/brand-config.js
+git add everwell/js/products.js everwell/js/brand-config.js
 git commit -m "Add Zinc Daily"
 git push
 ```
 
+If you are on cPanel rather than git, upload the changed file over FTP and you
+are done — there is nothing to build.
+
 **Check it first:**
 
 ```bash
-node _tools/check.js everwell
+node _tools/check.js everwell    # dead links, missing images, unstyled markup
+node _tools/test.js              # pricing, and that the panel derives products
+                                 # the same way the generator does
 ```
 
-If you added an image that does not exist, this catches it before it ships.
+If you added an image that does not exist, `check.js` catches it before it
+ships.
 
 ---
 

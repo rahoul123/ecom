@@ -1,0 +1,259 @@
+<!-- ===== ADMIN — the catalogue editor.
+
+     There is no server here, so this does not "save" anywhere a visitor can
+     see. What it does instead: you edit products in the browser, it keeps the
+     work in this browser's storage as you go, and then it hands you a
+     finished js/products.js to upload over FTP. One file, and the shop
+     changes. See js/admin.js.
+
+     Not linked from the site, not in the sitemap, noindex. Anyone who finds
+     the URL can edit their own copy and change nothing of yours — the file
+     they would need to replace lives on your hosting.
+     ===== -->
+
+<div class="adm">
+
+  <header class="adm-bar">
+    <div class="adm-bar__left">
+      <h1 class="adm-bar__title">Products</h1>
+      <span class="adm-count" id="adm-count">0</span>
+      <span class="adm-state" id="adm-state" hidden></span>
+    </div>
+    <div class="adm-bar__right">
+      <button type="button" class="adm-btn" id="adm-add">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        Add product
+      </button>
+      <button type="button" class="adm-btn" id="adm-import">Import</button>
+      <input type="file" id="adm-import-file" accept=".js,.json,text/javascript,application/json" hidden>
+      <button type="button" class="adm-btn" id="adm-revert">Start over</button>
+      <button type="button" class="adm-btn adm-btn--primary" id="adm-export">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        Export products.js
+      </button>
+    </div>
+  </header>
+
+  <!-- How this reaches the live site. Worth saying once, at the top. -->
+  <details class="adm-help" id="adm-help">
+    <summary>How do these edits reach my shop?</summary>
+    <ol>
+      <li>Edit your products here. The work is kept in this browser as you type, so you can close the tab and come back.</li>
+      <li>Press <b>Export products.js</b>. Your browser downloads a file called <code>products.js</code>.</li>
+      <li>Upload it to the <code>js/</code> folder on your hosting, over the <code>products.js</code> already there.</li>
+      <li>Reload the shop. Every page now shows your catalogue.</li>
+    </ol>
+    <p class="adm-help__note">
+      Photos are the one thing that does not travel inside that file unless
+      you ask it to. Either upload your images to <code>images/products/</code>
+      and point each product at its filename, or tick <b>Embed the photo</b>
+      and it will be carried inside <code>products.js</code> — convenient, but
+      it makes the file bigger, so the panel tells you how big.
+    </p>
+  </details>
+
+  <div class="adm-body">
+
+    <!-- ------------------------------------------------- the catalogue --- -->
+    <aside class="adm-list-pane">
+      <label class="adm-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input type="search" id="adm-search" placeholder="Search products" aria-label="Search products">
+      </label>
+      <ol class="adm-list" id="adm-list"></ol>
+      <p class="adm-list__empty" id="adm-list-empty" hidden>Nothing matches that.</p>
+    </aside>
+
+    <!-- ----------------------------------------------------- the editor --- -->
+    <main class="adm-editor" id="adm-editor" hidden>
+
+      <div class="adm-preview">
+        <p class="adm-preview__label">This is the card your shop will show</p>
+        <div class="adm-preview__stage" id="adm-preview"></div>
+      </div>
+
+      <form id="adm-form" autocomplete="off">
+
+        <fieldset class="adm-group">
+          <legend>Basics</legend>
+
+          <div class="adm-field">
+            <label for="f-name">Product name</label>
+            <input type="text" id="f-name" data-field="name" required>
+            <span class="adm-field__err" id="err-name"></span>
+          </div>
+
+          <div class="adm-row">
+            <div class="adm-field">
+              <label for="f-category">Category</label>
+              <input type="text" id="f-category" data-field="category" list="adm-categories">
+              <datalist id="adm-categories"></datalist>
+              <span class="adm-hint">Groups the product in the shop and the menu.</span>
+            </div>
+            <div class="adm-field">
+              <label for="f-slug">Web address</label>
+              <input type="text" id="f-slug" data-field="slug">
+              <span class="adm-hint" id="slug-preview">product.html?p=</span>
+              <span class="adm-field__err" id="err-slug"></span>
+            </div>
+          </div>
+
+          <div class="adm-row">
+            <div class="adm-field">
+              <label for="f-badge">Badge</label>
+              <input type="text" id="f-badge" data-field="badge" placeholder="Best seller, New, Low stock…">
+              <span class="adm-hint">Leave empty for no badge.</span>
+            </div>
+            <div class="adm-field adm-field--check">
+              <label class="adm-check">
+                <input type="checkbox" id="f-featured" data-field="featured">
+                <span>Show on the home page</span>
+              </label>
+              <span class="adm-hint">Featured products fill the Best Sellers row.</span>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="adm-group">
+          <legend>Price</legend>
+          <div class="adm-row adm-row--3">
+            <div class="adm-field">
+              <label for="f-price">Price</label>
+              <input type="number" id="f-price" data-field="price" min="0" step="0.01" required>
+              <span class="adm-field__err" id="err-price"></span>
+            </div>
+            <div class="adm-field">
+              <label for="f-compareAt">Was (optional)</label>
+              <input type="number" id="f-compareAt" data-field="compareAt" min="0" step="0.01">
+              <span class="adm-hint">Shows a struck-through price.</span>
+              <span class="adm-field__err" id="err-compareAt"></span>
+            </div>
+            <div class="adm-field">
+              <label for="f-priceNote">Note under the price</label>
+              <input type="text" id="f-priceNote" data-field="priceNote" placeholder="e.g. free delivery">
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="adm-group">
+          <legend>Words</legend>
+
+          <div class="adm-field">
+            <label for="f-shortBenefit">One-line summary</label>
+            <input type="text" id="f-shortBenefit" data-field="shortBenefit" maxlength="90">
+            <span class="adm-hint">Shown on the product card, under the name.</span>
+          </div>
+
+          <div class="adm-field">
+            <label for="f-description">Full description</label>
+            <textarea id="f-description" data-field="description" rows="4"></textarea>
+          </div>
+
+          <div class="adm-field">
+            <label for="f-howItWorks">How to use it</label>
+            <textarea id="f-howItWorks" data-field="howItWorks" rows="2"></textarea>
+          </div>
+        </fieldset>
+
+        <fieldset class="adm-group">
+          <legend>Details</legend>
+
+          <div class="adm-row">
+            <div class="adm-field">
+              <label for="f-benefits">Selling points</label>
+              <textarea id="f-benefits" data-list="benefits" rows="4"></textarea>
+              <span class="adm-hint">One per line.</span>
+            </div>
+            <div class="adm-field">
+              <label for="f-ingredients">What it is made of</label>
+              <textarea id="f-ingredients" data-list="ingredients" rows="4"></textarea>
+              <span class="adm-hint">One per line.</span>
+            </div>
+          </div>
+
+          <div class="adm-row">
+            <div class="adm-field">
+              <label for="f-optionLabel">Choice the buyer makes</label>
+              <input type="text" id="f-optionLabel" data-field="optionLabel" placeholder="Size, Colour, Set…">
+            </div>
+            <div class="adm-field">
+              <label for="f-options">The choices</label>
+              <textarea id="f-options" data-list="options" rows="3"></textarea>
+              <span class="adm-hint">One per line. Leave empty for no choice.</span>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="adm-group">
+          <legend>Look</legend>
+
+          <div class="adm-row">
+            <div class="adm-field">
+              <label for="f-colour">Colour name</label>
+              <input type="text" id="f-colour" data-field="colour" placeholder="Champagne">
+            </div>
+            <div class="adm-field">
+              <label for="f-swatch">Colour</label>
+              <span class="adm-swatch">
+                <input type="color" id="f-swatch" data-field="swatch" value="#e8dcc6">
+                <input type="text" id="f-swatch-hex" placeholder="#e8dcc6" spellcheck="false">
+                <button type="button" class="adm-mini" id="f-swatch-clear">Clear</button>
+              </span>
+              <span class="adm-hint">Tints the product card and its dot in the colour row.</span>
+            </div>
+          </div>
+
+          <div class="adm-field">
+            <label for="f-image">Photo</label>
+            <div class="adm-image">
+              <span class="adm-image__preview" id="adm-image-preview"></span>
+              <div class="adm-image__controls">
+                <input type="text" id="f-image" data-field="image" placeholder="images/products/my-product.jpg">
+                <div class="adm-image__actions">
+                  <button type="button" class="adm-mini" id="adm-pick-file">Choose a photo…</button>
+                  <input type="file" id="adm-file" accept="image/*" hidden>
+                  <label class="adm-check adm-check--sm">
+                    <input type="checkbox" id="adm-embed">
+                    <span>Embed the photo in products.js</span>
+                  </label>
+                </div>
+                <span class="adm-hint" id="adm-image-note">
+                  Point this at a file in your <code>images/products/</code> folder.
+                </span>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="adm-group">
+          <legend>Reviews</legend>
+          <div class="adm-row">
+            <div class="adm-field">
+              <label for="f-rating">Rating out of 5</label>
+              <input type="number" id="f-rating" data-field="rating" min="0" max="5" step="0.1">
+              <span class="adm-field__err" id="err-rating"></span>
+            </div>
+            <div class="adm-field">
+              <label for="f-reviewCount">Number of reviews</label>
+              <input type="number" id="f-reviewCount" data-field="reviewCount" min="0" step="1">
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="adm-danger">
+          <button type="button" class="adm-btn" id="adm-duplicate">Duplicate this product</button>
+          <button type="button" class="adm-btn adm-btn--danger" id="adm-delete">Delete this product</button>
+        </div>
+      </form>
+    </main>
+
+    <div class="adm-blank" id="adm-blank">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8v13H3V8"/><path d="M1 3h22v5H1z"/><path d="M10 12h4"/></svg>
+      <p>Pick a product on the left, or add a new one.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- Confirmations and export results land here rather than in an alert(). -->
+<div class="adm-toast" id="adm-toast" hidden></div>

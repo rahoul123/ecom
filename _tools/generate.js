@@ -134,6 +134,13 @@ const PAGES = [
     title: (b) => `Checkout | ${b.name}`,
     desc: (b) => `Complete your ${b.name} order.` },
 
+  /* The catalogue editor. Not in the nav, not in the sitemap, noindex: it
+     is a tool for whoever runs the shop, not a page for customers. */
+  { file: 'admin.html', src: 'admin.html', nav: 'Admin', noindex: true, skipSitemap: true,
+    bare: true, css: 'css/admin.css',
+    title: (b) => `Products | ${b.name}`,
+    desc: () => 'Edit the product catalogue and export it.' },
+
   { file: '404.html', src: '404.html', nav: '404', noindex: true, skipSitemap: true,
     title: (b) => `Page not found | ${b.name}`,
     desc: () => 'Page not found.' }
@@ -260,26 +267,63 @@ function shade(hex, amount) {
   }).join('');
 }
 
+/* ------------------------------------------------------------ products.js
+   Ships empty. admin.html exports a filled-in version of this exact file,
+   which the shop owner uploads over the top of it — one file, no build step,
+   no server. Because it runs after brand-config.js it simply reassigns
+   PRODUCTS, and every page picks the new catalogue up.
+   ------------------------------------------------------------------------ */
+
+const PRODUCTS_STUB = `/* ==========================================================================
+   PRODUCTS.JS — your catalogue.
+
+   This file ships empty, which means the site uses the products defined in
+   js/brand-config.js.
+
+   To change what the shop sells, open admin.html in a browser, edit the
+   products there and press "Export products.js". Upload the file it gives
+   you over this one, and every page updates.
+
+   You can also edit this file by hand. Uncomment the line below and put your
+   products in the array — the shape of one product is in brand-config.js.
+   ========================================================================== */
+
+/* PRODUCTS = []; */
+`;
+
 /* -------------------------------------------------------- brand-config.js */
 
 function brandConfig(brand, imageMap) {
   const products = brand.products.map((p) => ({
     slug: p.slug,
     name: p.name,
-    sku: `${brand.slug.toUpperCase().replace(/-/g, '')}-${p.slug.toUpperCase().replace(/-/g, '').slice(0, 12)}`,
+    /* The slug in full, not a 12-character prefix of it: truncating gave all
+       eight pillowcase colours the same SKU, and tracking.js hands this to
+       GA4 and Meta as the item id, so they were being counted as one
+       product. The slug is already unique, so this is too. */
+    sku: `${brand.slug.toUpperCase().replace(/-/g, '')}-${p.slug.toUpperCase().replace(/-/g, '')}`,
     category: p.category,
     shortBenefit: p.shortBenefit,
-    description: `[[PLACEHOLDER]] ${p.shortBenefit} Full product copy goes here — keep it factual and avoid medical claims until reviewed.`,
-    metaDescription: `[[PLACEHOLDER]] ${p.name} from ${brand.name}. ${p.shortBenefit}`,
+    description: p.description ||
+      `[[PLACEHOLDER]] ${p.shortBenefit} Full product copy goes here — keep it factual and avoid medical claims until reviewed.`,
+    metaDescription: p.metaDescription || `[[PLACEHOLDER]] ${p.name} from ${brand.name}. ${p.shortBenefit}`,
     price: p.price,
     compareAt: p.compareAt,
-    priceNote: p.category === 'Bundles' || p.category === 'Sets' ? 'one-off purchase' : 'per 30-day supply',
+    /* A product says what it wants; failing that the brand sets the house
+       default. The last fallback only suits a subscription shop, which is why
+       a brand selling objects sets `priceNote: null` and is done with it. */
+    priceNote: p.priceNote !== undefined ? p.priceNote
+      : brand.priceNote !== undefined ? brand.priceNote
+      : (p.category === 'Bundles' || p.category === 'Sets' ? 'one-off purchase' : 'per 30-day supply'),
     rating: p.rating,
     reviewCount: p.reviewCount,
     badge: p.badge,
     featured: p.featured,
-    optionLabel: 'Supply',
-    options: ['1 month', '3 months', '6 months'],
+    /* A supplement shop sells a supply; a linen shop sells a size. The
+       product decides, the brand sets its house default, and the last
+       fallback keeps the original supplement sites as they were. */
+    optionLabel: p.optionLabel || brand.optionLabel || 'Supply',
+    options: p.options || brand.productOptions || ['1 month', '3 months', '6 months'],
     benefits: p.benefits,
     ingredients: p.ingredients,
     howItWorks: p.howItWorks,
@@ -327,6 +371,9 @@ function brandConfig(brand, imageMap) {
    ========================================================================== */
 
 var BRAND = {
+  /* The folder this site lives in. admin.html builds SKUs from it, so it has
+     to match what generate.js used. */
+  slug: ${JSON.stringify(brand.slug)},
   name: ${JSON.stringify(brand.name)},
   tagline: ${JSON.stringify(brand.tagline)},
   announcement: ${JSON.stringify(brand.announcement)},
@@ -548,10 +595,18 @@ function buildBrand(brand) {
 
   /* --- css + js: always refreshed from _shared --- */
   write(path.join(dir, 'css', 'base.css'), read(SHARED, 'css', 'base.css'));
+  write(path.join(dir, 'css', 'admin.css'), read(SHARED, 'css', 'admin.css'));
   write(path.join(dir, 'css', 'brand.css'), brandCSS(brand));
-  ['theme-init.js', 'site.js', 'tracking.js', 'cart.js', 'checkout.js'].forEach((f) => {
+  ['theme-init.js', 'site.js', 'tracking.js', 'cart.js', 'checkout.js', 'admin.js'].forEach((f) => {
     write(path.join(dir, 'js', f), read(SHARED, 'js', f));
   });
+
+  /* --- products.js: the catalogue admin.html writes. Same rule as
+         brand-config.js below — once it exists it is the user's file. --- */
+  const prodPath = path.join(dir, 'js', 'products.js');
+  if (!fs.existsSync(prodPath) || forceConfig) {
+    write(prodPath, PRODUCTS_STUB);
+  }
 
   /* --- brand-config.js: never clobber the user's edits --- */
   const cfgPath = path.join(dir, 'js', 'brand-config.js');
@@ -575,6 +630,9 @@ function buildBrand(brand) {
     PRIMARY_CTA: brand.copy.primaryCta || common.copy.primaryCta,
     FONT_LINK: brand.fonts.link,
     ASSET_V: ASSET_VERSION,
+    /* Only the admin page carries an extra stylesheet; everything else
+       resolves this to nothing. */
+    PAGE_CSS: '',
     PROMO_TAG: (brand.promo || common.promo || {}).tag || 'Offer',
     PROMO_HEADING: (brand.promo || common.promo || {}).heading || '[[PLACEHOLDER: offer heading]]',
     PROMO_TEXT: (brand.promo || common.promo || {}).text || '[[PLACEHOLDER: offer detail]]',
@@ -619,6 +677,7 @@ function buildBrand(brand) {
     const ctx = Object.assign({}, baseCtx, {
       PAGE_TITLE: page.title(brand),
       PAGE_DESC: page.desc(brand),
+      PAGE_CSS: page.css ? `<link rel="stylesheet" href="${page.css}?v=${ASSET_VERSION}">` : '',
       PAGE_PATH: page.file === 'index.html' ? '' : page.file,
       ROBOTS: NOINDEX,
       JSONLD: page.file === 'index.html' ? orgSchema(brand) : ''

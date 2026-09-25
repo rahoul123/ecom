@@ -1,0 +1,353 @@
+<!doctype html>
+<!--
+  Products | Vitality Rx
+  Static site. No build step, no server. Upload this folder as-is via FTP.
+  Brand identity, products and Shopify redirect links all live in js/brand-config.js.
+-->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+
+<title>Products | Vitality Rx</title>
+<meta name="description" content="Edit the product catalogue and export it.">
+<link rel="canonical" href="https://vitality-rx-placeholder.com/admin.html">
+<!-- REMOVE BEFORE LAUNCH: keeps placeholder content out of search results -->
+<meta name="robots" content="noindex, nofollow">
+
+<!-- Open Graph / social + ad previews -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Vitality Rx">
+<meta property="og:title" content="Products | Vitality Rx">
+<meta property="og:description" content="Edit the product catalogue and export it.">
+<meta property="og:url" content="https://vitality-rx-placeholder.com/admin.html">
+<meta property="og:image" content="https://vitality-rx-placeholder.com/images/og-default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/base.css?v=1c5b372c">
+<link rel="stylesheet" href="css/brand.css?v=1c5b372c">
+<!-- A page may add one stylesheet of its own. It loads last so it wins. -->
+<link rel="stylesheet" href="css/admin.css?v=1c5b372c">
+
+<!--
+  Load order matters. brand-config.js first (data), theme-init.js second
+  (applies colours before first paint), then site.js (renderers), then
+  tracking.js (inert until you add pixel IDs). All synchronous and tiny —
+  that is what lets inline render calls run during parse with zero layout shift.
+-->
+<script src="js/brand-config.js?v=1c5b372c"></script>
+<!-- Products exported from admin.html, if there are any. It reassigns PRODUCTS,
+     so it has to run before anything reads them. Ships empty; replacing this
+     one file is all it takes to change the catalogue. -->
+<script src="js/products.js?v=1c5b372c"></script>
+<script src="js/cart.js?v=1c5b372c"></script>
+<script src="js/theme-init.js?v=1c5b372c"></script>
+<script src="js/site.js?v=1c5b372c"></script>
+<script src="js/tracking.js?v=1c5b372c"></script>
+<script src="js/checkout.js?v=1c5b372c"></script>
+<script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
+
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<!-- ===== CHECKOUT HEADER — the slim chrome used only by pages marked `bare`
+     in _tools/generate.js. No nav and no mega menu: once someone is in the
+     checkout, every link out of it is a link out of the sale. The logo goes
+     home and the basket goes back a step, and that is the lot. ===== -->
+<header class="co-header">
+  <div class="co-header__inner">
+    <p class="co-header__proof">
+      <span class="co-header__proof-stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+      <span data-checkout-proof>Award-winning silk</span>
+    </p>
+
+    <a class="co-header__logo" href="index.html" aria-label="Vitality Rx &mdash; home">
+      <img data-brand-logo src="images/logo.svg" alt="Vitality Rx" width="148" height="40">
+    </a>
+
+    <a class="co-header__cart icon-btn" href="cart.html" data-cart-link aria-label="Back to basket">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+      <span class="cart-count" data-cart-count hidden>0</span>
+    </a>
+  </div>
+</header>
+
+<main id="main">
+<!-- ===== ADMIN — the catalogue editor.
+
+     There is no server here, so this does not "save" anywhere a visitor can
+     see. What it does instead: you edit products in the browser, it keeps the
+     work in this browser's storage as you go, and then it hands you a
+     finished js/products.js to upload over FTP. One file, and the shop
+     changes. See js/admin.js.
+
+     Not linked from the site, not in the sitemap, noindex. Anyone who finds
+     the URL can edit their own copy and change nothing of yours — the file
+     they would need to replace lives on your hosting.
+     ===== -->
+
+<div class="adm">
+
+  <header class="adm-bar">
+    <div class="adm-bar__left">
+      <h1 class="adm-bar__title">Products</h1>
+      <span class="adm-count" id="adm-count">0</span>
+      <span class="adm-state" id="adm-state" hidden></span>
+    </div>
+    <div class="adm-bar__right">
+      <button type="button" class="adm-btn" id="adm-add">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        Add product
+      </button>
+      <button type="button" class="adm-btn" id="adm-import">Import</button>
+      <input type="file" id="adm-import-file" accept=".js,.json,text/javascript,application/json" hidden>
+      <button type="button" class="adm-btn" id="adm-revert">Start over</button>
+      <button type="button" class="adm-btn adm-btn--primary" id="adm-export">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        Export products.js
+      </button>
+    </div>
+  </header>
+
+  <!-- How this reaches the live site. Worth saying once, at the top. -->
+  <details class="adm-help" id="adm-help">
+    <summary>How do these edits reach my shop?</summary>
+    <ol>
+      <li>Edit your products here. The work is kept in this browser as you type, so you can close the tab and come back.</li>
+      <li>Press <b>Export products.js</b>. Your browser downloads a file called <code>products.js</code>.</li>
+      <li>Upload it to the <code>js/</code> folder on your hosting, over the <code>products.js</code> already there.</li>
+      <li>Reload the shop. Every page now shows your catalogue.</li>
+    </ol>
+    <p class="adm-help__note">
+      Photos are the one thing that does not travel inside that file unless
+      you ask it to. Either upload your images to <code>images/products/</code>
+      and point each product at its filename, or tick <b>Embed the photo</b>
+      and it will be carried inside <code>products.js</code> — convenient, but
+      it makes the file bigger, so the panel tells you how big.
+    </p>
+  </details>
+
+  <div class="adm-body">
+
+    <!-- ------------------------------------------------- the catalogue --- -->
+    <aside class="adm-list-pane">
+      <label class="adm-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input type="search" id="adm-search" placeholder="Search products" aria-label="Search products">
+      </label>
+      <ol class="adm-list" id="adm-list"></ol>
+      <p class="adm-list__empty" id="adm-list-empty" hidden>Nothing matches that.</p>
+    </aside>
+
+    <!-- ----------------------------------------------------- the editor --- -->
+    <main class="adm-editor" id="adm-editor" hidden>
+
+      <div class="adm-preview">
+        <p class="adm-preview__label">This is the card your shop will show</p>
+        <div class="adm-preview__stage" id="adm-preview"></div>
+      </div>
+
+      <form id="adm-form" autocomplete="off">
+
+        <fieldset class="adm-group">
+          <legend>Basics</legend>
+
+          <div class="adm-field">
+            <label for="f-name">Product name</label>
+            <input type="text" id="f-name" data-field="name" required>
+            <span class="adm-field__err" id="err-name"></span>
+          </div>
+
+          <div class="adm-row">
+            <div class="adm-field">
+              <label for="f-category">Category</label>
+              <input type="text" id="f-category" data-field="category" list="adm-categories">
+              <datalist id="adm-categories"></datalist>
+              <span class="adm-hint">Groups the product in the shop and the menu.</span>
+            </div>
+            <div class="adm-field">
+              <label for="f-slug">Web address</label>
+              <input type="text" id="f-slug" data-field="slug">
+              <span class="adm-hint" id="slug-preview">product.html?p=</span>
+              <span class="adm-field__err" id="err-slug"></span>
+            </div>
+          </div>
+
+          <div class="adm-row">
+            <div class="adm-field">
+              <label for="f-badge">Badge</label>
+              <input type="text" id="f-badge" data-field="badge" placeholder="Best seller, New, Low stock…">
+              <span class="adm-hint">Leave empty for no badge.</span>
+            </div>
+            <div class="adm-field adm-field--check">
+              <label class="adm-check">
+                <input type="checkbox" id="f-featured" data-field="featured">
+                <span>Show on the home page</span>
+              </label>
+              <span class="adm-hint">Featured products fill the Best Sellers row.</span>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="adm-group">
+          <legend>Price</legend>
+          <div class="adm-row adm-row--3">
+            <div class="adm-field">
+              <label for="f-price">Price</label>
+              <input type="number" id="f-price" data-field="price" min="0" step="0.01" required>
+              <span class="adm-field__err" id="err-price"></span>
+            </div>
+            <div class="adm-field">
+              <label for="f-compareAt">Was (optional)</label>
+              <input type="number" id="f-compareAt" data-field="compareAt" min="0" step="0.01">
+              <span class="adm-hint">Shows a struck-through price.</span>
+              <span class="adm-field__err" id="err-compareAt"></span>
+            </div>
+            <div class="adm-field">
+              <label for="f-priceNote">Note under the price</label>
+              <input type="text" id="f-priceNote" data-field="priceNote" placeholder="e.g. free delivery">
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="adm-group">
+          <legend>Words</legend>
+
+          <div class="adm-field">
+            <label for="f-shortBenefit">One-line summary</label>
+            <input type="text" id="f-shortBenefit" data-field="shortBenefit" maxlength="90">
+            <span class="adm-hint">Shown on the product card, under the name.</span>
+          </div>
+
+          <div class="adm-field">
+            <label for="f-description">Full description</label>
+            <textarea id="f-description" data-field="description" rows="4"></textarea>
+          </div>
+
+          <div class="adm-field">
+            <label for="f-howItWorks">How to use it</label>
+            <textarea id="f-howItWorks" data-field="howItWorks" rows="2"></textarea>
+          </div>
+        </fieldset>
+
+        <fieldset class="adm-group">
+          <legend>Details</legend>
+
+          <div class="adm-row">
+            <div class="adm-field">
+              <label for="f-benefits">Selling points</label>
+              <textarea id="f-benefits" data-list="benefits" rows="4"></textarea>
+              <span class="adm-hint">One per line.</span>
+            </div>
+            <div class="adm-field">
+              <label for="f-ingredients">What it is made of</label>
+              <textarea id="f-ingredients" data-list="ingredients" rows="4"></textarea>
+              <span class="adm-hint">One per line.</span>
+            </div>
+          </div>
+
+          <div class="adm-row">
+            <div class="adm-field">
+              <label for="f-optionLabel">Choice the buyer makes</label>
+              <input type="text" id="f-optionLabel" data-field="optionLabel" placeholder="Size, Colour, Set…">
+            </div>
+            <div class="adm-field">
+              <label for="f-options">The choices</label>
+              <textarea id="f-options" data-list="options" rows="3"></textarea>
+              <span class="adm-hint">One per line. Leave empty for no choice.</span>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="adm-group">
+          <legend>Look</legend>
+
+          <div class="adm-row">
+            <div class="adm-field">
+              <label for="f-colour">Colour name</label>
+              <input type="text" id="f-colour" data-field="colour" placeholder="Champagne">
+            </div>
+            <div class="adm-field">
+              <label for="f-swatch">Colour</label>
+              <span class="adm-swatch">
+                <input type="color" id="f-swatch" data-field="swatch" value="#e8dcc6">
+                <input type="text" id="f-swatch-hex" placeholder="#e8dcc6" spellcheck="false">
+                <button type="button" class="adm-mini" id="f-swatch-clear">Clear</button>
+              </span>
+              <span class="adm-hint">Tints the product card and its dot in the colour row.</span>
+            </div>
+          </div>
+
+          <div class="adm-field">
+            <label for="f-image">Photo</label>
+            <div class="adm-image">
+              <span class="adm-image__preview" id="adm-image-preview"></span>
+              <div class="adm-image__controls">
+                <input type="text" id="f-image" data-field="image" placeholder="images/products/my-product.jpg">
+                <div class="adm-image__actions">
+                  <button type="button" class="adm-mini" id="adm-pick-file">Choose a photo…</button>
+                  <input type="file" id="adm-file" accept="image/*" hidden>
+                  <label class="adm-check adm-check--sm">
+                    <input type="checkbox" id="adm-embed">
+                    <span>Embed the photo in products.js</span>
+                  </label>
+                </div>
+                <span class="adm-hint" id="adm-image-note">
+                  Point this at a file in your <code>images/products/</code> folder.
+                </span>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="adm-group">
+          <legend>Reviews</legend>
+          <div class="adm-row">
+            <div class="adm-field">
+              <label for="f-rating">Rating out of 5</label>
+              <input type="number" id="f-rating" data-field="rating" min="0" max="5" step="0.1">
+              <span class="adm-field__err" id="err-rating"></span>
+            </div>
+            <div class="adm-field">
+              <label for="f-reviewCount">Number of reviews</label>
+              <input type="number" id="f-reviewCount" data-field="reviewCount" min="0" step="1">
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="adm-danger">
+          <button type="button" class="adm-btn" id="adm-duplicate">Duplicate this product</button>
+          <button type="button" class="adm-btn adm-btn--danger" id="adm-delete">Delete this product</button>
+        </div>
+      </form>
+    </main>
+
+    <div class="adm-blank" id="adm-blank">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8v13H3V8"/><path d="M1 3h22v5H1z"/><path d="M10 12h4"/></svg>
+      <p>Pick a product on the left, or add a new one.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- Confirmations and export results land here rather than in an alert(). -->
+<div class="adm-toast" id="adm-toast" hidden></div>
+</main>
+
+<!-- ===== CHECKOUT FOOTER — legal links only. Filled from BRAND.legalPages by site.js, so
+     removing a legal page cannot strand a link here. ===== -->
+<footer class="co-footer">
+  <div class="co-footer__inner">
+    <ul id="footer-legal-inline"></ul>
+  </div>
+</footer>
+</body>
+</html>

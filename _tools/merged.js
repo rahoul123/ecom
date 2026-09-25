@@ -288,6 +288,12 @@ module.exports = {
     address: '[[PLACEHOLDER: registered business address]]'
   },
 
+  /* Silk is bought once, not subscribed to. No supply note, and no months
+     to choose from — every product here names its own sizes or sets. */
+  priceNote: null,
+  optionLabel: 'Option',
+  productOptions: [],
+
   shipping: { freeOver: 75, flatRate: 6.95 },
 
   /* No provider connected yet — the checkout confirms the order and says

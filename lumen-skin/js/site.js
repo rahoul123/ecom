@@ -1608,6 +1608,9 @@ var Site = (function () {
     esc: esc,
     addToCart: addToCart,
     syncCartCount: syncCartCount,
+    /* Exported so admin.html can preview a card with the very markup the
+       shop renders, rather than an approximation of it. */
+    productCard: productCard,
     renderProducts: renderProducts,
     renderShop: renderShop,
     renderFilters: renderFilters,
