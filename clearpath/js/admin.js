@@ -164,7 +164,7 @@ var Admin = (function () {
     if (raw) {
       try {
         var draft = JSON.parse(raw);
-        if (draft && Array.isArray(draft.items)) {
+        if (draft && Array.isArray(draft.items) && draft.items.length > 0) {
           state.items = draft.items;
           state.dirty = !!draft.dirty;
           return;
@@ -176,7 +176,13 @@ var Admin = (function () {
 
   /** Starts again from the catalogue the site currently ships. */
   function resetToLive() {
-    state.items = (typeof PRODUCTS !== 'undefined' ? PRODUCTS : []).map(function (p) {
+    var source = (typeof PRODUCTS !== 'undefined' && Array.isArray(PRODUCTS) && PRODUCTS.length)
+      ? PRODUCTS
+      : (typeof BRAND !== 'undefined' && BRAND.products && Array.isArray(BRAND.products))
+      ? BRAND.products
+      : [];
+
+    state.items = source.map(function (p) {
       return JSON.parse(JSON.stringify(p));
     });
     state.dirty = false;
