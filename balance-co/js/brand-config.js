@@ -64,6 +64,25 @@ var BRAND = {
   "Sleep": "sleep.html",
   "Bundles": "bundles.html"
 },
+  /* Rendered into the footer, so removing a legal page cannot leave a dead link. */
+  legalPages: [
+  {
+    "title": "Privacy Policy",
+    "href": "privacy-policy.html"
+  },
+  {
+    "title": "Terms of Service",
+    "href": "terms-of-service.html"
+  },
+  {
+    "title": "Shipping & Refund Policy",
+    "href": "shipping-refund-policy.html"
+  },
+  {
+    "title": "Medical Disclaimer",
+    "href": "medical-disclaimer.html"
+  }
+],
   categoryIndex: {
   "Daily support": 1,
   "Nutrition": 2,
@@ -117,6 +136,8 @@ var BRAND = {
 ],
   goals: [],
   heroProducts: [],
+  awards: [],
+  press: [],
   newArrivals: [],
   qualityPicks: [],
   spotlightSlug: "",
@@ -296,6 +317,10 @@ var PRODUCTS = [
       "images/products/_angle-daily-support-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Daily Balance Capsules]]",
+    "swatch": null,
+    "colour": null,
+    "tint": null,
+    "deep": null,
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/daily-balance-capsules"
   },
   {
@@ -338,6 +363,10 @@ var PRODUCTS = [
       "images/products/_angle-daily-support-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Daily Fibre Blend]]",
+    "swatch": null,
+    "colour": null,
+    "tint": null,
+    "deep": null,
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/fibre-blend"
   },
   {
@@ -380,6 +409,10 @@ var PRODUCTS = [
       "images/products/_angle-nutrition-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Protein Shake — Vanilla]]",
+    "swatch": null,
+    "colour": null,
+    "tint": null,
+    "deep": null,
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/protein-shake-vanilla"
   },
   {
@@ -422,6 +455,10 @@ var PRODUCTS = [
       "images/products/_angle-sleep-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Evening Calm]]",
+    "swatch": null,
+    "colour": null,
+    "tint": null,
+    "deep": null,
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/evening-calm"
   },
   {
@@ -464,6 +501,10 @@ var PRODUCTS = [
       "images/products/_angle-nutrition-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Hydration Sticks]]",
+    "swatch": null,
+    "colour": null,
+    "tint": null,
+    "deep": null,
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/hydration-sticks"
   },
   {
@@ -504,6 +545,10 @@ var PRODUCTS = [
       "images/products/_angle-bundles-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Balance Starter Kit]]",
+    "swatch": null,
+    "colour": null,
+    "tint": null,
+    "deep": null,
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/balance-starter-kit"
   }
 ];

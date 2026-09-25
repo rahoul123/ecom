@@ -118,14 +118,29 @@ var Site = (function () {
 
   /* --------------------------------------------------------- product card */
 
+  /**
+   * Inline custom properties for one card. A product that names its own silk
+   * swatch is drawn in that colour; anything else falls back to the tint its
+   * category was assigned.
+   */
+  function cardTint(p) {
+    if (p.swatch) {
+      return ' style="--tint:' + esc(p.tint || p.swatch) +
+        ';--deep:' + esc(p.deep || 'inherit') +
+        ';--swatch:' + esc(p.swatch) + '"';
+    }
+    var n = (BRAND.categoryIndex && BRAND.categoryIndex[p.category]) || 0;
+    return n ? ' style="--tint:var(--cat-' + n + '-tint);--deep:var(--cat-' + n + '-deep)"' : '';
+  }
+
+
   function productCard(p) {
     var onSale = p.compareAt && p.compareAt > p.price;
     /* Each card carries its category's tint, so a shop grid is colour-coded
        rather than 30 identical white boxes. brand.css defines --cat-N-*. */
-    var n = (BRAND.categoryIndex && BRAND.categoryIndex[p.category]) || 0;
-    var tint = n ? ' style="--tint:var(--cat-' + n + '-tint);--deep:var(--cat-' + n + '-deep)"' : '';
+    var style = cardTint(p);
     return '' +
-      '<article class="product-card"' + tint + '>' +
+      '<article class="product-card"' + style + '>' +
         '<a class="product-card__media" href="product.html?p=' + esc(p.slug) + '" aria-label="' + esc(p.name) + '">' +
           /* [[PLACEHOLDER: product photo]] — swap image path in brand-config.js */
           '<img src="' + esc(p.image) + '" alt="' + esc(p.imageAlt || p.name) + '" width="600" height="600" loading="lazy" decoding="async">' +
@@ -134,7 +149,9 @@ var Site = (function () {
             Math.round((1 - p.price / p.compareAt) * 100) + '%</span>' : '') +
         '</a>' +
         '<div class="product-card__body">' +
-          '<span class="product-card__cat">' + esc(p.category) + '</span>' +
+          (p.colour
+            ? '<span class="product-card__colour"><i></i>' + esc(p.colour) + '</span>'
+            : '<span class="product-card__cat">' + esc(p.category) + '</span>') +
           '<h3 class="product-card__title"><a href="product.html?p=' + esc(p.slug) + '">' + esc(p.name) + '</a></h3>' +
           '<p class="product-card__benefit">' + esc(p.shortBenefit) + '</p>' +
           '<div class="rating-line">' + stars(p.rating, 'sm') +
@@ -890,18 +907,18 @@ var Site = (function () {
     }
 
     host.innerHTML = picks.slice(0, 3).map(function (p) {
-      var n = (BRAND.categoryIndex && BRAND.categoryIndex[p.category]) || 0;
-      var vars = n ? ' style="--tint:var(--cat-' + n + '-tint);--deep:var(--cat-' + n + '-deep)"' : '';
       var onSale = p.compareAt && p.compareAt > p.price;
 
-      return '<article class="arrival"' + vars + '>' +
+      return '<article class="arrival"' + cardTint(p) + '>' +
         '<a class="arrival__media" href="product.html?p=' + esc(p.slug) + '" aria-label="' + esc(p.name) + '">' +
           '<img src="' + esc(p.image) + '" alt="' + esc(p.imageAlt || p.name) +
           '" width="800" height="720" loading="lazy" decoding="async">' +
           '<span class="arrival__flag">' + esc(p.badge || 'New in') + '</span>' +
         '</a>' +
         '<div class="arrival__body">' +
-          '<span class="arrival__cat">' + esc(p.category) + '</span>' +
+          (p.colour
+            ? '<span class="product-card__colour"><i></i>' + esc(p.colour) + '</span>'
+            : '<span class="arrival__cat">' + esc(p.category) + '</span>') +
           '<h3><a href="product.html?p=' + esc(p.slug) + '">' + esc(p.name) + '</a></h3>' +
           '<p>' + esc(p.shortBenefit) + '</p>' +
           '<div class="rating-line">' + stars(p.rating, 'sm') +
@@ -1009,8 +1026,11 @@ var Site = (function () {
     var onSale = p.compareAt && p.compareAt > p.price;
     var save = onSale ? Math.round((1 - p.price / p.compareAt) * 100) : 0;
     var cta = esc(BRAND.copy && BRAND.copy.buyCta ? BRAND.copy.buyCta : 'Buy now');
-    var n = (BRAND.categoryIndex && BRAND.categoryIndex[p.category]) || 0;
-    if (n) host.setAttribute('style', '--spot-tint:var(--cat-' + n + '-tint)');
+    if (p.tint) host.setAttribute('style', '--spot-tint:' + p.tint);
+    else {
+      var n = (BRAND.categoryIndex && BRAND.categoryIndex[p.category]) || 0;
+      if (n) host.setAttribute('style', '--spot-tint:var(--cat-' + n + '-tint)');
+    }
 
     host.innerHTML =
       '<div class="spotlight__media" data-parallax="0.05">' +
@@ -1087,6 +1107,64 @@ var Site = (function () {
     host.innerHTML = '<div class="hero__disc" data-parallax="-0.04"></div>' + packs + chips;
   }
 
+  /** The numbers strip under the hero. */
+  function renderAwards(selector) {
+    var host = el(selector);
+    if (!host) return;
+    var items = BRAND.awards || [];
+    if (!items.length) return;
+
+    host.innerHTML = items.map(function (a, i) {
+      return '<div class="is-placeholder">' +
+        (i === 0 ? stars(5, 'sm') : '') +
+        '<span class="award__value">' + esc(a.value) + '</span>' +
+        '<span class="award__label">' + esc(a.label) + '</span></div>';
+    }).join('');
+  }
+
+  /** Press wordmarks. Replace with real, permissioned logos before launch. */
+  function renderPress(selector) {
+    var host = el(selector);
+    if (!host) return;
+    var items = BRAND.press || [];
+    if (!items.length) return;
+    host.innerHTML = items.map(function (p) {
+      return '<span class="press__logo">' + p + '</span>';
+    }).join('');
+  }
+
+  /**
+   * The collection band: every colour the shop sells, as swatch chips that
+   * link to the product. Built from the products that carry a swatch.
+   */
+  function renderSwatches(selector, category) {
+    var host = el(selector);
+    if (!host) return;
+
+    /* These are the hero product's colours, not every colour in the shop —
+       otherwise a bundle in a near-identical shade shows up as a duplicate.
+       Defaults to the first category, which is the range the shop leads on. */
+    var only = category || BRAND.swatchCategory ||
+      (PRODUCTS[0] && PRODUCTS[0].category);
+
+    var seen = {};
+    var list = PRODUCTS.filter(function (p) {
+      if (!p.swatch || !p.colour) return false;
+      if (only && p.category !== only) return false;
+      if (seen[p.colour]) return false;
+      seen[p.colour] = true;
+      return true;
+    });
+    if (!list.length) return;
+
+    host.innerHTML = list.map(function (p) {
+      return '<a class="swatch" href="product.html?p=' + esc(p.slug) + '" ' +
+        'style="--swatch:' + esc(p.swatch) + '">' +
+        '<span class="swatch__dot"></span>' +
+        '<span class="swatch__name">' + esc(p.colour) + '</span></a>';
+    }).join('');
+  }
+
   function renderTrust(selector) {
     var host = el(selector);
     if (!host) return;
@@ -1129,6 +1207,22 @@ var Site = (function () {
     els('[data-brand-disclaimer]').forEach(function (n) { n.textContent = BRAND.disclaimer; });
     els('[data-brand-announcement]').forEach(function (n) { n.textContent = BRAND.announcement; });
     els('[data-year]').forEach(function (n) { n.textContent = new Date().getFullYear(); });
+
+    /* Footer legal links come from the config, so a removed legal page cannot
+       leave a dead link behind in the footer. */
+    var legal = BRAND.legalPages || [];
+    var legalCol = el('#footer-legal');
+    if (legalCol && legal.length) {
+      legalCol.innerHTML = legal.map(function (l) {
+        return '<li><a href="' + esc(l.href) + '">' + esc(l.title) + '</a></li>';
+      }).join('');
+    }
+    var legalRow = el('#footer-legal-inline');
+    if (legalRow) {
+      legalRow.innerHTML = legal.map(function (l) {
+        return '<li><a href="' + esc(l.href) + '">' + esc(l.title) + '</a></li>';
+      }).join('') + '<li><a href="contact.html">Contact</a></li>';
+    }
 
     /* Footer "Shop" column lists the live categories. */
     var footCats = el('#footer-categories');
@@ -1439,6 +1533,9 @@ var Site = (function () {
     renderFaq: renderFaq,
     emitFaqSchema: emitFaqSchema,
     renderTrust: renderTrust,
+    renderAwards: renderAwards,
+    renderPress: renderPress,
+    renderSwatches: renderSwatches,
     renderHeroStage: renderHeroStage,
     renderGoals: renderGoals,
     renderSpotlight: renderSpotlight,

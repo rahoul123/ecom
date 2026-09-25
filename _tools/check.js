@@ -95,7 +95,30 @@ for (const site of sites) {
   if (calledMissing.size) fail(site, 'Site.* called but not exported: ' + [...calledMissing].join(', '));
   else console.log('  ok    every Site.* call is exported');
 
-  /* 5. No unrendered template tokens left behind. */
+  /* 5. Internal links resolve. This one exists because a removed legal page
+        left two dead links in the footer of every page, and the class check
+        above happily passed. */
+  const linkTargets = new Set();
+  for (const f of pages) {
+    const html = fs.readFileSync(path.join(dir, f), 'utf8');
+    for (const m of html.matchAll(/href="([^"#?:]+\.html)(?:[?#][^"]*)?"/g)) linkTargets.add(m[1] + '|' + f);
+  }
+  /* Links built at runtime from config, not present in the HTML. */
+  const cfg = fs.readFileSync(path.join(dir, 'js', 'brand-config.js'), 'utf8');
+  for (const m of cfg.matchAll(/"href":\s*"([^"]+\.html)"/g)) linkTargets.add(m[1] + '|brand-config.js');
+  for (const m of cfg.matchAll(/"([a-z0-9-]+\.html)"/g)) linkTargets.add(m[1] + '|brand-config.js');
+
+  let dead = 0;
+  for (const entry of linkTargets) {
+    const [target, from] = entry.split('|');
+    if (!fs.existsSync(path.join(dir, target))) {
+      fail(site, 'dead link -> ' + target + '  (' + from + ')');
+      dead++;
+    }
+  }
+  if (!dead) console.log('  ok    ' + linkTargets.size + ' internal links all resolve');
+
+  /* 6. No unrendered template tokens left behind. */
   let tokens = 0;
   for (const f of pages) {
     const html = fs.readFileSync(path.join(dir, f), 'utf8');

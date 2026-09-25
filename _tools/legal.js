@@ -7,6 +7,10 @@
    and business model before taking an order or running an ad.
 
    {{BRAND_NAME}} and {{LEGAL_ENTITY}} are substituted per brand at generate time.
+
+   A block wrapped in <!--IF:<slug>--> ... <!--ENDIF--> is kept only when that
+   legal page exists for the brand. A shop selling pillowcases should not carry
+   a clause pointing at a medical disclaimer it does not publish.
    ========================================================================== */
 
 module.exports = {
@@ -65,8 +69,10 @@ module.exports = {
 <h2>2. What this website is</h2>
 <p>[[PLACEHOLDER]] This website presents information about products and directs visitors to a separate online store where purchases are completed. Orders, payment, fulfilment and returns are handled by that store under its own terms and conditions, which you should read before buying.</p>
 
+<!--IF:medical-disclaimer-->
 <h2>3. Not medical advice</h2>
 <p>[[PLACEHOLDER]] Content on this website is provided for general information only and is not medical advice, diagnosis or treatment. See our <a href="medical-disclaimer.html">Medical Disclaimer</a> for detail.</p>
+<!--ENDIF-->
 
 <h2>4. Eligibility</h2>
 <p>[[PLACEHOLDER]] You must be of legal age in your jurisdiction to use this website and to purchase any product presented on it.</p>

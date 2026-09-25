@@ -1,5 +1,5 @@
 /* ==========================================================================
-   BRAND.CSS — Everwell
+   BRAND.CSS — Lunelle Silk
    Static fallback for the brand tokens. js/brand-config.js is the live source:
    theme-init.js reads BRAND.colors and overrides these before first paint.
 
@@ -10,62 +10,56 @@
 
 :root {
   --color-bg: #ffffff;
-  --color-surface: #f7f8f5;
-  --color-soft: #f2f5ee;
-  --color-text: #1a1d18;
-  --color-heading: #0f120d;
-  --color-muted: #5c6357;
-  --color-border: #e5e8df;
-  --color-border-strong: #cdd3c3;
-  --color-accent: #4c8c1b;
-  --color-accent-hover: #3c7014;
-  --color-accent-tint: #eef6e4;
+  --color-surface: #f7f8fb;
+  --color-soft: #f1f3f9;
+  --color-text: #2b3244;
+  --color-heading: #111a2e;
+  --color-muted: #6b7488;
+  --color-border: #e5e8f0;
+  --color-border-strong: #c9cfdd;
+  --color-accent: #1b2a4e;
+  --color-accent-hover: #111d3a;
+  --color-accent-tint: #e9edf6;
   --color-on-accent: #ffffff;
-  --color-footer-bg: #12150f;
-  --color-footer-text: #c9d1c2;
-  --color-star: #f5a524;
-  --color-accent-alt: #e8590c;
+  --color-footer-bg: #111a2e;
+  --color-footer-text: #c3c9d8;
+  --color-star: #dfa93f;
+  --color-accent-alt: #c0563c;
   /* Deeper accents used where white body text sits on the accent. The plain
      accent measured 3.46:1 behind white body copy, which fails AA. */
-  --color-accent-deep: #3c7014;
-  --color-accent-deeper: #2c5310;
-  --color-accent-alt-tint: #fdefe6;
+  --color-accent-deep: #16233f;
+  --color-accent-deeper: #0c1630;
+  --color-accent-alt-tint: #fbeee9;
 
   --color-error: #b3261e;
   --color-warn: #a15c00;
   --color-warn-bg: #fff8ea;
   --color-warn-border: #f0dfbe;
 
-  --font-heading: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
+  --font-heading: 'Fraunces', Georgia, 'Times New Roman', serif;
   --font-body: 'Inter', 'Segoe UI', system-ui, sans-serif;
   --weight-heading: 600;
-  --tracking-heading: -1.4px;
+  --tracking-heading: -0.6px;
 
   --page-width: 1240px;
   --radius: 14px;
-  --radius-lg: 24px;
+  --radius-lg: 22px;
   --radius-sm: 8px;
   --radius-btn: 999px;
-  --logo-width: 152px;
+  --logo-width: 156px;
 
-  --cat-1: hsl(94 46% 42%);
-  --cat-1-tint: hsl(94 38% 94%);
-  --cat-1-deep: hsl(94 46% 26%);
-  --cat-2: hsl(141 46% 42%);
-  --cat-2-tint: hsl(141 38% 94%);
-  --cat-2-deep: hsl(141 46% 26%);
-  --cat-3: hsl(188 46% 42%);
-  --cat-3-tint: hsl(188 38% 94%);
-  --cat-3-deep: hsl(188 46% 26%);
-  --cat-4: hsl(235 46% 42%);
-  --cat-4-tint: hsl(235 38% 94%);
-  --cat-4-deep: hsl(235 46% 26%);
-  --cat-5: hsl(282 46% 42%);
-  --cat-5-tint: hsl(282 38% 94%);
-  --cat-5-deep: hsl(282 46% 26%);
-  --cat-6: hsl(329 46% 42%);
-  --cat-6-tint: hsl(329 38% 94%);
-  --cat-6-deep: hsl(329 46% 26%);
+  --cat-1: hsl(222 46% 42%);
+  --cat-1-tint: hsl(222 38% 94%);
+  --cat-1-deep: hsl(222 46% 26%);
+  --cat-2: hsl(269 46% 42%);
+  --cat-2-tint: hsl(269 38% 94%);
+  --cat-2-deep: hsl(269 46% 26%);
+  --cat-3: hsl(316 46% 42%);
+  --cat-3-tint: hsl(316 38% 94%);
+  --cat-3-deep: hsl(316 46% 26%);
+  --cat-4: hsl(3 46% 42%);
+  --cat-4-tint: hsl(3 38% 94%);
+  --cat-4-deep: hsl(3 46% 26%);
   --shadow-sm: 0 1px 3px rgba(16, 20, 25, 0.07);
   --shadow: 0 1px 2px rgba(16, 20, 25, 0.04), 0 6px 20px rgba(16, 20, 25, 0.06);
   --shadow-lg: 0 12px 38px rgba(16, 20, 25, 0.12);

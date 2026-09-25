@@ -64,6 +64,25 @@ var BRAND = {
   "Blends": "blends.html",
   "Bundles": "bundles.html"
 },
+  /* Rendered into the footer, so removing a legal page cannot leave a dead link. */
+  legalPages: [
+  {
+    "title": "Privacy Policy",
+    "href": "privacy-policy.html"
+  },
+  {
+    "title": "Terms of Service",
+    "href": "terms-of-service.html"
+  },
+  {
+    "title": "Shipping & Refund Policy",
+    "href": "shipping-refund-policy.html"
+  },
+  {
+    "title": "Medical Disclaimer",
+    "href": "medical-disclaimer.html"
+  }
+],
   categoryIndex: {
   "Foundations": 1,
   "Evening": 2,
@@ -117,6 +136,8 @@ var BRAND = {
 ],
   goals: [],
   heroProducts: [],
+  awards: [],
+  press: [],
   newArrivals: [],
   qualityPicks: [],
   spotlightSlug: "",
@@ -296,6 +317,10 @@ var PRODUCTS = [
       "images/products/_angle-foundations-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Daily Multi]]",
+    "swatch": null,
+    "colour": null,
+    "tint": null,
+    "deep": null,
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/daily-multi"
   },
   {
@@ -337,6 +362,10 @@ var PRODUCTS = [
       "images/products/_angle-foundations-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Omega-3]]",
+    "swatch": null,
+    "colour": null,
+    "tint": null,
+    "deep": null,
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/omega-3"
   },
   {
@@ -378,6 +407,10 @@ var PRODUCTS = [
       "images/products/_angle-evening-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Magnesium Evening]]",
+    "swatch": null,
+    "colour": null,
+    "tint": null,
+    "deep": null,
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/magnesium-evening"
   },
   {
@@ -419,6 +452,10 @@ var PRODUCTS = [
       "images/products/_angle-foundations-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Vitamin D3 + K2]]",
+    "swatch": null,
+    "colour": null,
+    "tint": null,
+    "deep": null,
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/vitamin-d3-k2"
   },
   {
@@ -461,6 +498,10 @@ var PRODUCTS = [
       "images/products/_angle-blends-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Greens Powder]]",
+    "swatch": null,
+    "colour": null,
+    "tint": null,
+    "deep": null,
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/greens-powder"
   },
   {
@@ -501,6 +542,10 @@ var PRODUCTS = [
       "images/products/_angle-bundles-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of The Daily Three]]",
+    "swatch": null,
+    "colour": null,
+    "tint": null,
+    "deep": null,
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/the-daily-three"
   }
 ];

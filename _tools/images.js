@@ -45,7 +45,13 @@ const hsl = (c, dl = 0, ds = 0, dh = 0) =>
   `hsl(${(c.h + dh + 360) % 360} ${Math.max(0, Math.min(100, c.s + ds))}% ${Math.max(0, Math.min(100, c.l + dl))}%)`;
 
 /* Each category gets its own hue so a grid of 30 products has real variety. */
-function productHue(brand, category, categories) {
+function productHue(brand, category, categories, product) {
+  /* A product that names its own colour is drawn in that colour — for a shop
+     selling one item in ten shades, that is the entire visual system. */
+  if (product && product.swatch) {
+    const c = hexToHsl(product.swatch);
+    return { h: c.h, s: c.s, l: c.l };
+  }
   const base = hexToHsl(brand.colors.accent);
   const i = Math.max(0, categories.indexOf(category));
   return { h: (base.h + i * 47) % 360, s: Math.max(28, Math.min(52, base.s)), l: 46 };
@@ -61,19 +67,61 @@ function productHue(brand, category, categories) {
  */
 function formOf(product) {
   const n = String(product.name).toLowerCase();
-  if (/\b(bundle|kit|set|routine|trio|three)\b/.test(n)) return 'bundle';
-  if (/\bmask\b/.test(n)) return 'soft';
+  /* Sets are checked first: "The Pillowcase Pair" is a box, not a pillowcase. */
+  if (/\b(gift box|sleep set|pair|set|bundle|box|trio)\b/.test(n)) return 'giftbox';
+  if (/\bscrunchie/.test(n)) return 'scrunchie';
+  if (/\bmask\b/.test(n)) return 'mask';
+  if (/\bpillowcase\b|\bpillow\b/.test(n)) return 'pillow';
   if (/\btea\b/.test(n)) return 'tin';
   if (/\b(sticks?|sachets?)\b/.test(n)) return 'box';
   if (/\b(powder|protein|greens|fibre|fiber|blend|shake)\b/.test(n)) return 'pouch';
   if (/\b(drops?|serum|oil)\b/.test(n)) return 'dropper';
   if (/\b(balm|moisturiser|moisturizer|cream|jar)\b/.test(n)) return 'jar';
   if (/\b(cleanser|spf|gel|tube|wash)\b/.test(n)) return 'tube';
+  if (/\b(kit|routine)\b/.test(n)) return 'bundle';
   return 'bottle';
 }
 
+
 /* Each shape returns SVG drawn inside an 800x800 box, centred on (400, 400). */
 const SHAPES = {
+  /* A folded pillowcase seen at a slight angle, with a sheen band. */
+  pillow(c) {
+    return `
+    <path d="M168 250 h464 a26 26 0 0 1 26 26 v248 a26 26 0 0 1 -26 26 h-464 a26 26 0 0 1 -26 -26 v-248 a26 26 0 0 1 26 -26 z" fill="url(#body)"/>
+    <path d="M168 250 h180 q-44 150 0 300 h-180 a26 26 0 0 1 -26 -26 v-248 a26 26 0 0 1 26 -26 z" fill="${hsl(c, 9)}" opacity="0.55"/>
+    <path d="M430 250 q62 150 0 300" stroke="${hsl(c, 12)}" stroke-width="26" fill="none" opacity="0.5"/>
+    <path d="M520 250 q42 150 0 300" stroke="${hsl(c, -7)}" stroke-width="12" fill="none" opacity="0.45"/>
+    <rect x="142" y="384" width="516" height="16" rx="8" fill="${hsl(c, -12)}" opacity="0.32"/>
+    <circle cx="640" cy="392" r="9" fill="${hsl(c, -20)}" opacity="0.5"/>`;
+  },
+  /* Sleep mask: contoured body with a strap looping behind. */
+  mask(c) {
+    return `
+    <path d="M118 400 q60 -60 130 -60 q80 0 152 0 q72 0 152 0 q70 0 130 60 q-60 60 -130 60 q-80 0 -152 0 q-72 0 -152 0 q-70 0 -130 -60 z" fill="none" stroke="${hsl(c, -14)}" stroke-width="14" opacity="0.45"/>
+    <path d="M214 336 h372 a86 86 0 0 1 0 172 h-372 a86 86 0 0 1 0 -172 z" fill="url(#body)"/>
+    <path d="M214 336 h150 a86 86 0 0 0 0 172 h-150 a86 86 0 0 1 0 -172 z" fill="${hsl(c, 10)}" opacity="0.5"/>
+    <path d="M400 336 q-34 86 0 172" stroke="${hsl(c, -10)}" stroke-width="10" fill="none" opacity="0.4"/>
+    <ellipse cx="300" cy="400" rx="46" ry="26" fill="${hsl(c, 14)}" opacity="0.4"/>`;
+  },
+  /* Scrunchies: three overlapping rings. */
+  scrunchie(c) {
+    return `
+    <circle cx="310" cy="440" r="118" fill="none" stroke="${hsl(c, 8)}" stroke-width="58" opacity="0.9"/>
+    <circle cx="490" cy="440" r="118" fill="none" stroke="${hsl(c, -8)}" stroke-width="58" opacity="0.9"/>
+    <circle cx="400" cy="330" r="118" fill="none" stroke="url(#body)" stroke-width="58"/>
+    <circle cx="400" cy="330" r="118" fill="none" stroke="${hsl(c, 16)}" stroke-width="16" opacity="0.4"/>`;
+  },
+  /* Gift box with a ribbon. */
+  giftbox(c) {
+    return `
+    <rect x="196" y="352" width="408" height="238" rx="18" fill="url(#body)"/>
+    <rect x="196" y="352" width="132" height="238" rx="18" fill="${hsl(c, 10)}" opacity="0.45"/>
+    <rect x="176" y="300" width="448" height="72" rx="16" fill="${hsl(c, -8)}"/>
+    <rect x="368" y="300" width="64" height="290" fill="${hsl(c, -18)}" opacity="0.85"/>
+    <path d="M400 300 q-70 -66 -108 -22 q-26 32 40 40 z" fill="${hsl(c, -14)}"/>
+    <path d="M400 300 q70 -66 108 -22 q26 32 -40 40 z" fill="${hsl(c, -14)}"/>`;
+  },
   bottle(c) {
     return `
     <rect x="286" y="300" width="228" height="288" rx="30" fill="url(#body)"/>
@@ -164,7 +212,7 @@ const SHAPES = {
 /* ------------------------------------------------------------- product ---- */
 
 function product(brand, prod, categories) {
-  const c = productHue(brand, prod.category, categories);
+  const c = productHue(brand, prod.category, categories, prod);
   const form = prod.imageForm || formOf(prod);
   const shape = (SHAPES[form] || SHAPES.bottle)(c);
   const name = prod.name.length > 22 ? prod.name.slice(0, 21) + '…' : prod.name;

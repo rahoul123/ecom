@@ -2095,3 +2095,166 @@ body.show-placeholders .is-placeholder { outline: 2px dashed var(--color-warn); 
 @media (max-width: 819px) {
   .newsletter__note { max-width: none; }
 }
+
+/* --------------------------------------------------------------------------
+   33. Awards strip — the numbers directly under the hero
+   -------------------------------------------------------------------------- */
+
+.awards {
+  border-block: 1px solid var(--color-border);
+  background: var(--color-bg);
+}
+.awards__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem 1rem;
+  padding-block: 2rem;
+  text-align: center;
+}
+@media (min-width: 820px) { .awards__grid { grid-template-columns: repeat(4, 1fr); } }
+
+.award__value {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 3vw, 2.125rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: var(--tracking-heading);
+  color: var(--color-heading);
+}
+.award__label {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: var(--fs-xs);
+  color: var(--color-muted);
+}
+.awards .stars { margin-bottom: 0.35rem; }
+
+/* --------------------------------------------------------------------------
+   34. Press strip — wordmarks, muted until hovered
+   -------------------------------------------------------------------------- */
+
+.press {
+  padding-block: 2.25rem;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+.press__label {
+  text-align: center;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: 1.35rem;
+}
+.press__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem 2.75rem;
+}
+.press__logo {
+  font-family: var(--font-heading);
+  font-size: clamp(0.95rem, 2vw, 1.25rem);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--color-heading);
+  opacity: 0.32;
+  transition: opacity 0.22s ease;
+}
+.press__logo:hover { opacity: 0.7; }
+
+/* --------------------------------------------------------------------------
+   35. The collection band — the brand statement, with the colours on show
+   -------------------------------------------------------------------------- */
+
+.collection {
+  position: relative;
+  overflow: hidden;
+  border-radius: 34px;
+  padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.5rem, 5vw, 4rem);
+  background:
+    radial-gradient(60rem 30rem at 12% -20%, var(--color-accent-tint) 0%, transparent 62%),
+    var(--color-soft);
+  text-align: center;
+}
+
+.collection__eyebrow {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: 1rem;
+}
+.collection h2 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  margin-bottom: 0.85rem;
+}
+.collection__lede {
+  max-width: 52ch;
+  margin: 0 auto 2.5rem;
+  color: var(--color-muted);
+  font-size: var(--fs-lead);
+  text-wrap: pretty;
+}
+
+/* The swatch row: every colour the shop sells, as clickable chips. */
+.swatches {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.25rem 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.swatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  width: 76px;
+}
+.swatch__dot {
+  width: 58px; height: 58px;
+  border-radius: 50%;
+  background: var(--swatch, var(--color-surface));
+  box-shadow: inset 0 0 0 1px rgb(17 26 46 / 0.10), 0 6px 16px -8px rgb(17 26 46 / 0.45);
+  transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.24s ease;
+}
+.swatch:hover .swatch__dot {
+  transform: scale(1.12) translateY(-3px);
+  box-shadow: inset 0 0 0 1px rgb(17 26 46 / 0.14), 0 14px 26px -10px rgb(17 26 46 / 0.55);
+}
+.swatch__name {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--color-heading);
+  text-align: center;
+  line-height: 1.25;
+}
+.swatch:hover .swatch__name { color: var(--color-accent); }
+
+/* --------------------------------------------------------------------------
+   36. Colour dot on product cards
+   -------------------------------------------------------------------------- */
+
+.product-card__colour {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--deep, var(--color-muted));
+}
+.product-card__colour i {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--swatch, var(--color-border));
+  box-shadow: inset 0 0 0 1px rgb(17 26 46 / 0.14);
+}

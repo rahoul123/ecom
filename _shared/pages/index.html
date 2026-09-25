@@ -5,7 +5,7 @@
         <b>{{PROMO_CODE}}</b> {{HERO_OFFER}}
       </span>
 
-      <h1 class="is-placeholder">{{copy.heroH1}}</h1>
+      <h1 class="is-placeholder">{{copy.heroH1}} <em>{{copy.heroH1Accent}}</em></h1>
       <p class="hero__lede is-placeholder">{{copy.heroLede}}</p>
 
       <div class="btn-row">
@@ -43,25 +43,39 @@
   </div>
 </section>
 
-<section class="section section--tight">
+<div class="awards">
   <div class="container">
-    <div class="section-head">
-      <span class="eyebrow">Shop by need</span>
-      <h2>Find what you came for</h2>
-    </div>
-    <div class="category-grid" id="categories"></div>
-    <script>Site.renderCategories('#categories');</script>
+    <div class="awards__grid" id="awards"></div>
+    <script>Site.renderAwards('#awards');</script>
   </div>
-</section>
+</div>
 
+<div class="press">
+  <div class="container">
+    <p class="press__label">As seen in</p>
+    <div class="press__row" id="press"></div>
+    <script>Site.renderPress('#press');</script>
+    <p class="text-center text-muted mt-2" style="font-size:0.75rem">
+      [[PLACEHOLDER: press logos — only list publications that have actually covered you.]]
+    </p>
+  </div>
+</div>
+
+<!-- The collection band: the brand line, with every colour on show. -->
 <section class="section section--tight">
   <div class="container">
-    <div class="section-head">
-      <span class="eyebrow">Shop by goal</span>
-      <h2>Start with what you are working on</h2>
+    <div class="collection">
+      <span class="collection__eyebrow is-placeholder">{{copy.collectionEyebrow}}</span>
+      <h2 class="is-placeholder">{{copy.collectionHeading}}</h2>
+      <p class="collection__lede is-placeholder">{{copy.collectionLede}}</p>
+
+      <div class="swatches" id="swatches"></div>
+      <script>Site.renderSwatches('#swatches');</script>
+
+      <div class="btn-row" style="justify-content:center">
+        <a class="btn btn--primary btn--lg" href="shop.html">{{copy.primaryCta}}</a>
+      </div>
     </div>
-    <div class="goals" id="goals"></div>
-    <script>Site.renderGoals('#goals');</script>
   </div>
 </section>
 
@@ -132,7 +146,7 @@
   <div class="container">
     <div class="section-head">
       <span class="eyebrow">New arrivals</span>
-      <h2>Just landed</h2>
+      <h2>New Arrivals</h2>
       <p class="is-placeholder">{{copy.arrivalsLede}}</p>
     </div>
     <div class="arrivals" id="arrivals"></div>

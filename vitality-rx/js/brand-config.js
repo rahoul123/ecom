@@ -64,6 +64,25 @@ var BRAND = {
   "Hair & skin": "hair-skin.html",
   "Bundles": "bundles.html"
 },
+  /* Rendered into the footer, so removing a legal page cannot leave a dead link. */
+  legalPages: [
+  {
+    "title": "Privacy Policy",
+    "href": "privacy-policy.html"
+  },
+  {
+    "title": "Terms of Service",
+    "href": "terms-of-service.html"
+  },
+  {
+    "title": "Shipping & Refund Policy",
+    "href": "shipping-refund-policy.html"
+  },
+  {
+    "title": "Medical Disclaimer",
+    "href": "medical-disclaimer.html"
+  }
+],
   categoryIndex: {
   "Daily essentials": 1,
   "Sleep & recovery": 2,
@@ -117,6 +136,8 @@ var BRAND = {
 ],
   goals: [],
   heroProducts: [],
+  awards: [],
+  press: [],
   newArrivals: [],
   qualityPicks: [],
   spotlightSlug: "",
@@ -296,6 +317,10 @@ var PRODUCTS = [
       "images/products/_angle-daily-essentials-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Daily Foundation]]",
+    "swatch": null,
+    "colour": null,
+    "tint": null,
+    "deep": null,
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/daily-foundation"
   },
   {
@@ -338,6 +363,10 @@ var PRODUCTS = [
       "images/products/_angle-sleep-recovery-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Evening Wind Down]]",
+    "swatch": null,
+    "colour": null,
+    "tint": null,
+    "deep": null,
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/evening-wind-down"
   },
   {
@@ -380,6 +409,10 @@ var PRODUCTS = [
       "images/products/_angle-daily-essentials-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Focus Support]]",
+    "swatch": null,
+    "colour": null,
+    "tint": null,
+    "deep": null,
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/focus-support"
   },
   {
@@ -422,6 +455,10 @@ var PRODUCTS = [
       "images/products/_angle-hair-skin-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Thickening Serum]]",
+    "swatch": null,
+    "colour": null,
+    "tint": null,
+    "deep": null,
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/hair-thickening-serum"
   },
   {
@@ -464,6 +501,10 @@ var PRODUCTS = [
       "images/products/_angle-sleep-recovery-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Post-Training Recovery]]",
+    "swatch": null,
+    "colour": null,
+    "tint": null,
+    "deep": null,
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/post-training-recovery"
   },
   {
@@ -504,6 +545,10 @@ var PRODUCTS = [
       "images/products/_angle-bundles-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of The Starter Bundle]]",
+    "swatch": null,
+    "colour": null,
+    "tint": null,
+    "deep": null,
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/starter-bundle"
   }
 ];

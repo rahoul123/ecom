@@ -63,6 +63,25 @@ var BRAND = {
   "Rituals": "rituals.html",
   "Bundles": "bundles.html"
 },
+  /* Rendered into the footer, so removing a legal page cannot leave a dead link. */
+  legalPages: [
+  {
+    "title": "Privacy Policy",
+    "href": "privacy-policy.html"
+  },
+  {
+    "title": "Terms of Service",
+    "href": "terms-of-service.html"
+  },
+  {
+    "title": "Shipping & Refund Policy",
+    "href": "shipping-refund-policy.html"
+  },
+  {
+    "title": "Medical Disclaimer",
+    "href": "medical-disclaimer.html"
+  }
+],
   categoryIndex: {
   "Evening": 1,
   "Rituals": 2,
@@ -115,6 +134,8 @@ var BRAND = {
 ],
   goals: [],
   heroProducts: [],
+  awards: [],
+  press: [],
   newArrivals: [],
   qualityPicks: [],
   spotlightSlug: "",
@@ -294,6 +315,10 @@ var PRODUCTS = [
       "images/products/_angle-evening-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Night Capsules]]",
+    "swatch": null,
+    "colour": null,
+    "tint": null,
+    "deep": null,
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/night-capsules"
   },
   {
@@ -335,6 +360,10 @@ var PRODUCTS = [
       "images/products/_angle-evening-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Calm Drops]]",
+    "swatch": null,
+    "colour": null,
+    "tint": null,
+    "deep": null,
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/calm-drops"
   },
   {
@@ -377,6 +406,10 @@ var PRODUCTS = [
       "images/products/_angle-rituals-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Wind Down Tea]]",
+    "swatch": null,
+    "colour": null,
+    "tint": null,
+    "deep": null,
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/wind-down-tea"
   },
   {
@@ -417,6 +450,10 @@ var PRODUCTS = [
       "images/products/_angle-evening-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Magnesium Night]]",
+    "swatch": null,
+    "colour": null,
+    "tint": null,
+    "deep": null,
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/magnesium-night"
   },
   {
@@ -457,6 +494,10 @@ var PRODUCTS = [
       "images/products/_angle-rituals-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Silk Sleep Mask]]",
+    "swatch": null,
+    "colour": null,
+    "tint": null,
+    "deep": null,
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/silk-sleep-mask"
   },
   {
@@ -497,6 +538,10 @@ var PRODUCTS = [
       "images/products/_angle-bundles-4.svg"
     ],
     "imageAlt": "[[PLACEHOLDER: product photo of Evening Ritual Set]]",
+    "swatch": null,
+    "colour": null,
+    "tint": null,
+    "deep": null,
     "checkoutUrl": "https://example-shopify-store.myshopify.com/products/evening-ritual-set"
   }
 ];

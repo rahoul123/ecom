@@ -89,7 +89,11 @@ const common = {
     trustLede: '[[PLACEHOLDER]] The things we think matter most when you are buying something for your health.',
     reviewsLede: '[[PLACEHOLDER]] Fictional reviews shown for layout purposes only.',
     arrivalsLede: '[[PLACEHOLDER]] The newest products in the range.',
-    picksLede: '[[PLACEHOLDER]] The three our customers rate highest.'
+    picksLede: '[[PLACEHOLDER]] The three our customers rate highest.',
+    collectionEyebrow: 'The collection',
+    collectionHeading: '[[PLACEHOLDER: collection line]]',
+    collectionLede: '[[PLACEHOLDER: what the collection is.]]',
+    heroH1Accent: ''
   }
 };
 
