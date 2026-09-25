@@ -665,9 +665,11 @@ function buildBrand(brand) {
   function renderPage(outFile, bodySrc, ctx, opts) {
     writtenPages.add(outFile);
     const bare = opts && opts.bare;
+    const adminScript = outFile === 'admin.html' ? `\n<script src="js/admin.js?v=${ASSET_VERSION}"></script>` : '';
     const html = fill(head, ctx, outFile, warnings) +
       fill(bare ? checkoutHead : header, ctx, outFile, warnings) +
       fill(bodySrc, ctx, outFile, warnings) +
+      adminScript +
       fill(bare ? checkoutFoot : footer, ctx, outFile, warnings);
     write(path.join(dir, outFile), html);
     count++;
