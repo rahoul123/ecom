@@ -357,6 +357,11 @@ var Site = (function () {
     setHTML('#pdp-main-image',
       '<img id="pdp-img" src="' + esc(imgs[0]) + '" alt="' + esc(p.imageAlt || p.name) +
       '" width="800" height="800" decoding="async">');
+    /* One photo needs no thumbnail strip — it would just be the same picture
+       again, smaller. */
+    var thumbs = el('#pdp-thumbs');
+    if (thumbs) thumbs.hidden = imgs.length < 2;
+
     setHTML('#pdp-thumbs', imgs.map(function (src, i) {
       return '<button type="button" class="pdp__thumb' + (i === 0 ? ' is-active' : '') +
         '" data-src="' + esc(src) + '" aria-label="View image ' + (i + 1) + '">' +

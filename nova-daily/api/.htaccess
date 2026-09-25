@@ -1,0 +1,15 @@
+# The admin API. Nothing here should be indexed, listed or served as source.
+
+Options -Indexes
+
+<IfModule mod_headers.c>
+  Header set X-Robots-Tag "noindex, nofollow"
+</IfModule>
+
+# config.php holds the password hash and backups hold your catalogue history.
+# Neither is ever fetched by a browser — only included by PHP on the server.
+<FilesMatch "^(config|auth)\.php$">
+  Require all denied
+</FilesMatch>
+
+RedirectMatch 404 ^/api/backups/

@@ -9,16 +9,35 @@ There are two ways. Use the panel unless you have a reason not to.
 Open **`admin.html`** in a browser — on your live site (`yoursite.com/admin.html`)
 or by double-clicking the file on your computer.
 
-1. Press **Add product** and fill in the form. The card preview at the top is
-   the real product card, so what you see is what the shop will show.
-2. Press **Export products.js**. Your browser downloads `products.js`.
-3. Upload that file to the `js/` folder on your hosting, replacing the
-   `products.js` already there.
-4. Reload the shop.
+Press **Add product**, fill in the form, and press **Save to site**. Reload the
+shop and it is there. The card preview at the top is the real product card, so
+what you see is what the shop will show.
+
+**Save to site needs PHP on your host** — see [ADMIN-SETUP.md](ADMIN-SETUP.md)
+for the five-minute setup. It works on cPanel and normal hosting; it does not
+work on Vercel, Netlify or GitHub Pages, which only serve files and never run
+code.
+
+Without PHP the panel hides Save and gives you **Download file** instead:
+
+1. Press **Download file**. Your browser downloads `products.js`.
+2. Upload it to the `js/` folder on your hosting, over the one already there.
+3. Reload the shop.
+
+### Photos
+
+Each product has four photo slots. The first is the one on the product card and
+at the top of the product page; the rest are the thumbnails under it. Leave a
+slot empty to skip it.
+
+With Save turned on, **Choose…** uploads the photo for you. Without it, either
+put your images in `images/products/` yourself and type the filename, or tick
+*Embed photos in products.js* and they travel inside the file — no separate
+upload, but a bigger file. The panel tells you which photos it cannot find.
 
 Your work is kept in the browser as you type, so you can close the tab and come
-back to it. It is *only* in that browser, though — nothing is saved to the site
-until you export and upload.
+back to it. Until you press Save (or upload the downloaded file), it is *only*
+in that browser.
 
 **To edit later:** open the panel, press **Import**, and pick the `products.js`
 you exported last time. Edit, export again.

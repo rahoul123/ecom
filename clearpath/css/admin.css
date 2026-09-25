@@ -584,3 +584,90 @@
   color: var(--color-heading);
 }
 .adm-pick__price { flex-shrink: 0; font-size: var(--fs-xs); color: var(--color-muted); }
+
+/* ------------------------------------------------------- photo slots ---- */
+
+.adm-gallery {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  margin: 0.5rem 0 0.75rem;
+}
+.adm-shot {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.6rem;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: var(--color-bg);
+}
+.adm-shot.is-empty { border-style: dashed; background: transparent; }
+.adm-shot__frame {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  background: var(--color-soft);
+  overflow: hidden;
+}
+.adm-shot__frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.adm-shot__none { font-size: var(--fs-xs); color: var(--color-muted); }
+.adm-shot__tag {
+  position: absolute;
+  top: 5px; left: 5px;
+  padding: 0.1rem 0.4rem;
+  border-radius: 999px;
+  background: var(--color-heading);
+  color: var(--color-bg);
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.adm-shot__path {
+  width: 100%;
+  padding: 0.3rem 0.45rem;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-bg);
+  font: inherit;
+  font-size: 0.6875rem;
+  color: var(--color-text);
+}
+.adm-shot__path:read-only { background: var(--color-soft); color: var(--color-muted); }
+.adm-shot__actions { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+
+/* ------------------------------------------------------------ sign in --- */
+
+.adm-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+}
+.adm-modal__scrim { position: absolute; inset: 0; background: rgb(10 14 24 / 0.55); }
+.adm-modal__panel {
+  position: relative;
+  width: min(26rem, 100%);
+  padding: 1.5rem;
+  border-radius: 16px;
+  background: var(--color-bg);
+  box-shadow: 0 24px 60px rgb(0 0 0 / 0.3);
+}
+.adm-modal__title { margin: 0 0 0.4rem; font-family: var(--font-body); font-size: 1.125rem; }
+.adm-modal__note { margin: 0 0 1.1rem; font-size: var(--fs-sm); color: var(--color-muted); line-height: 1.55; }
+.adm-modal__panel .adm-field input {
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 7px;
+  background: var(--color-bg);
+  font: inherit;
+}
+.adm-modal__actions { display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1.1rem; }
+
+.adm-btn.is-busy { opacity: 0.6; cursor: progress; }
+.adm-btn:disabled { opacity: 0.55; cursor: default; }

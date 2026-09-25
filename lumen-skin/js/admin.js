@@ -17,6 +17,144 @@
    Loaded on every page and does nothing unless #adm-list is present.
    ========================================================================== */
 
+/* ==========================================================================
+   SERVER — the optional half.
+
+   If api/save.php is on the host, the panel can write the catalogue straight
+   to the site: press Save, reload the shop, done. If it is not — a static
+   host, or the files opened from disk — every call here reports "no server"
+   and the panel falls back to downloading products.js for you to upload.
+
+   So the panel works either way. It just works better with PHP behind it.
+   ========================================================================== */
+
+var Server = (function () {
+  'use strict';
+
+  var state = {
+    /* null until the first probe answers: unknown, not absent. */
+    reachable: null,
+    configured: false,
+    signedIn: false,
+    writable: false,
+    csrf: ''
+  };
+
+  function available() { return state.reachable === true; }
+  function signedIn() { return state.reachable === true && state.signedIn; }
+  function configured() { return state.configured; }
+  function writable() { return state.writable; }
+
+  function json(res) {
+    return res.text().then(function (text) {
+      try { return JSON.parse(text); }
+      catch (e) {
+        /* A PHP fatal, or a host serving the file as plain text. Either way
+           the useful thing is the first line of what came back. */
+        throw new Error(text.slice(0, 160) || ('Server said ' + res.status));
+      }
+    });
+  }
+
+  /** Asks the host whether there is an API, and who we are. */
+  function probe(done) {
+    if (typeof fetch !== 'function' || location.protocol === 'file:') {
+      state.reachable = false;
+      done(state);
+      return;
+    }
+
+    fetch('api/session.php', { credentials: 'same-origin', headers: { Accept: 'application/json' } })
+      .then(json)
+      .then(function (data) {
+        state.reachable = true;
+        state.configured = !!data.configured;
+        state.signedIn = !!data.signedIn;
+        state.writable = !!data.writable;
+        state.csrf = data.csrf || '';
+      })
+      .catch(function () { state.reachable = false; })
+      .then(function () { done(state); });
+  }
+
+  function signIn(password, done) {
+    fetch('api/session.php', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: password })
+    })
+      .then(json)
+      .then(function (data) {
+        if (!data.ok) throw new Error(data.error || 'Could not sign in.');
+        state.signedIn = true;
+        state.csrf = data.csrf || state.csrf;
+        done(null);
+      })
+      .catch(function (e) { done(e.message); });
+  }
+
+  function signOut(done) {
+    fetch('api/session.php', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ logout: 1 })
+    })
+      .then(json)
+      .then(function () { state.signedIn = false; done(null); })
+      .catch(function (e) { done(e.message); });
+  }
+
+  function save(payload, done) {
+    fetch('api/save.php', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json', 'X-CSRF': state.csrf },
+      body: JSON.stringify(payload)
+    })
+      .then(json)
+      .then(function (data) {
+        if (!data.ok) throw new Error(data.error || 'The save failed.');
+        done(null, data);
+      })
+      .catch(function (e) {
+        /* A session that timed out looks like any other refusal from here,
+           so say the one thing that fixes it. */
+        done(/signed in/i.test(e.message) ? 'Your sign-in expired. Sign in and save again.' : e.message);
+      });
+  }
+
+  function upload(file, done) {
+    var form = new FormData();
+    form.append('photo', file);
+    fetch('api/upload.php', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'X-CSRF': state.csrf },
+      body: form
+    })
+      .then(json)
+      .then(function (data) {
+        if (!data.ok) throw new Error(data.error || 'The upload failed.');
+        done(null, data.url);
+      })
+      .catch(function (e) { done(e.message); });
+  }
+
+  return {
+    probe: probe,
+    available: available,
+    configured: configured,
+    signedIn: signedIn,
+    writable: writable,
+    signIn: signIn,
+    signOut: signOut,
+    save: save,
+    upload: upload
+  };
+})();
+
 var Admin = (function () {
   'use strict';
 
@@ -25,6 +163,10 @@ var Admin = (function () {
   /* A photo bigger than this is downscaled before it is embedded. 1200px is
      more than the largest place a product image is shown. */
   var MAX_EMBED_PX = 1200;
+
+  /* How many photos a product can carry. Four is what the product page lays
+     out: one large, three thumbnails beneath. */
+  var GALLERY_SLOTS = 4;
   var EMBED_QUALITY = 0.82;
 
   function el(sel, ctx) { return (ctx || document).querySelector(sel); }
@@ -97,14 +239,24 @@ var Admin = (function () {
     out.image = image;
     out.imageAlt = out.imageAlt || ('Product photo of ' + out.name);
 
-    /* An embedded photo has no sibling angle shots to show, so the gallery is
-       just the one image rather than three broken ones. */
-    out.gallery = image.indexOf('data:') === 0 ? [image] : [
-      image,
-      'images/products/_angle-' + catSlug + '-2.svg',
-      'images/products/_angle-' + catSlug + '-3.svg',
-      'images/products/_angle-' + catSlug + '-4.svg'
-    ];
+    /* The gallery is whatever the product actually has.
+       Those _angle- files are one generic set per category, so every
+       pillowcase was showing the same three grey circles. They are only a
+       fallback now, for a product nobody has given photos to yet. */
+    var shots = (out.gallery || []).filter(Boolean);
+    if (shots.length) {
+      out.gallery = shots.slice(0, GALLERY_SLOTS);
+      out.image = shots[0];
+    } else if (image.indexOf('data:') === 0) {
+      out.gallery = [image];
+    } else {
+      out.gallery = [
+        image,
+        'images/products/_angle-' + catSlug + '-2.svg',
+        'images/products/_angle-' + catSlug + '-3.svg',
+        'images/products/_angle-' + catSlug + '-4.svg'
+      ];
+    }
 
     if (out.priceNote === undefined) {
       out.priceNote = BRAND && BRAND.priceNote !== undefined ? BRAND.priceNote : null;
@@ -139,6 +291,7 @@ var Admin = (function () {
       ingredients: [],
       howItWorks: '',
       image: '',
+      gallery: [],
       swatch: null,
       colour: null
     };
@@ -533,7 +686,7 @@ var Admin = (function () {
     if (embed) embed.checked = String(p.image || '').indexOf('data:') === 0;
 
     renderPreview();
-    renderImagePreview();
+    renderGallery();
     validate();
   }
 
@@ -612,40 +765,89 @@ var Admin = (function () {
     }
   }
 
-  function renderImagePreview() {
-    var host = el('#adm-image-preview');
-    var note = el('#adm-image-note');
+  /**
+   * The four photo slots.
+   *
+   * Slot 0 is the product's main image; the others are the thumbnails on the
+   * product page. Each is independent, which is the whole point — before
+   * this, slots 1-3 were one shared set per category, so every pillowcase
+   * showed the same three grey circles.
+   */
+  function renderGallery() {
+    var host = el('#adm-gallery');
     var p = current();
     if (!host || !p) return;
 
-    if (!p.image) {
-      host.innerHTML = '<span class="adm-image__none">No photo</span>';
-      if (note) note.innerHTML = 'Point this at a file in your <code>images/products/</code> folder.';
+    var shots = p.gallery && p.gallery.length ? p.gallery.slice() : [];
+    /* Show what the product would actually render, so an untouched product
+       arrives with its existing images in the slots rather than blank. */
+    if (!shots.length) shots = deriveProduct(p).gallery.slice();
+
+    var html = '';
+    for (var i = 0; i < GALLERY_SLOTS; i++) {
+      var src = shots[i] || '';
+      var embedded = src.indexOf('data:') === 0;
+      html +=
+        '<div class="adm-shot' + (src ? '' : ' is-empty') + '" data-slot="' + i + '">' +
+          '<span class="adm-shot__frame">' +
+            (src ? '<img src="' + esc(src) + '" alt="">'
+                 : '<span class="adm-shot__none">Empty</span>') +
+            (i === 0 ? '<span class="adm-shot__tag">Main</span>' : '') +
+          '</span>' +
+          '<input class="adm-shot__path" type="text" data-slot-path="' + i + '" ' +
+            'value="' + (embedded ? '' : esc(src)) + '" ' +
+            'placeholder="' + (embedded ? 'embedded in products.js' : 'images/products/photo.jpg') + '" ' +
+            'aria-label="Path for photo ' + (i + 1) + '"' + (embedded ? ' readonly' : '') + '>' +
+          '<span class="adm-shot__actions">' +
+            '<button type="button" class="adm-mini" data-slot-pick="' + i + '">Choose&hellip;</button>' +
+            (src ? '<button type="button" class="adm-mini adm-mini--danger" data-slot-clear="' + i + '">Clear</button>' : '') +
+          '</span>' +
+        '</div>';
+    }
+    host.innerHTML = html;
+
+    /* Keep the product's own copy in step with what is on screen. */
+    p.gallery = shots.slice(0, GALLERY_SLOTS).filter(Boolean);
+    if (p.gallery.length) p.image = p.gallery[0];
+
+    reportGallery(p);
+  }
+
+  /** Says whether each path resolves, and what an embedded photo costs. */
+  function reportGallery(p) {
+    var note = el('#adm-image-note');
+    if (!note) return;
+
+    var shots = (p.gallery || []).filter(Boolean);
+    if (!shots.length) {
+      note.textContent = 'No photos yet. This product will fall back to a generated placeholder.';
       return;
     }
 
-    host.innerHTML = '<img src="' + esc(p.image) + '" alt="">';
-
-    if (String(p.image).indexOf('data:') === 0) {
-      if (note) {
-        note.innerHTML = 'Carried inside <code>products.js</code> (' +
-          Math.round(p.image.length / 1024) + ' KB). Nothing to upload separately.';
-      }
+    var embedded = shots.filter(function (s) { return s.indexOf('data:') === 0; });
+    if (embedded.length) {
+      var kb = embedded.reduce(function (n, s) { return n + s.length; }, 0) / 1024;
+      note.innerHTML = embedded.length + ' photo' + (embedded.length === 1 ? '' : 's') +
+        ' carried inside <code>products.js</code> (' + Math.round(kb) + ' KB). Nothing to upload separately.';
       return;
     }
 
-    /* Tell them now if the path is wrong, not after they have uploaded. */
-    var probe = new Image();
-    probe.onload = function () {
-      if (note) note.innerHTML = 'Found. <code>' + esc(p.image) + '</code>';
-    };
-    probe.onerror = function () {
-      if (note) {
-        note.innerHTML = '<b>Not found here.</b> Upload the file to <code>' +
-          esc(p.image.replace(/[^/]+$/, '')) + '</code> on your hosting, or choose a photo below.';
-      }
-    };
-    probe.src = p.image;
+    var paths = shots.filter(function (s) { return s.indexOf('data:') !== 0; });
+    var checked = 0;
+    var bad = [];
+    paths.forEach(function (src) {
+      var probe = new Image();
+      probe.onload = probe.onerror = function () {
+        checked++;
+        if (!probe.naturalWidth) bad.push(src);
+        if (checked !== paths.length) return;
+        note.innerHTML = bad.length
+          ? '<b>' + bad.length + ' photo' + (bad.length === 1 ? ' is' : 's are') +
+            ' not on the site yet:</b> ' + bad.map(esc).join(', ')
+          : 'All ' + paths.length + ' photo' + (paths.length === 1 ? '' : 's') + ' found.';
+      };
+      probe.src = src;
+    });
   }
 
   /* ------------------------------------------------------------ photos --- */
@@ -740,24 +942,26 @@ var Admin = (function () {
 
   /* ------------------------------------------------------------ export --- */
 
-  function exportText() {
-    var clean = state.items.map(function (p) {
+  /**
+   * The catalogue as plain data: what save.php is posted, and what the
+   * downloaded file is built from. One source, so the two cannot drift.
+   */
+  function payload() {
+    syncCategories();
+
+    var products = state.items.map(function (p) {
       var d = deriveProduct(p);
       delete d._slugLocked;
       return d;
     });
 
-    var embedded = clean.filter(function (p) { return String(p.image).indexOf('data:') === 0; }).length;
-
-    syncCategories();
-
-    var cats = state.categories.map(function (c) {
+    var categories = state.categories.map(function (c) {
       return { name: c.name, slug: slugify(c.name), blurb: c.blurb || '' };
     });
 
-    /* A collection that points only at deleted products would render an
-       empty page, so it is dropped rather than shipped broken. */
-    var colls = state.collections
+    /* A collection pointing only at deleted products would render an empty
+       page, so it is dropped rather than published broken. */
+    var collections = state.collections
       .filter(function (c) { return c.name && c.slug && collProducts(c).length; })
       .map(function (c) {
         return {
@@ -768,6 +972,18 @@ var Admin = (function () {
           products: collProducts(c).map(function (p) { return p.slug; })
         };
       });
+
+    return { products: products, categories: categories, collections: collections };
+  }
+
+  function exportText() {
+    var clean = payload().products;
+
+    var embedded = clean.filter(function (p) { return String(p.image).indexOf('data:') === 0; }).length;
+
+    var data = payload();
+    var cats = data.categories;
+    var colls = data.collections;
 
     return '/* ==========================================================================\n' +
       '   PRODUCTS.JS — your catalogue.\n' +
@@ -820,6 +1036,87 @@ var Admin = (function () {
     renderList();
     toast('products.js downloaded (' + Math.round(text.length / 1024) + ' KB). ' +
       'Upload it to your js/ folder and reload the shop.');
+  }
+
+  /* -------------------------------------------------------------- save --- */
+
+  /** Reflects what the host can do in what the bar offers. */
+  function paintServerState() {
+    var saveBtn = el('#adm-save');
+    var signOut = el('#adm-signout');
+    var exportBtn = el('#adm-export');
+
+    var on = Server.available();
+    if (saveBtn) saveBtn.hidden = !on;
+    if (signOut) signOut.hidden = !(on && Server.signedIn());
+    if (exportBtn) {
+      exportBtn.classList.toggle('adm-btn--primary', !on);
+      exportBtn.title = on
+        ? 'Download products.js instead of saving to the site'
+        : 'Download products.js and upload it to your js/ folder';
+    }
+
+    if (on && !Server.configured()) {
+      toast('The panel found api/save.php but no password is set yet. Open api/config.php and follow the note at the top.', true);
+    } else if (on && !Server.writable()) {
+      toast('api/save.php is there, but the js folder is not writable. Set it to 755 in your file manager.', true);
+    }
+  }
+
+  function askSignIn(then) {
+    var modal = el('#adm-signin');
+    if (!modal) return;
+    modal.hidden = false;
+    pendingAfterSignIn = then || null;
+    var pw = el('#adm-password');
+    if (pw) { pw.value = ''; pw.focus(); }
+    var err = el('#err-signin');
+    if (err) err.textContent = '';
+  }
+
+  var pendingAfterSignIn = null;
+
+  function closeSignIn() {
+    var modal = el('#adm-signin');
+    if (modal) modal.hidden = true;
+    pendingAfterSignIn = null;
+  }
+
+  /** Save, which for once actually means save. */
+  function doSave() {
+    var issues = problems();
+    if (issues.length) {
+      toast('Fix these first: ' + issues.slice(0, 3).join(' ') +
+        (issues.length > 3 ? ' (+' + (issues.length - 3) + ' more)' : ''), true);
+      return;
+    }
+
+    if (!Server.signedIn()) {
+      askSignIn(doSave);
+      return;
+    }
+
+    var btn = el('#adm-save');
+    if (btn) { btn.disabled = true; btn.classList.add('is-busy'); }
+
+    Server.save(payload(), function (err, data) {
+      if (btn) { btn.disabled = false; btn.classList.remove('is-busy'); }
+
+      if (err) {
+        toast(err, true);
+        /* An expired session is the common case; offer the fix rather than
+           making them find the button. */
+        if (/sign in/i.test(err)) askSignIn(doSave);
+        return;
+      }
+
+      state.dirty = false;
+      save();
+      renderList();
+      paintServerState();
+      toast('Saved. ' + data.products + ' product' + (data.products === 1 ? '' : 's') +
+        ' are live — reload the shop to see them.');
+    });
   }
 
   /* ------------------------------------------------------------ import --- */
@@ -1024,7 +1321,6 @@ var Admin = (function () {
       p.swatch = picker.value;
       hexBox.value = picker.value;
       touch();
-      renderImagePreview();
     });
     hexBox.addEventListener('input', function () {
       var p = current();
@@ -1047,20 +1343,62 @@ var Admin = (function () {
     });
 
     /* --- photos --- */
-    el('#adm-pick-file').addEventListener('click', function () { el('#adm-file').click(); });
+    /* --- photos: four slots, each its own --- */
+    var pendingSlot = 0;
+    var gallery = el('#adm-gallery');
+
+    /** Writes one slot and keeps `image` pointing at the first photo. */
+    function setSlot(i, src) {
+      var p = current();
+      if (!p) return;
+      var shots = (p.gallery && p.gallery.length ? p.gallery.slice() : deriveProduct(p).gallery.slice());
+      while (shots.length < GALLERY_SLOTS) shots.push('');
+      shots[i] = src || '';
+      p.gallery = shots.filter(Boolean).slice(0, GALLERY_SLOTS);
+      p.image = p.gallery[0] || '';
+      touch();
+      renderGallery();
+    }
+
+    if (gallery) {
+      gallery.addEventListener('click', function (ev) {
+        var pick = ev.target.closest('[data-slot-pick]');
+        if (pick) {
+          pendingSlot = Number(pick.getAttribute('data-slot-pick'));
+          el('#adm-file').click();
+          return;
+        }
+        var clear = ev.target.closest('[data-slot-clear]');
+        if (clear) setSlot(Number(clear.getAttribute('data-slot-clear')), '');
+      });
+
+      gallery.addEventListener('change', function (ev) {
+        var path = ev.target.closest('[data-slot-path]');
+        if (path) setSlot(Number(path.getAttribute('data-slot-path')), path.value.trim());
+      });
+    }
+
     el('#adm-file').addEventListener('change', function (ev) {
       var file = ev.target.files && ev.target.files[0];
-      var p = current();
-      if (!file || !p) return;
-      readImage(file, el('#adm-embed').checked, function (src) {
-        p.image = src;
-        el('#f-image').value = src.indexOf('data:') === 0 ? '' : src;
-        touch();
-        renderImagePreview();
-      });
+      if (!file) return;
+      var slot = pendingSlot;
+      var embed = el('#adm-embed').checked;
+
+      /* With a server behind the panel the file is uploaded and the slot gets
+         a normal path. Without one, it is either embedded or the visitor is
+         told where to put it themselves. */
+      if (!embed && Server.available()) {
+        toast('Uploading ' + file.name + '\u2026');
+        Server.upload(file, function (err, url) {
+          if (err) { toast(err, true); return; }
+          setSlot(slot, url);
+          toast('Uploaded.');
+        });
+      } else {
+        readImage(file, embed, function (src) { setSlot(slot, src); });
+      }
       ev.target.value = '';
     });
-    el('#f-image').addEventListener('change', renderImagePreview);
 
     /* --- catalogue buttons --- */
     el('#adm-add').addEventListener('click', function () {
@@ -1352,6 +1690,49 @@ var Admin = (function () {
     }
 
     el('#adm-export').addEventListener('click', doExport);
+
+    var saveBtn = el('#adm-save');
+    if (saveBtn) saveBtn.addEventListener('click', doSave);
+
+    var signOutBtn = el('#adm-signout');
+    if (signOutBtn) {
+      signOutBtn.addEventListener('click', function () {
+        Server.signOut(function () { paintServerState(); toast('Signed out.'); });
+      });
+    }
+
+    var signInForm = el('#adm-signin-form');
+    if (signInForm) {
+      signInForm.addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        var pw = el('#adm-password');
+        var err = el('#err-signin');
+        var go = el('#adm-signin-go');
+        if (go) go.disabled = true;
+
+        Server.signIn(pw.value, function (problem) {
+          if (go) go.disabled = false;
+          if (problem) {
+            if (err) err.textContent = problem;
+            pw.select();
+            return;
+          }
+          var next = pendingAfterSignIn;
+          closeSignIn();
+          paintServerState();
+          if (next) next();
+        });
+      });
+    }
+    els('[data-close-signin]').forEach(function (b) {
+      b.addEventListener('click', closeSignIn);
+    });
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape') closeSignIn();
+    });
+
+    /* Ask the host what it can do, then show the matching buttons. */
+    Server.probe(paintServerState);
 
     el('#adm-import').addEventListener('click', function () { el('#adm-import-file').click(); });
     el('#adm-import-file').addEventListener('change', function (ev) {

@@ -629,6 +629,16 @@ function buildBrand(brand) {
   /* --- css + js: always refreshed from _shared --- */
   write(path.join(dir, 'css', 'base.css'), read(SHARED, 'css', 'base.css'));
   write(path.join(dir, 'css', 'admin.css'), read(SHARED, 'css', 'admin.css'));
+
+  /* The admin API. Optional: on a host with no PHP these files just sit
+     there, and the panel falls back to downloading the catalogue. config.php
+     is never overwritten once it exists, because after setup it holds the
+     password hash. */
+  fs.readdirSync(path.join(SHARED, 'php')).forEach((f) => {
+    const dest = path.join(dir, 'api', f);
+    if (f === 'config.php' && fs.existsSync(dest)) return;
+    write(dest, read(SHARED, 'php', f));
+  });
   write(path.join(dir, 'css', 'brand.css'), brandCSS(brand));
   ['theme-init.js', 'site.js', 'tracking.js', 'cart.js', 'checkout.js', 'admin.js'].forEach((f) => {
     write(path.join(dir, 'js', f), read(SHARED, 'js', f));

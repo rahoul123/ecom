@@ -32,10 +32,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="css/base.css?v=dc51998e">
-<link rel="stylesheet" href="css/brand.css?v=dc51998e">
+<link rel="stylesheet" href="css/base.css?v=81305e96">
+<link rel="stylesheet" href="css/brand.css?v=81305e96">
 <!-- A page may add one stylesheet of its own. It loads last so it wins. -->
-<link rel="stylesheet" href="css/admin.css?v=dc51998e">
+<link rel="stylesheet" href="css/admin.css?v=81305e96">
 
 <!--
   Load order matters. brand-config.js first (data), theme-init.js second
@@ -43,19 +43,19 @@
   tracking.js (inert until you add pixel IDs). All synchronous and tiny —
   that is what lets inline render calls run during parse with zero layout shift.
 -->
-<script src="js/brand-config.js?v=dc51998e"></script>
+<script src="js/brand-config.js?v=81305e96"></script>
 <!-- Products exported from admin.html, if there are any. It reassigns PRODUCTS,
      so it has to run before anything reads them. Ships empty; replacing this
      one file is all it takes to change the catalogue. -->
-<script src="js/products.js?v=dc51998e"></script>
-<script src="js/cart.js?v=dc51998e"></script>
-<script src="js/theme-init.js?v=dc51998e"></script>
-<script src="js/site.js?v=dc51998e"></script>
-<script src="js/tracking.js?v=dc51998e"></script>
-<script src="js/checkout.js?v=dc51998e"></script>
+<script src="js/products.js?v=81305e96"></script>
+<script src="js/cart.js?v=81305e96"></script>
+<script src="js/theme-init.js?v=81305e96"></script>
+<script src="js/site.js?v=81305e96"></script>
+<script src="js/tracking.js?v=81305e96"></script>
+<script src="js/checkout.js?v=81305e96"></script>
 <!-- A page may load one script of its own. admin.js is the only one, and it
      has no business on the 16 pages a customer actually visits. -->
-<script src="js/admin.js?v=dc51998e"></script>
+<script src="js/admin.js?v=81305e96"></script>
 <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
 
 </head>
@@ -113,10 +113,19 @@
       <button type="button" class="adm-btn" id="adm-import">Import</button>
       <input type="file" id="adm-import-file" accept=".js,.json,text/javascript,application/json" hidden>
       <button type="button" class="adm-btn" id="adm-revert">Start over</button>
-      <button type="button" class="adm-btn adm-btn--primary" id="adm-export">
+      <button type="button" class="adm-btn" id="adm-export">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-        Export products.js
+        Download file
       </button>
+
+      <!-- Only useful when api/save.php is on the host. Hidden otherwise,
+           and the download above becomes the way to publish. -->
+      <button type="button" class="adm-btn adm-btn--primary" id="adm-save" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
+        Save to site
+      </button>
+
+      <button type="button" class="adm-btn" id="adm-signout" hidden>Sign out</button>
     </div>
   </header>
 
@@ -308,25 +317,21 @@
           </div>
 
           <div class="adm-field">
-            <label for="f-image">Photo</label>
-            <div class="adm-image">
-              <span class="adm-image__preview" id="adm-image-preview"></span>
-              <div class="adm-image__controls">
-                <input type="text" id="f-image" data-field="image" placeholder="images/products/my-product.jpg">
-                <div class="adm-image__actions">
-                  <button type="button" class="adm-mini" id="adm-pick-file">Choose a photo…</button>
-                  <input type="file" id="adm-file" accept="image/*" hidden>
-                  <label class="adm-check adm-check--sm">
-                    <input type="checkbox" id="adm-embed">
-                    <span>Embed the photo in products.js</span>
-                  </label>
-                </div>
-                <span class="adm-hint" id="adm-image-note">
-                  Point this at a file in your <code>images/products/</code> folder.
-                </span>
-              </div>
-            </div>
+            <label>Photos</label>
+            <span class="adm-hint">
+              The first is the one on the product card and at the top of the
+              product page; the rest are the thumbnails under it. Leave a slot
+              empty to skip it.
+            </span>
+            <div class="adm-gallery" id="adm-gallery"></div>
+            <input type="file" id="adm-file" accept="image/*" hidden>
+            <label class="adm-check adm-check--sm">
+              <input type="checkbox" id="adm-embed">
+              <span>Embed photos in products.js instead of uploading them</span>
+            </label>
+            <span class="adm-hint" id="adm-image-note"></span>
           </div>
+
         </fieldset>
 
         <fieldset class="adm-group">
@@ -449,6 +454,27 @@
       </div>
     </div>
   </div>
+
+<!-- Sign-in. The password lives on the server as a hash; this only ever
+     sends it, never stores it. -->
+<div class="adm-modal" id="adm-signin" hidden>
+  <div class="adm-modal__scrim" data-close-signin></div>
+  <form class="adm-modal__panel" id="adm-signin-form" role="dialog" aria-modal="true" aria-labelledby="signin-title">
+    <h2 class="adm-modal__title" id="signin-title">Sign in to save</h2>
+    <p class="adm-modal__note">
+      The password is the one you set in <code>api/config.php</code>.
+    </p>
+    <div class="adm-field">
+      <label for="adm-password">Password</label>
+      <input type="password" id="adm-password" autocomplete="current-password" required>
+      <span class="adm-field__err" id="err-signin"></span>
+    </div>
+    <div class="adm-modal__actions">
+      <button type="button" class="adm-btn" data-close-signin>Cancel</button>
+      <button type="submit" class="adm-btn adm-btn--primary" id="adm-signin-go">Sign in</button>
+    </div>
+  </form>
+</div>
 
 <!-- Confirmations and export results land here rather than in an alert(). -->
 <div class="adm-toast" id="adm-toast" hidden></div>
