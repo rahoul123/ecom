@@ -55,7 +55,7 @@ function pillowcase(colour, hex, price, compareAt, rating, reviews, badge, featu
 }
 
 const products = [
-  /* ---- Pillowcases: the hero product, one card per colour ---- */
+  /* ---- Pillowcases (10 products) ---- */
   pillowcase('Champagne', SILK.champagne, 89, 109, 4.9, 4820, 'Best seller', true),
   pillowcase('Ivory', SILK.ivory, 89, 109, 4.9, 3140, null, true),
   pillowcase('Blush', SILK.blush, 89, 109, 4.8, 2760, null, true),
@@ -64,8 +64,10 @@ const products = [
   pillowcase('Lavender', SILK.lavender, 89, null, 4.8, 960, 'New', false),
   pillowcase('Pearl', SILK.pearl, 89, 109, 4.7, 1540, null, false),
   pillowcase('Gold', SILK.gold, 99, 124, 4.9, 870, 'New', false),
+  pillowcase('Rose', SILK.rose, 89, 109, 4.8, 1240, null, false),
+  pillowcase('Charcoal', SILK.charcoal, 89, 109, 4.9, 1680, null, false),
 
-  /* ---- A few accessories so every section has something to show ---- */
+  /* ---- Sleep Masks (10 products) ---- */
   {
     slug: 'silk-sleep-mask-champagne',
     name: 'Silk Sleep Mask — Champagne',
@@ -73,10 +75,10 @@ const products = [
     swatch: SILK.champagne,
     colour: 'Champagne',
     shortBenefit: 'Blocks the light, adjustable strap.',
-    price: 39, compareAt: 49, rating: 4.8, reviewCount: 1420, badge: null, featured: true,
+    price: 39, compareAt: 49, rating: 4.8, reviewCount: 1420, badge: 'Popular', featured: true,
     optionLabel: 'Fit', options: ['One size'],
-    benefits: ['[[PLACEHOLDER]] 22-momme mulberry silk', 'Adjustable, no-snag strap', 'Travel pouch included'],
-    ingredients: ['[[PLACEHOLDER]] 100% mulberry silk'],
+    benefits: ['22-momme mulberry silk', 'Adjustable, no-snag strap', 'Travel pouch included'],
+    ingredients: ['100% mulberry silk'],
     howItWorks: 'Adjust the strap and wear it over the eyes. Hand wash cool.'
   },
   {
@@ -88,10 +90,116 @@ const products = [
     shortBenefit: 'Blocks the light, adjustable strap.',
     price: 39, compareAt: null, rating: 4.9, reviewCount: 980, badge: null, featured: false,
     optionLabel: 'Fit', options: ['One size'],
-    benefits: ['[[PLACEHOLDER]] 22-momme mulberry silk', 'Adjustable, no-snag strap', 'Travel pouch included'],
-    ingredients: ['[[PLACEHOLDER]] 100% mulberry silk'],
+    benefits: ['22-momme mulberry silk', 'Adjustable, no-snag strap', 'Travel pouch included'],
+    ingredients: ['100% mulberry silk'],
     howItWorks: 'Adjust the strap and wear it over the eyes. Hand wash cool.'
   },
+  {
+    slug: 'silk-sleep-mask-ivory',
+    name: 'Silk Sleep Mask — Ivory',
+    category: 'Sleep Masks',
+    swatch: SILK.ivory,
+    colour: 'Ivory',
+    shortBenefit: 'Pure silk contour mask for restful sleep.',
+    price: 39, compareAt: 49, rating: 4.8, reviewCount: 840, badge: null, featured: false,
+    optionLabel: 'Fit', options: ['One size'],
+    benefits: ['22-momme mulberry silk', 'Light-blocking design', 'Travel pouch included'],
+    ingredients: ['100% mulberry silk'],
+    howItWorks: 'Adjust strap for a snug fit. Hand wash cool.'
+  },
+  {
+    slug: 'silk-sleep-mask-blush',
+    name: 'Silk Sleep Mask — Blush',
+    category: 'Sleep Masks',
+    swatch: SILK.blush,
+    colour: 'Blush',
+    shortBenefit: 'Gentle on eyes and lashes.',
+    price: 39, compareAt: 49, rating: 4.9, reviewCount: 920, badge: 'Best Seller', featured: false,
+    optionLabel: 'Fit', options: ['One size'],
+    benefits: ['22-momme mulberry silk', 'Smooth plush inner layer', 'Gentle strap'],
+    ingredients: ['100% mulberry silk'],
+    howItWorks: 'Place over eyes before sleep.'
+  },
+  {
+    slug: 'silk-sleep-mask-rose',
+    name: 'Silk Sleep Mask — Rose',
+    category: 'Sleep Masks',
+    swatch: SILK.rose,
+    colour: 'Rose',
+    shortBenefit: 'Deep light blocking for travel or home.',
+    price: 39, compareAt: null, rating: 4.8, reviewCount: 650, badge: null, featured: false,
+    optionLabel: 'Fit', options: ['One size'],
+    benefits: ['Ultra-soft silk padding', 'Breathable natural fabric', 'No-tangle elastic'],
+    ingredients: ['100% mulberry silk'],
+    howItWorks: 'Adjust strap and rest peacefully.'
+  },
+  {
+    slug: 'silk-sleep-mask-sage',
+    name: 'Silk Sleep Mask — Sage',
+    category: 'Sleep Masks',
+    swatch: SILK.sage,
+    colour: 'Sage',
+    shortBenefit: 'Calming sage tone in 22-momme silk.',
+    price: 39, compareAt: null, rating: 4.7, reviewCount: 510, badge: 'New', featured: false,
+    optionLabel: 'Fit', options: ['One size'],
+    benefits: ['Soothing natural silk', 'Protects delicate eye skin', 'Includes storage pouch'],
+    ingredients: ['100% mulberry silk'],
+    howItWorks: 'Adjust strap to your comfort level.'
+  },
+  {
+    slug: 'silk-sleep-mask-lavender',
+    name: 'Silk Sleep Mask — Lavender',
+    category: 'Sleep Masks',
+    swatch: SILK.lavender,
+    colour: 'Lavender',
+    shortBenefit: 'Soft lavender silk mask.',
+    price: 39, compareAt: null, rating: 4.8, reviewCount: 430, badge: 'New', featured: false,
+    optionLabel: 'Fit', options: ['One size'],
+    benefits: ['Hypoallergenic mulberry silk', 'Completely blackout', 'Elastic band covered in silk'],
+    ingredients: ['100% mulberry silk'],
+    howItWorks: 'Wear comfortably overnight.'
+  },
+  {
+    slug: 'silk-sleep-mask-pearl',
+    name: 'Silk Sleep Mask — Pearl',
+    category: 'Sleep Masks',
+    swatch: SILK.pearl,
+    colour: 'Pearl',
+    shortBenefit: 'Luminous pearl silk mask.',
+    price: 39, compareAt: 49, rating: 4.8, reviewCount: 760, badge: null, featured: false,
+    optionLabel: 'Fit', options: ['One size'],
+    benefits: ['22-momme pure silk', 'Smooth texture prevents creasing', 'Lightweight design'],
+    ingredients: ['100% mulberry silk'],
+    howItWorks: 'Hand wash cool and dry flat.'
+  },
+  {
+    slug: 'silk-sleep-mask-gold',
+    name: 'Silk Sleep Mask — Gold',
+    category: 'Sleep Masks',
+    swatch: SILK.gold,
+    colour: 'Gold',
+    shortBenefit: 'Luxurious gold silk with blackout padding.',
+    price: 45, compareAt: 55, rating: 4.9, reviewCount: 380, badge: 'Limited Edition', featured: false,
+    optionLabel: 'Fit', options: ['One size'],
+    benefits: ['Premium gold mulberry silk', 'Padded for ultimate light block', 'Gift box included'],
+    ingredients: ['100% mulberry silk'],
+    howItWorks: 'Fit strap around head gently.'
+  },
+  {
+    slug: 'silk-sleep-mask-charcoal',
+    name: 'Silk Sleep Mask — Charcoal',
+    category: 'Sleep Masks',
+    swatch: SILK.charcoal,
+    colour: 'Charcoal',
+    shortBenefit: 'Deep charcoal shade for total blackout.',
+    price: 39, compareAt: null, rating: 4.8, reviewCount: 590, badge: null, featured: false,
+    optionLabel: 'Fit', options: ['One size'],
+    benefits: ['Dark weave for 100% blackout', 'Cooling silk feel', 'Strap covered in soft silk'],
+    ingredients: ['100% mulberry silk'],
+    howItWorks: 'Adjust and wear for night or travel.'
+  },
+
+  /* ---- Scrunchies (10 products) ---- */
   {
     slug: 'silk-scrunchies-neutrals',
     name: 'Silk Scrunchies — Neutrals',
@@ -101,8 +209,8 @@ const products = [
     shortBenefit: 'Set of three, no-crease.',
     price: 29, compareAt: 36, rating: 4.7, reviewCount: 2310, badge: null, featured: false,
     optionLabel: 'Set', options: ['Set of 3'],
-    benefits: ['[[PLACEHOLDER]] Three scrunchies per set', 'Soft elastic, holds without pulling', '22-momme mulberry silk'],
-    ingredients: ['[[PLACEHOLDER]] 100% mulberry silk', '[[PLACEHOLDER]] Covered elastic'],
+    benefits: ['Three scrunchies per set', 'Soft elastic, holds without pulling', '22-momme mulberry silk'],
+    ingredients: ['100% mulberry silk', 'Covered elastic'],
     howItWorks: 'Wear as you would any hair tie. Hand wash cool.'
   },
   {
@@ -114,12 +222,116 @@ const products = [
     shortBenefit: 'Set of three, no-crease.',
     price: 29, compareAt: null, rating: 4.7, reviewCount: 1160, badge: 'New', featured: false,
     optionLabel: 'Set', options: ['Set of 3'],
-    benefits: ['[[PLACEHOLDER]] Three scrunchies per set', 'Soft elastic, holds without pulling', '22-momme mulberry silk'],
-    ingredients: ['[[PLACEHOLDER]] 100% mulberry silk', '[[PLACEHOLDER]] Covered elastic'],
+    benefits: ['Three scrunchies per set', 'Soft elastic, holds without pulling', '22-momme mulberry silk'],
+    ingredients: ['100% mulberry silk', 'Covered elastic'],
     howItWorks: 'Wear as you would any hair tie. Hand wash cool.'
   },
+  {
+    slug: 'silk-scrunchies-champagne-trio',
+    name: 'Silk Scrunchies — Champagne Trio',
+    category: 'Scrunchies',
+    swatch: SILK.champagne,
+    colour: 'Champagne',
+    shortBenefit: 'Three Champagne silk scrunchies.',
+    price: 29, compareAt: 36, rating: 4.9, reviewCount: 1840, badge: 'Best Seller', featured: false,
+    optionLabel: 'Set', options: ['Set of 3'],
+    benefits: ['Gentle on hair shafts', 'Reduces breakage & dents', '22-momme mulberry silk'],
+    ingredients: ['100% mulberry silk'],
+    howItWorks: 'Wrap around hair 2-3 times.'
+  },
+  {
+    slug: 'silk-scrunchies-midnight-trio',
+    name: 'Silk Scrunchies — Midnight Trio',
+    category: 'Scrunchies',
+    swatch: SILK.midnight,
+    colour: 'Midnight',
+    shortBenefit: 'Three Midnight navy silk scrunchies.',
+    price: 29, compareAt: 36, rating: 4.8, reviewCount: 1290, badge: null, featured: false,
+    optionLabel: 'Set', options: ['Set of 3'],
+    benefits: ['Sleek dark silk finish', 'Prevents frizz and split ends', 'Durable inner band'],
+    ingredients: ['100% mulberry silk'],
+    howItWorks: 'Ideal for sleep buns or daytime styles.'
+  },
+  {
+    slug: 'silk-scrunchies-blush-trio',
+    name: 'Silk Scrunchies — Blush Trio',
+    category: 'Scrunchies',
+    swatch: SILK.blush,
+    colour: 'Blush',
+    shortBenefit: 'Three romantic Blush pink scrunchies.',
+    price: 29, compareAt: null, rating: 4.8, reviewCount: 940, badge: null, featured: false,
+    optionLabel: 'Set', options: ['Set of 3'],
+    benefits: ['Soft blush tone', 'Glides off hair smoothly', '100% pure silk outer'],
+    ingredients: ['100% mulberry silk'],
+    howItWorks: 'Gentle hold for all hair types.'
+  },
+  {
+    slug: 'silk-scrunchies-rose-trio',
+    name: 'Silk Scrunchies — Rose Trio',
+    category: 'Scrunchies',
+    swatch: SILK.rose,
+    colour: 'Rose',
+    shortBenefit: 'Three elegant Rose silk scrunchies.',
+    price: 29, compareAt: 36, rating: 4.7, reviewCount: 720, badge: null, featured: false,
+    optionLabel: 'Set', options: ['Set of 3'],
+    benefits: ['Deep rose hue', 'Snag-free hold', 'Machine washable delicate'],
+    ingredients: ['100% mulberry silk'],
+    howItWorks: 'Use daily to prevent hair damage.'
+  },
+  {
+    slug: 'silk-scrunchies-sage-trio',
+    name: 'Silk Scrunchies — Sage Trio',
+    category: 'Scrunchies',
+    swatch: SILK.sage,
+    colour: 'Sage',
+    shortBenefit: 'Three soothing Sage silk scrunchies.',
+    price: 29, compareAt: null, rating: 4.8, reviewCount: 580, badge: 'New', featured: false,
+    optionLabel: 'Set', options: ['Set of 3'],
+    benefits: ['Modern pastel green', 'Holds tight without headaches', '22-momme grade silk'],
+    ingredients: ['100% mulberry silk'],
+    howItWorks: 'Wrap gently around ponytails or buns.'
+  },
+  {
+    slug: 'silk-scrunchies-lavender-trio',
+    name: 'Silk Scrunchies — Lavender Trio',
+    category: 'Scrunchies',
+    swatch: SILK.lavender,
+    colour: 'Lavender',
+    shortBenefit: 'Three soft Lavender silk hair ties.',
+    price: 29, compareAt: null, rating: 4.8, reviewCount: 490, badge: 'New', featured: false,
+    optionLabel: 'Set', options: ['Set of 3'],
+    benefits: ['Dreamy lavender tint', 'Non-damaging elastic', 'Ultra smooth finish'],
+    ingredients: ['100% mulberry silk'],
+    howItWorks: 'Perfect for overnight hair protection.'
+  },
+  {
+    slug: 'silk-scrunchies-pearl-gold',
+    name: 'Silk Scrunchies — Pearl & Gold Set',
+    category: 'Scrunchies',
+    swatch: SILK.gold,
+    colour: 'Gold',
+    shortBenefit: 'Premium 4-pack of Pearl and Gold scrunchies.',
+    price: 34, compareAt: 42, rating: 4.9, reviewCount: 630, badge: 'Special Value', featured: false,
+    optionLabel: 'Set', options: ['Set of 4'],
+    benefits: ['Includes 2 Pearl & 2 Gold scrunchies', 'High shine finish', 'Great for gifting'],
+    ingredients: ['100% mulberry silk'],
+    howItWorks: 'Mix and match for styles.'
+  },
+  {
+    slug: 'silk-scrunchies-charcoal-trio',
+    name: 'Silk Scrunchies — Charcoal Trio',
+    category: 'Scrunchies',
+    swatch: SILK.charcoal,
+    colour: 'Charcoal',
+    shortBenefit: 'Three versatile Charcoal grey scrunchies.',
+    price: 29, compareAt: 36, rating: 4.8, reviewCount: 810, badge: null, featured: false,
+    optionLabel: 'Set', options: ['Set of 3'],
+    benefits: ['Classic neutral charcoal', 'Strong hold for thick hair', 'Smooth silk exterior'],
+    ingredients: ['100% mulberry silk'],
+    howItWorks: 'Hand wash cool.'
+  },
 
-  /* ---- Bundles ---- */
+  /* ---- Bundles (10 products) ---- */
   {
     slug: 'the-sleep-set',
     name: 'The Sleep Set',
@@ -129,8 +341,8 @@ const products = [
     shortBenefit: 'Pillowcase, sleep mask and scrunchies.',
     price: 139, compareAt: 179, rating: 4.9, reviewCount: 1640, badge: 'Save 22%', featured: true,
     optionLabel: 'Size', options: ['Standard', 'Queen', 'King'],
-    benefits: ['[[PLACEHOLDER]] One pillowcase, one mask, one scrunchie set', 'Arrives gift-boxed', 'Cheaper than buying separately'],
-    ingredients: ['[[PLACEHOLDER]] 100% mulberry silk throughout'],
+    benefits: ['One pillowcase, one mask, one scrunchie set', 'Arrives gift-boxed', 'Cheaper than buying separately'],
+    ingredients: ['100% mulberry silk throughout'],
     howItWorks: 'Follow the care label on each piece. Wash cool, hang to dry.'
   },
   {
@@ -140,10 +352,10 @@ const products = [
     swatch: SILK.pearl,
     colour: 'Pearl',
     shortBenefit: 'Two pillowcases, one for each side.',
-    price: 159, compareAt: 198, rating: 4.9, reviewCount: 920, badge: 'Buy 3 get 1', featured: false,
+    price: 159, compareAt: 198, rating: 4.9, reviewCount: 920, badge: 'Buy 2 & Save', featured: false,
     optionLabel: 'Size', options: ['Standard', 'Queen', 'King'],
-    benefits: ['[[PLACEHOLDER]] Two 22-momme pillowcases', 'Mix or match the colours', 'Arrives gift-boxed'],
-    ingredients: ['[[PLACEHOLDER]] 100% mulberry silk'],
+    benefits: ['Two 22-momme pillowcases', 'Mix or match the colours', 'Arrives gift-boxed'],
+    ingredients: ['100% mulberry silk'],
     howItWorks: 'Wash cool on a delicate cycle, hang to dry.'
   },
   {
@@ -155,9 +367,100 @@ const products = [
     shortBenefit: 'The whole range, boxed and ribboned.',
     price: 199, compareAt: 254, rating: 5.0, reviewCount: 540, badge: 'Save 22%', featured: false,
     optionLabel: 'Size', options: ['Standard', 'Queen', 'King'],
-    benefits: ['[[PLACEHOLDER]] Pillowcase, mask, scrunchies and a travel pouch', 'Gift box and ribbon included', 'Add a handwritten note at checkout'],
-    ingredients: ['[[PLACEHOLDER]] 100% mulberry silk throughout'],
+    benefits: ['Pillowcase, mask, scrunchies and a travel pouch', 'Gift box and ribbon included', 'Add a handwritten note at checkout'],
+    ingredients: ['100% mulberry silk throughout'],
     howItWorks: 'Follow the care label on each piece.'
+  },
+  {
+    slug: 'the-deluxe-silk-set',
+    name: 'The Deluxe Silk Set',
+    category: 'Bundles',
+    swatch: SILK.midnight,
+    colour: 'Midnight',
+    shortBenefit: 'Two pillowcases, two masks, and 6 scrunchies.',
+    price: 229, compareAt: 289, rating: 5.0, reviewCount: 780, badge: 'Save 25%', featured: true,
+    optionLabel: 'Size', options: ['Standard', 'Queen', 'King'],
+    benefits: ['Complete set for couples', 'Premium gift box presentation', 'Maximum savings bundle'],
+    ingredients: ['100% mulberry silk throughout'],
+    howItWorks: 'Unbox and enjoy total silk luxury.'
+  },
+  {
+    slug: 'the-travel-companion',
+    name: 'The Travel Companion Set',
+    category: 'Bundles',
+    swatch: SILK.champagne,
+    colour: 'Champagne',
+    shortBenefit: 'Sleep mask, scrunchie & silk travel pouch.',
+    price: 89, compareAt: 115, rating: 4.8, reviewCount: 640, badge: 'Travel Pack', featured: false,
+    optionLabel: 'Size', options: ['One size'],
+    benefits: ['Includes silk mask & scrunchie', 'Custom compact carry pouch', 'Ideal for flights and hotel stays'],
+    ingredients: ['100% mulberry silk'],
+    howItWorks: 'Pack in carry-on bag.'
+  },
+  {
+    slug: 'the-weekend-luxe-bundle',
+    name: 'The Weekend Luxe Bundle',
+    category: 'Bundles',
+    swatch: SILK.sage,
+    colour: 'Sage',
+    shortBenefit: 'Pillowcase & sleep mask in soothing Sage.',
+    price: 119, compareAt: 148, rating: 4.9, reviewCount: 490, badge: 'Save 20%', featured: false,
+    optionLabel: 'Size', options: ['Standard', 'Queen', 'King'],
+    benefits: ['Color-matched pillowcase & mask', '22-momme mulberry silk', 'Gift packaging'],
+    ingredients: ['100% mulberry silk'],
+    howItWorks: 'Wash cool, dry in shade.'
+  },
+  {
+    slug: 'the-bedtime-essentials',
+    name: 'The Bedtime Essentials Bundle',
+    category: 'Bundles',
+    swatch: SILK.ivory,
+    colour: 'Ivory',
+    shortBenefit: 'Pillowcase and set of 3 scrunchies.',
+    price: 109, compareAt: 135, rating: 4.9, reviewCount: 870, badge: 'Popular', featured: false,
+    optionLabel: 'Size', options: ['Standard', 'Queen', 'King'],
+    benefits: ['Ivory pillowcase with matching scrunchies', 'Protects hair and skin overnight', 'Delicate wash approved'],
+    ingredients: ['100% mulberry silk'],
+    howItWorks: 'Use daily for skin and hair health.'
+  },
+  {
+    slug: 'the-silk-trio-pack',
+    name: 'The Silk Trio Pack',
+    category: 'Bundles',
+    swatch: SILK.lavender,
+    colour: 'Lavender',
+    shortBenefit: 'Three silk pillowcases in pastel tones.',
+    price: 239, compareAt: 297, rating: 4.9, reviewCount: 350, badge: 'Best Value', featured: false,
+    optionLabel: 'Size', options: ['Standard', 'Queen', 'King'],
+    benefits: ['Three pillowcases in Lavender, Sage, Pearl', 'Save $58 vs buying individual items', 'Great for laundry rotation'],
+    ingredients: ['100% mulberry silk'],
+    howItWorks: 'Rotate weekly for fresh sleep.'
+  },
+  {
+    slug: 'the-ultimate-glow-kit',
+    name: 'The Ultimate Glow Kit',
+    category: 'Bundles',
+    swatch: SILK.blush,
+    colour: 'Blush',
+    shortBenefit: 'Blush pillowcase, sleep mask, and face band.',
+    price: 149, compareAt: 185, rating: 4.9, reviewCount: 520, badge: 'Gift Choice', featured: false,
+    optionLabel: 'Size', options: ['Standard', 'Queen', 'King'],
+    benefits: ['Complete night skin routine kit', 'Ultra gentle on sensitive skin', 'Beautiful gift presentation'],
+    ingredients: ['100% mulberry silk'],
+    howItWorks: 'Incorporate into nighttime beauty ritual.'
+  },
+  {
+    slug: 'the-double-pillowcase-mask-set',
+    name: 'The Double Pillowcase & Mask Set',
+    category: 'Bundles',
+    swatch: SILK.charcoal,
+    colour: 'Charcoal',
+    shortBenefit: '2 Charcoal pillowcases + 2 Charcoal sleep masks.',
+    price: 185, compareAt: 235, rating: 4.8, reviewCount: 410, badge: 'Save 21%', featured: false,
+    optionLabel: 'Size', options: ['Standard', 'Queen', 'King'],
+    benefits: ['Set of 2 pillowcases and 2 masks', 'Matching deep charcoal aesthetic', 'Hypoallergenic and breathable'],
+    ingredients: ['100% mulberry silk'],
+    howItWorks: 'Machine wash cool.'
   }
 ];
 

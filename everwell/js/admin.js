@@ -593,11 +593,6 @@ var Admin = (function () {
     if (editor && window.innerWidth < 900) editor.scrollIntoView({ block: 'start' });
   }
 
-  function safeOn(sel, evt, fn) {
-    var node = typeof sel === 'string' ? el(sel) : sel;
-    if (node) node.addEventListener(evt, fn);
-  }
-
   function init() {
     if (!el('#adm-list')) return;
 
@@ -606,7 +601,7 @@ var Admin = (function () {
     fillForm();
 
     /* --- the list --- */
-    safeOn('#adm-list', 'click', function (ev) {
+    el('#adm-list').addEventListener('click', function (ev) {
       var row = ev.target.closest('.adm-item');
       if (!row) return;
       var i = Number(row.getAttribute('data-index'));
@@ -628,89 +623,79 @@ var Admin = (function () {
       select(i);
     });
 
-    safeOn('#adm-search', 'input', function (ev) {
+    el('#adm-search').addEventListener('input', function (ev) {
       state.filter = ev.target.value;
       renderList();
     });
 
     /* --- the form --- */
     var form = el('#adm-form');
-    if (form) {
-      form.addEventListener('input', function (ev) {
-        var input = ev.target.closest('[data-field], [data-list]');
-        if (input) bindInput(input);
-      });
-      form.addEventListener('change', function (ev) {
-        var input = ev.target.closest('[data-field]');
-        if (input && input.type === 'checkbox') bindInput(input);
-      });
-      form.addEventListener('submit', function (ev) { ev.preventDefault(); });
-    }
+    form.addEventListener('input', function (ev) {
+      var input = ev.target.closest('[data-field], [data-list]');
+      if (input) bindInput(input);
+    });
+    form.addEventListener('change', function (ev) {
+      var input = ev.target.closest('[data-field]');
+      if (input && input.type === 'checkbox') bindInput(input);
+    });
+    form.addEventListener('submit', function (ev) { ev.preventDefault(); });
 
     /* --- colour --- */
     var picker = el('#f-swatch');
     var hexBox = el('#f-swatch-hex');
-    if (picker) {
-      picker.addEventListener('input', function () {
-        var p = current();
-        if (!p) return;
-        p.swatch = picker.value;
-        if (hexBox) hexBox.value = picker.value;
+    picker.addEventListener('input', function () {
+      var p = current();
+      if (!p) return;
+      p.swatch = picker.value;
+      hexBox.value = picker.value;
+      touch();
+      renderImagePreview();
+    });
+    hexBox.addEventListener('input', function () {
+      var p = current();
+      if (!p) return;
+      var v = hexBox.value.trim();
+      if (/^#?[0-9a-f]{3}([0-9a-f]{3})?$/i.test(v)) {
+        p.swatch = v[0] === '#' ? v : '#' + v;
+        /* shade(x, 0) returns x unchanged but always six digits, which is
+           the only form input[type=color] accepts. */
+        picker.value = shade(p.swatch, 0) || picker.value;
         touch();
-        renderImagePreview();
-      });
-    }
-    if (hexBox) {
-      hexBox.addEventListener('input', function () {
-        var p = current();
-        if (!p) return;
-        var v = hexBox.value.trim();
-        if (/^#?[0-9a-f]{3}([0-9a-f]{3})?$/i.test(v)) {
-          p.swatch = v[0] === '#' ? v : '#' + v;
-          if (picker) picker.value = shade(p.swatch, 0) || picker.value;
-          touch();
-        }
-      });
-    }
-    safeOn('#f-swatch-clear', 'click', function () {
+      }
+    });
+    el('#f-swatch-clear').addEventListener('click', function () {
       var p = current();
       if (!p) return;
       p.swatch = null;
-      if (hexBox) hexBox.value = '';
+      hexBox.value = '';
       touch();
     });
 
     /* --- photos --- */
-    safeOn('#adm-pick-file', 'click', function () {
-      var fileEl = el('#adm-file');
-      if (fileEl) fileEl.click();
-    });
-    safeOn('#adm-file', 'change', function (ev) {
+    el('#adm-pick-file').addEventListener('click', function () { el('#adm-file').click(); });
+    el('#adm-file').addEventListener('change', function (ev) {
       var file = ev.target.files && ev.target.files[0];
       var p = current();
       if (!file || !p) return;
-      var embedEl = el('#adm-embed');
-      readImage(file, embedEl ? embedEl.checked : false, function (src) {
+      readImage(file, el('#adm-embed').checked, function (src) {
         p.image = src;
-        var imgField = el('#f-image');
-        if (imgField) imgField.value = src.indexOf('data:') === 0 ? '' : src;
+        el('#f-image').value = src.indexOf('data:') === 0 ? '' : src;
         touch();
         renderImagePreview();
       });
       ev.target.value = '';
     });
-    safeOn('#f-image', 'change', renderImagePreview);
+    el('#f-image').addEventListener('change', renderImagePreview);
 
     /* --- catalogue buttons --- */
-    safeOn('#adm-add', 'click', function () {
+    el('#adm-add').addEventListener('click', function () {
       var p = blankProduct();
       p.slug = uniqueSlug('new-product', -1);
       p.name = '';
       state.items.push(p);
       state.index = state.items.length - 1;
       state.filter = '';
-      var s = el('#adm-search');
-      if (s) s.value = '';
+      el('#adm-search').value = '';
       state.dirty = true;
       save();
       renderList();
@@ -719,7 +704,7 @@ var Admin = (function () {
       if (name) name.focus();
     });
 
-    safeOn('#adm-duplicate', 'click', function () {
+    el('#adm-duplicate').addEventListener('click', function () {
       var p = current();
       if (!p) return;
       var copy = JSON.parse(JSON.stringify(p));
@@ -733,7 +718,7 @@ var Admin = (function () {
       renderList();
     });
 
-    safeOn('#adm-delete', 'click', function () {
+    el('#adm-delete').addEventListener('click', function () {
       var p = current();
       if (!p) return;
       if (!window.confirm('Delete "' + (p.name || 'this product') + '"? This cannot be undone.')) return;
@@ -745,7 +730,7 @@ var Admin = (function () {
       fillForm();
     });
 
-    safeOn('#adm-revert', 'click', function () {
+    el('#adm-revert').addEventListener('click', function () {
       if (!window.confirm('Throw away your edits and start again from the products the shop currently ships?')) return;
       resetToLive();
       state.index = -1;
@@ -755,13 +740,10 @@ var Admin = (function () {
       toast('Back to the catalogue the site is using now.');
     });
 
-    safeOn('#adm-export', 'click', doExport);
+    el('#adm-export').addEventListener('click', doExport);
 
-    safeOn('#adm-import', 'click', function () {
-      var imp = el('#adm-import-file');
-      if (imp) imp.click();
-    });
-    safeOn('#adm-import-file', 'change', function (ev) {
+    el('#adm-import').addEventListener('click', function () { el('#adm-import-file').click(); });
+    el('#adm-import-file').addEventListener('change', function (ev) {
       var file = ev.target.files && ev.target.files[0];
       if (file) doImport(file);
       ev.target.value = '';

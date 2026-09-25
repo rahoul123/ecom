@@ -776,6 +776,94 @@ var PRODUCTS = [
     "deep": "#64593f"
   },
   {
+    "slug": "silk-pillowcase-rose",
+    "name": "Silk Pillowcase — Rose",
+    "sku": "EVERWELL-SILKPILLOWCASEROSE",
+    "category": "Pillowcases",
+    "shortBenefit": "22-momme mulberry silk, both sides.",
+    "description": "[[PLACEHOLDER]] 22-momme mulberry silk, both sides. Full product copy goes here — keep it factual and avoid medical claims until reviewed.",
+    "metaDescription": "[[PLACEHOLDER]] Silk Pillowcase — Rose from Lunelle Silk. 22-momme mulberry silk, both sides.",
+    "price": 89,
+    "compareAt": 109,
+    "priceNote": null,
+    "rating": 4.8,
+    "reviewCount": 1240,
+    "badge": null,
+    "featured": false,
+    "optionLabel": "Size",
+    "options": [
+      "Standard",
+      "Queen",
+      "King"
+    ],
+    "benefits": [
+      "100% mulberry silk, 22 momme",
+      "Hidden zip, silk on both sides",
+      "Machine washable on a delicate cycle"
+    ],
+    "ingredients": [
+      "[[PLACEHOLDER]] 100% mulberry silk",
+      "[[PLACEHOLDER]] OEKO-TEX certified dye"
+    ],
+    "howItWorks": "Slip it over your usual pillow and sleep on it. Wash cool on a delicate cycle, hang to dry.",
+    "image": "images/products/silk-pillowcase-rose.svg",
+    "gallery": [
+      "images/products/silk-pillowcase-rose.svg",
+      "images/products/_angle-pillowcases-2.svg",
+      "images/products/_angle-pillowcases-3.svg",
+      "images/products/_angle-pillowcases-4.svg"
+    ],
+    "imageAlt": "[[PLACEHOLDER: product photo of Silk Pillowcase — Rose]]",
+    "swatch": "#e2b8b8",
+    "colour": "Rose",
+    "tint": "#fbf5f5",
+    "deep": "#665353"
+  },
+  {
+    "slug": "silk-pillowcase-charcoal",
+    "name": "Silk Pillowcase — Charcoal",
+    "sku": "EVERWELL-SILKPILLOWCASECHARCOAL",
+    "category": "Pillowcases",
+    "shortBenefit": "22-momme mulberry silk, both sides.",
+    "description": "[[PLACEHOLDER]] 22-momme mulberry silk, both sides. Full product copy goes here — keep it factual and avoid medical claims until reviewed.",
+    "metaDescription": "[[PLACEHOLDER]] Silk Pillowcase — Charcoal from Lunelle Silk. 22-momme mulberry silk, both sides.",
+    "price": 89,
+    "compareAt": 109,
+    "priceNote": null,
+    "rating": 4.9,
+    "reviewCount": 1680,
+    "badge": null,
+    "featured": false,
+    "optionLabel": "Size",
+    "options": [
+      "Standard",
+      "Queen",
+      "King"
+    ],
+    "benefits": [
+      "100% mulberry silk, 22 momme",
+      "Hidden zip, silk on both sides",
+      "Machine washable on a delicate cycle"
+    ],
+    "ingredients": [
+      "[[PLACEHOLDER]] 100% mulberry silk",
+      "[[PLACEHOLDER]] OEKO-TEX certified dye"
+    ],
+    "howItWorks": "Slip it over your usual pillow and sleep on it. Wash cool on a delicate cycle, hang to dry.",
+    "image": "images/products/silk-pillowcase-charcoal.svg",
+    "gallery": [
+      "images/products/silk-pillowcase-charcoal.svg",
+      "images/products/_angle-pillowcases-2.svg",
+      "images/products/_angle-pillowcases-3.svg",
+      "images/products/_angle-pillowcases-4.svg"
+    ],
+    "imageAlt": "[[PLACEHOLDER: product photo of Silk Pillowcase — Charcoal]]",
+    "swatch": "#4a4e58",
+    "colour": "Charcoal",
+    "tint": "#e6e6e8",
+    "deep": "#212328"
+  },
+  {
     "slug": "silk-sleep-mask-champagne",
     "name": "Silk Sleep Mask — Champagne",
     "sku": "EVERWELL-SILKSLEEPMASKCHAMPAGNE",
@@ -788,19 +876,19 @@ var PRODUCTS = [
     "priceNote": null,
     "rating": 4.8,
     "reviewCount": 1420,
-    "badge": null,
+    "badge": "Popular",
     "featured": true,
     "optionLabel": "Fit",
     "options": [
       "One size"
     ],
     "benefits": [
-      "[[PLACEHOLDER]] 22-momme mulberry silk",
+      "22-momme mulberry silk",
       "Adjustable, no-snag strap",
       "Travel pouch included"
     ],
     "ingredients": [
-      "[[PLACEHOLDER]] 100% mulberry silk"
+      "100% mulberry silk"
     ],
     "howItWorks": "Adjust the strap and wear it over the eyes. Hand wash cool.",
     "image": "images/products/silk-sleep-mask-champagne.svg",
@@ -836,12 +924,12 @@ var PRODUCTS = [
       "One size"
     ],
     "benefits": [
-      "[[PLACEHOLDER]] 22-momme mulberry silk",
+      "22-momme mulberry silk",
       "Adjustable, no-snag strap",
       "Travel pouch included"
     ],
     "ingredients": [
-      "[[PLACEHOLDER]] 100% mulberry silk"
+      "100% mulberry silk"
     ],
     "howItWorks": "Adjust the strap and wear it over the eyes. Hand wash cool.",
     "image": "images/products/silk-sleep-mask-midnight.svg",
@@ -856,6 +944,334 @@ var PRODUCTS = [
     "colour": "Midnight",
     "tint": "#e1e2e7",
     "deep": "#131724"
+  },
+  {
+    "slug": "silk-sleep-mask-ivory",
+    "name": "Silk Sleep Mask — Ivory",
+    "sku": "EVERWELL-SILKSLEEPMASKIVORY",
+    "category": "Sleep Masks",
+    "shortBenefit": "Pure silk contour mask for restful sleep.",
+    "description": "[[PLACEHOLDER]] Pure silk contour mask for restful sleep. Full product copy goes here — keep it factual and avoid medical claims until reviewed.",
+    "metaDescription": "[[PLACEHOLDER]] Silk Sleep Mask — Ivory from Lunelle Silk. Pure silk contour mask for restful sleep.",
+    "price": 39,
+    "compareAt": 49,
+    "priceNote": null,
+    "rating": 4.8,
+    "reviewCount": 840,
+    "badge": null,
+    "featured": false,
+    "optionLabel": "Fit",
+    "options": [
+      "One size"
+    ],
+    "benefits": [
+      "22-momme mulberry silk",
+      "Light-blocking design",
+      "Travel pouch included"
+    ],
+    "ingredients": [
+      "100% mulberry silk"
+    ],
+    "howItWorks": "Adjust strap for a snug fit. Hand wash cool.",
+    "image": "images/products/silk-sleep-mask-ivory.svg",
+    "gallery": [
+      "images/products/silk-sleep-mask-ivory.svg",
+      "images/products/_angle-sleep-masks-2.svg",
+      "images/products/_angle-sleep-masks-3.svg",
+      "images/products/_angle-sleep-masks-4.svg"
+    ],
+    "imageAlt": "[[PLACEHOLDER: product photo of Silk Sleep Mask — Ivory]]",
+    "swatch": "#f2ece1",
+    "colour": "Ivory",
+    "tint": "#fdfcfb",
+    "deep": "#6d6a65"
+  },
+  {
+    "slug": "silk-sleep-mask-blush",
+    "name": "Silk Sleep Mask — Blush",
+    "sku": "EVERWELL-SILKSLEEPMASKBLUSH",
+    "category": "Sleep Masks",
+    "shortBenefit": "Gentle on eyes and lashes.",
+    "description": "[[PLACEHOLDER]] Gentle on eyes and lashes. Full product copy goes here — keep it factual and avoid medical claims until reviewed.",
+    "metaDescription": "[[PLACEHOLDER]] Silk Sleep Mask — Blush from Lunelle Silk. Gentle on eyes and lashes.",
+    "price": 39,
+    "compareAt": 49,
+    "priceNote": null,
+    "rating": 4.9,
+    "reviewCount": 920,
+    "badge": "Best Seller",
+    "featured": false,
+    "optionLabel": "Fit",
+    "options": [
+      "One size"
+    ],
+    "benefits": [
+      "22-momme mulberry silk",
+      "Smooth plush inner layer",
+      "Gentle strap"
+    ],
+    "ingredients": [
+      "100% mulberry silk"
+    ],
+    "howItWorks": "Place over eyes before sleep.",
+    "image": "images/products/silk-sleep-mask-blush.svg",
+    "gallery": [
+      "images/products/silk-sleep-mask-blush.svg",
+      "images/products/_angle-sleep-masks-2.svg",
+      "images/products/_angle-sleep-masks-3.svg",
+      "images/products/_angle-sleep-masks-4.svg"
+    ],
+    "imageAlt": "[[PLACEHOLDER: product photo of Silk Sleep Mask — Blush]]",
+    "swatch": "#edd3d1",
+    "colour": "Blush",
+    "tint": "#fcf9f9",
+    "deep": "#6b5f5e"
+  },
+  {
+    "slug": "silk-sleep-mask-rose",
+    "name": "Silk Sleep Mask — Rose",
+    "sku": "EVERWELL-SILKSLEEPMASKROSE",
+    "category": "Sleep Masks",
+    "shortBenefit": "Deep light blocking for travel or home.",
+    "description": "[[PLACEHOLDER]] Deep light blocking for travel or home. Full product copy goes here — keep it factual and avoid medical claims until reviewed.",
+    "metaDescription": "[[PLACEHOLDER]] Silk Sleep Mask — Rose from Lunelle Silk. Deep light blocking for travel or home.",
+    "price": 39,
+    "compareAt": null,
+    "priceNote": null,
+    "rating": 4.8,
+    "reviewCount": 650,
+    "badge": null,
+    "featured": false,
+    "optionLabel": "Fit",
+    "options": [
+      "One size"
+    ],
+    "benefits": [
+      "Ultra-soft silk padding",
+      "Breathable natural fabric",
+      "No-tangle elastic"
+    ],
+    "ingredients": [
+      "100% mulberry silk"
+    ],
+    "howItWorks": "Adjust strap and rest peacefully.",
+    "image": "images/products/silk-sleep-mask-rose.svg",
+    "gallery": [
+      "images/products/silk-sleep-mask-rose.svg",
+      "images/products/_angle-sleep-masks-2.svg",
+      "images/products/_angle-sleep-masks-3.svg",
+      "images/products/_angle-sleep-masks-4.svg"
+    ],
+    "imageAlt": "[[PLACEHOLDER: product photo of Silk Sleep Mask — Rose]]",
+    "swatch": "#e2b8b8",
+    "colour": "Rose",
+    "tint": "#fbf5f5",
+    "deep": "#665353"
+  },
+  {
+    "slug": "silk-sleep-mask-sage",
+    "name": "Silk Sleep Mask — Sage",
+    "sku": "EVERWELL-SILKSLEEPMASKSAGE",
+    "category": "Sleep Masks",
+    "shortBenefit": "Calming sage tone in 22-momme silk.",
+    "description": "[[PLACEHOLDER]] Calming sage tone in 22-momme silk. Full product copy goes here — keep it factual and avoid medical claims until reviewed.",
+    "metaDescription": "[[PLACEHOLDER]] Silk Sleep Mask — Sage from Lunelle Silk. Calming sage tone in 22-momme silk.",
+    "price": 39,
+    "compareAt": null,
+    "priceNote": null,
+    "rating": 4.7,
+    "reviewCount": 510,
+    "badge": "New",
+    "featured": false,
+    "optionLabel": "Fit",
+    "options": [
+      "One size"
+    ],
+    "benefits": [
+      "Soothing natural silk",
+      "Protects delicate eye skin",
+      "Includes storage pouch"
+    ],
+    "ingredients": [
+      "100% mulberry silk"
+    ],
+    "howItWorks": "Adjust strap to your comfort level.",
+    "image": "images/products/silk-sleep-mask-sage.svg",
+    "gallery": [
+      "images/products/silk-sleep-mask-sage.svg",
+      "images/products/_angle-sleep-masks-2.svg",
+      "images/products/_angle-sleep-masks-3.svg",
+      "images/products/_angle-sleep-masks-4.svg"
+    ],
+    "imageAlt": "[[PLACEHOLDER: product photo of Silk Sleep Mask — Sage]]",
+    "swatch": "#cdd8c8",
+    "colour": "Sage",
+    "tint": "#f8faf7",
+    "deep": "#5c615a"
+  },
+  {
+    "slug": "silk-sleep-mask-lavender",
+    "name": "Silk Sleep Mask — Lavender",
+    "sku": "EVERWELL-SILKSLEEPMASKLAVENDER",
+    "category": "Sleep Masks",
+    "shortBenefit": "Soft lavender silk mask.",
+    "description": "[[PLACEHOLDER]] Soft lavender silk mask. Full product copy goes here — keep it factual and avoid medical claims until reviewed.",
+    "metaDescription": "[[PLACEHOLDER]] Silk Sleep Mask — Lavender from Lunelle Silk. Soft lavender silk mask.",
+    "price": 39,
+    "compareAt": null,
+    "priceNote": null,
+    "rating": 4.8,
+    "reviewCount": 430,
+    "badge": "New",
+    "featured": false,
+    "optionLabel": "Fit",
+    "options": [
+      "One size"
+    ],
+    "benefits": [
+      "Hypoallergenic mulberry silk",
+      "Completely blackout",
+      "Elastic band covered in silk"
+    ],
+    "ingredients": [
+      "100% mulberry silk"
+    ],
+    "howItWorks": "Wear comfortably overnight.",
+    "image": "images/products/silk-sleep-mask-lavender.svg",
+    "gallery": [
+      "images/products/silk-sleep-mask-lavender.svg",
+      "images/products/_angle-sleep-masks-2.svg",
+      "images/products/_angle-sleep-masks-3.svg",
+      "images/products/_angle-sleep-masks-4.svg"
+    ],
+    "imageAlt": "[[PLACEHOLDER: product photo of Silk Sleep Mask — Lavender]]",
+    "swatch": "#d8d2e6",
+    "colour": "Lavender",
+    "tint": "#faf9fc",
+    "deep": "#615e67"
+  },
+  {
+    "slug": "silk-sleep-mask-pearl",
+    "name": "Silk Sleep Mask — Pearl",
+    "sku": "EVERWELL-SILKSLEEPMASKPEARL",
+    "category": "Sleep Masks",
+    "shortBenefit": "Luminous pearl silk mask.",
+    "description": "[[PLACEHOLDER]] Luminous pearl silk mask. Full product copy goes here — keep it factual and avoid medical claims until reviewed.",
+    "metaDescription": "[[PLACEHOLDER]] Silk Sleep Mask — Pearl from Lunelle Silk. Luminous pearl silk mask.",
+    "price": 39,
+    "compareAt": 49,
+    "priceNote": null,
+    "rating": 4.8,
+    "reviewCount": 760,
+    "badge": null,
+    "featured": false,
+    "optionLabel": "Fit",
+    "options": [
+      "One size"
+    ],
+    "benefits": [
+      "22-momme pure silk",
+      "Smooth texture prevents creasing",
+      "Lightweight design"
+    ],
+    "ingredients": [
+      "100% mulberry silk"
+    ],
+    "howItWorks": "Hand wash cool and dry flat.",
+    "image": "images/products/silk-sleep-mask-pearl.svg",
+    "gallery": [
+      "images/products/silk-sleep-mask-pearl.svg",
+      "images/products/_angle-sleep-masks-2.svg",
+      "images/products/_angle-sleep-masks-3.svg",
+      "images/products/_angle-sleep-masks-4.svg"
+    ],
+    "imageAlt": "[[PLACEHOLDER: product photo of Silk Sleep Mask — Pearl]]",
+    "swatch": "#e4e6ea",
+    "colour": "Pearl",
+    "tint": "#fbfcfc",
+    "deep": "#676769"
+  },
+  {
+    "slug": "silk-sleep-mask-gold",
+    "name": "Silk Sleep Mask — Gold",
+    "sku": "EVERWELL-SILKSLEEPMASKGOLD",
+    "category": "Sleep Masks",
+    "shortBenefit": "Luxurious gold silk with blackout padding.",
+    "description": "[[PLACEHOLDER]] Luxurious gold silk with blackout padding. Full product copy goes here — keep it factual and avoid medical claims until reviewed.",
+    "metaDescription": "[[PLACEHOLDER]] Silk Sleep Mask — Gold from Lunelle Silk. Luxurious gold silk with blackout padding.",
+    "price": 45,
+    "compareAt": 55,
+    "priceNote": null,
+    "rating": 4.9,
+    "reviewCount": 380,
+    "badge": "Limited Edition",
+    "featured": false,
+    "optionLabel": "Fit",
+    "options": [
+      "One size"
+    ],
+    "benefits": [
+      "Premium gold mulberry silk",
+      "Padded for ultimate light block",
+      "Gift box included"
+    ],
+    "ingredients": [
+      "100% mulberry silk"
+    ],
+    "howItWorks": "Fit strap around head gently.",
+    "image": "images/products/silk-sleep-mask-gold.svg",
+    "gallery": [
+      "images/products/silk-sleep-mask-gold.svg",
+      "images/products/_angle-sleep-masks-2.svg",
+      "images/products/_angle-sleep-masks-3.svg",
+      "images/products/_angle-sleep-masks-4.svg"
+    ],
+    "imageAlt": "[[PLACEHOLDER: product photo of Silk Sleep Mask — Gold]]",
+    "swatch": "#dfc68c",
+    "colour": "Gold",
+    "tint": "#fbf7ef",
+    "deep": "#64593f"
+  },
+  {
+    "slug": "silk-sleep-mask-charcoal",
+    "name": "Silk Sleep Mask — Charcoal",
+    "sku": "EVERWELL-SILKSLEEPMASKCHARCOAL",
+    "category": "Sleep Masks",
+    "shortBenefit": "Deep charcoal shade for total blackout.",
+    "description": "[[PLACEHOLDER]] Deep charcoal shade for total blackout. Full product copy goes here — keep it factual and avoid medical claims until reviewed.",
+    "metaDescription": "[[PLACEHOLDER]] Silk Sleep Mask — Charcoal from Lunelle Silk. Deep charcoal shade for total blackout.",
+    "price": 39,
+    "compareAt": null,
+    "priceNote": null,
+    "rating": 4.8,
+    "reviewCount": 590,
+    "badge": null,
+    "featured": false,
+    "optionLabel": "Fit",
+    "options": [
+      "One size"
+    ],
+    "benefits": [
+      "Dark weave for 100% blackout",
+      "Cooling silk feel",
+      "Strap covered in soft silk"
+    ],
+    "ingredients": [
+      "100% mulberry silk"
+    ],
+    "howItWorks": "Adjust and wear for night or travel.",
+    "image": "images/products/silk-sleep-mask-charcoal.svg",
+    "gallery": [
+      "images/products/silk-sleep-mask-charcoal.svg",
+      "images/products/_angle-sleep-masks-2.svg",
+      "images/products/_angle-sleep-masks-3.svg",
+      "images/products/_angle-sleep-masks-4.svg"
+    ],
+    "imageAlt": "[[PLACEHOLDER: product photo of Silk Sleep Mask — Charcoal]]",
+    "swatch": "#4a4e58",
+    "colour": "Charcoal",
+    "tint": "#e6e6e8",
+    "deep": "#212328"
   },
   {
     "slug": "silk-scrunchies-neutrals",
@@ -877,13 +1293,13 @@ var PRODUCTS = [
       "Set of 3"
     ],
     "benefits": [
-      "[[PLACEHOLDER]] Three scrunchies per set",
+      "Three scrunchies per set",
       "Soft elastic, holds without pulling",
       "22-momme mulberry silk"
     ],
     "ingredients": [
-      "[[PLACEHOLDER]] 100% mulberry silk",
-      "[[PLACEHOLDER]] Covered elastic"
+      "100% mulberry silk",
+      "Covered elastic"
     ],
     "howItWorks": "Wear as you would any hair tie. Hand wash cool.",
     "image": "images/products/silk-scrunchies-neutrals.svg",
@@ -919,13 +1335,13 @@ var PRODUCTS = [
       "Set of 3"
     ],
     "benefits": [
-      "[[PLACEHOLDER]] Three scrunchies per set",
+      "Three scrunchies per set",
       "Soft elastic, holds without pulling",
       "22-momme mulberry silk"
     ],
     "ingredients": [
-      "[[PLACEHOLDER]] 100% mulberry silk",
-      "[[PLACEHOLDER]] Covered elastic"
+      "100% mulberry silk",
+      "Covered elastic"
     ],
     "howItWorks": "Wear as you would any hair tie. Hand wash cool.",
     "image": "images/products/silk-scrunchies-jewels.svg",
@@ -940,6 +1356,334 @@ var PRODUCTS = [
     "colour": "Jewels",
     "tint": "#faf9fc",
     "deep": "#615e67"
+  },
+  {
+    "slug": "silk-scrunchies-champagne-trio",
+    "name": "Silk Scrunchies — Champagne Trio",
+    "sku": "EVERWELL-SILKSCRUNCHIESCHAMPAGNETRIO",
+    "category": "Scrunchies",
+    "shortBenefit": "Three Champagne silk scrunchies.",
+    "description": "[[PLACEHOLDER]] Three Champagne silk scrunchies. Full product copy goes here — keep it factual and avoid medical claims until reviewed.",
+    "metaDescription": "[[PLACEHOLDER]] Silk Scrunchies — Champagne Trio from Lunelle Silk. Three Champagne silk scrunchies.",
+    "price": 29,
+    "compareAt": 36,
+    "priceNote": null,
+    "rating": 4.9,
+    "reviewCount": 1840,
+    "badge": "Best Seller",
+    "featured": false,
+    "optionLabel": "Set",
+    "options": [
+      "Set of 3"
+    ],
+    "benefits": [
+      "Gentle on hair shafts",
+      "Reduces breakage & dents",
+      "22-momme mulberry silk"
+    ],
+    "ingredients": [
+      "100% mulberry silk"
+    ],
+    "howItWorks": "Wrap around hair 2-3 times.",
+    "image": "images/products/silk-scrunchies-champagne-trio.svg",
+    "gallery": [
+      "images/products/silk-scrunchies-champagne-trio.svg",
+      "images/products/_angle-scrunchies-2.svg",
+      "images/products/_angle-scrunchies-3.svg",
+      "images/products/_angle-scrunchies-4.svg"
+    ],
+    "imageAlt": "[[PLACEHOLDER: product photo of Silk Scrunchies — Champagne Trio]]",
+    "swatch": "#e8dcc6",
+    "colour": "Champagne",
+    "tint": "#fcfaf7",
+    "deep": "#686359"
+  },
+  {
+    "slug": "silk-scrunchies-midnight-trio",
+    "name": "Silk Scrunchies — Midnight Trio",
+    "sku": "EVERWELL-SILKSCRUNCHIESMIDNIGHTTRIO",
+    "category": "Scrunchies",
+    "shortBenefit": "Three Midnight navy silk scrunchies.",
+    "description": "[[PLACEHOLDER]] Three Midnight navy silk scrunchies. Full product copy goes here — keep it factual and avoid medical claims until reviewed.",
+    "metaDescription": "[[PLACEHOLDER]] Silk Scrunchies — Midnight Trio from Lunelle Silk. Three Midnight navy silk scrunchies.",
+    "price": 29,
+    "compareAt": 36,
+    "priceNote": null,
+    "rating": 4.8,
+    "reviewCount": 1290,
+    "badge": null,
+    "featured": false,
+    "optionLabel": "Set",
+    "options": [
+      "Set of 3"
+    ],
+    "benefits": [
+      "Sleek dark silk finish",
+      "Prevents frizz and split ends",
+      "Durable inner band"
+    ],
+    "ingredients": [
+      "100% mulberry silk"
+    ],
+    "howItWorks": "Ideal for sleep buns or daytime styles.",
+    "image": "images/products/silk-scrunchies-midnight-trio.svg",
+    "gallery": [
+      "images/products/silk-scrunchies-midnight-trio.svg",
+      "images/products/_angle-scrunchies-2.svg",
+      "images/products/_angle-scrunchies-3.svg",
+      "images/products/_angle-scrunchies-4.svg"
+    ],
+    "imageAlt": "[[PLACEHOLDER: product photo of Silk Scrunchies — Midnight Trio]]",
+    "swatch": "#2a3350",
+    "colour": "Midnight",
+    "tint": "#e1e2e7",
+    "deep": "#131724"
+  },
+  {
+    "slug": "silk-scrunchies-blush-trio",
+    "name": "Silk Scrunchies — Blush Trio",
+    "sku": "EVERWELL-SILKSCRUNCHIESBLUSHTRIO",
+    "category": "Scrunchies",
+    "shortBenefit": "Three romantic Blush pink scrunchies.",
+    "description": "[[PLACEHOLDER]] Three romantic Blush pink scrunchies. Full product copy goes here — keep it factual and avoid medical claims until reviewed.",
+    "metaDescription": "[[PLACEHOLDER]] Silk Scrunchies — Blush Trio from Lunelle Silk. Three romantic Blush pink scrunchies.",
+    "price": 29,
+    "compareAt": null,
+    "priceNote": null,
+    "rating": 4.8,
+    "reviewCount": 940,
+    "badge": null,
+    "featured": false,
+    "optionLabel": "Set",
+    "options": [
+      "Set of 3"
+    ],
+    "benefits": [
+      "Soft blush tone",
+      "Glides off hair smoothly",
+      "100% pure silk outer"
+    ],
+    "ingredients": [
+      "100% mulberry silk"
+    ],
+    "howItWorks": "Gentle hold for all hair types.",
+    "image": "images/products/silk-scrunchies-blush-trio.svg",
+    "gallery": [
+      "images/products/silk-scrunchies-blush-trio.svg",
+      "images/products/_angle-scrunchies-2.svg",
+      "images/products/_angle-scrunchies-3.svg",
+      "images/products/_angle-scrunchies-4.svg"
+    ],
+    "imageAlt": "[[PLACEHOLDER: product photo of Silk Scrunchies — Blush Trio]]",
+    "swatch": "#edd3d1",
+    "colour": "Blush",
+    "tint": "#fcf9f9",
+    "deep": "#6b5f5e"
+  },
+  {
+    "slug": "silk-scrunchies-rose-trio",
+    "name": "Silk Scrunchies — Rose Trio",
+    "sku": "EVERWELL-SILKSCRUNCHIESROSETRIO",
+    "category": "Scrunchies",
+    "shortBenefit": "Three elegant Rose silk scrunchies.",
+    "description": "[[PLACEHOLDER]] Three elegant Rose silk scrunchies. Full product copy goes here — keep it factual and avoid medical claims until reviewed.",
+    "metaDescription": "[[PLACEHOLDER]] Silk Scrunchies — Rose Trio from Lunelle Silk. Three elegant Rose silk scrunchies.",
+    "price": 29,
+    "compareAt": 36,
+    "priceNote": null,
+    "rating": 4.7,
+    "reviewCount": 720,
+    "badge": null,
+    "featured": false,
+    "optionLabel": "Set",
+    "options": [
+      "Set of 3"
+    ],
+    "benefits": [
+      "Deep rose hue",
+      "Snag-free hold",
+      "Machine washable delicate"
+    ],
+    "ingredients": [
+      "100% mulberry silk"
+    ],
+    "howItWorks": "Use daily to prevent hair damage.",
+    "image": "images/products/silk-scrunchies-rose-trio.svg",
+    "gallery": [
+      "images/products/silk-scrunchies-rose-trio.svg",
+      "images/products/_angle-scrunchies-2.svg",
+      "images/products/_angle-scrunchies-3.svg",
+      "images/products/_angle-scrunchies-4.svg"
+    ],
+    "imageAlt": "[[PLACEHOLDER: product photo of Silk Scrunchies — Rose Trio]]",
+    "swatch": "#e2b8b8",
+    "colour": "Rose",
+    "tint": "#fbf5f5",
+    "deep": "#665353"
+  },
+  {
+    "slug": "silk-scrunchies-sage-trio",
+    "name": "Silk Scrunchies — Sage Trio",
+    "sku": "EVERWELL-SILKSCRUNCHIESSAGETRIO",
+    "category": "Scrunchies",
+    "shortBenefit": "Three soothing Sage silk scrunchies.",
+    "description": "[[PLACEHOLDER]] Three soothing Sage silk scrunchies. Full product copy goes here — keep it factual and avoid medical claims until reviewed.",
+    "metaDescription": "[[PLACEHOLDER]] Silk Scrunchies — Sage Trio from Lunelle Silk. Three soothing Sage silk scrunchies.",
+    "price": 29,
+    "compareAt": null,
+    "priceNote": null,
+    "rating": 4.8,
+    "reviewCount": 580,
+    "badge": "New",
+    "featured": false,
+    "optionLabel": "Set",
+    "options": [
+      "Set of 3"
+    ],
+    "benefits": [
+      "Modern pastel green",
+      "Holds tight without headaches",
+      "22-momme grade silk"
+    ],
+    "ingredients": [
+      "100% mulberry silk"
+    ],
+    "howItWorks": "Wrap gently around ponytails or buns.",
+    "image": "images/products/silk-scrunchies-sage-trio.svg",
+    "gallery": [
+      "images/products/silk-scrunchies-sage-trio.svg",
+      "images/products/_angle-scrunchies-2.svg",
+      "images/products/_angle-scrunchies-3.svg",
+      "images/products/_angle-scrunchies-4.svg"
+    ],
+    "imageAlt": "[[PLACEHOLDER: product photo of Silk Scrunchies — Sage Trio]]",
+    "swatch": "#cdd8c8",
+    "colour": "Sage",
+    "tint": "#f8faf7",
+    "deep": "#5c615a"
+  },
+  {
+    "slug": "silk-scrunchies-lavender-trio",
+    "name": "Silk Scrunchies — Lavender Trio",
+    "sku": "EVERWELL-SILKSCRUNCHIESLAVENDERTRIO",
+    "category": "Scrunchies",
+    "shortBenefit": "Three soft Lavender silk hair ties.",
+    "description": "[[PLACEHOLDER]] Three soft Lavender silk hair ties. Full product copy goes here — keep it factual and avoid medical claims until reviewed.",
+    "metaDescription": "[[PLACEHOLDER]] Silk Scrunchies — Lavender Trio from Lunelle Silk. Three soft Lavender silk hair ties.",
+    "price": 29,
+    "compareAt": null,
+    "priceNote": null,
+    "rating": 4.8,
+    "reviewCount": 490,
+    "badge": "New",
+    "featured": false,
+    "optionLabel": "Set",
+    "options": [
+      "Set of 3"
+    ],
+    "benefits": [
+      "Dreamy lavender tint",
+      "Non-damaging elastic",
+      "Ultra smooth finish"
+    ],
+    "ingredients": [
+      "100% mulberry silk"
+    ],
+    "howItWorks": "Perfect for overnight hair protection.",
+    "image": "images/products/silk-scrunchies-lavender-trio.svg",
+    "gallery": [
+      "images/products/silk-scrunchies-lavender-trio.svg",
+      "images/products/_angle-scrunchies-2.svg",
+      "images/products/_angle-scrunchies-3.svg",
+      "images/products/_angle-scrunchies-4.svg"
+    ],
+    "imageAlt": "[[PLACEHOLDER: product photo of Silk Scrunchies — Lavender Trio]]",
+    "swatch": "#d8d2e6",
+    "colour": "Lavender",
+    "tint": "#faf9fc",
+    "deep": "#615e67"
+  },
+  {
+    "slug": "silk-scrunchies-pearl-gold",
+    "name": "Silk Scrunchies — Pearl & Gold Set",
+    "sku": "EVERWELL-SILKSCRUNCHIESPEARLGOLD",
+    "category": "Scrunchies",
+    "shortBenefit": "Premium 4-pack of Pearl and Gold scrunchies.",
+    "description": "[[PLACEHOLDER]] Premium 4-pack of Pearl and Gold scrunchies. Full product copy goes here — keep it factual and avoid medical claims until reviewed.",
+    "metaDescription": "[[PLACEHOLDER]] Silk Scrunchies — Pearl & Gold Set from Lunelle Silk. Premium 4-pack of Pearl and Gold scrunchies.",
+    "price": 34,
+    "compareAt": 42,
+    "priceNote": null,
+    "rating": 4.9,
+    "reviewCount": 630,
+    "badge": "Special Value",
+    "featured": false,
+    "optionLabel": "Set",
+    "options": [
+      "Set of 4"
+    ],
+    "benefits": [
+      "Includes 2 Pearl & 2 Gold scrunchies",
+      "High shine finish",
+      "Great for gifting"
+    ],
+    "ingredients": [
+      "100% mulberry silk"
+    ],
+    "howItWorks": "Mix and match for styles.",
+    "image": "images/products/silk-scrunchies-pearl-gold.svg",
+    "gallery": [
+      "images/products/silk-scrunchies-pearl-gold.svg",
+      "images/products/_angle-scrunchies-2.svg",
+      "images/products/_angle-scrunchies-3.svg",
+      "images/products/_angle-scrunchies-4.svg"
+    ],
+    "imageAlt": "[[PLACEHOLDER: product photo of Silk Scrunchies — Pearl & Gold Set]]",
+    "swatch": "#dfc68c",
+    "colour": "Gold",
+    "tint": "#fbf7ef",
+    "deep": "#64593f"
+  },
+  {
+    "slug": "silk-scrunchies-charcoal-trio",
+    "name": "Silk Scrunchies — Charcoal Trio",
+    "sku": "EVERWELL-SILKSCRUNCHIESCHARCOALTRIO",
+    "category": "Scrunchies",
+    "shortBenefit": "Three versatile Charcoal grey scrunchies.",
+    "description": "[[PLACEHOLDER]] Three versatile Charcoal grey scrunchies. Full product copy goes here — keep it factual and avoid medical claims until reviewed.",
+    "metaDescription": "[[PLACEHOLDER]] Silk Scrunchies — Charcoal Trio from Lunelle Silk. Three versatile Charcoal grey scrunchies.",
+    "price": 29,
+    "compareAt": 36,
+    "priceNote": null,
+    "rating": 4.8,
+    "reviewCount": 810,
+    "badge": null,
+    "featured": false,
+    "optionLabel": "Set",
+    "options": [
+      "Set of 3"
+    ],
+    "benefits": [
+      "Classic neutral charcoal",
+      "Strong hold for thick hair",
+      "Smooth silk exterior"
+    ],
+    "ingredients": [
+      "100% mulberry silk"
+    ],
+    "howItWorks": "Hand wash cool.",
+    "image": "images/products/silk-scrunchies-charcoal-trio.svg",
+    "gallery": [
+      "images/products/silk-scrunchies-charcoal-trio.svg",
+      "images/products/_angle-scrunchies-2.svg",
+      "images/products/_angle-scrunchies-3.svg",
+      "images/products/_angle-scrunchies-4.svg"
+    ],
+    "imageAlt": "[[PLACEHOLDER: product photo of Silk Scrunchies — Charcoal Trio]]",
+    "swatch": "#4a4e58",
+    "colour": "Charcoal",
+    "tint": "#e6e6e8",
+    "deep": "#212328"
   },
   {
     "slug": "the-sleep-set",
@@ -963,12 +1707,12 @@ var PRODUCTS = [
       "King"
     ],
     "benefits": [
-      "[[PLACEHOLDER]] One pillowcase, one mask, one scrunchie set",
+      "One pillowcase, one mask, one scrunchie set",
       "Arrives gift-boxed",
       "Cheaper than buying separately"
     ],
     "ingredients": [
-      "[[PLACEHOLDER]] 100% mulberry silk throughout"
+      "100% mulberry silk throughout"
     ],
     "howItWorks": "Follow the care label on each piece. Wash cool, hang to dry.",
     "image": "images/products/the-sleep-set.svg",
@@ -997,7 +1741,7 @@ var PRODUCTS = [
     "priceNote": null,
     "rating": 4.9,
     "reviewCount": 920,
-    "badge": "Buy 3 get 1",
+    "badge": "Buy 2 & Save",
     "featured": false,
     "optionLabel": "Size",
     "options": [
@@ -1006,12 +1750,12 @@ var PRODUCTS = [
       "King"
     ],
     "benefits": [
-      "[[PLACEHOLDER]] Two 22-momme pillowcases",
+      "Two 22-momme pillowcases",
       "Mix or match the colours",
       "Arrives gift-boxed"
     ],
     "ingredients": [
-      "[[PLACEHOLDER]] 100% mulberry silk"
+      "100% mulberry silk"
     ],
     "howItWorks": "Wash cool on a delicate cycle, hang to dry.",
     "image": "images/products/the-pillowcase-pair.svg",
@@ -1049,12 +1793,12 @@ var PRODUCTS = [
       "King"
     ],
     "benefits": [
-      "[[PLACEHOLDER]] Pillowcase, mask, scrunchies and a travel pouch",
+      "Pillowcase, mask, scrunchies and a travel pouch",
       "Gift box and ribbon included",
       "Add a handwritten note at checkout"
     ],
     "ingredients": [
-      "[[PLACEHOLDER]] 100% mulberry silk throughout"
+      "100% mulberry silk throughout"
     ],
     "howItWorks": "Follow the care label on each piece.",
     "image": "images/products/the-gift-box.svg",
@@ -1069,6 +1813,305 @@ var PRODUCTS = [
     "colour": "Gold",
     "tint": "#fbf7ef",
     "deep": "#64593f"
+  },
+  {
+    "slug": "the-deluxe-silk-set",
+    "name": "The Deluxe Silk Set",
+    "sku": "EVERWELL-THEDELUXESILKSET",
+    "category": "Bundles",
+    "shortBenefit": "Two pillowcases, two masks, and 6 scrunchies.",
+    "description": "[[PLACEHOLDER]] Two pillowcases, two masks, and 6 scrunchies. Full product copy goes here — keep it factual and avoid medical claims until reviewed.",
+    "metaDescription": "[[PLACEHOLDER]] The Deluxe Silk Set from Lunelle Silk. Two pillowcases, two masks, and 6 scrunchies.",
+    "price": 229,
+    "compareAt": 289,
+    "priceNote": null,
+    "rating": 5,
+    "reviewCount": 780,
+    "badge": "Save 25%",
+    "featured": true,
+    "optionLabel": "Size",
+    "options": [
+      "Standard",
+      "Queen",
+      "King"
+    ],
+    "benefits": [
+      "Complete set for couples",
+      "Premium gift box presentation",
+      "Maximum savings bundle"
+    ],
+    "ingredients": [
+      "100% mulberry silk throughout"
+    ],
+    "howItWorks": "Unbox and enjoy total silk luxury.",
+    "image": "images/products/the-deluxe-silk-set.svg",
+    "gallery": [
+      "images/products/the-deluxe-silk-set.svg",
+      "images/products/_angle-bundles-2.svg",
+      "images/products/_angle-bundles-3.svg",
+      "images/products/_angle-bundles-4.svg"
+    ],
+    "imageAlt": "[[PLACEHOLDER: product photo of The Deluxe Silk Set]]",
+    "swatch": "#2a3350",
+    "colour": "Midnight",
+    "tint": "#e1e2e7",
+    "deep": "#131724"
+  },
+  {
+    "slug": "the-travel-companion",
+    "name": "The Travel Companion Set",
+    "sku": "EVERWELL-THETRAVELCOMPANION",
+    "category": "Bundles",
+    "shortBenefit": "Sleep mask, scrunchie & silk travel pouch.",
+    "description": "[[PLACEHOLDER]] Sleep mask, scrunchie & silk travel pouch. Full product copy goes here — keep it factual and avoid medical claims until reviewed.",
+    "metaDescription": "[[PLACEHOLDER]] The Travel Companion Set from Lunelle Silk. Sleep mask, scrunchie & silk travel pouch.",
+    "price": 89,
+    "compareAt": 115,
+    "priceNote": null,
+    "rating": 4.8,
+    "reviewCount": 640,
+    "badge": "Travel Pack",
+    "featured": false,
+    "optionLabel": "Size",
+    "options": [
+      "One size"
+    ],
+    "benefits": [
+      "Includes silk mask & scrunchie",
+      "Custom compact carry pouch",
+      "Ideal for flights and hotel stays"
+    ],
+    "ingredients": [
+      "100% mulberry silk"
+    ],
+    "howItWorks": "Pack in carry-on bag.",
+    "image": "images/products/the-travel-companion.svg",
+    "gallery": [
+      "images/products/the-travel-companion.svg",
+      "images/products/_angle-bundles-2.svg",
+      "images/products/_angle-bundles-3.svg",
+      "images/products/_angle-bundles-4.svg"
+    ],
+    "imageAlt": "[[PLACEHOLDER: product photo of The Travel Companion Set]]",
+    "swatch": "#e8dcc6",
+    "colour": "Champagne",
+    "tint": "#fcfaf7",
+    "deep": "#686359"
+  },
+  {
+    "slug": "the-weekend-luxe-bundle",
+    "name": "The Weekend Luxe Bundle",
+    "sku": "EVERWELL-THEWEEKENDLUXEBUNDLE",
+    "category": "Bundles",
+    "shortBenefit": "Pillowcase & sleep mask in soothing Sage.",
+    "description": "[[PLACEHOLDER]] Pillowcase & sleep mask in soothing Sage. Full product copy goes here — keep it factual and avoid medical claims until reviewed.",
+    "metaDescription": "[[PLACEHOLDER]] The Weekend Luxe Bundle from Lunelle Silk. Pillowcase & sleep mask in soothing Sage.",
+    "price": 119,
+    "compareAt": 148,
+    "priceNote": null,
+    "rating": 4.9,
+    "reviewCount": 490,
+    "badge": "Save 20%",
+    "featured": false,
+    "optionLabel": "Size",
+    "options": [
+      "Standard",
+      "Queen",
+      "King"
+    ],
+    "benefits": [
+      "Color-matched pillowcase & mask",
+      "22-momme mulberry silk",
+      "Gift packaging"
+    ],
+    "ingredients": [
+      "100% mulberry silk"
+    ],
+    "howItWorks": "Wash cool, dry in shade.",
+    "image": "images/products/the-weekend-luxe-bundle.svg",
+    "gallery": [
+      "images/products/the-weekend-luxe-bundle.svg",
+      "images/products/_angle-bundles-2.svg",
+      "images/products/_angle-bundles-3.svg",
+      "images/products/_angle-bundles-4.svg"
+    ],
+    "imageAlt": "[[PLACEHOLDER: product photo of The Weekend Luxe Bundle]]",
+    "swatch": "#cdd8c8",
+    "colour": "Sage",
+    "tint": "#f8faf7",
+    "deep": "#5c615a"
+  },
+  {
+    "slug": "the-bedtime-essentials",
+    "name": "The Bedtime Essentials Bundle",
+    "sku": "EVERWELL-THEBEDTIMEESSENTIALS",
+    "category": "Bundles",
+    "shortBenefit": "Pillowcase and set of 3 scrunchies.",
+    "description": "[[PLACEHOLDER]] Pillowcase and set of 3 scrunchies. Full product copy goes here — keep it factual and avoid medical claims until reviewed.",
+    "metaDescription": "[[PLACEHOLDER]] The Bedtime Essentials Bundle from Lunelle Silk. Pillowcase and set of 3 scrunchies.",
+    "price": 109,
+    "compareAt": 135,
+    "priceNote": null,
+    "rating": 4.9,
+    "reviewCount": 870,
+    "badge": "Popular",
+    "featured": false,
+    "optionLabel": "Size",
+    "options": [
+      "Standard",
+      "Queen",
+      "King"
+    ],
+    "benefits": [
+      "Ivory pillowcase with matching scrunchies",
+      "Protects hair and skin overnight",
+      "Delicate wash approved"
+    ],
+    "ingredients": [
+      "100% mulberry silk"
+    ],
+    "howItWorks": "Use daily for skin and hair health.",
+    "image": "images/products/the-bedtime-essentials.svg",
+    "gallery": [
+      "images/products/the-bedtime-essentials.svg",
+      "images/products/_angle-bundles-2.svg",
+      "images/products/_angle-bundles-3.svg",
+      "images/products/_angle-bundles-4.svg"
+    ],
+    "imageAlt": "[[PLACEHOLDER: product photo of The Bedtime Essentials Bundle]]",
+    "swatch": "#f2ece1",
+    "colour": "Ivory",
+    "tint": "#fdfcfb",
+    "deep": "#6d6a65"
+  },
+  {
+    "slug": "the-silk-trio-pack",
+    "name": "The Silk Trio Pack",
+    "sku": "EVERWELL-THESILKTRIOPACK",
+    "category": "Bundles",
+    "shortBenefit": "Three silk pillowcases in pastel tones.",
+    "description": "[[PLACEHOLDER]] Three silk pillowcases in pastel tones. Full product copy goes here — keep it factual and avoid medical claims until reviewed.",
+    "metaDescription": "[[PLACEHOLDER]] The Silk Trio Pack from Lunelle Silk. Three silk pillowcases in pastel tones.",
+    "price": 239,
+    "compareAt": 297,
+    "priceNote": null,
+    "rating": 4.9,
+    "reviewCount": 350,
+    "badge": "Best Value",
+    "featured": false,
+    "optionLabel": "Size",
+    "options": [
+      "Standard",
+      "Queen",
+      "King"
+    ],
+    "benefits": [
+      "Three pillowcases in Lavender, Sage, Pearl",
+      "Save $58 vs buying individual items",
+      "Great for laundry rotation"
+    ],
+    "ingredients": [
+      "100% mulberry silk"
+    ],
+    "howItWorks": "Rotate weekly for fresh sleep.",
+    "image": "images/products/the-silk-trio-pack.svg",
+    "gallery": [
+      "images/products/the-silk-trio-pack.svg",
+      "images/products/_angle-bundles-2.svg",
+      "images/products/_angle-bundles-3.svg",
+      "images/products/_angle-bundles-4.svg"
+    ],
+    "imageAlt": "[[PLACEHOLDER: product photo of The Silk Trio Pack]]",
+    "swatch": "#d8d2e6",
+    "colour": "Lavender",
+    "tint": "#faf9fc",
+    "deep": "#615e67"
+  },
+  {
+    "slug": "the-ultimate-glow-kit",
+    "name": "The Ultimate Glow Kit",
+    "sku": "EVERWELL-THEULTIMATEGLOWKIT",
+    "category": "Bundles",
+    "shortBenefit": "Blush pillowcase, sleep mask, and face band.",
+    "description": "[[PLACEHOLDER]] Blush pillowcase, sleep mask, and face band. Full product copy goes here — keep it factual and avoid medical claims until reviewed.",
+    "metaDescription": "[[PLACEHOLDER]] The Ultimate Glow Kit from Lunelle Silk. Blush pillowcase, sleep mask, and face band.",
+    "price": 149,
+    "compareAt": 185,
+    "priceNote": null,
+    "rating": 4.9,
+    "reviewCount": 520,
+    "badge": "Gift Choice",
+    "featured": false,
+    "optionLabel": "Size",
+    "options": [
+      "Standard",
+      "Queen",
+      "King"
+    ],
+    "benefits": [
+      "Complete night skin routine kit",
+      "Ultra gentle on sensitive skin",
+      "Beautiful gift presentation"
+    ],
+    "ingredients": [
+      "100% mulberry silk"
+    ],
+    "howItWorks": "Incorporate into nighttime beauty ritual.",
+    "image": "images/products/the-ultimate-glow-kit.svg",
+    "gallery": [
+      "images/products/the-ultimate-glow-kit.svg",
+      "images/products/_angle-bundles-2.svg",
+      "images/products/_angle-bundles-3.svg",
+      "images/products/_angle-bundles-4.svg"
+    ],
+    "imageAlt": "[[PLACEHOLDER: product photo of The Ultimate Glow Kit]]",
+    "swatch": "#edd3d1",
+    "colour": "Blush",
+    "tint": "#fcf9f9",
+    "deep": "#6b5f5e"
+  },
+  {
+    "slug": "the-double-pillowcase-mask-set",
+    "name": "The Double Pillowcase & Mask Set",
+    "sku": "EVERWELL-THEDOUBLEPILLOWCASEMASKSET",
+    "category": "Bundles",
+    "shortBenefit": "2 Charcoal pillowcases + 2 Charcoal sleep masks.",
+    "description": "[[PLACEHOLDER]] 2 Charcoal pillowcases + 2 Charcoal sleep masks. Full product copy goes here — keep it factual and avoid medical claims until reviewed.",
+    "metaDescription": "[[PLACEHOLDER]] The Double Pillowcase & Mask Set from Lunelle Silk. 2 Charcoal pillowcases + 2 Charcoal sleep masks.",
+    "price": 185,
+    "compareAt": 235,
+    "priceNote": null,
+    "rating": 4.8,
+    "reviewCount": 410,
+    "badge": "Save 21%",
+    "featured": false,
+    "optionLabel": "Size",
+    "options": [
+      "Standard",
+      "Queen",
+      "King"
+    ],
+    "benefits": [
+      "Set of 2 pillowcases and 2 masks",
+      "Matching deep charcoal aesthetic",
+      "Hypoallergenic and breathable"
+    ],
+    "ingredients": [
+      "100% mulberry silk"
+    ],
+    "howItWorks": "Machine wash cool.",
+    "image": "images/products/the-double-pillowcase-mask-set.svg",
+    "gallery": [
+      "images/products/the-double-pillowcase-mask-set.svg",
+      "images/products/_angle-bundles-2.svg",
+      "images/products/_angle-bundles-3.svg",
+      "images/products/_angle-bundles-4.svg"
+    ],
+    "imageAlt": "[[PLACEHOLDER: product photo of The Double Pillowcase & Mask Set]]",
+    "swatch": "#4a4e58",
+    "colour": "Charcoal",
+    "tint": "#e6e6e8",
+    "deep": "#212328"
   }
 ];
 
