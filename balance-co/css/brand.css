@@ -36,6 +36,12 @@
   --color-warn-bg: #fff8ea;
   --color-warn-border: #f0dfbe;
 
+  /* The reassuring counterpart to warn — measured against its own background
+     at 5.9:1, so it stays readable as body text. */
+  --color-ok: #1f6b45;
+  --color-ok-bg: #edf7f1;
+  --color-ok-border: #c8e3d4;
+
   --font-heading: 'Outfit', 'Segoe UI', system-ui, sans-serif;
   --font-body: 'Karla', 'Segoe UI', system-ui, sans-serif;
   --weight-heading: 600;

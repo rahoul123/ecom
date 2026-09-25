@@ -69,21 +69,83 @@ var Checkout = (function () {
     renderTotals();
   }
 
-  function renderTotals() {
+  /* What the visitor has chosen on the checkout page. The basket itself is
+     Cart's business; this is only the stuff that lives for one visit. */
+  var choice = { shipping: null, discount: null };
+
+  function shipMethods() { return BRAND.shippingMethods || []; }
+
+  function selectedMethod() {
+    var list = shipMethods();
+    if (!list.length) return null;
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].id === choice.shipping) return list[i];
+    }
+    return list[0];
+  }
+
+  /**
+   * The real cost of the order.
+   *
+   * On the basket page there is no method picker, so delivery falls back to
+   * Cart.shipping() and the numbers are exactly what they always were. On the
+   * checkout the chosen method sets the price, and a method carrying freeOver
+   * drops to nothing once the basket clears it.
+   */
+  function pricing() {
     var sub = Cart.subtotal();
-    var ship = Cart.shipping();
+    var method = el('#ship-methods') ? selectedMethod() : null;
+    var ship;
+
+    if (method) {
+      var free = typeof method.freeOver === 'number' && sub >= method.freeOver;
+      ship = free ? 0 : Number(method.price) || 0;
+    } else {
+      ship = Cart.shipping();
+    }
+
+    var off = 0;
+    var d = choice.discount;
+    if (d) {
+      if (d.kind === 'percent') off = sub * (Number(d.value) / 100);
+      else if (d.kind === 'amount') off = Number(d.value);
+      else if (d.kind === 'shipping') ship = 0;
+    }
+    /* Never discount past free, and never to a negative total. */
+    off = Math.min(sub, Math.round(off * 100) / 100);
+
+    return { sub: sub, ship: ship, off: off, total: sub - off + ship, method: method };
+  }
+
+  function renderTotals() {
+    var p = pricing();
 
     var subEl = el('#sum-subtotal');
-    if (subEl) subEl.textContent = money(sub);
+    if (subEl) subEl.textContent = money(p.sub);
 
     var shipEl = el('#sum-shipping');
-    if (shipEl) shipEl.textContent = ship === 0 ? 'Free' : money(ship);
+    if (shipEl) shipEl.textContent = p.ship === 0 ? 'Free' : money(p.ship);
+
+    var discRow = el('#row-discount');
+    if (discRow) {
+      discRow.hidden = !p.off;
+      var discEl = el('#sum-discount');
+      if (discEl) discEl.textContent = '\u2212' + money(p.off);
+      var tag = el('#discount-tag');
+      if (tag) tag.textContent = choice.discount ? choice.discount.code : '';
+    }
 
     var totalEl = el('#sum-total');
-    if (totalEl) totalEl.textContent = money(Cart.total());
+    if (totalEl) totalEl.textContent = money(p.total);
 
     var btnTotal = el('#btn-total');
-    if (btnTotal) btnTotal.textContent = money(Cart.total());
+    if (btnTotal) btnTotal.textContent = money(p.total);
+
+    var toggleTotal = el('#toggle-total');
+    if (toggleTotal) toggleTotal.textContent = money(p.total);
+
+    var cur = el('.co-totals__cur');
+    if (cur) cur.textContent = ((BRAND.currency) || {}).code || 'USD';
 
     var countEl = el('#sum-count');
     if (countEl) {
@@ -318,8 +380,18 @@ var Checkout = (function () {
     paintBrand();
   }
 
+  /** True when the card panel is the one the visitor has open. */
+  function cardSelected() {
+    var picked = el('#pay-methods input[name="payMethod"]:checked');
+    return !picked || picked.value === 'card';
+  }
+
   /** Card-specific checks, run after the generic required-field pass. */
   function validateCard() {
+    /* A closed panel cannot show an error message, so there is no point
+       producing one. */
+    if (!cardSelected()) return true;
+
     var checks = [
       ['#co-cardnumber', function (v) { return cardNumberError(v); }],
       ['#co-expiry', function (v) { return expiryError(v); }],
@@ -345,10 +417,221 @@ var Checkout = (function () {
     return ok;
   }
 
+  /* ------------------------------------------------- checkout furniture ----
+     The pieces of the checkout page that come out of BRAND, plus the small
+     amount of state the page carries: which delivery method, which payment
+     method, and whether a code has been applied.
+     -------------------------------------------------------------------- */
+
+  /** Delivery options, priced live against the current basket. */
+  function renderShipMethods() {
+    var host = el('#ship-methods');
+    if (!host) return;
+
+    var list = shipMethods();
+    if (!list.length) {
+      host.innerHTML = '<p class="co-choice__redirect">Delivery is calculated at the next step.</p>';
+      return;
+    }
+
+    if (!choice.shipping) choice.shipping = list[0].id;
+    var sub = Cart.subtotal();
+
+    host.innerHTML = list.map(function (m) {
+      var free = typeof m.freeOver === 'number' && sub >= m.freeOver;
+      var price = free ? 'Free' : money(Number(m.price) || 0);
+      var on = m.id === choice.shipping;
+      return '<div class="co-choice' + (on ? ' is-selected' : '') + '">' +
+        '<label class="co-choice__head">' +
+          '<input type="radio" name="shipMethod" value="' + esc(m.id) + '"' + (on ? ' checked' : '') + '>' +
+          '<span class="co-choice__label">' + esc(m.label) + '</span>' +
+          (m.eta ? '<span class="co-choice__note">' + esc(m.eta) + '</span>' : '') +
+          '<span class="co-choice__price">' + price + '</span>' +
+        '</label>' +
+      '</div>';
+    }).join('');
+  }
+
+  /* Wallet buttons and wallet payment rows are drawn but not wired. Each one
+     needs its provider's SDK and a server to create the session, neither of
+     which a static site has. They are here so the layout is right the day a
+     provider is connected — see submitOrder(). */
+  function renderExpress() {
+    var host = el('#co-express');
+    if (!host) return;
+
+    var list = BRAND.expressPay || [];
+    if (!list.length) {
+      var block = host.closest('.co-block--express');
+      if (block) block.hidden = true;
+      return;
+    }
+
+    host.innerHTML = list.map(function (w) {
+      return '<button type="button" class="co-wallet co-wallet--' + esc(w.id) + '" data-wallet="' + esc(w.id) + '">' +
+        esc(w.label) + '</button>';
+    }).join('');
+  }
+
+  function renderTrust() {
+    var host = el('#co-trust');
+    if (!host) return;
+    var list = BRAND.checkoutTrust || [];
+    /* An empty rail would still draw its rules, leaving a bare strip. */
+    host.hidden = !list.length;
+    host.innerHTML = list.map(function (t) {
+      return '<li>' + icon(t.icon) + '<span>' + esc(t.label) + '</span></li>';
+    }).join('');
+  }
+
+  function renderPress() {
+    var host = el('#co-press');
+    if (!host) return;
+    var list = BRAND.press || [];
+    if (!list.length) {
+      var wrap = host.closest('.co-featured');
+      if (wrap) wrap.hidden = true;
+      return;
+    }
+    host.innerHTML = list.slice(0, 5).map(function (name) {
+      return '<li>' + name + '</li>';
+    }).join('');
+  }
+
+  function renderGuarantees() {
+    var host = el('#co-guarantees');
+    if (!host) return;
+    var list = BRAND.guarantees || [];
+    host.hidden = !list.length;
+    host.innerHTML = list.map(function (g) {
+      return '<div class="co-guarantee">' +
+        icon('shield', 'co-guarantee__icon') +
+        '<div><strong>' + esc(g.title) + '</strong>' +
+        '<span>' + esc(g.body) + '</span></div>' +
+      '</div>';
+    }).join('');
+  }
+
+  /** The social-proof line in the checkout header. */
+  function renderProof() {
+    var host = el('[data-checkout-proof]');
+    if (!host) return;
+    var r = BRAND.reviewsSummary || {};
+    if (!r.rating) return;
+    host.textContent = r.rating + ' out of 5' + (r.count ? ' from ' + r.count + ' reviews' : '');
+  }
+
+  /* --------------------------------------------------------- interaction --- */
+
+  /** Keeps a radio group's rows in step with whichever one is checked. */
+  function paintChoices(host) {
+    els('.co-choice', host).forEach(function (row) {
+      var input = el('input[type="radio"]', row);
+      row.classList.toggle('is-selected', !!input && input.checked);
+    });
+  }
+
+  function initShipMethods() {
+    var host = el('#ship-methods');
+    if (!host) return;
+    renderShipMethods();
+
+    host.addEventListener('change', function (ev) {
+      var input = ev.target.closest('input[name="shipMethod"]');
+      if (!input) return;
+      choice.shipping = input.value;
+      paintChoices(host);
+      renderTotals();
+    });
+  }
+
+  function initPayMethods() {
+    var host = el('#pay-methods');
+    if (!host) return;
+
+    host.addEventListener('change', function (ev) {
+      var input = ev.target.closest('input[name="payMethod"]');
+      if (!input) return;
+      paintChoices(host);
+      var verb = el('#btn-verb');
+      if (verb) {
+        /* A wallet row does not collect a card, so the button should not
+           promise one is being charged here. */
+        verb.textContent = input.value === 'card' ? 'Pay now' : 'Continue';
+      }
+    });
+
+    /* Billing address only appears when it differs from delivery. */
+    var same = el('#co-same-billing');
+    var billing = el('#co-billing');
+    if (same && billing) {
+      same.addEventListener('change', function () {
+        billing.hidden = same.checked;
+        /* Required only while visible, so a hidden block cannot block the
+           form — see validate(). */
+        els('input', billing).forEach(function (i) {
+          if (same.checked) i.removeAttribute('required');
+          else i.setAttribute('required', '');
+        });
+      });
+    }
+  }
+
+  /** Looks the typed code up in BRAND.discounts and re-prices the order. */
+  function initDiscount() {
+    var input = el('#co-discount');
+    var button = el('#apply-discount');
+    var msg = el('#discount-msg');
+    if (!input || !button) return;
+
+    function apply() {
+      var code = input.value.trim().toUpperCase();
+      if (!code) return;
+
+      var found = null;
+      (BRAND.discounts || []).forEach(function (d) {
+        if (String(d.code).toUpperCase() === code) found = d;
+      });
+
+      choice.discount = found;
+      if (msg) {
+        msg.hidden = false;
+        msg.textContent = found ? found.label + ' applied.' : 'That code is not valid.';
+        msg.classList.toggle('is-bad', !found);
+      }
+      if (found) input.value = found.code;
+      renderTotals();
+    }
+
+    button.addEventListener('click', apply);
+    input.addEventListener('keydown', function (ev) {
+      /* Enter inside the checkout form would otherwise submit the order. */
+      if (ev.key === 'Enter') { ev.preventDefault(); apply(); }
+    });
+  }
+
+  /** On narrow screens the summary starts collapsed above the form. */
+  function initSummaryToggle() {
+    var button = el('#summary-toggle');
+    var body = el('#summary-body');
+    if (!button || !body) return;
+
+    button.addEventListener('click', function () {
+      var open = button.getAttribute('aria-expanded') === 'true';
+      button.setAttribute('aria-expanded', String(!open));
+      body.classList.toggle('is-open', !open);
+    });
+  }
+
   /** Every required field valid, with the message shown under the offender. */
   function validate(form) {
     var ok = true;
     els('[required]', form).forEach(function (input) {
+      /* A field inside a collapsed panel — an unused wallet row, or the
+         billing block while it matches delivery — is not something the
+         visitor can see, so it cannot be something they failed to fill. */
+      if (!input.offsetParent && input.type !== 'hidden') return;
+
       var field = input.closest('.field');
       var err = field ? el('.field__error', field) : null;
       var value = input.value.trim();
@@ -367,10 +650,6 @@ var Checkout = (function () {
       if (!valid) ok = false;
     });
     return ok;
-  }
-
-  function orderRef() {
-    return 'LN-' + Date.now().toString(36).toUpperCase().slice(-6);
   }
 
   /**
@@ -393,7 +672,7 @@ var Checkout = (function () {
     if (!lines.length) return;
 
     var pay = (BRAND.payment) || {};
-    var total = Cart.total();
+    var total = pricing().total;
 
     if (pay.provider === 'link' && pay.url) {
       if (typeof Tracking !== 'undefined' && Tracking.purchase) {
@@ -416,14 +695,14 @@ var Checkout = (function () {
 
     /* No provider: stop, and be plain about why. The basket is left intact so
        nothing is lost, and no purchase event fires — nothing was bought. */
-    showStop(total);
+    showStop();
   }
 
   function orderRef() {
     return 'LN-' + Date.now().toString(36).toUpperCase().slice(-6);
   }
 
-  function showStop(total) {
+  function showStop(lock) {
     var host = el('#form-stop');
     if (!host) return;
 
@@ -440,10 +719,15 @@ var Checkout = (function () {
       'submitted or charged. Connect a provider in <code>BRAND.payment</code> ' +
       '(js/brand-config.js) to take real payments.</div>';
 
-    var btn = el('#place-order');
-    if (btn) {
-      btn.disabled = true;
-      btn.textContent = 'Nothing was submitted';
+    /* Only a completed submit retires the button. A wallet click shows the
+       same notice but leaves the card path usable, so one stray tap does not
+       strand the visitor on a dead form. */
+    if (lock !== false) {
+      var btn = el('#place-order');
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Nothing was submitted';
+      }
     }
 
     host.scrollIntoView({ block: 'center', behavior: 'smooth' });
@@ -459,11 +743,26 @@ var Checkout = (function () {
       return;
     }
 
-    renderSummaryLines();
+    renderProof();
+    renderExpress();
+    renderTrust();
+    renderPress();
+    renderGuarantees();
+    initShipMethods();
+    initPayMethods();
+    initDiscount();
+    initSummaryToggle();
     initCardFields();
+    renderSummaryLines();
+
+    /* The wallet buttons collect nothing, so they stop straight away rather
+       than pretending to hand off to a provider that is not connected. */
+    document.addEventListener('click', function (ev) {
+      if (ev.target.closest('[data-wallet]')) showStop(false);
+    });
 
     if (typeof Tracking !== 'undefined' && Tracking.beginCheckout) {
-      Tracking.beginCheckout(Cart.items(), Cart.total());
+      Tracking.beginCheckout(Cart.items(), pricing().total);
     }
 
     form.addEventListener('submit', function (ev) {

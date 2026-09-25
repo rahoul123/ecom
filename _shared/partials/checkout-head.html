@@ -1,0 +1,23 @@
+<!-- ===== CHECKOUT HEADER — the slim chrome used only by pages marked `bare`
+     in _tools/generate.js. No nav and no mega menu: once someone is in the
+     checkout, every link out of it is a link out of the sale. The logo goes
+     home and the basket goes back a step, and that is the lot. ===== -->
+<header class="co-header">
+  <div class="co-header__inner">
+    <p class="co-header__proof">
+      <span class="co-header__proof-stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+      <span data-checkout-proof>Award-winning silk</span>
+    </p>
+
+    <a class="co-header__logo" href="index.html" aria-label="{{BRAND_NAME}} &mdash; home">
+      <img data-brand-logo src="{{LOGO_IMG}}" alt="{{BRAND_NAME}}" width="148" height="40">
+    </a>
+
+    <a class="co-header__cart icon-btn" href="cart.html" data-cart-link aria-label="Back to basket">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+      <span class="cart-count" data-cart-count hidden>0</span>
+    </a>
+  </div>
+</header>
+
+<main id="main">

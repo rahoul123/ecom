@@ -32,8 +32,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="css/base.css?v=100d8705">
-<link rel="stylesheet" href="css/brand.css?v=100d8705">
+<link rel="stylesheet" href="css/base.css?v=9d224f14">
+<link rel="stylesheet" href="css/brand.css?v=9d224f14">
 
 <!--
   Load order matters. brand-config.js first (data), theme-init.js second
@@ -41,370 +41,374 @@
   tracking.js (inert until you add pixel IDs). All synchronous and tiny —
   that is what lets inline render calls run during parse with zero layout shift.
 -->
-<script src="js/brand-config.js?v=100d8705"></script>
-<script src="js/cart.js?v=100d8705"></script>
-<script src="js/theme-init.js?v=100d8705"></script>
-<script src="js/site.js?v=100d8705"></script>
-<script src="js/tracking.js?v=100d8705"></script>
-<script src="js/checkout.js?v=100d8705"></script>
+<script src="js/brand-config.js?v=9d224f14"></script>
+<script src="js/cart.js?v=9d224f14"></script>
+<script src="js/theme-init.js?v=9d224f14"></script>
+<script src="js/site.js?v=9d224f14"></script>
+<script src="js/tracking.js?v=9d224f14"></script>
+<script src="js/checkout.js?v=9d224f14"></script>
 <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
 
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
-<!-- ===== HEADER — duplicated in every .html file. Change it in _shared/partials/header.html
-     and re-run `node _tools/generate.js`, or find-and-replace across all pages. ===== -->
-<div class="announcement">
-  <span data-brand-announcement>[[PLACEHOLDER]] Buy 3, get 1 free — ends Sunday</span>
-</div>
+<!-- ===== CHECKOUT HEADER — the slim chrome used only by pages marked `bare`
+     in _tools/generate.js. No nav and no mega menu: once someone is in the
+     checkout, every link out of it is a link out of the sale. The logo goes
+     home and the basket goes back a step, and that is the lot. ===== -->
+<header class="co-header">
+  <div class="co-header__inner">
+    <p class="co-header__proof">
+      <span class="co-header__proof-stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+      <span data-checkout-proof>Award-winning silk</span>
+    </p>
 
-<header class="site-header">
-  <div class="container header-inner">
-    <a class="header-logo" href="index.html">
-      <!-- [[PLACEHOLDER: logo]] — replace images/logo.svg, or point BRAND.logo elsewhere -->
+    <a class="co-header__logo" href="index.html" aria-label="Lunelle Silk &mdash; home">
       <img data-brand-logo src="images/logo.svg" alt="Lunelle Silk" width="148" height="40">
     </a>
 
-    <nav class="header-nav" aria-label="Main">
-      <a href="index.html">Home</a>
-
-      <!-- Shop is a plain link to every product. -->
-      <a href="shop.html">Shop</a>
-
-      <!-- Categories: mega menu. Category list on the left, and the products of
-           whichever category is hovered on the right. Both are built from
-           PRODUCTS at runtime — see Site.renderCategoryMenu(). -->
-      <div class="nav-item" id="categories-nav-item">
-        <a class="nav-trigger" href="shop.html" aria-expanded="false" aria-haspopup="true" aria-controls="categories-menu">
-          Categories
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-        </a>
-        <div class="nav-menu nav-menu--mega" id="categories-menu">
-          <div class="nav-mega">
-            <div>
-              <div class="nav-mega__cats" id="mega-cats"></div>
-              <a class="nav-mega__all" href="shop.html">
-                <span>View all products</span>
-                <span id="mega-total"></span>
-              </a>
-            </div>
-            <div class="nav-mega__panel">
-              <div class="nav-mega__panel-head">
-                <h4 class="nav-mega__panel-title" id="mega-panel-title"></h4>
-                <a class="nav-mega__panel-link" id="mega-panel-link" href="shop.html">See all &rarr;</a>
-              </div>
-              <div class="nav-mega__products" id="mega-products"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <a href="index.html#how-it-works">How it works</a>
-      <a href="about.html">About</a>
-      <a href="faq.html">FAQ</a>
-    </nav>
-
-    <div class="header-actions">
-      <a class="btn btn--primary btn--sm" href="shop.html">Shop pillowcases</a>
-
-      <!-- The basket. Count is filled by Site.syncCartCount on every page. -->
-      <a class="icon-btn" href="cart.html" data-cart-link aria-label="Basket">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
-        <span class="cart-count" data-cart-count hidden>0</span>
-      </a>
-
-      <button type="button" class="icon-btn nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
-      </button>
-    </div>
+    <a class="co-header__cart icon-btn" href="cart.html" data-cart-link aria-label="Back to basket">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+      <span class="cart-count" data-cart-count hidden>0</span>
+    </a>
   </div>
 </header>
 
-<div class="mobile-nav" id="mobile-nav">
-  <div class="mobile-nav__scrim"></div>
-  <div class="mobile-nav__panel" role="dialog" aria-modal="true" aria-label="Menu">
-    <div class="mobile-nav__head">
-      <img data-brand-logo src="images/logo.svg" alt="Lunelle Silk" width="130" height="35">
-      <button type="button" class="icon-btn mobile-nav__close" aria-label="Close menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
-      </button>
-    </div>
-    <nav class="mobile-nav__links" aria-label="Mobile">
-      <a href="index.html">Home</a>
-
-      <a href="shop.html">Shop</a>
-
-      <!-- Tap the text for all products; tap the chevron to open the categories. -->
-      <div class="mobile-nav__row">
-        <a href="shop.html">Categories</a>
-        <button type="button" class="mobile-nav__sub-toggle" aria-expanded="false" aria-controls="mobile-categories-menu" aria-label="Show product categories">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
-      </div>
-      <div class="mobile-nav__sub" id="mobile-categories-menu"><div></div></div>
-
-      <a href="index.html#how-it-works">How it works</a>
-      <a href="about.html">About</a>
-      <a href="faq.html">FAQ</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-    <div class="mobile-nav__foot">
-      <a class="btn btn--primary btn--block" href="shop.html">Shop pillowcases</a>
-    </div>
-  </div>
-</div>
-
 <main id="main">
-<section class="page-head">
-  <div class="container">
-    <nav class="breadcrumbs" aria-label="Breadcrumb">
-      <a href="index.html">Home</a>
-      <span aria-hidden="true">/</span>
-      <a href="cart.html">Basket</a>
-      <span aria-hidden="true">/</span>
-      <span>Checkout</span>
-    </nav>
-    <h1>Checkout</h1>
-  </div>
-</section>
+<!-- ===== CHECKOUT — a single-page checkout in the shape people already know
+     from Shopify: the form on the left, the order fixed beside it on the
+     right, and nothing else on the page to click away to.
 
-<section class="section" id="checkout-main">
-  <div class="container">
-    <div class="checkout-layout">
+     Every field label sits inside its input and lifts out of the way once the
+     field has something in it, which keeps the label readable after the field
+     is filled. That is pure CSS (.field--float), so it survives autofill.
+
+     The form validates in full and then STOPS. Nothing is charged, nothing is
+     sent, and no card value is stored — see submitOrder() in js/checkout.js.
+     ===== -->
+
+<div class="co-page">
+
+  <div class="co-page__form">
+    <div class="co-form-inner">
+
+      <p class="co-urgent">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <span class="is-placeholder">Your basket is held while you are on this page. Leave and the offer goes with it.</span>
+      </p>
+
+      <!-- Express wallets. Presentational until a provider is connected —
+           each one needs its own SDK and a server to talk to. -->
+      <section class="co-block co-block--express">
+        <h2 class="co-block__title">Express checkout</h2>
+        <div class="co-express" id="co-express"></div>
+        <p class="co-or"><span>OR</span></p>
+      </section>
 
       <form id="checkout-form" novalidate>
 
-        <div class="checkout-step">
-          <div class="checkout-step__head">
-            <span class="checkout-step__num">1</span>
-            <h2>Contact</h2>
-          </div>
-          <div class="field-row">
-            <div class="field">
-              <label for="co-email">Email address</label>
-              <input class="input" type="email" id="co-email" name="email" autocomplete="email" required>
-              <span class="field__error"></span>
-              <span class="hint">Your order confirmation goes here.</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="checkout-step">
-          <div class="checkout-step__head">
-            <span class="checkout-step__num">2</span>
-            <h2>Delivery address</h2>
+        <section class="co-block">
+          <div class="co-block__head">
+            <h2 class="co-block__title">Contact</h2>
+            <a class="co-block__link" href="contact.html">Sign in</a>
           </div>
 
-          <div class="field-row field-row--2">
-            <div class="field">
+          <div class="field field--float">
+            <input class="input" type="email" id="co-email" name="email"
+                   autocomplete="email" placeholder=" " required>
+            <label for="co-email">Email</label>
+            <span class="field__error"></span>
+          </div>
+
+          <label class="co-check">
+            <input type="checkbox" name="optIn" checked>
+            <span>Email me with news and offers</span>
+          </label>
+        </section>
+
+        <section class="co-block">
+          <h2 class="co-block__title">Delivery</h2>
+
+          <div class="field field--float field--select">
+            <select id="co-country" name="country" autocomplete="country-name" required>
+              <option>United States</option>
+              <option>United Kingdom</option>
+              <option>Canada</option>
+              <option>Australia</option>
+              <option>Pakistan</option>
+              <option>United Arab Emirates</option>
+            </select>
+            <label for="co-country">Country / Region</label>
+            <span class="field__error"></span>
+          </div>
+
+          <div class="co-row co-row--2">
+            <div class="field field--float">
+              <input class="input" type="text" id="co-first" name="firstName"
+                     autocomplete="given-name" placeholder=" " required>
               <label for="co-first">First name</label>
-              <input class="input" type="text" id="co-first" name="firstName" autocomplete="given-name" required>
               <span class="field__error"></span>
             </div>
-            <div class="field">
+            <div class="field field--float">
+              <input class="input" type="text" id="co-last" name="lastName"
+                     autocomplete="family-name" placeholder=" " required>
               <label for="co-last">Last name</label>
-              <input class="input" type="text" id="co-last" name="lastName" autocomplete="family-name" required>
               <span class="field__error"></span>
             </div>
           </div>
 
-          <div class="field-row mt-2">
-            <div class="field">
-              <label for="co-address">Address</label>
-              <input class="input" type="text" id="co-address" name="address" autocomplete="address-line1" required>
-              <span class="field__error"></span>
-            </div>
+          <div class="field field--float">
+            <input class="input" type="text" id="co-address" name="address"
+                   autocomplete="address-line1" placeholder=" " required>
+            <label for="co-address">Address</label>
+            <span class="field__error"></span>
           </div>
 
-          <div class="field-row mt-2">
-            <div class="field">
-              <label for="co-address2">Apartment, suite etc. <span class="text-muted">(optional)</span></label>
-              <input class="input" type="text" id="co-address2" name="address2" autocomplete="address-line2">
-            </div>
+          <div class="field field--float">
+            <input class="input" type="text" id="co-address2" name="address2"
+                   autocomplete="address-line2" placeholder=" ">
+            <label for="co-address2">Apartment, suite, etc. (optional)</label>
           </div>
 
-          <div class="field-row field-row--2 mt-2">
-            <div class="field">
+          <div class="co-row co-row--2">
+            <div class="field field--float">
+              <input class="input" type="text" id="co-city" name="city"
+                     autocomplete="address-level2" placeholder=" " required>
               <label for="co-city">City</label>
-              <input class="input" type="text" id="co-city" name="city" autocomplete="address-level2" required>
               <span class="field__error"></span>
             </div>
-            <div class="field">
-              <label for="co-postcode">Postcode</label>
-              <input class="input" type="text" id="co-postcode" name="postcode" autocomplete="postal-code" required>
+            <div class="field field--float">
+              <input class="input" type="text" id="co-postcode" name="postcode"
+                     autocomplete="postal-code" placeholder=" " required>
+              <label for="co-postcode">Postal code</label>
               <span class="field__error"></span>
             </div>
           </div>
 
-          <div class="field-row field-row--2 mt-2">
-            <div class="field">
-              <label for="co-country">Country</label>
-              <select id="co-country" name="country" autocomplete="country-name" required>
-                <option value="">Choose a country</option>
-                <option>United States</option>
-                <option>United Kingdom</option>
-                <option>Pakistan</option>
-                <option>United Arab Emirates</option>
-                <option>Canada</option>
-                <option>Australia</option>
-              </select>
-              <span class="field__error"></span>
-            </div>
-            <div class="field">
-              <label for="co-phone">Phone</label>
-              <input class="input" type="tel" inputmode="tel" id="co-phone" name="phone" autocomplete="tel" required>
-              <span class="field__error"></span>
-              <span class="hint">For delivery updates only.</span>
-            </div>
+          <div class="field field--float">
+            <input class="input" type="tel" inputmode="tel" id="co-phone" name="phone"
+                   autocomplete="tel" placeholder=" " required>
+            <label for="co-phone">Phone</label>
+            <span class="field__error"></span>
+            <span class="hint">For delivery updates only.</span>
           </div>
-        </div>
+        </section>
 
-        <div class="checkout-step">
-          <div class="checkout-step__head">
-            <span class="checkout-step__num">3</span>
-            <h2>Payment</h2>
-            <span class="card-brands" id="card-brands" aria-hidden="true">
-              <span class="card-brands__mark" data-brand="visa">VISA</span>
-              <span class="card-brands__mark" data-brand="mastercard">MC</span>
-              <span class="card-brands__mark" data-brand="amex">AMEX</span>
-              <span class="card-brands__mark" data-brand="discover">DISC</span>
-            </span>
-          </div>
+        <section class="co-block">
+          <h2 class="co-block__title">Shipping method</h2>
+          <!-- Built from BRAND.shippingMethods. Changing it re-prices the
+               order summary on the right. -->
+          <div class="co-choices" id="ship-methods" role="radiogroup" aria-label="Shipping method"></div>
+        </section>
 
-          <div class="card-grid">
-            <div class="field">
-              <label for="co-cardname">Name on card</label>
-              <input class="input" type="text" id="co-cardname" name="cardName"
-                     autocomplete="cc-name" required>
-              <span class="field__error"></span>
-            </div>
+        <section class="co-block">
+          <h2 class="co-block__title">Payment</h2>
+          <p class="co-block__sub">All transactions are secure and encrypted.</p>
 
-            <div class="field">
-              <label for="co-cardnumber">Card number</label>
-              <span class="card-input">
-                <input class="input" type="text" id="co-cardnumber" name="cardNumber"
-                       inputmode="numeric" autocomplete="cc-number"
-                       placeholder="1234 5678 9012 3456" maxlength="23" required>
-                <span class="card-input__brand" id="card-brand"></span>
-              </span>
-              <span class="field__error"></span>
-            </div>
+          <div class="co-choices" id="pay-methods">
 
-            <div class="card-grid card-grid--split">
-              <div class="field">
-                <label for="co-expiry">Expiry</label>
-                <input class="input" type="text" id="co-expiry" name="cardExpiry"
-                       inputmode="numeric" autocomplete="cc-exp"
-                       placeholder="MM / YY" maxlength="7" required>
-                <span class="field__error"></span>
+            <div class="co-choice is-selected" data-pay="card">
+              <label class="co-choice__head">
+                <input type="radio" name="payMethod" value="card" checked>
+                <span class="co-choice__label">Credit card</span>
+                <span class="card-brands" id="card-brands" aria-hidden="true">
+                  <span class="card-brands__mark" data-brand="visa">VISA</span>
+                  <span class="card-brands__mark" data-brand="mastercard">MC</span>
+                  <span class="card-brands__mark" data-brand="amex">AMEX</span>
+                  <span class="card-brands__mark" data-brand="discover">DISC</span>
+                </span>
+              </label>
+
+              <div class="co-choice__panel">
+                <div class="field field--float">
+                  <span class="card-input">
+                    <input class="input" type="text" id="co-cardnumber" name="cardNumber"
+                           inputmode="numeric" autocomplete="cc-number"
+                           placeholder=" " maxlength="23" required>
+                    <span class="card-input__brand" id="card-brand"></span>
+                  </span>
+                  <label for="co-cardnumber">Card number</label>
+                  <span class="field__error"></span>
+                </div>
+
+                <div class="co-row co-row--2">
+                  <div class="field field--float">
+                    <input class="input" type="text" id="co-expiry" name="cardExpiry"
+                           inputmode="numeric" autocomplete="cc-exp"
+                           placeholder=" " maxlength="7" required>
+                    <label for="co-expiry">Expiration date (MM / YY)</label>
+                    <span class="field__error"></span>
+                  </div>
+                  <div class="field field--float">
+                    <input class="input" type="text" id="co-cvc" name="cardCvc"
+                           inputmode="numeric" autocomplete="cc-csc"
+                           placeholder=" " maxlength="4" required>
+                    <label for="co-cvc">Security code</label>
+                    <span class="field__error"></span>
+                  </div>
+                </div>
+
+                <div class="field field--float">
+                  <input class="input" type="text" id="co-cardname" name="cardName"
+                         autocomplete="cc-name" placeholder=" " required>
+                  <label for="co-cardname">Name on card</label>
+                  <span class="field__error"></span>
+                </div>
+
+                <label class="co-check">
+                  <input type="checkbox" id="co-same-billing" checked>
+                  <span>Use shipping address as billing address</span>
+                </label>
+
+                <!-- Shown only when the box above is cleared. -->
+                <div class="co-billing" id="co-billing" hidden>
+                  <div class="field field--float">
+                    <input class="input" type="text" id="co-bill-address" name="billAddress"
+                           autocomplete="billing address-line1" placeholder=" ">
+                    <label for="co-bill-address">Billing address</label>
+                    <span class="field__error"></span>
+                  </div>
+                  <div class="co-row co-row--2">
+                    <div class="field field--float">
+                      <input class="input" type="text" id="co-bill-city" name="billCity"
+                             autocomplete="billing address-level2" placeholder=" ">
+                      <label for="co-bill-city">City</label>
+                      <span class="field__error"></span>
+                    </div>
+                    <div class="field field--float">
+                      <input class="input" type="text" id="co-bill-postcode" name="billPostcode"
+                             autocomplete="billing postal-code" placeholder=" ">
+                      <label for="co-bill-postcode">Postal code</label>
+                      <span class="field__error"></span>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="field">
-                <label for="co-cvc">Security code</label>
-                <input class="input" type="text" id="co-cvc" name="cardCvc"
-                       inputmode="numeric" autocomplete="cc-csc"
-                       placeholder="123" maxlength="4" required>
-                <span class="field__error"></span>
-                <span class="hint">On the back of the card.</span>
+            </div>
+
+            <!-- The wallet rows. Same story as the express buttons above. -->
+            <div class="co-choice" data-pay="wallet">
+              <label class="co-choice__head">
+                <input type="radio" name="payMethod" value="shoppay">
+                <span class="co-choice__label">Shop Pay</span>
+                <span class="co-choice__note">Pay in full or in instalments</span>
+              </label>
+              <div class="co-choice__panel">
+                <p class="co-choice__redirect">You would be taken to Shop Pay to finish the purchase.</p>
+              </div>
+            </div>
+
+            <div class="co-choice" data-pay="wallet">
+              <label class="co-choice__head">
+                <input type="radio" name="payMethod" value="paypal">
+                <span class="co-choice__label">PayPal</span>
+              </label>
+              <div class="co-choice__panel">
+                <p class="co-choice__redirect">You would be taken to PayPal to finish the purchase.</p>
+              </div>
+            </div>
+
+            <div class="co-choice" data-pay="wallet">
+              <label class="co-choice__head">
+                <input type="radio" name="payMethod" value="afterpay">
+                <span class="co-choice__label">Afterpay</span>
+                <span class="co-choice__note">4 interest-free payments</span>
+              </label>
+              <div class="co-choice__panel">
+                <p class="co-choice__redirect">You would be taken to Afterpay to finish the purchase.</p>
               </div>
             </div>
           </div>
+        </section>
 
-          <p class="card-lock">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-            Card details are validated in your browser and never leave this page.
-          </p>
+        <section class="co-block">
+          <h2 class="co-block__title">Remember me</h2>
+          <label class="co-check">
+            <input type="checkbox" name="remember">
+            <span>Save my information for a faster checkout</span>
+          </label>
+        </section>
 
-          <button type="submit" class="btn btn--primary btn--lg btn--block mt-3" id="place-order">
-            Place order &middot; <span id="btn-total">&mdash;</span>
-          </button>
-          <p class="summary__note">
-            By placing this order you agree to our
-            <a href="terms-of-service.html">Terms of Service</a>.
-          </p>
+        <button type="submit" class="btn btn--primary btn--lg btn--block co-pay" id="place-order">
+          <span id="btn-verb">Pay now</span> &middot; <span id="btn-total">&mdash;</span>
+        </button>
 
-          <!-- Filled by checkout.js once the form validates. -->
-          <div id="form-stop" hidden></div>
-        </div>
+        <!-- Filled by checkout.js once the form validates. -->
+        <div id="form-stop" hidden></div>
+
+        <p class="co-lock">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          Card details are checked in your browser and never leave this page.
+        </p>
       </form>
-
-      <aside class="summary">
-        <h2>Your order</h2>
-        <ul class="summary-lines" id="summary-lines"></ul>
-
-        <div class="summary__row">
-          <span>Subtotal</span><span id="sum-subtotal">&mdash;</span>
-        </div>
-        <div class="summary__row">
-          <span>Delivery</span><span id="sum-shipping">&mdash;</span>
-        </div>
-        <div class="summary__row summary__row--total">
-          <span>Total</span><span id="sum-total">&mdash;</span>
-        </div>
-
-        <p class="summary__note"><a href="cart.html">Edit basket</a></p>
-      </aside>
-
     </div>
   </div>
-</section>
+
+  <aside class="co-page__summary" aria-label="Order summary">
+    <div class="co-summary-inner">
+
+      <!-- The summary collapses on narrow screens, where it would otherwise
+           push the whole form below the fold. -->
+      <button type="button" class="co-summary__toggle" id="summary-toggle" aria-expanded="false" aria-controls="summary-body">
+        <span class="co-summary__toggle-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+          Order summary
+          <svg class="co-summary__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </span>
+        <strong id="toggle-total">&mdash;</strong>
+      </button>
+
+      <div class="co-summary__body" id="summary-body">
+        <ul class="summary-lines" id="summary-lines"></ul>
+
+        <div class="co-discount">
+          <div class="field field--float">
+            <input class="input" type="text" id="co-discount" placeholder=" " autocomplete="off">
+            <label for="co-discount">Discount code or gift card</label>
+          </div>
+          <button type="button" class="btn btn--ghost" id="apply-discount">Apply</button>
+        </div>
+        <p class="co-discount__msg" id="discount-msg" hidden></p>
+
+        <div class="co-totals">
+          <div class="co-totals__row">
+            <span>Subtotal</span><span id="sum-subtotal">&mdash;</span>
+          </div>
+          <div class="co-totals__row" id="row-discount" hidden>
+            <span>Discount <span class="co-totals__tag" id="discount-tag"></span></span>
+            <span id="sum-discount">&mdash;</span>
+          </div>
+          <div class="co-totals__row">
+            <span>Shipping</span><span id="sum-shipping">&mdash;</span>
+          </div>
+          <div class="co-totals__row co-totals__row--total">
+            <span>Total</span>
+            <span class="co-totals__grand"><span class="co-totals__cur">USD</span> <strong id="sum-total">&mdash;</strong></span>
+          </div>
+        </div>
+
+        <ul class="co-trust" id="co-trust"></ul>
+
+        <div class="co-featured">
+          <p class="co-featured__label">Featured in</p>
+          <ul class="co-featured__list" id="co-press"></ul>
+        </div>
+
+        <div class="co-guarantees" id="co-guarantees"></div>
+
+        <p class="co-summary__edit"><a href="cart.html">Edit basket</a></p>
+      </div>
+    </div>
+  </aside>
+
+</div>
 </main>
 
-<!-- ===== FOOTER — duplicated in every .html file. Change it in _shared/partials/footer.html
-     and re-run `node _tools/generate.js`, or find-and-replace across all pages. ===== -->
-<footer class="site-footer">
-  <div class="container">
-    <!-- Newsletter. No backend on static hosting — see README "contact form". -->
-    <div class="newsletter">
-      <div>
-        <h3>[[PLACEHOLDER]] Get 15% off your first order</h3>
-        <p>Occasional emails about new products and offers. Unsubscribe anytime.</p>
-      </div>
-      <div>
-        <form class="newsletter__form" id="newsletter-form" novalidate>
-          <label class="visually-hidden" for="nl-email">Email address</label>
-          <input type="email" id="nl-email" name="email" placeholder="you@example.com" autocomplete="email" required>
-          <button type="submit" class="btn btn--primary">Sign up</button>
-        </form>
-        <p class="newsletter__note">[[PLACEHOLDER: this form does not send yet. Connect a form service — see README.]]</p>
-      </div>
-    </div>
-
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <img data-brand-logo src="images/logo-light.svg" alt="Lunelle Silk" width="148" height="40">
-        <p data-brand-tagline>A little silk. A lot to love.</p>
-      </div>
-
-      <div class="footer-col">
-        <h4>Shop</h4>
-        <!-- Filled from PRODUCTS by site.js so it tracks your live categories. -->
-        <ul id="footer-categories">
-          <li><a href="shop.html">All products</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4>Company</h4>
-        <ul>
-          <li><a href="about.html">About us</a></li>
-          <li><a href="faq.html">FAQ</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4>Legal</h4>
-        <!-- Filled from BRAND.legalPages so removing a page cannot strand a link. -->
-        <ul id="footer-legal"></ul>
-      </div>
-    </div>
-
-    <p class="footer-disclaimer is-placeholder" data-brand-disclaimer>[[PLACEHOLDER: health disclaimer — replace with reviewed legal copy before launch.]]</p>
-
-    <div class="footer-bottom">
-      <p style="margin:0">&copy; <span data-year>2025</span> <span data-brand-entity>Lunelle Silk Ltd</span>. All rights reserved.</p>
-      <ul id="footer-legal-inline"></ul>
-    </div>
+<!-- ===== CHECKOUT FOOTER — legal links only. Filled from BRAND.legalPages by site.js, so
+     removing a legal page cannot strand a link here. ===== -->
+<footer class="co-footer">
+  <div class="co-footer__inner">
+    <ul id="footer-legal-inline"></ul>
   </div>
 </footer>
 </body>

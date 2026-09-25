@@ -294,6 +294,45 @@ module.exports = {
      plainly that nothing was charged. See README -> Payments. */
   payment: { provider: 'none', url: '', endpoint: '' },
 
+  /* Delivery options offered at checkout. The first is the default, and any
+     method carrying freeOver drops to nothing once the basket clears it —
+     which is what the free-delivery promise on the product pages refers to. */
+  shippingMethods: [
+    { id: 'standard', label: 'Standard delivery', eta: '5-8 business days', price: 6.95, freeOver: 75 },
+    { id: 'express', label: 'Express delivery', eta: '2-3 business days', price: 14.95 },
+    { id: 'priority', label: 'Priority overnight', eta: 'Next business day if ordered before 2pm', price: 29.95 }
+  ],
+
+  /* Discount codes. These live in the page, so a determined visitor can read
+     them straight out of the source — fine for a launch code, wrong for
+     anything you would not print on a postcard. Real validation belongs on a
+     payment provider's side once one is connected. */
+  discounts: [
+    { code: 'SILK10', kind: 'percent', value: 10, label: '10% off your order' },
+    { code: 'WELCOME15', kind: 'amount', value: 15, label: '$15 off your order' },
+    { code: 'FREESILK', kind: 'shipping', value: 0, label: 'Free delivery' }
+  ],
+
+  /* The reassurance rail beside the order summary. */
+  checkoutTrust: [
+    { icon: 'lock', label: 'Secure checkout' },
+    { icon: 'truck', label: 'Fast shipping' },
+    { icon: 'chat', label: 'Real people, real help' }
+  ],
+
+  guarantees: [
+    { title: '60-night sleep guarantee', body: 'Sleep on it for two months. If it is not for you, send it back for a full refund.' },
+    { title: 'Over 250,000 cases shipped', body: '[[PLACEHOLDER: replace with your own figure once you have one.]]' }
+  ],
+
+  /* Express wallet buttons. They are presentational until a provider is
+     connected — see the note in checkout.js. */
+  expressPay: [
+    { id: 'shoppay', label: 'Shop Pay' },
+    { id: 'paypal', label: 'PayPal' },
+    { id: 'gpay', label: 'G Pay' }
+  ],
+
   copy: {
     buyCta: 'Add to cart',
     heroEyebrow: '22-momme mulberry silk',
