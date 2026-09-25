@@ -52,6 +52,9 @@
 <script src="js/site.js?v={{ASSET_V}}"></script>
 <script src="js/tracking.js?v={{ASSET_V}}"></script>
 <script src="js/checkout.js?v={{ASSET_V}}"></script>
+<!-- A page may load one script of its own. admin.js is the only one, and it
+     has no business on the 16 pages a customer actually visits. -->
+{{PAGE_JS}}
 <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
 {{JSONLD}}
 </head>

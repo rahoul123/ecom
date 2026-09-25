@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" role="img" aria-label="Silk Pillowcase — Charcoal">
+  <!-- [[PLACEHOLDER IMAGE]] Stylised illustration, not a photograph.
+       Replace this file with real product photography at the same path (800x800). -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0%" stop-color="hsl(222.8571428571429 8% 69.76470588235294%)"/>
+      <stop offset="100%" stop-color="hsl(222.8571428571429 8% 61.76470588235294%)"/>
+    </linearGradient>
+    <linearGradient id="body" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="hsl(222.8571428571429 8.641975308641971% 43.76470588235294%)"/>
+      <stop offset="55%" stop-color="hsl(222.8571428571429 8.641975308641971% 31.76470588235294%)"/>
+      <stop offset="100%" stop-color="hsl(222.8571428571429 8.641975308641971% 19.76470588235294%)"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="50%" cy="42%" r="52%">
+      <stop offset="0%" stop-color="hsl(222.8571428571429 8% 72.76470588235294%)" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="hsl(222.8571428571429 8% 72.76470588235294%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+  </defs>
+
+  <rect width="800" height="800" fill="url(#bg)"/>
+  <circle cx="400" cy="376" r="250" fill="url(#halo)"/>
+  <circle cx="640" cy="150" r="96" fill="hsl(222.8571428571429 8% 73.76470588235294%)" opacity="0.6"/>
+  <circle cx="150" cy="654" r="62" fill="hsl(222.8571428571429 8% 73.76470588235294%)" opacity="0.5"/>
+
+  <ellipse cx="400" cy="612" rx="176" ry="30" fill="hsl(222.8571428571429 8.641975308641971% 5.7647058823529385%)" opacity="0.22" filter="url(#soft)"/>
+
+  
+    <!-- body, with a slight pillow curve rather than a flat rectangle -->
+    <path d="M160 268 q240 -26 480 0 q22 132 0 264 q-240 26 -480 0 q-22 -132 0 -264 z"
+          fill="url(#body)" stroke="hsl(222.8571428571429 8.641975308641971% 9.764705882352938%)" stroke-width="3" stroke-opacity="0.35"/>
+
+    <!-- drape: the lit left face and the shaded right one -->
+    <path d="M160 268 q120 -13 240 -18 q26 150 0 300 q-120 -5 -240 -18 q-22 -132 0 -264 z"
+          fill="hsl(222.8571428571429 8.641975308641971% 42.76470588235294%)" opacity="0.6"/>
+    <path d="M520 258 q62 136 0 292" stroke="hsl(222.8571428571429 8.641975308641971% 18.76470588235294%)" stroke-width="30" fill="none" opacity="0.28"/>
+
+    <!-- sheen, which is what makes silk read as silk -->
+    <path d="M300 256 q40 144 0 288" stroke="hsl(222.8571428571429 8.641975308641971% 57.76470588235294%)" stroke-width="44" fill="none" opacity="0.5"/>
+    <path d="M356 254 q26 146 0 292" stroke="hsl(222.8571428571429 8.641975308641971% 51.76470588235294%)" stroke-width="14" fill="none" opacity="0.45"/>
+
+    <!-- hidden zip along the lower edge, and the folded-back corner -->
+    <path d="M176 470 q232 24 452 0" stroke="hsl(222.8571428571429 8.641975308641971% 5.7647058823529385%)" stroke-width="5" fill="none" opacity="0.4"/>
+    <path d="M640 268 q-84 10 -96 86 q66 8 96 -86 z" fill="hsl(222.8571428571429 8.641975308641971% 51.76470588235294%)" opacity="0.85"/>
+    <path d="M640 268 q-84 10 -96 86" stroke="hsl(222.8571428571429 8.641975308641971% 7.7647058823529385%)" stroke-width="3" fill="none" opacity="0.4"/>
+
+  <text x="400" y="694" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif"
+        font-size="26" font-weight="600" letter-spacing="-0.3" fill="hsl(222.8571428571429 8% 13.764705882352942%)">Silk Pillowcase — Cha…</text>
+  <text x="400" y="762" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif"
+        font-size="14" letter-spacing="1.6" fill="hsl(222.8571428571429 8% 25.764705882352942%)" opacity="0.5">PLACEHOLDER IMAGE</text>
+</svg>

@@ -708,14 +708,79 @@ var Site = (function () {
    * Useful on a multi-category store; harmless on a single-category one.
    * Icons come from BRAND.categoryIcons if present, otherwise a sensible default.
    */
+  /**
+   * The categories the shop has, in the order they should appear.
+   *
+   * Order comes from CATEGORIES when the catalogue defines one — that is what
+   * the admin panel writes when someone drags a category up the list.
+   * Otherwise it is the order the categories first appear in PRODUCTS, which
+   * is how this worked before and still works with no extra configuration.
+   *
+   * A category with no products in it is dropped: an empty link in the menu
+   * is worse than no link.
+   */
   function categoryList() {
     var counts = {};
-    var order = [];
+    var seen = [];
     PRODUCTS.forEach(function (p) {
-      if (!counts[p.category]) { counts[p.category] = 0; order.push(p.category); }
+      if (!p.category) return;
+      if (!counts[p.category]) { counts[p.category] = 0; seen.push(p.category); }
       counts[p.category]++;
     });
-    return order.map(function (name) { return { name: name, count: counts[name] }; });
+
+    var defined = (typeof CATEGORIES !== 'undefined' && Array.isArray(CATEGORIES)) ? CATEGORIES : [];
+    var order = [];
+
+    defined.forEach(function (c) {
+      var name = c && c.name;
+      if (name && counts[name] && order.indexOf(name) === -1) order.push(name);
+    });
+    /* Anything with products but no entry in CATEGORIES still gets shown. */
+    seen.forEach(function (name) { if (order.indexOf(name) === -1) order.push(name); });
+
+    return order.map(function (name) {
+      var meta = null;
+      defined.forEach(function (c) { if (c && c.name === name) meta = c; });
+      return {
+        name: name,
+        count: counts[name],
+        blurb: (meta && meta.blurb) || '',
+        image: (meta && meta.image) || null
+      };
+    });
+  }
+
+  /* ------------------------------------------------------- collections ----
+     A collection is a named set of products chosen by hand, which may cut
+     across categories — "Gifts under $50", "The bedroom edit". Categories
+     describe what a product is; a collection describes why you would buy it.
+     -------------------------------------------------------------------- */
+
+  function collectionList() {
+    var list = (typeof COLLECTIONS !== 'undefined' && Array.isArray(COLLECTIONS)) ? COLLECTIONS : [];
+    return list.filter(function (c) {
+      return c && c.slug && c.name && productsIn(c).length;
+    });
+  }
+
+  function findCollection(slug) {
+    var found = null;
+    collectionList().forEach(function (c) { if (c.slug === slug) found = c; });
+    return found;
+  }
+
+  /** The products of a collection, in the order the collection lists them. */
+  function productsIn(collection) {
+    var want = (collection && collection.products) || [];
+    var out = [];
+    want.forEach(function (slug) {
+      PRODUCTS.forEach(function (p) { if (p.slug === slug) out.push(p); });
+    });
+    return out;
+  }
+
+  function collectionHref(slug) {
+    return 'collection.html?c=' + encodeURIComponent(slug);
   }
 
   /**
@@ -782,6 +847,97 @@ var Site = (function () {
    * in whichever category is hovered. Also fills the mobile drawer submenu.
    * Everything is derived from PRODUCTS, so a new category needs no markup change.
    */
+  /** collection.html — one collection, or a list of them if ?c= is missing. */
+  function renderCollectionPage() {
+    var host = el('#collection-products');
+    if (!host) return;
+
+    var slug = qs('c');
+    var one = slug ? findCollection(slug) : null;
+    var title = el('#collection-title');
+    var blurb = el('#collection-blurb');
+    var crumb = el('#collection-crumb');
+
+    if (slug && !one) {
+      /* A link to a collection that no longer exists should say so and offer
+         the way back, not show an empty grid. */
+      if (title) title.textContent = 'Collection not found';
+      if (blurb) blurb.textContent = 'That collection has been removed or renamed.';
+      host.className = '';
+      host.innerHTML = '<div class="empty-state"><p><strong>Collection not found.</strong></p>' +
+        '<p><a href="shop.html">Browse the full range</a></p></div>';
+      return;
+    }
+
+    if (one) {
+      document.title = one.name + ' | ' + BRAND.name;
+      if (title) title.textContent = one.name;
+      if (blurb) { blurb.textContent = one.blurb || ''; blurb.hidden = !one.blurb; }
+      if (crumb) crumb.textContent = one.name;
+      host.className = 'product-grid';
+      host.innerHTML = productsIn(one).map(productCard).join('');
+      return;
+    }
+
+    /* No ?c= — show every collection as a card. */
+    var all = collectionList();
+    if (title) title.textContent = 'Collections';
+    if (blurb) { blurb.textContent = 'Hand-picked groups from across the range.'; blurb.hidden = false; }
+    if (!all.length) {
+      host.className = '';
+      host.innerHTML = '<div class="empty-state"><p><strong>No collections yet.</strong></p>' +
+        '<p><a href="shop.html">Browse the full range</a></p></div>';
+      return;
+    }
+    host.className = 'collection-index';
+    host.innerHTML = all.map(function (c) {
+      var items = productsIn(c);
+      return '<a class="collection-card" href="' + collectionHref(c.slug) + '">' +
+        '<span class="collection-card__shots">' +
+          items.slice(0, 3).map(function (p) {
+            return '<span class="collection-card__shot"' +
+              (p.tint ? ' style="--tint:' + esc(p.tint) + '"' : '') + '>' +
+              '<img src="' + esc(p.image) + '" alt="" loading="lazy" decoding="async">' +
+            '</span>';
+          }).join('') +
+        '</span>' +
+        '<span class="collection-card__name">' + esc(c.name) + '</span>' +
+        '<span class="collection-card__count">' + items.length +
+          (items.length === 1 ? ' product' : ' products') + '</span>' +
+      '</a>';
+    }).join('');
+  }
+
+  /** The home-page row of collections. Hides itself when there are none. */
+  function renderFeaturedCollections(selector) {
+    var host = el(selector);
+    if (!host) return;
+
+    var all = collectionList().filter(function (c) { return c.featured; });
+    var section = host.closest('section');
+
+    if (!all.length) {
+      if (section) section.hidden = true;
+      return;
+    }
+    if (section) section.hidden = false;
+
+    host.innerHTML = all.map(function (c) {
+      var items = productsIn(c);
+      return '<a class="collection-tile" href="' + collectionHref(c.slug) + '">' +
+        '<span class="collection-tile__media"' +
+          (items[0] && items[0].tint ? ' style="--tint:' + esc(items[0].tint) + '"' : '') + '>' +
+          (items[0] ? '<img src="' + esc(items[0].image) + '" alt="" loading="lazy" decoding="async">' : '') +
+        '</span>' +
+        '<span class="collection-tile__body">' +
+          '<span class="collection-tile__name">' + esc(c.name) + '</span>' +
+          (c.blurb ? '<span class="collection-tile__blurb">' + esc(c.blurb) + '</span>' : '') +
+          '<span class="collection-tile__count">' + items.length + ' products</span>' +
+        '</span>' +
+      '</a>';
+    }).join('');
+  }
+
   function renderCategoryMenu() {
     var cats = categoryList();
     if (!cats.length) return;
@@ -802,6 +958,19 @@ var Site = (function () {
 
     var total = el('#mega-total');
     if (total) total.textContent = PRODUCTS.length + ' items';
+
+    /* Collections sit beside the categories, and the block disappears when
+       there are none rather than leaving an empty heading. */
+    var collHost = el('#mega-collections');
+    if (collHost) {
+      var colls = collectionList();
+      var wrap = collHost.closest('[data-collections-block]');
+      if (wrap) wrap.hidden = !colls.length;
+      collHost.innerHTML = colls.map(function (c) {
+        return '<a href="' + collectionHref(c.slug) + '">' + esc(c.name) +
+          '<span class="nav-menu__count">' + productsIn(c).length + '</span></a>';
+      }).join('');
+    }
 
     megaPreview(cats[0].name);
 
@@ -1617,6 +1786,12 @@ var Site = (function () {
     renderCategories: renderCategories,
     renderCategoryMenu: renderCategoryMenu,
     renderCategoryPage: renderCategoryPage,
+    categoryList: categoryList,
+    collectionList: collectionList,
+    productsIn: productsIn,
+    collectionHref: collectionHref,
+    renderCollectionPage: renderCollectionPage,
+    renderFeaturedCollections: renderFeaturedCollections,
     removeCategory: removeCategory,
     renderProduct: renderProduct,
     renderProductExtras: renderProductExtras,

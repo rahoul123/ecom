@@ -29,6 +29,13 @@
           <div class="nav-mega">
             <div>
               <div class="nav-mega__cats" id="mega-cats"></div>
+
+            <!-- Collections, when there are any. Built at runtime from
+                 COLLECTIONS so a new one needs no rebuild. -->
+            <div class="nav-mega__collections" data-collections-block hidden>
+              <p class="nav-mega__label">Collections</p>
+              <div class="nav-menu__links" id="mega-collections"></div>
+            </div>
               <a class="nav-mega__all" href="shop.html">
                 <span>View all products</span>
                 <span id="mega-total"></span>

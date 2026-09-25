@@ -160,6 +160,19 @@
   </div>
 </section>
 
+<!-- Collections made in admin.html. The whole section hides itself when
+     there are none, so this changes nothing until you create one. -->
+<section class="section section--tight" hidden>
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Collections</span>
+      <h2>Shop the edits</h2>
+    </div>
+    <div class="collection-row" id="featured-collections"></div>
+    <script>Site.renderFeaturedCollections('#featured-collections');</script>
+  </div>
+</section>
+
 <section class="section section--soft">
   <div class="container">
     <div class="picks">

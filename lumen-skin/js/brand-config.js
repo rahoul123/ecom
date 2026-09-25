@@ -578,6 +578,50 @@ var PRODUCTS = [
   }
 ];
 
+/* ==========================================================================
+   CATEGORIES
+   The order categories appear in, and an optional line about each. Membership
+   is not here: a product's own category field decides that. A category with no
+   products in it is not shown, whatever this list says.
+   ========================================================================== */
+
+var CATEGORIES = [
+  {
+    "name": "Cleanse",
+    "slug": "cleanse",
+    "blurb": ""
+  },
+  {
+    "name": "Treat",
+    "slug": "treat",
+    "blurb": ""
+  },
+  {
+    "name": "Moisturise",
+    "slug": "moisturise",
+    "blurb": ""
+  },
+  {
+    "name": "Protect",
+    "slug": "protect",
+    "blurb": ""
+  },
+  {
+    "name": "Sets",
+    "slug": "sets",
+    "blurb": ""
+  }
+];
+
+/* ==========================================================================
+   COLLECTIONS
+   Hand-picked sets of products, which may cut across categories. Each one is
+   served by collection.html?c=<slug>. Empty here: collections are made in
+   admin.html, which writes them into js/products.js.
+   ========================================================================== */
+
+var COLLECTIONS = [];
+
 /* ========================================================================== */
 
 var TESTIMONIALS = [

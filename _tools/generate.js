@@ -126,6 +126,13 @@ const PAGES = [
     title: (b) => `Contact us | ${b.name}`,
     desc: (b) => `[[PLACEHOLDER]] Get in touch with the ${b.name} support team about an order, a product or a return.` },
 
+  /* One page for every collection: collection.html?c=<slug>. The panel
+     cannot create files, so collections are served from the query string
+     the way products are. */
+  { file: 'collection.html', src: 'collection.html', nav: 'Collections',
+    title: (b) => `Collections | ${b.name}`,
+    desc: (b) => `Hand-picked groups of ${b.name} products.` },
+
   { file: 'cart.html', src: 'cart.html', nav: 'Basket', noindex: true, skipSitemap: true,
     title: (b) => `Your basket | ${b.name}`,
     desc: (b) => `Review your basket at ${b.name} before checking out.` },
@@ -137,7 +144,7 @@ const PAGES = [
   /* The catalogue editor. Not in the nav, not in the sitemap, noindex: it
      is a tool for whoever runs the shop, not a page for customers. */
   { file: 'admin.html', src: 'admin.html', nav: 'Admin', noindex: true, skipSitemap: true,
-    bare: true, css: 'css/admin.css',
+    bare: true, css: 'css/admin.css', js: 'js/admin.js',
     title: (b) => `Products | ${b.name}`,
     desc: () => 'Edit the product catalogue and export it.' },
 
@@ -350,6 +357,14 @@ function brandConfig(brand, imageMap) {
   const categoryPages = {};
   categoriesOf(brand).forEach((c) => { categoryPages[c] = slugifyCategory(c) + '.html'; });
 
+  /* Order plus any blurb the brand wrote for the category page, so the shop
+     and the admin panel agree about how categories are presented. */
+  const categoryMeta = categoriesOf(brand).map((c) => ({
+    name: c,
+    slug: slugifyCategory(c),
+    blurb: ((brand.categoryContent && brand.categoryContent[c]) || {}).lede || ''
+  }));
+
   return `/* ==========================================================================
    BRAND-CONFIG.JS — ${brand.name}
 
@@ -470,6 +485,24 @@ var BRAND = {
    ========================================================================== */
 
 var PRODUCTS = ${j(products)};
+
+/* ==========================================================================
+   CATEGORIES
+   The order categories appear in, and an optional line about each. Membership
+   is not here: a product's own category field decides that. A category with no
+   products in it is not shown, whatever this list says.
+   ========================================================================== */
+
+var CATEGORIES = ${j(categoryMeta)};
+
+/* ==========================================================================
+   COLLECTIONS
+   Hand-picked sets of products, which may cut across categories. Each one is
+   served by collection.html?c=<slug>. Empty here: collections are made in
+   admin.html, which writes them into js/products.js.
+   ========================================================================== */
+
+var COLLECTIONS = ${j(brand.collections || [])};
 
 /* ========================================================================== */
 
@@ -633,6 +666,7 @@ function buildBrand(brand) {
     /* Only the admin page carries an extra stylesheet; everything else
        resolves this to nothing. */
     PAGE_CSS: '',
+    PAGE_JS: '',
     PROMO_TAG: (brand.promo || common.promo || {}).tag || 'Offer',
     PROMO_HEADING: (brand.promo || common.promo || {}).heading || '[[PLACEHOLDER: offer heading]]',
     PROMO_TEXT: (brand.promo || common.promo || {}).text || '[[PLACEHOLDER: offer detail]]',
@@ -665,11 +699,9 @@ function buildBrand(brand) {
   function renderPage(outFile, bodySrc, ctx, opts) {
     writtenPages.add(outFile);
     const bare = opts && opts.bare;
-    const adminScript = outFile === 'admin.html' ? `\n<script src="js/admin.js?v=${ASSET_VERSION}"></script>` : '';
     const html = fill(head, ctx, outFile, warnings) +
       fill(bare ? checkoutHead : header, ctx, outFile, warnings) +
       fill(bodySrc, ctx, outFile, warnings) +
-      adminScript +
       fill(bare ? checkoutFoot : footer, ctx, outFile, warnings);
     write(path.join(dir, outFile), html);
     count++;
@@ -680,6 +712,7 @@ function buildBrand(brand) {
       PAGE_TITLE: page.title(brand),
       PAGE_DESC: page.desc(brand),
       PAGE_CSS: page.css ? `<link rel="stylesheet" href="${page.css}?v=${ASSET_VERSION}">` : '',
+      PAGE_JS: page.js ? `<script src="${page.js}?v=${ASSET_VERSION}"></script>` : '',
       PAGE_PATH: page.file === 'index.html' ? '' : page.file,
       ROBOTS: NOINDEX,
       JSONLD: page.file === 'index.html' ? orgSchema(brand) : ''

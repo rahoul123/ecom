@@ -23,6 +23,30 @@ until you export and upload.
 **To edit later:** open the panel, press **Import**, and pick the `products.js`
 you exported last time. Edit, export again.
 
+**If the panel shows a different number of products than your shop**, it is
+showing a draft saved in that browser from an earlier visit. The panel says so
+at the top and offers to load the shop's products instead. Nothing is
+overwritten until you choose.
+
+### Categories
+
+The **Categories** tab lists every category, in the order they appear in the
+menu. You can rename one — every product in it follows — reorder them, and give
+each a line of description. A category exists because products are in it, so
+the only way to delete one is to empty it first, and adding one creates a blank
+product for it to hold.
+
+### Collections
+
+A category is what a product *is*. A **collection** is why you would buy it:
+"Gifts under $50", "The bedroom edit". One product can be in any number of
+collections, and a collection can mix categories freely.
+
+Make one in the **Collections** tab, tick the products that belong in it, and
+it appears in the Categories menu straight away. Tick *Show on the home page*
+and it also gets a tile there. Each one is served at
+`collection.html?c=<its address>` — no new file to upload, no rebuild.
+
 **Photos.** Either upload your images to `images/products/` and point each
 product at its filename, or tick *Embed the photo* and the picture is carried
 inside `products.js` itself — no separate upload, but a bigger file. The panel

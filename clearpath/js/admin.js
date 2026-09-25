@@ -37,8 +37,15 @@ var Admin = (function () {
 
   var state = {
     items: [],
+    /* Category order and blurbs. A category only exists because a product is
+       in it, so this list is about presentation, not membership. */
+    categories: [],
+    collections: [],
     index: -1,
+    collIndex: -1,
     filter: '',
+    pickerFilter: '',
+    tab: 'products',
     /* Whether this catalogue differs from the one the site currently ships. */
     dirty: false
   };
@@ -149,7 +156,12 @@ var Admin = (function () {
 
   function save() {
     try {
-      localStorage.setItem(STORE, JSON.stringify({ items: state.items, dirty: state.dirty }));
+      localStorage.setItem(STORE, JSON.stringify({
+        items: state.items,
+        categories: state.categories,
+        collections: state.collections,
+        dirty: state.dirty
+      }));
     } catch (e) {
       /* Private mode, or a full quota. The work is still on screen, so say so
          rather than failing silently. */
@@ -164,9 +176,12 @@ var Admin = (function () {
     if (raw) {
       try {
         var draft = JSON.parse(raw);
-        if (draft && Array.isArray(draft.items) && draft.items.length > 0) {
+        if (draft && Array.isArray(draft.items) && draft.items.length) {
           state.items = draft.items;
+          state.categories = Array.isArray(draft.categories) ? draft.categories : [];
+          state.collections = Array.isArray(draft.collections) ? draft.collections : [];
           state.dirty = !!draft.dirty;
+          syncCategories();
           return;
         }
       } catch (e) { /* A corrupt draft is no reason to refuse to open. */ }
@@ -176,16 +191,249 @@ var Admin = (function () {
 
   /** Starts again from the catalogue the site currently ships. */
   function resetToLive() {
-    var source = (typeof PRODUCTS !== 'undefined' && Array.isArray(PRODUCTS) && PRODUCTS.length)
-      ? PRODUCTS
-      : (typeof BRAND !== 'undefined' && BRAND.products && Array.isArray(BRAND.products))
-      ? BRAND.products
-      : [];
+    var live = (typeof PRODUCTS !== 'undefined' && Array.isArray(PRODUCTS)) ? PRODUCTS : [];
+    state.items = live.map(function (p) { return JSON.parse(JSON.stringify(p)); });
 
-    state.items = source.map(function (p) {
-      return JSON.parse(JSON.stringify(p));
-    });
+    var liveCats = (typeof CATEGORIES !== 'undefined' && Array.isArray(CATEGORIES)) ? CATEGORIES : [];
+    state.categories = liveCats.map(function (c) { return JSON.parse(JSON.stringify(c)); });
+
+    var liveColls = (typeof COLLECTIONS !== 'undefined' && Array.isArray(COLLECTIONS)) ? COLLECTIONS : [];
+    state.collections = liveColls.map(function (c) { return JSON.parse(JSON.stringify(c)); });
+
+    state.index = -1;
+    state.collIndex = -1;
     state.dirty = false;
+    syncCategories();
+  }
+
+  /* ------------------------------------------------------- categories ---- */
+
+  /**
+   * Keeps state.categories in step with the products.
+   *
+   * A category exists because products are in it. This adds an entry for any
+   * category a product names but the list has not got, and drops entries for
+   * categories nothing is in any more — an empty category is a menu link to
+   * an empty page.
+   */
+  function syncCategories() {
+    var counts = {};
+    state.items.forEach(function (p) {
+      if (p.category) counts[p.category] = (counts[p.category] || 0) + 1;
+    });
+
+    state.categories = state.categories.filter(function (c) {
+      return c && c.name && counts[c.name];
+    });
+
+    var have = {};
+    state.categories.forEach(function (c) { have[c.name] = true; });
+
+    /* New ones go on the end, in the order the products introduce them. */
+    state.items.forEach(function (p) {
+      if (p.category && !have[p.category]) {
+        have[p.category] = true;
+        state.categories.push({ name: p.category, slug: slugify(p.category), blurb: '' });
+      }
+    });
+
+    state.categories.forEach(function (c) {
+      c.slug = slugify(c.name);
+      c.count = counts[c.name] || 0;
+    });
+  }
+
+  function renderCategories() {
+    var host = el('#adm-cats');
+    if (!host) return;
+    syncCategories();
+
+    host.innerHTML = state.categories.map(function (c, i) {
+      return '<li class="adm-cat" data-cat-index="' + i + '">' +
+        '<span class="adm-cat__move">' +
+          '<button type="button" class="adm-mini" data-cat-move="-1" aria-label="Move up"' + (i === 0 ? ' disabled' : '') + '>&#9650;</button>' +
+          '<button type="button" class="adm-mini" data-cat-move="1" aria-label="Move down"' + (i === state.categories.length - 1 ? ' disabled' : '') + '>&#9660;</button>' +
+        '</span>' +
+        '<span class="adm-cat__fields">' +
+          '<input class="adm-cat__name" type="text" value="' + esc(c.name) + '" data-cat-name aria-label="Category name">' +
+          '<input class="adm-cat__blurb" type="text" value="' + esc(c.blurb || '') + '" data-cat-blurb placeholder="One line about this category (optional)" aria-label="Category description">' +
+        '</span>' +
+        '<span class="adm-cat__count">' + c.count + '</span>' +
+        '<button type="button" class="adm-mini adm-mini--danger" data-cat-delete' +
+          ' title="A category can only go once nothing is in it">Delete</button>' +
+      '</li>';
+    }).join('');
+  }
+
+  /** Renaming a category moves every product that was in it. */
+  function renameCategory(from, to) {
+    to = String(to || '').trim();
+    if (!to || to === from) return false;
+
+    var clash = state.categories.some(function (c) { return c.name === to; });
+    state.items.forEach(function (p) { if (p.category === from) p.category = to; });
+
+    if (clash) {
+      /* Merging into an existing category: drop the now-duplicate entry. */
+      state.categories = state.categories.filter(function (c) { return c.name !== from; });
+    } else {
+      state.categories.forEach(function (c) { if (c.name === from) { c.name = to; c.slug = slugify(to); } });
+    }
+    return true;
+  }
+
+  /* ------------------------------------------------------ collections ---- */
+
+  function currentColl() {
+    return state.collIndex >= 0 ? state.collections[state.collIndex] : null;
+  }
+
+  function uniqueCollSlug(base, exceptIndex) {
+    var slug = base || 'collection';
+    var n = 1;
+    while (state.collections.some(function (c, i) { return i !== exceptIndex && c.slug === slug; })) {
+      n++;
+      slug = base + '-' + n;
+    }
+    return slug;
+  }
+
+  /** Products still in the catalogue, in the order the collection lists. */
+  function collProducts(coll) {
+    var out = [];
+    (coll.products || []).forEach(function (slug) {
+      state.items.forEach(function (p) { if (p.slug === slug) out.push(p); });
+    });
+    return out;
+  }
+
+  function renderCollections() {
+    var host = el('#adm-colls');
+    if (!host) return;
+
+    host.innerHTML = state.collections.map(function (c, i) {
+      var items = collProducts(c);
+      var first = items[0];
+      var tint = first && first.swatch ? shade(first.swatch, 0.86) : null;
+      return '<li class="adm-item' + (i === state.collIndex ? ' is-active' : '') + '" data-coll-index="' + i + '">' +
+        '<button type="button" class="adm-item__open">' +
+          '<span class="adm-item__thumb"' + (tint ? ' style="background:' + esc(tint) + '"' : '') + '>' +
+            (first && first.image ? '<img src="' + esc(first.image) + '" alt="" loading="lazy">' : '') +
+          '</span>' +
+          '<span class="adm-item__body">' +
+            '<span class="adm-item__name">' + (esc(c.name) || '<i>Untitled</i>') + '</span>' +
+            '<span class="adm-item__meta">' + items.length +
+              (items.length === 1 ? ' product' : ' products') +
+              (c.featured ? ' &middot; <b>home</b>' : '') + '</span>' +
+          '</span>' +
+        '</button>' +
+        '<span class="adm-item__move">' +
+          '<button type="button" class="adm-mini" data-coll-move="-1" aria-label="Move up"' + (i === 0 ? ' disabled' : '') + '>&#9650;</button>' +
+          '<button type="button" class="adm-mini" data-coll-move="1" aria-label="Move down"' + (i === state.collections.length - 1 ? ' disabled' : '') + '>&#9660;</button>' +
+        '</span>' +
+      '</li>';
+    }).join('');
+
+    var empty = el('#adm-colls-empty');
+    if (empty) empty.hidden = state.collections.length > 0;
+  }
+
+  function fillCollForm() {
+    var c = currentColl();
+    var editor = el('#adm-coll-editor');
+    var blank = el('#adm-coll-blank');
+    if (editor) editor.hidden = !c;
+    if (blank) blank.hidden = !!c;
+    if (!c) return;
+
+    els('[data-coll]').forEach(function (input) {
+      var v = c[input.getAttribute('data-coll')];
+      if (input.type === 'checkbox') input.checked = !!v;
+      else input.value = v == null ? '' : v;
+    });
+
+    var note = el('#coll-slug-preview');
+    if (note) note.textContent = 'collection.html?c=' + (c.slug || '');
+
+    renderPicker();
+    validateColl();
+  }
+
+  /** The product chooser: every product, grouped by category, with a tick. */
+  function renderPicker() {
+    var host = el('#adm-picker');
+    var c = currentColl();
+    if (!host || !c) return;
+
+    var chosen = {};
+    (c.products || []).forEach(function (slug) { chosen[slug] = true; });
+
+    var q = state.pickerFilter.toLowerCase();
+    var groups = {};
+    var order = [];
+    state.items.forEach(function (p) {
+      if (q && (p.name || '').toLowerCase().indexOf(q) === -1 &&
+               (p.category || '').toLowerCase().indexOf(q) === -1) return;
+      var cat = p.category || 'Uncategorised';
+      if (!groups[cat]) { groups[cat] = []; order.push(cat); }
+      groups[cat].push(p);
+    });
+
+    if (!order.length) {
+      host.innerHTML = '<p class="adm-hint">Nothing matches that.</p>';
+      return;
+    }
+
+    host.innerHTML = order.map(function (cat) {
+      return '<div class="adm-picker__group">' +
+        '<p class="adm-picker__cat">' + esc(cat) + '</p>' +
+        groups[cat].map(function (p) {
+          return '<label class="adm-pick' + (chosen[p.slug] ? ' is-on' : '') + '">' +
+            '<input type="checkbox" data-pick="' + esc(p.slug) + '"' + (chosen[p.slug] ? ' checked' : '') + '>' +
+            '<span class="adm-pick__thumb"' +
+              (p.swatch ? ' style="background:' + esc(shade(p.swatch, 0.86)) + '"' : '') + '>' +
+              (p.image ? '<img src="' + esc(p.image) + '" alt="" loading="lazy">' : '') + '</span>' +
+            '<span class="adm-pick__name">' + esc(p.name) + '</span>' +
+            '<span class="adm-pick__price">' + money(p.price) + '</span>' +
+          '</label>';
+        }).join('') +
+      '</div>';
+    }).join('');
+
+    var count = el('#adm-picked-count');
+    if (count) {
+      var n = collProducts(c).length;
+      count.textContent = n + (n === 1 ? ' chosen' : ' chosen');
+    }
+  }
+
+  function validateColl() {
+    var c = currentColl();
+    if (!c) return true;
+    var ok = true;
+
+    var nameErr = el('#err-cname');
+    if (nameErr) nameErr.textContent = c.name ? '' : 'Give the collection a name.';
+    if (!c.name) ok = false;
+
+    var clash = state.collections.some(function (o, i) { return i !== state.collIndex && o.slug === c.slug; });
+    var slugErr = el('#err-cslug');
+    if (slugErr) {
+      slugErr.textContent = !c.slug ? 'Needed \u2014 this is the collection\u2019s web address.'
+        : clash ? 'Another collection already uses this address.' : '';
+    }
+    if (!c.slug || clash) ok = false;
+
+    return ok;
+  }
+
+  function selectColl(i) {
+    state.collIndex = i;
+    state.pickerFilter = '';
+    var search = el('#adm-coll-search');
+    if (search) search.value = '';
+    renderCollections();
+    fillCollForm();
   }
 
   /* ------------------------------------------------------------ the list -- */
@@ -477,6 +725,16 @@ var Admin = (function () {
       if (p.price === null || isNaN(p.price) || p.price < 0) found.push(where + ' has no price.');
       if (!p.category) found.push(where + ' has no category.');
     });
+
+    var seenColl = {};
+    state.collections.forEach(function (c, i) {
+      var where = c.name || 'Collection ' + (i + 1);
+      if (!c.name) found.push(where + ' has no name.');
+      if (!c.slug) found.push(where + ' has no web address.');
+      else if (seenColl[c.slug]) found.push(where + ' shares a web address with ' + seenColl[c.slug] + '.');
+      else seenColl[c.slug] = where;
+      if (!collProducts(c).length) found.push(where + ' has no products in it.');
+    });
     return found;
   }
 
@@ -491,6 +749,26 @@ var Admin = (function () {
 
     var embedded = clean.filter(function (p) { return String(p.image).indexOf('data:') === 0; }).length;
 
+    syncCategories();
+
+    var cats = state.categories.map(function (c) {
+      return { name: c.name, slug: slugify(c.name), blurb: c.blurb || '' };
+    });
+
+    /* A collection that points only at deleted products would render an
+       empty page, so it is dropped rather than shipped broken. */
+    var colls = state.collections
+      .filter(function (c) { return c.name && c.slug && collProducts(c).length; })
+      .map(function (c) {
+        return {
+          slug: c.slug,
+          name: c.name,
+          blurb: c.blurb || '',
+          featured: !!c.featured,
+          products: collProducts(c).map(function (p) { return p.slug; })
+        };
+      });
+
     return '/* ==========================================================================\n' +
       '   PRODUCTS.JS — your catalogue.\n' +
       '\n' +
@@ -503,7 +781,14 @@ var Admin = (function () {
       '   export a new one.\n' +
       '   ========================================================================== */\n' +
       '\n' +
-      'PRODUCTS = ' + JSON.stringify(clean, null, 2) + ';\n';
+      'PRODUCTS = ' + JSON.stringify(clean, null, 2) + ';\n' +
+      '\n' +
+      '/* Category order and descriptions. Membership comes from each product\n' +
+      '   above; this only decides how they are shown. */\n' +
+      'CATEGORIES = ' + JSON.stringify(cats, null, 2) + ';\n' +
+      '\n' +
+      '/* Hand-picked sets, served at collection.html?c=<slug>. */\n' +
+      'COLLECTIONS = ' + JSON.stringify(colls, null, 2) + ';\n';
   }
 
   function download(name, text) {
@@ -539,6 +824,37 @@ var Admin = (function () {
 
   /* ------------------------------------------------------------ import --- */
 
+  /** Pulls `NAME = [ ... ];` out of an exported file, as JSON. */
+  function grab(text, name) {
+    var at = text.indexOf(name + ' =');
+    if (at === -1) return null;
+    var open = text.indexOf('[', at);
+    if (open === -1) return null;
+
+    /* Walk the brackets rather than guessing at the last ']' — there are
+       three arrays in the file and they must not be confused. */
+    var depth = 0;
+    var inStr = false;
+    var quote = '';
+    for (var i = open; i < text.length; i++) {
+      var ch = text[i];
+      if (inStr) {
+        if (ch === '\\') { i++; continue; }
+        if (ch === quote) inStr = false;
+        continue;
+      }
+      if (ch === '"' || ch === "'") { inStr = true; quote = ch; continue; }
+      if (ch === '[') depth++;
+      else if (ch === ']') {
+        depth--;
+        if (!depth) {
+          try { return JSON.parse(text.slice(open, i + 1)); } catch (e) { return null; }
+        }
+      }
+    }
+    return null;
+  }
+
   function doImport(file) {
     var reader = new FileReader();
     reader.onload = function () {
@@ -546,14 +862,7 @@ var Admin = (function () {
       var items = null;
 
       /* Either a products.js this panel wrote, or a plain JSON array. */
-      var start = text.indexOf('PRODUCTS');
-      if (start !== -1) {
-        var open = text.indexOf('[', start);
-        var close = text.lastIndexOf(']');
-        if (open !== -1 && close > open) {
-          try { items = JSON.parse(text.slice(open, close + 1)); } catch (e) { items = null; }
-        }
-      }
+      items = grab(text, 'PRODUCTS');
       if (!items) {
         try { items = JSON.parse(text); } catch (e) { items = null; }
       }
@@ -564,12 +873,22 @@ var Admin = (function () {
       }
 
       state.items = items;
+      state.categories = grab(text, 'CATEGORIES') || [];
+      state.collections = grab(text, 'COLLECTIONS') || [];
       state.index = -1;
+      state.collIndex = -1;
       state.dirty = true;
+      syncCategories();
       save();
       renderList();
       fillForm();
-      toast('Loaded ' + items.length + ' product' + (items.length === 1 ? '' : 's') + '.');
+      renderCategories();
+      renderCollections();
+      fillCollForm();
+      checkStale();
+      toast('Loaded ' + items.length + ' product' + (items.length === 1 ? '' : 's') +
+        (state.collections.length ? ' and ' + state.collections.length + ' collection' +
+          (state.collections.length === 1 ? '' : 's') : '') + '.');
     };
     reader.onerror = function () { toast('That file could not be read.', true); };
     reader.readAsText(file);
@@ -599,24 +918,65 @@ var Admin = (function () {
     if (editor && window.innerWidth < 900) editor.scrollIntoView({ block: 'start' });
   }
 
-  function safeOn(sel, evt, fn) {
-    var node = typeof sel === 'string' ? el(sel) : sel;
-    if (node) node.addEventListener(evt, fn);
+  /* ---------------------------------------------------------- the tabs -- */
+
+  function showTab(name) {
+    state.tab = name;
+    els('.adm-tab').forEach(function (b) {
+      var on = b.getAttribute('data-tab') === name;
+      b.classList.toggle('is-active', on);
+      b.setAttribute('aria-selected', String(on));
+    });
+    els('.adm-pane').forEach(function (p) {
+      p.hidden = p.getAttribute('data-pane') !== name;
+    });
+
+    if (name === 'categories') renderCategories();
+    if (name === 'collections') { renderCollections(); fillCollForm(); }
+  }
+
+  /* --------------------------------------------------- the stale notice -- */
+
+  /**
+   * The draft in this browser can fall behind: somebody changes the
+   * catalogue elsewhere, uploads it, and this panel still shows what it had.
+   * Saying nothing was how a 16-product draft quietly hid a 40-product shop.
+   * This offers the choice and takes neither side by itself.
+   */
+  function checkStale() {
+    var host = el('#adm-stale');
+    if (!host) return;
+
+    var live = (typeof PRODUCTS !== 'undefined' && Array.isArray(PRODUCTS)) ? PRODUCTS : [];
+    if (!live.length || !state.items.length) { host.hidden = true; return; }
+
+    var mine = state.items.map(function (p) { return p.slug; }).sort().join('|');
+    var theirs = live.map(function (p) { return p.slug; }).sort().join('|');
+    if (mine === theirs) { host.hidden = true; return; }
+
+    host.hidden = false;
+    var text = el('#adm-stale-text');
+    if (text) {
+      text.innerHTML = 'This browser has a draft of <b>' + state.items.length +
+        '</b> product' + (state.items.length === 1 ? '' : 's') +
+        ', but the shop is currently serving <b>' + live.length +
+        '</b>. Your draft has not been exported, so nothing is lost either way.';
+    }
   }
 
   function init() {
     if (!el('#adm-list')) return;
 
     load();
-    if (!state.items || !state.items.length) {
-      resetToLive();
-      save();
-    }
     renderList();
     fillForm();
+    renderCategories();
+    renderCollections();
+    fillCollForm();
+    checkStale();
 
     /* --- the list --- */
-    safeOn('#adm-list', 'click', function (ev) {
+    el('#adm-list').addEventListener('click', function (ev) {
       var row = ev.target.closest('.adm-item');
       if (!row) return;
       var i = Number(row.getAttribute('data-index'));
@@ -638,89 +998,79 @@ var Admin = (function () {
       select(i);
     });
 
-    safeOn('#adm-search', 'input', function (ev) {
+    el('#adm-search').addEventListener('input', function (ev) {
       state.filter = ev.target.value;
       renderList();
     });
 
     /* --- the form --- */
     var form = el('#adm-form');
-    if (form) {
-      form.addEventListener('input', function (ev) {
-        var input = ev.target.closest('[data-field], [data-list]');
-        if (input) bindInput(input);
-      });
-      form.addEventListener('change', function (ev) {
-        var input = ev.target.closest('[data-field]');
-        if (input && input.type === 'checkbox') bindInput(input);
-      });
-      form.addEventListener('submit', function (ev) { ev.preventDefault(); });
-    }
+    form.addEventListener('input', function (ev) {
+      var input = ev.target.closest('[data-field], [data-list]');
+      if (input) bindInput(input);
+    });
+    form.addEventListener('change', function (ev) {
+      var input = ev.target.closest('[data-field]');
+      if (input && input.type === 'checkbox') bindInput(input);
+    });
+    form.addEventListener('submit', function (ev) { ev.preventDefault(); });
 
     /* --- colour --- */
     var picker = el('#f-swatch');
     var hexBox = el('#f-swatch-hex');
-    if (picker) {
-      picker.addEventListener('input', function () {
-        var p = current();
-        if (!p) return;
-        p.swatch = picker.value;
-        if (hexBox) hexBox.value = picker.value;
+    picker.addEventListener('input', function () {
+      var p = current();
+      if (!p) return;
+      p.swatch = picker.value;
+      hexBox.value = picker.value;
+      touch();
+      renderImagePreview();
+    });
+    hexBox.addEventListener('input', function () {
+      var p = current();
+      if (!p) return;
+      var v = hexBox.value.trim();
+      if (/^#?[0-9a-f]{3}([0-9a-f]{3})?$/i.test(v)) {
+        p.swatch = v[0] === '#' ? v : '#' + v;
+        /* shade(x, 0) returns x unchanged but always six digits, which is
+           the only form input[type=color] accepts. */
+        picker.value = shade(p.swatch, 0) || picker.value;
         touch();
-        renderImagePreview();
-      });
-    }
-    if (hexBox) {
-      hexBox.addEventListener('input', function () {
-        var p = current();
-        if (!p) return;
-        var v = hexBox.value.trim();
-        if (/^#?[0-9a-f]{3}([0-9a-f]{3})?$/i.test(v)) {
-          p.swatch = v[0] === '#' ? v : '#' + v;
-          if (picker) picker.value = shade(p.swatch, 0) || picker.value;
-          touch();
-        }
-      });
-    }
-    safeOn('#f-swatch-clear', 'click', function () {
+      }
+    });
+    el('#f-swatch-clear').addEventListener('click', function () {
       var p = current();
       if (!p) return;
       p.swatch = null;
-      if (hexBox) hexBox.value = '';
+      hexBox.value = '';
       touch();
     });
 
     /* --- photos --- */
-    safeOn('#adm-pick-file', 'click', function () {
-      var fileEl = el('#adm-file');
-      if (fileEl) fileEl.click();
-    });
-    safeOn('#adm-file', 'change', function (ev) {
+    el('#adm-pick-file').addEventListener('click', function () { el('#adm-file').click(); });
+    el('#adm-file').addEventListener('change', function (ev) {
       var file = ev.target.files && ev.target.files[0];
       var p = current();
       if (!file || !p) return;
-      var embedEl = el('#adm-embed');
-      readImage(file, embedEl ? embedEl.checked : false, function (src) {
+      readImage(file, el('#adm-embed').checked, function (src) {
         p.image = src;
-        var imgField = el('#f-image');
-        if (imgField) imgField.value = src.indexOf('data:') === 0 ? '' : src;
+        el('#f-image').value = src.indexOf('data:') === 0 ? '' : src;
         touch();
         renderImagePreview();
       });
       ev.target.value = '';
     });
-    safeOn('#f-image', 'change', renderImagePreview);
+    el('#f-image').addEventListener('change', renderImagePreview);
 
     /* --- catalogue buttons --- */
-    safeOn('#adm-add', 'click', function () {
+    el('#adm-add').addEventListener('click', function () {
       var p = blankProduct();
       p.slug = uniqueSlug('new-product', -1);
       p.name = '';
       state.items.push(p);
       state.index = state.items.length - 1;
       state.filter = '';
-      var s = el('#adm-search');
-      if (s) s.value = '';
+      el('#adm-search').value = '';
       state.dirty = true;
       save();
       renderList();
@@ -729,7 +1079,7 @@ var Admin = (function () {
       if (name) name.focus();
     });
 
-    safeOn('#adm-duplicate', 'click', function () {
+    el('#adm-duplicate').addEventListener('click', function () {
       var p = current();
       if (!p) return;
       var copy = JSON.parse(JSON.stringify(p));
@@ -743,19 +1093,22 @@ var Admin = (function () {
       renderList();
     });
 
-    safeOn('#adm-delete', 'click', function () {
+    el('#adm-delete').addEventListener('click', function () {
       var p = current();
       if (!p) return;
       if (!window.confirm('Delete "' + (p.name || 'this product') + '"? This cannot be undone.')) return;
       state.items.splice(state.index, 1);
       state.index = -1;
       state.dirty = true;
+      syncCategories();
       save();
       renderList();
       fillForm();
+      renderCategories();
+      renderCollections();
     });
 
-    safeOn('#adm-revert', 'click', function () {
+    el('#adm-revert').addEventListener('click', function () {
       if (!window.confirm('Throw away your edits and start again from the products the shop currently ships?')) return;
       resetToLive();
       state.index = -1;
@@ -765,13 +1118,243 @@ var Admin = (function () {
       toast('Back to the catalogue the site is using now.');
     });
 
-    safeOn('#adm-export', 'click', doExport);
-
-    safeOn('#adm-import', 'click', function () {
-      var imp = el('#adm-import-file');
-      if (imp) imp.click();
+    /* --- tabs --- */
+    els('.adm-tab').forEach(function (b) {
+      b.addEventListener('click', function () { showTab(b.getAttribute('data-tab')); });
     });
-    safeOn('#adm-import-file', 'change', function (ev) {
+
+    /* --- the stale notice --- */
+    var staleLoad = el('#adm-stale-load');
+    if (staleLoad) {
+      staleLoad.addEventListener('click', function () {
+        resetToLive();
+        save();
+        renderList();
+        fillForm();
+        renderCategories();
+        renderCollections();
+        fillCollForm();
+        checkStale();
+        toast('Loaded the ' + state.items.length + ' products the shop is serving.');
+      });
+    }
+    var staleKeep = el('#adm-stale-keep');
+    if (staleKeep) {
+      staleKeep.addEventListener('click', function () { el('#adm-stale').hidden = true; });
+    }
+
+    /* --- categories --- */
+    var catNew = el('#adm-cat-new');
+    if (catNew) {
+      catNew.addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        var input = el('#adm-cat-name');
+        var name = input.value.trim();
+        if (!name) return;
+        if (state.categories.some(function (c) { return c.name === name; })) {
+          toast('There is already a category called that.', true);
+          return;
+        }
+        /* A category with nothing in it would be dropped by syncCategories,
+           so it is created by putting a new product in it. */
+        var p = blankProduct();
+        p.category = name;
+        p.name = '';
+        p.slug = uniqueSlug('new-product', -1);
+        state.items.push(p);
+        state.categories.push({ name: name, slug: slugify(name), blurb: '', count: 1 });
+        state.index = state.items.length - 1;
+        state.dirty = true;
+        input.value = '';
+        save();
+        renderCategories();
+        renderList();
+        fillForm();
+        showTab('products');
+        toast('Category "' + name + '" created with an empty product in it. Fill that in and it is live.');
+        var nameInput = el('#f-name');
+        if (nameInput) nameInput.focus();
+      });
+    }
+
+    var cats = el('#adm-cats');
+    if (cats) {
+      cats.addEventListener('click', function (ev) {
+        var row = ev.target.closest('[data-cat-index]');
+        if (!row) return;
+        var i = Number(row.getAttribute('data-cat-index'));
+
+        var move = ev.target.closest('[data-cat-move]');
+        if (move) {
+          var to = i + Number(move.getAttribute('data-cat-move'));
+          if (to < 0 || to >= state.categories.length) return;
+          var moved = state.categories.splice(i, 1)[0];
+          state.categories.splice(to, 0, moved);
+          state.dirty = true;
+          save();
+          renderCategories();
+          return;
+        }
+
+        if (ev.target.closest('[data-cat-delete]')) {
+          var cat = state.categories[i];
+          if (cat.count) {
+            toast('"' + cat.name + '" still has ' + cat.count + ' product' +
+              (cat.count === 1 ? '' : 's') + ' in it. Move or delete those first.', true);
+            return;
+          }
+          state.categories.splice(i, 1);
+          state.dirty = true;
+          save();
+          renderCategories();
+        }
+      });
+
+      cats.addEventListener('change', function (ev) {
+        var row = ev.target.closest('[data-cat-index]');
+        if (!row) return;
+        var i = Number(row.getAttribute('data-cat-index'));
+        var cat = state.categories[i];
+        if (!cat) return;
+
+        if (ev.target.hasAttribute('data-cat-name')) {
+          var was = cat.name;
+          if (!renameCategory(was, ev.target.value)) { renderCategories(); return; }
+          toast('Renamed "' + was + '". Every product in it moved too.');
+        } else if (ev.target.hasAttribute('data-cat-blurb')) {
+          cat.blurb = ev.target.value.trim();
+        }
+        state.dirty = true;
+        save();
+        renderCategories();
+        renderList();
+      });
+    }
+
+    /* --- collections --- */
+    var collAdd = el('#adm-coll-add');
+    if (collAdd) {
+      collAdd.addEventListener('click', function () {
+        var c = { name: '', slug: uniqueCollSlug('new-collection', -1), blurb: '', featured: false, products: [] };
+        state.collections.push(c);
+        state.dirty = true;
+        save();
+        selectColl(state.collections.length - 1);
+        var nameInput = el('#fc-name');
+        if (nameInput) nameInput.focus();
+      });
+    }
+
+    var colls = el('#adm-colls');
+    if (colls) {
+      colls.addEventListener('click', function (ev) {
+        var row = ev.target.closest('[data-coll-index]');
+        if (!row) return;
+        var i = Number(row.getAttribute('data-coll-index'));
+
+        var move = ev.target.closest('[data-coll-move]');
+        if (move) {
+          var to = i + Number(move.getAttribute('data-coll-move'));
+          if (to < 0 || to >= state.collections.length) return;
+          var moved = state.collections.splice(i, 1)[0];
+          state.collections.splice(to, 0, moved);
+          if (state.collIndex === i) state.collIndex = to;
+          else if (state.collIndex === to) state.collIndex = i;
+          state.dirty = true;
+          save();
+          renderCollections();
+          return;
+        }
+        selectColl(i);
+      });
+    }
+
+    var collEditor = el('#adm-coll-editor');
+    if (collEditor) {
+      collEditor.addEventListener('input', function (ev) {
+        var c = currentColl();
+        var input = ev.target.closest('[data-coll]');
+        if (!c || !input) return;
+        var key = input.getAttribute('data-coll');
+
+        if (input.type === 'checkbox') c[key] = input.checked;
+        else if (key === 'slug') c.slug = slugify(input.value);
+        else c[key] = input.value.trim();
+
+        /* The address follows the name until somebody types their own. */
+        if (key === 'name' && !c._slugLocked) {
+          c.slug = uniqueCollSlug(slugify(c.name), state.collIndex);
+          var slugInput = el('#fc-slug');
+          if (slugInput) slugInput.value = c.slug;
+        }
+        if (key === 'slug') c._slugLocked = true;
+
+        var note = el('#coll-slug-preview');
+        if (note) note.textContent = 'collection.html?c=' + (c.slug || '');
+
+        state.dirty = true;
+        save();
+        renderCollections();
+        validateColl();
+      });
+
+      collEditor.addEventListener('change', function (ev) {
+        var c = currentColl();
+        var input = ev.target.closest('[data-coll]');
+        if (c && input && input.type === 'checkbox') {
+          c[input.getAttribute('data-coll')] = input.checked;
+          state.dirty = true;
+          save();
+          renderCollections();
+        }
+      });
+    }
+
+    var picker = el('#adm-picker');
+    if (picker) {
+      picker.addEventListener('change', function (ev) {
+        var box = ev.target.closest('[data-pick]');
+        var c = currentColl();
+        if (!box || !c) return;
+        var slug = box.getAttribute('data-pick');
+        c.products = c.products || [];
+        var at = c.products.indexOf(slug);
+        if (box.checked && at === -1) c.products.push(slug);
+        if (!box.checked && at !== -1) c.products.splice(at, 1);
+        state.dirty = true;
+        save();
+        renderPicker();
+        renderCollections();
+      });
+    }
+
+    var collSearch = el('#adm-coll-search');
+    if (collSearch) {
+      collSearch.addEventListener('input', function (ev) {
+        state.pickerFilter = ev.target.value;
+        renderPicker();
+      });
+    }
+
+    var collDelete = el('#adm-coll-delete');
+    if (collDelete) {
+      collDelete.addEventListener('click', function () {
+        var c = currentColl();
+        if (!c) return;
+        if (!window.confirm('Delete the collection "' + (c.name || 'untitled') + '"? The products stay in the shop.')) return;
+        state.collections.splice(state.collIndex, 1);
+        state.collIndex = -1;
+        state.dirty = true;
+        save();
+        renderCollections();
+        fillCollForm();
+      });
+    }
+
+    el('#adm-export').addEventListener('click', doExport);
+
+    el('#adm-import').addEventListener('click', function () { el('#adm-import-file').click(); });
+    el('#adm-import-file').addEventListener('change', function (ev) {
       var file = ev.target.files && ev.target.files[0];
       if (file) doImport(file);
       ev.target.value = '';

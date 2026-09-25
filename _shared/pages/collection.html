@@ -1,0 +1,32 @@
+<!-- ===== COLLECTION — one page that serves every collection.
+
+     A collection is made in admin.html, which cannot create files, so this
+     page takes the collection from the query string the way product.html
+     does: collection.html?c=<slug>. Make a collection in the panel, export,
+     upload, and its link works immediately — nothing to generate.
+
+     With no ?c= it lists every collection instead, so the bare URL is useful
+     rather than broken.
+     ===== -->
+
+<section class="page-head">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span aria-hidden="true">/</span>
+      <a href="collection.html">Collections</a>
+      <span aria-hidden="true">/</span>
+      <span id="collection-crumb">&hellip;</span>
+    </nav>
+    <h1 id="collection-title">Collections</h1>
+    <p id="collection-blurb" hidden></p>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="product-grid" id="collection-products"></div>
+  </div>
+</section>
+
+<script>Site.renderCollectionPage();</script>

@@ -10,6 +10,7 @@
    ========================================================================== */
 
 const fs = require('node:fs');
+const vm = require('node:vm');
 const path = require('node:path');
 
 const ROOT = path.resolve(__dirname, '..');
@@ -74,18 +75,46 @@ for (const site of sites) {
   if (depth !== 0 || stray) fail(site, 'unbalanced CSS braces (depth ' + depth + ', stray ' + stray + ')');
   else console.log('  ok    CSS braces balanced');
 
-  /* 3. Every image the HTML points at exists on disk. */
+  /* 3. Every image the site points at exists on disk — both the ones written
+        into the HTML and the ones the catalogue names. Products are rendered
+        in the browser, so their images never appear in any .html file; only
+        checking the markup let 25 products ship with no picture. */
   let missing = 0, imgs = 0;
-  for (const f of pages) {
-    const html = fs.readFileSync(path.join(dir, f), 'utf8');
-    for (const m of html.matchAll(/src="(images\/[^"]+)"/g)) {
-      imgs++;
-      if (!fs.existsSync(path.join(dir, m[1]))) {
-        fail(site, 'missing image ' + m[1] + ' (' + f + ')');
-        missing++;
-      }
+  const seenImg = new Set();
+
+  function checkImage(src, where) {
+    if (!src || !src.startsWith('images/')) return;
+    imgs++;
+    const key = src + '|' + where;
+    if (seenImg.has(key)) return;
+    seenImg.add(key);
+    if (!fs.existsSync(path.join(dir, src))) {
+      fail(site, 'missing image ' + src + ' (' + where + ')');
+      missing++;
     }
   }
+
+  for (const f of pages) {
+    const html = fs.readFileSync(path.join(dir, f), 'utf8');
+    for (const m of html.matchAll(/src="(images\/[^"]+)"/g)) checkImage(m[1], f);
+  }
+
+  /* The catalogue: brand-config.js, plus products.js when it overrides it. */
+  try {
+    const box = { console: { log() {}, warn() {}, error() {} } };
+    vm.createContext(box);
+    vm.runInContext(fs.readFileSync(path.join(dir, 'js', 'brand-config.js'), 'utf8'), box);
+    const over = path.join(dir, 'js', 'products.js');
+    if (fs.existsSync(over)) vm.runInContext(fs.readFileSync(over, 'utf8'), box);
+
+    for (const p of box.PRODUCTS || []) {
+      checkImage(p.image, 'catalogue: ' + p.slug);
+      for (const g of p.gallery || []) checkImage(g, 'catalogue: ' + p.slug + ' gallery');
+    }
+  } catch (e) {
+    fail(site, 'could not read the catalogue: ' + e.message);
+  }
+
   if (!missing) console.log('  ok    ' + imgs + ' image references all resolve');
 
   /* 4. Every Site.* called from a page is actually exported. */

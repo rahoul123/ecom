@@ -190,4 +190,152 @@ console.log(FAILS ? '\n' + fails + ' FAILED' : '\nall admin derivation checks pa
 
 })();
 
+(function categoriesAndCollections() {
+  /* Pull the real functions out of the shipped files rather than describing
+     what they ought to do. Same trick as the pricing suite above. */
+  function extract(src, names) {
+    let out = '';
+    for (const name of names) {
+      const start = src.indexOf('  function ' + name + '(');
+      if (start === -1) throw new Error('no ' + name + ' to test');
+      let i = src.indexOf('{', start), depth = 0;
+      for (; i < src.length; i++) {
+        if (src[i] === '{') depth++;
+        else if (src[i] === '}') { depth--; if (!depth) break; }
+      }
+      out += src.slice(start, i + 1) + '\n';
+    }
+    return out;
+  }
+
+  function ok(label, got, want) {
+    const same = JSON.stringify(got) === JSON.stringify(want);
+    if (!same) {
+      FAILS++;
+      console.log('  FAIL ' + label + '\n        got:  ' + JSON.stringify(got) +
+                  '\n        want: ' + JSON.stringify(want));
+    } else {
+      console.log('  ok   ' + label);
+    }
+  }
+
+  /* ------------------------------------------------------------ site.js -- */
+
+  const siteSrc = fs.readFileSync('_shared/js/site.js', 'utf8');
+  const site = { console, encodeURIComponent };
+  vm.createContext(site);
+  vm.runInContext(
+    extract(siteSrc, ['categoryList', 'collectionList', 'findCollection', 'productsIn', 'collectionHref']),
+    site);
+
+  console.log('\ncategories on the shop');
+
+  site.PRODUCTS = [
+    { slug: 'a', category: 'Pillowcases' },
+    { slug: 'b', category: 'Scrunchies' },
+    { slug: 'c', category: 'Pillowcases' }
+  ];
+  site.CATEGORIES = undefined;
+  site.COLLECTIONS = undefined;
+  ok('derived from products when nothing declares an order',
+     site.categoryList().map((c) => c.name + ':' + c.count),
+     ['Pillowcases:2', 'Scrunchies:1']);
+
+  site.CATEGORIES = [{ name: 'Scrunchies', blurb: 'Soft ties' }, { name: 'Pillowcases' }];
+  ok('CATEGORIES decides the order',
+     site.categoryList().map((c) => c.name),
+     ['Scrunchies', 'Pillowcases']);
+  ok('and carries the blurb', site.categoryList()[0].blurb, 'Soft ties');
+
+  site.CATEGORIES = [{ name: 'Bundles' }, { name: 'Pillowcases' }];
+  ok('a category with nothing in it is not shown',
+     site.categoryList().map((c) => c.name),
+     ['Pillowcases', 'Scrunchies']);
+
+  site.CATEGORIES = [{ name: 'Pillowcases' }];
+  ok('a category missing from the list still appears',
+     site.categoryList().map((c) => c.name),
+     ['Pillowcases', 'Scrunchies']);
+
+  console.log('\ncollections');
+
+  site.PRODUCTS = [
+    { slug: 'pillow', category: 'Pillowcases' },
+    { slug: 'mask', category: 'Sleep Masks' },
+    { slug: 'tie', category: 'Scrunchies' }
+  ];
+  site.COLLECTIONS = [
+    { slug: 'gifts', name: 'Gifts', products: ['mask', 'pillow'] },
+    { slug: 'gone', name: 'All deleted', products: ['nope'] },
+    { slug: '', name: 'No address', products: ['tie'] }
+  ];
+
+  ok('a collection keeps its own product order',
+     site.productsIn(site.COLLECTIONS[0]).map((p) => p.slug),
+     ['mask', 'pillow']);
+  ok('collections spanning categories are fine',
+     site.productsIn(site.COLLECTIONS[0]).map((p) => p.category),
+     ['Sleep Masks', 'Pillowcases']);
+  ok('one whose products are all gone is dropped',
+     site.collectionList().map((c) => c.slug),
+     ['gifts']);
+  ok('findCollection locates by slug', site.findCollection('gifts').name, 'Gifts');
+  ok('an unknown slug finds nothing', site.findCollection('nope'), null);
+  ok('the link is a query, so no file is needed',
+     site.collectionHref('the edit'), 'collection.html?c=the%20edit');
+
+  /* ----------------------------------------------------------- admin.js -- */
+
+  console.log('\nthe panel');
+
+  const adminSrc = fs.readFileSync('_shared/js/admin.js', 'utf8');
+  const adm = { console };
+  adm.slugify = null;
+  vm.createContext(adm);
+  vm.runInContext(
+    extract(adminSrc, ['slugify', 'syncCategories', 'renameCategory', 'collProducts', 'grab']),
+    adm);
+
+  adm.state = {
+    items: [
+      { slug: 'a', name: 'A', category: 'Pillowcases' },
+      { slug: 'b', name: 'B', category: 'Scrunchies' }
+    ],
+    categories: [{ name: 'Pillowcases', blurb: 'keep me' }, { name: 'Gone', blurb: 'x' }],
+    collections: []
+  };
+
+  adm.syncCategories();
+  ok('an empty category is dropped from the panel too',
+     adm.state.categories.map((c) => c.name), ['Pillowcases', 'Scrunchies']);
+  ok('the blurb survives the sync', adm.state.categories[0].blurb, 'keep me');
+  ok('counts are recomputed', adm.state.categories.map((c) => c.count), [1, 1]);
+
+  adm.renameCategory('Pillowcases', 'Pillow Covers');
+  ok('renaming moves every product in it',
+     adm.state.items.map((p) => p.category), ['Pillow Covers', 'Scrunchies']);
+  ok('and the category itself', adm.state.categories[0].name, 'Pillow Covers');
+  ok('the slug follows the name', adm.state.categories[0].slug, 'pillow-covers');
+
+  adm.renameCategory('Pillow Covers', 'Scrunchies');
+  adm.syncCategories();
+  ok('renaming onto an existing category merges them',
+     adm.state.categories.map((c) => c.name + ':' + c.count), ['Scrunchies:2']);
+
+  console.log('\nreading an exported file back');
+
+  const file = [
+    'PRODUCTS = [{"slug":"a","name":"Has ] a bracket"}];',
+    'CATEGORIES = [{"name":"One"},{"name":"Two"}];',
+    'COLLECTIONS = [{"slug":"g","products":["a"]}];'
+  ].join('\n');
+
+  ok('products are read back', adm.grab(file, 'PRODUCTS').length, 1);
+  ok('a bracket inside a string does not end the array early',
+     adm.grab(file, 'PRODUCTS')[0].name, 'Has ] a bracket');
+  ok('categories are read back', adm.grab(file, 'CATEGORIES').map((c) => c.name), ['One', 'Two']);
+  ok('collections are read back', adm.grab(file, 'COLLECTIONS')[0].slug, 'g');
+  ok('a name that is not there returns nothing', adm.grab(file, 'NOPE'), null);
+})();
+
 process.exit(FAILS ? 1 : 0);

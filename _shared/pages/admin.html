@@ -52,7 +52,25 @@
     </p>
   </details>
 
-  <div class="adm-body">
+  <!-- Shown when the draft in this browser no longer matches the catalogue
+       the shop is serving — usually because the products were changed
+       somewhere else since. Never overwrites anything without being asked. -->
+  <div class="adm-stale" id="adm-stale" hidden>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+    <p id="adm-stale-text"></p>
+    <span class="adm-stale__actions">
+      <button type="button" class="adm-btn adm-btn--primary" id="adm-stale-load">Load the shop&rsquo;s products</button>
+      <button type="button" class="adm-btn" id="adm-stale-keep">Keep my draft</button>
+    </span>
+  </div>
+
+  <nav class="adm-tabs" aria-label="Sections">
+    <button type="button" class="adm-tab is-active" data-tab="products" aria-selected="true">Products</button>
+    <button type="button" class="adm-tab" data-tab="categories" aria-selected="false">Categories</button>
+    <button type="button" class="adm-tab" data-tab="collections" aria-selected="false">Collections</button>
+  </nav>
+
+  <div class="adm-body adm-pane" data-pane="products">
 
     <!-- ------------------------------------------------- the catalogue --- -->
     <aside class="adm-list-pane">
@@ -254,6 +272,97 @@
 
   </div>
 </div>
+
+  <!-- ------------------------------------------------- categories ----- -->
+  <div class="adm-pane" data-pane="categories" hidden>
+    <div class="adm-pane__inner">
+      <p class="adm-pane__lede">
+        A category is what a product <em>is</em>. Every product has exactly
+        one, and it drives the shop filters, the menu and the category pages.
+        Rename one here and every product in it follows.
+      </p>
+
+      <form class="adm-newrow" id="adm-cat-new">
+        <input type="text" id="adm-cat-name" placeholder="New category name" aria-label="New category name">
+        <button type="submit" class="adm-btn adm-btn--primary">Add category</button>
+      </form>
+
+      <ol class="adm-cats" id="adm-cats"></ol>
+    </div>
+  </div>
+
+  <!-- ------------------------------------------------- collections ----- -->
+  <div class="adm-pane" data-pane="collections" hidden>
+    <div class="adm-body">
+
+      <aside class="adm-list-pane">
+        <div class="adm-list-pane__head">
+          <button type="button" class="adm-btn adm-btn--primary adm-btn--block" id="adm-coll-add">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            New collection
+          </button>
+        </div>
+        <ol class="adm-list" id="adm-colls"></ol>
+        <p class="adm-list__empty" id="adm-colls-empty">
+          No collections yet. A collection is a hand-picked set of products
+          &mdash; &ldquo;Gifts under $50&rdquo;, &ldquo;The bedroom edit&rdquo;
+          &mdash; and it can mix categories freely.
+        </p>
+      </aside>
+
+      <main class="adm-editor" id="adm-coll-editor" hidden>
+        <div class="adm-group">
+          <div class="adm-field">
+            <label for="fc-name">Collection name</label>
+            <input type="text" id="fc-name" data-coll="name">
+            <span class="adm-field__err" id="err-cname"></span>
+          </div>
+
+          <div class="adm-row">
+            <div class="adm-field">
+              <label for="fc-slug">Web address</label>
+              <input type="text" id="fc-slug" data-coll="slug">
+              <span class="adm-hint" id="coll-slug-preview">collection.html?c=</span>
+              <span class="adm-field__err" id="err-cslug"></span>
+            </div>
+            <div class="adm-field adm-field--check">
+              <label class="adm-check">
+                <input type="checkbox" id="fc-featured" data-coll="featured">
+                <span>Show on the home page</span>
+              </label>
+              <span class="adm-hint">Featured collections get a tile on the home page. All of them appear in the menu.</span>
+            </div>
+          </div>
+
+          <div class="adm-field">
+            <label for="fc-blurb">One-line description</label>
+            <input type="text" id="fc-blurb" data-coll="blurb" maxlength="120">
+          </div>
+        </div>
+
+        <div class="adm-group">
+          <div class="adm-picker__head">
+            <h3 class="adm-picker__title">What is in it</h3>
+            <span class="adm-picker__count" id="adm-picked-count">0 chosen</span>
+          </div>
+          <label class="adm-search adm-search--flush">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            <input type="search" id="adm-coll-search" placeholder="Search products" aria-label="Search products to add">
+          </label>
+          <div class="adm-picker" id="adm-picker"></div>
+        </div>
+
+        <div class="adm-danger">
+          <button type="button" class="adm-btn adm-btn--danger" id="adm-coll-delete">Delete this collection</button>
+        </div>
+      </main>
+
+      <div class="adm-blank" id="adm-coll-blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></svg>
+        <p>Pick a collection on the left, or make a new one.</p>
+      </div>
+    </div>
+  </div>
 
 <!-- Confirmations and export results land here rather than in an alert(). -->
 <div class="adm-toast" id="adm-toast" hidden></div>

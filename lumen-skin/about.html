@@ -32,8 +32,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="css/base.css?v=1c5b372c">
-<link rel="stylesheet" href="css/brand.css?v=1c5b372c">
+<link rel="stylesheet" href="css/base.css?v=dc51998e">
+<link rel="stylesheet" href="css/brand.css?v=dc51998e">
 <!-- A page may add one stylesheet of its own. It loads last so it wins. -->
 
 
@@ -43,16 +43,19 @@
   tracking.js (inert until you add pixel IDs). All synchronous and tiny —
   that is what lets inline render calls run during parse with zero layout shift.
 -->
-<script src="js/brand-config.js?v=1c5b372c"></script>
+<script src="js/brand-config.js?v=dc51998e"></script>
 <!-- Products exported from admin.html, if there are any. It reassigns PRODUCTS,
      so it has to run before anything reads them. Ships empty; replacing this
      one file is all it takes to change the catalogue. -->
-<script src="js/products.js?v=1c5b372c"></script>
-<script src="js/cart.js?v=1c5b372c"></script>
-<script src="js/theme-init.js?v=1c5b372c"></script>
-<script src="js/site.js?v=1c5b372c"></script>
-<script src="js/tracking.js?v=1c5b372c"></script>
-<script src="js/checkout.js?v=1c5b372c"></script>
+<script src="js/products.js?v=dc51998e"></script>
+<script src="js/cart.js?v=dc51998e"></script>
+<script src="js/theme-init.js?v=dc51998e"></script>
+<script src="js/site.js?v=dc51998e"></script>
+<script src="js/tracking.js?v=dc51998e"></script>
+<script src="js/checkout.js?v=dc51998e"></script>
+<!-- A page may load one script of its own. admin.js is the only one, and it
+     has no business on the 16 pages a customer actually visits. -->
+
 <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
 
 </head>
@@ -89,6 +92,13 @@
           <div class="nav-mega">
             <div>
               <div class="nav-mega__cats" id="mega-cats"></div>
+
+            <!-- Collections, when there are any. Built at runtime from
+                 COLLECTIONS so a new one needs no rebuild. -->
+            <div class="nav-mega__collections" data-collections-block hidden>
+              <p class="nav-mega__label">Collections</p>
+              <div class="nav-menu__links" id="mega-collections"></div>
+            </div>
               <a class="nav-mega__all" href="shop.html">
                 <span>View all products</span>
                 <span id="mega-total"></span>
