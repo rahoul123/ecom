@@ -1,0 +1,273 @@
+<!doctype html>
+<!--
+  Your basket | Lunelle Silk
+  Static site. No build step, no server. Upload this folder as-is via FTP.
+  Brand identity, products and Shopify redirect links all live in js/brand-config.js.
+-->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+
+<title>Your basket | Lunelle Silk</title>
+<meta name="description" content="Review your basket at Lunelle Silk before checking out.">
+<link rel="canonical" href="https://lunelle-placeholder.com/cart.html">
+<!-- REMOVE BEFORE LAUNCH: keeps placeholder content out of search results -->
+<meta name="robots" content="noindex, nofollow">
+
+<!-- Open Graph / social + ad previews -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Lunelle Silk">
+<meta property="og:title" content="Your basket | Lunelle Silk">
+<meta property="og:description" content="Review your basket at Lunelle Silk before checking out.">
+<meta property="og:url" content="https://lunelle-placeholder.com/cart.html">
+<meta property="og:image" content="https://lunelle-placeholder.com/images/og-default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/base.css?v=3eb119c6">
+<link rel="stylesheet" href="css/brand.css?v=3eb119c6">
+
+<!--
+  Load order matters. brand-config.js first (data), theme-init.js second
+  (applies colours before first paint), then site.js (renderers), then
+  tracking.js (inert until you add pixel IDs). All synchronous and tiny —
+  that is what lets inline render calls run during parse with zero layout shift.
+-->
+<script src="js/brand-config.js?v=3eb119c6"></script>
+<script src="js/cart.js?v=3eb119c6"></script>
+<script src="js/theme-init.js?v=3eb119c6"></script>
+<script src="js/site.js?v=3eb119c6"></script>
+<script src="js/tracking.js?v=3eb119c6"></script>
+<script src="js/checkout.js?v=3eb119c6"></script>
+<script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
+
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<!-- ===== HEADER — duplicated in every .html file. Change it in _shared/partials/header.html
+     and re-run `node _tools/generate.js`, or find-and-replace across all pages. ===== -->
+<div class="announcement">
+  <span data-brand-announcement>[[PLACEHOLDER]] Buy 3, get 1 free — ends Sunday</span>
+</div>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="header-logo" href="index.html">
+      <!-- [[PLACEHOLDER: logo]] — replace images/logo.svg, or point BRAND.logo elsewhere -->
+      <img data-brand-logo src="images/logo.svg" alt="Lunelle Silk" width="148" height="40">
+    </a>
+
+    <nav class="header-nav" aria-label="Main">
+      <a href="index.html">Home</a>
+
+      <!-- Shop is a plain link to every product. -->
+      <a href="shop.html">Shop</a>
+
+      <!-- Categories: mega menu. Category list on the left, and the products of
+           whichever category is hovered on the right. Both are built from
+           PRODUCTS at runtime — see Site.renderCategoryMenu(). -->
+      <div class="nav-item" id="categories-nav-item">
+        <a class="nav-trigger" href="shop.html" aria-expanded="false" aria-haspopup="true" aria-controls="categories-menu">
+          Categories
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </a>
+        <div class="nav-menu nav-menu--mega" id="categories-menu">
+          <div class="nav-mega">
+            <div>
+              <div class="nav-mega__cats" id="mega-cats"></div>
+              <a class="nav-mega__all" href="shop.html">
+                <span>View all products</span>
+                <span id="mega-total"></span>
+              </a>
+            </div>
+            <div class="nav-mega__panel">
+              <div class="nav-mega__panel-head">
+                <h4 class="nav-mega__panel-title" id="mega-panel-title"></h4>
+                <a class="nav-mega__panel-link" id="mega-panel-link" href="shop.html">See all &rarr;</a>
+              </div>
+              <div class="nav-mega__products" id="mega-products"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a href="index.html#how-it-works">How it works</a>
+      <a href="about.html">About</a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="btn btn--primary btn--sm" href="shop.html">Shop pillowcases</a>
+
+      <!-- The basket. Count is filled by Site.syncCartCount on every page. -->
+      <a class="icon-btn" href="cart.html" data-cart-link aria-label="Basket">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+        <span class="cart-count" data-cart-count hidden>0</span>
+      </a>
+
+      <button type="button" class="icon-btn nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-nav" id="mobile-nav">
+  <div class="mobile-nav__scrim"></div>
+  <div class="mobile-nav__panel" role="dialog" aria-modal="true" aria-label="Menu">
+    <div class="mobile-nav__head">
+      <img data-brand-logo src="images/logo.svg" alt="Lunelle Silk" width="130" height="35">
+      <button type="button" class="icon-btn mobile-nav__close" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <nav class="mobile-nav__links" aria-label="Mobile">
+      <a href="index.html">Home</a>
+
+      <a href="shop.html">Shop</a>
+
+      <!-- Tap the text for all products; tap the chevron to open the categories. -->
+      <div class="mobile-nav__row">
+        <a href="shop.html">Categories</a>
+        <button type="button" class="mobile-nav__sub-toggle" aria-expanded="false" aria-controls="mobile-categories-menu" aria-label="Show product categories">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+      </div>
+      <div class="mobile-nav__sub" id="mobile-categories-menu"><div></div></div>
+
+      <a href="index.html#how-it-works">How it works</a>
+      <a href="about.html">About</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="mobile-nav__foot">
+      <a class="btn btn--primary btn--block" href="shop.html">Shop pillowcases</a>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+<section class="page-head">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span aria-hidden="true">/</span>
+      <span>Basket</span>
+    </nav>
+    <h1>Your basket</h1>
+    <p id="sum-count">&nbsp;</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    <!-- Shown when there is nothing in the basket. -->
+    <div class="cart-empty" id="cart-empty" hidden>
+      <h2>Your basket is empty</h2>
+      <p>Nothing here yet. The collection is a good place to start.</p>
+      <div class="btn-row" style="justify-content:center">
+        <a class="btn btn--primary btn--lg" href="shop.html">Shop pillowcases</a>
+      </div>
+    </div>
+
+    <div class="cart-layout" id="cart-body" hidden>
+      <div>
+        <ul class="cart-lines" id="cart-lines"></ul>
+        <div class="btn-row mt-3">
+          <a class="btn btn--secondary" href="shop.html">Continue shopping</a>
+        </div>
+      </div>
+
+      <aside class="summary">
+        <h2>Order summary</h2>
+
+        <div class="ship-meter" id="ship-meter" hidden></div>
+
+        <div class="summary__row">
+          <span>Subtotal</span><span id="sum-subtotal">&mdash;</span>
+        </div>
+        <div class="summary__row">
+          <span>Delivery</span><span id="sum-shipping">&mdash;</span>
+        </div>
+        <div class="summary__row summary__row--total">
+          <span>Total</span><span id="sum-total">&mdash;</span>
+        </div>
+
+        <a class="btn btn--primary btn--lg btn--block" href="checkout.html">Proceed to checkout</a>
+        <p class="summary__note">Taxes calculated at checkout.</p>
+      </aside>
+    </div>
+
+  </div>
+</section>
+</main>
+
+<!-- ===== FOOTER — duplicated in every .html file. Change it in _shared/partials/footer.html
+     and re-run `node _tools/generate.js`, or find-and-replace across all pages. ===== -->
+<footer class="site-footer">
+  <div class="container">
+    <!-- Newsletter. No backend on static hosting — see README "contact form". -->
+    <div class="newsletter">
+      <div>
+        <h3>[[PLACEHOLDER]] Get 15% off your first order</h3>
+        <p>Occasional emails about new products and offers. Unsubscribe anytime.</p>
+      </div>
+      <div>
+        <form class="newsletter__form" id="newsletter-form" novalidate>
+          <label class="visually-hidden" for="nl-email">Email address</label>
+          <input type="email" id="nl-email" name="email" placeholder="you@example.com" autocomplete="email" required>
+          <button type="submit" class="btn btn--primary">Sign up</button>
+        </form>
+        <p class="newsletter__note">[[PLACEHOLDER: this form does not send yet. Connect a form service — see README.]]</p>
+      </div>
+    </div>
+
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img data-brand-logo src="images/logo-light.svg" alt="Lunelle Silk" width="148" height="40">
+        <p data-brand-tagline>A little silk. A lot to love.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <!-- Filled from PRODUCTS by site.js so it tracks your live categories. -->
+        <ul id="footer-categories">
+          <li><a href="shop.html">All products</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About us</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <!-- Filled from BRAND.legalPages so removing a page cannot strand a link. -->
+        <ul id="footer-legal"></ul>
+      </div>
+    </div>
+
+    <p class="footer-disclaimer is-placeholder" data-brand-disclaimer>[[PLACEHOLDER: health disclaimer — replace with reviewed legal copy before launch.]]</p>
+
+    <div class="footer-bottom">
+      <p style="margin:0">&copy; <span data-year>2025</span> <span data-brand-entity>Lunelle Silk Ltd</span>. All rights reserved.</p>
+      <ul id="footer-legal-inline"></ul>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

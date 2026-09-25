@@ -83,37 +83,42 @@ var Site = (function () {
     return out + '</span>';
   }
 
-  /* -------------------------------------------------------------- checkout */
+  /* ------------------------------------------------------------------ cart */
 
   /**
-   * THE single integration point with the real Shopify stores.
-   * Fires a trackable outbound event, then navigates in the same tab.
-   * Redirect is never blocked by a slow pixel — see the timeout fallback.
+   * Adds a product and sends the visitor to the basket.
+   *
+   * This replaced a redirect to an external Shopify product page. The basket
+   * and checkout now live on this site, so the only hand-off left is the
+   * payment step itself — see checkout.html and BRAND.payment.
    */
-  function goToCheckout(slug, e) {
-    if (e) e.preventDefault();
-    var product = productBySlug(slug);
-    if (!product) return false;
-
-    var url = product.checkoutUrl;
-    if (!url || url.indexOf('example-shopify-store') !== -1) {
-      console.warn('[checkout] Placeholder URL still in place for "' + slug + '". ' +
-        'Set checkoutUrl in js/brand-config.js to the real Shopify product link.');
+  function addToCart(slug, option, qty, opts) {
+    opts = opts || {};
+    if (!Cart.add(slug, option, qty)) {
+      console.warn('[cart] no product with slug "' + slug + '"');
+      return false;
     }
 
-    var done = false;
-    function go() {
-      if (done) return;
-      done = true;
-      window.location.href = url;
+    if (typeof Tracking !== 'undefined' && Tracking.addToCart) {
+      Tracking.addToCart(productBySlug(slug), qty || 1);
     }
+    syncCartCount();
 
-    if (typeof Tracking !== 'undefined' && typeof Tracking.checkoutClick === 'function') {
-      Tracking.checkoutClick(product, go);
-    }
-    /* Never let analytics hold the user hostage. */
-    setTimeout(go, 350);
-    return false;
+    if (opts.stay) return true;
+    window.location.href = 'cart.html';
+    return true;
+  }
+
+  /** Keeps every cart badge on the page in step with the basket. */
+  function syncCartCount() {
+    var n = Cart.count();
+    els('[data-cart-count]').forEach(function (node) {
+      node.textContent = n;
+      node.hidden = n === 0;
+    });
+    els('[data-cart-link]').forEach(function (node) {
+      node.setAttribute('aria-label', 'Basket, ' + n + (n === 1 ? ' item' : ' items'));
+    });
   }
 
   /* --------------------------------------------------------- product card */
@@ -162,7 +167,7 @@ var Site = (function () {
               (onSale ? '<span class="price__was">' + money(p.compareAt) + '</span>' : '') +
             '</span>' +
             '<button type="button" class="btn btn--primary btn--sm" ' +
-              'onclick="return Site.goToCheckout(\'' + esc(p.slug) + '\', event)">Shop now</button>' +
+              'data-add="' + esc(p.slug) + '">Add to cart</button>' +
           '</div>' +
         '</div>' +
       '</article>';
@@ -387,9 +392,29 @@ var Site = (function () {
     }
 
     setHTML('#pdp-buy',
-      '<button type="button" class="btn btn--primary btn--lg btn--block" ' +
-      'onclick="return Site.goToCheckout(\'' + esc(p.slug) + '\', event)">' +
-      esc(BRAND.copy && BRAND.copy.buyCta ? BRAND.copy.buyCta : 'Buy now') + '</button>');
+      '<div class="qty" role="group" aria-label="Quantity">' +
+        '<button type="button" class="qty__btn" data-qty-step="-1" aria-label="Decrease quantity">&minus;</button>' +
+        '<input class="qty__input" id="pdp-qty" type="number" min="1" max="99" value="1" aria-label="Quantity">' +
+        '<button type="button" class="qty__btn" data-qty-step="1" aria-label="Increase quantity">+</button>' +
+      '</div>' +
+      '<button type="button" class="btn btn--primary btn--lg btn--block" id="pdp-add">' +
+      esc(BRAND.copy && BRAND.copy.buyCta ? BRAND.copy.buyCta : 'Add to cart') + '</button>');
+
+    var qtyBox = el('#pdp-qty');
+    els('[data-qty-step]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var next = (Number(qtyBox.value) || 1) + Number(b.getAttribute('data-qty-step'));
+        qtyBox.value = Math.max(1, Math.min(99, next));
+      });
+    });
+
+    var addBtn = el('#pdp-add');
+    if (addBtn) {
+      addBtn.addEventListener('click', function () {
+        var active = el('.option-pill.is-active');
+        addToCart(p.slug, active ? active.textContent.trim() : null, Number(qtyBox.value) || 1);
+      });
+    }
 
     setHTML('#pdp-benefits', p.benefits.map(function (b) {
       return '<li>' + icon('check') + '<span>' + esc(b) + '</span></li>';
@@ -423,8 +448,7 @@ var Site = (function () {
         '<div class="sticky-buy__price">' + money(p.price) +
           (onSale ? ' <s>' + money(p.compareAt) + '</s>' : '') + '</div>' +
       '</div>' +
-      '<button type="button" class="btn btn--primary" ' +
-      'onclick="return Site.goToCheckout(\'' + esc(p.slug) + '\', event)">' + cta + '</button>');
+      '<button type="button" class="btn btn--primary" data-add="' + esc(p.slug) + '">' + cta + '</button>');
 
     renderProducts('#pdp-related', { limit: 4, exclude: p.slug });
   }
@@ -452,7 +476,7 @@ var Site = (function () {
       image: [new URL(p.image, window.location.href).href],
       offers: {
         '@type': 'Offer',
-        url: p.checkoutUrl,
+        url: new URL('product.html?p=' + p.slug, window.location.href).href,
         priceCurrency: (BRAND.currency && BRAND.currency.code) || 'USD',
         price: Number(p.price).toFixed(2),
         availability: 'https://schema.org/InStock'
@@ -926,7 +950,7 @@ var Site = (function () {
           '<div class="arrival__foot">' +
             '<span class="price"><span class="price__now">' + money(p.price) + '</span>' +
               (onSale ? '<span class="price__was">' + money(p.compareAt) + '</span>' : '') + '</span>' +
-            '<button type="button" class="btn btn--primary btn--sm" data-buy="' + esc(p.slug) + '">Shop now</button>' +
+            '<button type="button" class="btn btn--primary btn--sm" data-add="' + esc(p.slug) + '">Add to cart</button>' +
           '</div>' +
         '</div>' +
       '</article>';
@@ -975,7 +999,7 @@ var Site = (function () {
           '<strong>' + esc(lead.name) + '</strong>' +
           '<span>' + esc(lead.reviewCount) + ' reviews &middot; ' + esc(lead.rating) + '/5</span>' +
         '</span>' +
-        '<button type="button" class="btn btn--primary btn--sm" data-buy="' + esc(lead.slug) + '">Buy</button>' +
+        '<button type="button" class="btn btn--primary btn--sm" data-add="' + esc(lead.slug) + '">Add to cart</button>' +
       '</span>';
   }
 
@@ -1055,7 +1079,7 @@ var Site = (function () {
             '<span class="pdp__save">Save ' + save + '%</span>' : '') +
         '</div>' +
         '<div class="btn-row">' +
-          '<button type="button" class="btn btn--primary btn--lg" data-buy="' + esc(p.slug) + '">' + cta + '</button>' +
+          '<button type="button" class="btn btn--primary btn--lg" data-add="' + esc(p.slug) + '">' + cta + '</button>' +
           '<a class="btn btn--secondary btn--lg" href="product.html?p=' + esc(p.slug) + '">See details</a>' +
         '</div>' +
       '</div>';
@@ -1546,12 +1570,18 @@ var Site = (function () {
     initScrollMotion();
     initCounters();
 
-    /* Any element carrying data-buy triggers the Shopify redirect. Using a
-       delegated listener keeps quoting out of generated markup. */
+    /* Anything carrying data-add puts that product in the basket. A delegated
+       listener keeps quoting out of the generated markup. */
     document.addEventListener('click', function (ev) {
-      var buy = ev.target.closest('[data-buy]');
-      if (buy) goToCheckout(buy.getAttribute('data-buy'), ev);
+      var add = ev.target.closest('[data-add]');
+      if (!add) return;
+      ev.preventDefault();
+      addToCart(add.getAttribute('data-add'), add.getAttribute('data-option'),
+        Number(add.getAttribute('data-qty')) || 1);
     });
+
+    syncCartCount();
+    Cart.onChange(syncCartCount);
 
     /* Removing an active filter chip on the shop page. */
     document.addEventListener('click', function (ev) {
@@ -1576,7 +1606,8 @@ var Site = (function () {
     icon: icon,
     stars: stars,
     esc: esc,
-    goToCheckout: goToCheckout,
+    addToCart: addToCart,
+    syncCartCount: syncCartCount,
     renderProducts: renderProducts,
     renderShop: renderShop,
     renderFilters: renderFilters,

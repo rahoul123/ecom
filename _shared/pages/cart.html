@@ -1,0 +1,54 @@
+<section class="page-head">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span aria-hidden="true">/</span>
+      <span>Basket</span>
+    </nav>
+    <h1>Your basket</h1>
+    <p id="sum-count">&nbsp;</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    <!-- Shown when there is nothing in the basket. -->
+    <div class="cart-empty" id="cart-empty" hidden>
+      <h2>Your basket is empty</h2>
+      <p>Nothing here yet. The collection is a good place to start.</p>
+      <div class="btn-row" style="justify-content:center">
+        <a class="btn btn--primary btn--lg" href="shop.html">{{copy.primaryCta}}</a>
+      </div>
+    </div>
+
+    <div class="cart-layout" id="cart-body" hidden>
+      <div>
+        <ul class="cart-lines" id="cart-lines"></ul>
+        <div class="btn-row mt-3">
+          <a class="btn btn--secondary" href="shop.html">Continue shopping</a>
+        </div>
+      </div>
+
+      <aside class="summary">
+        <h2>Order summary</h2>
+
+        <div class="ship-meter" id="ship-meter" hidden></div>
+
+        <div class="summary__row">
+          <span>Subtotal</span><span id="sum-subtotal">&mdash;</span>
+        </div>
+        <div class="summary__row">
+          <span>Delivery</span><span id="sum-shipping">&mdash;</span>
+        </div>
+        <div class="summary__row summary__row--total">
+          <span>Total</span><span id="sum-total">&mdash;</span>
+        </div>
+
+        <a class="btn btn--primary btn--lg btn--block" href="checkout.html">Proceed to checkout</a>
+        <p class="summary__note">Taxes calculated at checkout.</p>
+      </aside>
+    </div>
+
+  </div>
+</section>

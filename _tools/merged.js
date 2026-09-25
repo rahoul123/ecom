@@ -288,7 +288,14 @@ module.exports = {
     address: '[[PLACEHOLDER: registered business address]]'
   },
 
+  shipping: { freeOver: 75, flatRate: 6.95 },
+
+  /* No provider connected yet — the checkout confirms the order and says
+     plainly that nothing was charged. See README -> Payments. */
+  payment: { provider: 'none', url: '', endpoint: '' },
+
   copy: {
+    buyCta: 'Add to cart',
     heroEyebrow: '22-momme mulberry silk',
     heroH1: 'A little silk.',
     heroH1Accent: 'A lot to love.',

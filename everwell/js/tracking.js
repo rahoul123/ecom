@@ -8,8 +8,8 @@
    What it does once enabled:
      - loads the Google tag (GA4 and/or Google Ads) and the Meta Pixel
      - pushes a dataLayer event on every page view
-     - fires an outbound-click conversion right before the Shopify redirect,
-       which is your proxy conversion for ads (see Site.goToCheckout)
+     - fires add_to_cart, begin_checkout and purchase as the basket moves,
+       so ads have real funnel events rather than an outbound-click proxy
    ========================================================================== */
 
 var Tracking = (function () {
@@ -89,64 +89,81 @@ var Tracking = (function () {
     }
   }
 
-  /**
-   * Outbound click to the real Shopify store.
-   * This is the proxy conversion — the actual purchase happens on a domain
-   * this site cannot see, so this click is the last event we control.
-   *
-   * `done` is called as soon as the pixels have been handed the event; the
-   * caller also runs its own timeout so a blocked pixel never eats the click.
-   */
-  function checkoutClick(product, done) {
-    var payload = {
-      event: 'begin_checkout_outbound',
+  /** Something went into the basket. */
+  function addToCart(product, qty) {
+    if (!product) return;
+    window.dataLayer.push({
+      event: 'add_to_cart',
       currency: currency(),
-      value: Number(product.price),
-      destination: product.checkoutUrl,
-      items: [item(product)]
-    };
-    window.dataLayer.push(payload);
-
-    if (!enabled) {
-      if (typeof done === 'function') done();
-      return;
-    }
-
-    if (window.fbq) {
-      window.fbq('track', 'InitiateCheckout', {
+      value: Number(product.price) * (qty || 1),
+      items: [item(product, qty)]
+    });
+    if (enabled && window.fbq) {
+      window.fbq('track', 'AddToCart', {
         content_ids: [product.sku],
         content_name: product.name,
         content_type: 'product',
-        value: Number(product.price),
+        value: Number(product.price) * (qty || 1),
         currency: currency()
       });
     }
+  }
 
+  /** The visitor reached the checkout page with a basket. */
+  function beginCheckout(lines, value) {
+    window.dataLayer.push({
+      event: 'begin_checkout',
+      currency: currency(),
+      value: Number(value) || 0,
+      items: (lines || []).map(function (l) { return item(l.product, l.qty); })
+    });
+    if (enabled && window.fbq) {
+      window.fbq('track', 'InitiateCheckout', {
+        value: Number(value) || 0,
+        currency: currency(),
+        num_items: (lines || []).reduce(function (n, l) { return n + l.qty; }, 0)
+      });
+    }
+  }
+
+  /**
+   * The order was placed. On a static site this fires at the point the basket
+   * is handed to a payment provider, not on a confirmed payment — so treat it
+   * as an intent signal until a provider webhook can confirm the sale.
+   */
+  function purchase(lines, value, orderId) {
+    window.dataLayer.push({
+      event: 'purchase',
+      transaction_id: orderId,
+      currency: currency(),
+      value: Number(value) || 0,
+      items: (lines || []).map(function (l) { return item(l.product, l.qty); })
+    });
+    if (!enabled) return;
+    if (window.fbq) {
+      window.fbq('track', 'Purchase', { value: Number(value) || 0, currency: currency() });
+    }
     if (cfg.googleAdsConversionId && cfg.googleAdsConversionLabel) {
       gtag('event', 'conversion', {
         send_to: cfg.googleAdsConversionId + '/' + cfg.googleAdsConversionLabel,
-        value: Number(product.price),
+        value: Number(value) || 0,
         currency: currency(),
-        /* Lets the tag finish before we navigate away. */
-        event_callback: done
+        transaction_id: orderId
       });
-      return;
     }
-
-    if (typeof done === 'function') done();
   }
 
   function currency() {
     return (typeof BRAND !== 'undefined' && BRAND.currency && BRAND.currency.code) || 'USD';
   }
 
-  function item(product) {
+  function item(product, qty) {
     return {
       item_id: product.sku,
       item_name: product.name,
       item_category: product.category,
       price: Number(product.price),
-      quantity: 1
+      quantity: qty || 1
     };
   }
 
@@ -166,7 +183,9 @@ var Tracking = (function () {
   }
 
   return {
-    checkoutClick: checkoutClick,
+    addToCart: addToCart,
+    beginCheckout: beginCheckout,
+    purchase: purchase,
     viewItem: viewItem,
     pageView: pageView,
     isEnabled: function () { return enabled; }
