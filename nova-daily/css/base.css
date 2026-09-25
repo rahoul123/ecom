@@ -2624,3 +2624,99 @@ body.show-placeholders .is-placeholder { outline: 2px dashed var(--color-warn); 
   font-weight: 700;
   letter-spacing: 0.1em;
 }
+
+/* --------------------------------------------------------------------------
+   41. Card entry
+   The fields are real and validated, but the form deliberately goes nowhere —
+   there is no server behind it. See checkout.js -> submit.
+   -------------------------------------------------------------------------- */
+
+.card-brands {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+.card-brands__mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  min-width: 36px;
+  padding: 0 6px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-bg);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--color-muted);
+  opacity: 0.55;
+  transition: opacity 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.card-brands__mark.is-active {
+  opacity: 1;
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.card-grid { display: grid; gap: 1.25rem; }
+@media (min-width: 560px) { .card-grid--split { grid-template-columns: 1fr 1fr; } }
+
+/* The input that carries a detected brand badge on its right. */
+.card-input { position: relative; }
+.card-input .input { padding-right: 4.25rem; font-variant-numeric: tabular-nums; letter-spacing: 0.06em; }
+.card-input__brand {
+  position: absolute;
+  right: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 22px;
+  min-width: 34px;
+  padding: 0 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  background: var(--color-soft);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--color-muted);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.card-input__brand.is-shown { opacity: 1; background: var(--color-accent-tint); color: var(--color-accent); }
+
+.card-lock {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.85rem;
+  font-size: var(--fs-xs);
+  color: var(--color-muted);
+}
+.card-lock svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+/* The notice the form shows instead of placing an order. */
+.form-stop {
+  display: flex;
+  gap: 0.9rem;
+  margin-top: 1.5rem;
+  padding: 1.25rem 1.4rem;
+  border: 1px solid var(--color-warn-border);
+  border-left: 4px solid var(--color-warn);
+  border-radius: 18px;
+  background: var(--color-warn-bg);
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+}
+.form-stop svg { width: 21px; height: 21px; color: var(--color-warn); flex-shrink: 0; margin-top: 2px; }
+.form-stop strong { display: block; margin-bottom: 0.25rem; }
+.form-stop code {
+  padding: 0.1em 0.35em;
+  border-radius: 5px;
+  background: rgb(17 26 46 / 0.06);
+  font-size: 0.9em;
+}

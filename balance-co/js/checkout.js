@@ -82,6 +82,9 @@ var Checkout = (function () {
     var totalEl = el('#sum-total');
     if (totalEl) totalEl.textContent = money(Cart.total());
 
+    var btnTotal = el('#btn-total');
+    if (btnTotal) btnTotal.textContent = money(Cart.total());
+
     var countEl = el('#sum-count');
     if (countEl) {
       var n = Cart.count();
@@ -167,6 +170,181 @@ var Checkout = (function () {
     renderTotals();
   }
 
+  /* ----------------------------------------------------------------- card --
+     The card fields are real: formatted as you type, brand-detected, and
+     checked with Luhn and a live expiry test. They are also deliberately
+     inert — nothing is submitted anywhere and no value is ever stored. See
+     the submit handler at the bottom of this file.
+     -------------------------------------------------------------------- */
+
+  var CARD_BRANDS = [
+    { id: 'amex', label: 'AMEX', test: /^3[47]/, digits: [15], cvc: 4, gaps: [4, 10] },
+    { id: 'visa', label: 'VISA', test: /^4/, digits: [13, 16, 19], cvc: 3, gaps: [4, 8, 12] },
+    { id: 'mastercard', label: 'MC', test: /^(5[1-5]|2[2-7])/, digits: [16], cvc: 3, gaps: [4, 8, 12] },
+    { id: 'discover', label: 'DISC', test: /^(6011|65|64[4-9])/, digits: [16, 19], cvc: 3, gaps: [4, 8, 12] }
+  ];
+
+  function digitsOf(value) { return String(value || '').replace(/\D/g, ''); }
+
+  function brandOf(number) {
+    var d = digitsOf(number);
+    for (var i = 0; i < CARD_BRANDS.length; i++) {
+      if (CARD_BRANDS[i].test.test(d)) return CARD_BRANDS[i];
+    }
+    return null;
+  }
+
+  /** Groups digits the way the detected brand does; Amex is 4-6-5. */
+  function formatCardNumber(value) {
+    var brand = brandOf(value);
+    var gaps = brand ? brand.gaps : [4, 8, 12];
+    var d = digitsOf(value).slice(0, brand ? Math.max.apply(null, brand.digits) : 19);
+    var out = '';
+    for (var i = 0; i < d.length; i++) {
+      if (gaps.indexOf(i) !== -1) out += ' ';
+      out += d[i];
+    }
+    return out;
+  }
+
+  /** The standard checksum every card number satisfies. */
+  function luhnValid(number) {
+    var d = digitsOf(number);
+    if (d.length < 12) return false;
+    var sum = 0;
+    var alt = false;
+    for (var i = d.length - 1; i >= 0; i--) {
+      var n = Number(d[i]);
+      if (alt) {
+        n *= 2;
+        if (n > 9) n -= 9;
+      }
+      sum += n;
+      alt = !alt;
+    }
+    return sum % 10 === 0;
+  }
+
+  function cardNumberError(value) {
+    var d = digitsOf(value);
+    if (!d) return 'Enter the long number on the card.';
+    var brand = brandOf(value);
+    if (!brand) return 'We do not recognise that card type.';
+    if (brand.digits.indexOf(d.length) === -1) {
+      var lens = brand.digits.slice();
+      var last = lens.pop();
+      return 'A ' + brand.label + ' number is ' +
+        (lens.length ? lens.join(', ') + ' or ' + last : last) + ' digits.';
+    }
+    if (!luhnValid(d)) return 'Check the number — a digit looks wrong.';
+    return '';
+  }
+
+  function formatExpiry(value) {
+    var d = digitsOf(value).slice(0, 4);
+    /* A lone 2-9 is unambiguous: it can only be a month with a leading zero. */
+    if (d.length === 1 && Number(d) > 1) d = '0' + d;
+    if (d.length <= 2) return d;
+    return d.slice(0, 2) + ' / ' + d.slice(2);
+  }
+
+  function expiryError(value) {
+    var d = digitsOf(value);
+    if (d.length < 4) return 'Enter the expiry as MM / YY.';
+    var month = Number(d.slice(0, 2));
+    var year = 2000 + Number(d.slice(2, 4));
+    if (month < 1 || month > 12) return 'That month does not exist.';
+    var now = new Date();
+    /* Valid through the last day of the stated month. */
+    var expires = new Date(year, month, 1);
+    if (expires <= now) return 'That card has expired.';
+    if (year > now.getFullYear() + 25) return 'Check the year.';
+    return '';
+  }
+
+  function cvcError(value, number) {
+    var d = digitsOf(value);
+    var brand = brandOf(number);
+    var want = brand ? brand.cvc : 3;
+    if (d.length !== want) {
+      return 'The security code is ' + want + ' digits' + (brand && brand.id === 'amex' ? ' on Amex.' : '.');
+    }
+    return '';
+  }
+
+  /** Formats as the visitor types and keeps the brand badges in step. */
+  function initCardFields() {
+    var number = el('#co-cardnumber');
+    var expiry = el('#co-expiry');
+    var cvc = el('#co-cvc');
+    if (!number) return;
+
+    var badge = el('#card-brand');
+    var marks = els('#card-brands .card-brands__mark');
+
+    function paintBrand() {
+      var brand = brandOf(number.value);
+      if (badge) {
+        badge.textContent = brand ? brand.label : '';
+        badge.classList.toggle('is-shown', !!brand);
+      }
+      marks.forEach(function (m) {
+        m.classList.toggle('is-active', !!brand && m.getAttribute('data-brand') === brand.id);
+      });
+      if (cvc) cvc.maxLength = brand && brand.id === 'amex' ? 4 : 3;
+    }
+
+    number.addEventListener('input', function () {
+      var before = number.selectionStart;
+      var hadSpaceBefore = number.value.slice(0, before).endsWith(' ');
+      number.value = formatCardNumber(number.value);
+      /* Keep the caret roughly where it was after a space is inserted. */
+      if (before === number.value.length - 1 && hadSpaceBefore) before = number.value.length;
+      paintBrand();
+    });
+
+    if (expiry) {
+      expiry.addEventListener('input', function () {
+        expiry.value = formatExpiry(expiry.value);
+      });
+    }
+
+    if (cvc) {
+      cvc.addEventListener('input', function () {
+        cvc.value = digitsOf(cvc.value).slice(0, cvc.maxLength);
+      });
+    }
+
+    paintBrand();
+  }
+
+  /** Card-specific checks, run after the generic required-field pass. */
+  function validateCard() {
+    var checks = [
+      ['#co-cardnumber', function (v) { return cardNumberError(v); }],
+      ['#co-expiry', function (v) { return expiryError(v); }],
+      ['#co-cvc', function (v) { return cvcError(v, (el('#co-cardnumber') || {}).value); }]
+    ];
+
+    var ok = true;
+    var first = null;
+
+    checks.forEach(function (pair) {
+      var input = el(pair[0]);
+      if (!input) return;
+      var message = pair[1](input.value);
+      var field = input.closest('.field');
+      var err = field ? el('.field__error', field) : null;
+      if (field) field.classList.toggle('field--error', !!message);
+      if (err) err.textContent = message;
+      if (message && !first) first = input;
+      if (message) ok = false;
+    });
+
+    if (first) first.focus();
+    return ok;
+  }
+
   /** Every required field valid, with the message shown under the offender. */
   function validate(form) {
     var ok = true;
@@ -196,81 +374,79 @@ var Checkout = (function () {
   }
 
   /**
-   * Hands the basket to the configured payment provider.
+   * What happens when the form validates.
    *
-   * BRAND.payment.provider:
-   *   'none'   — no provider yet. Shows the confirmation and says clearly that
-   *              nothing was charged. This is the default.
-   *   'link'   — sends the visitor to BRAND.payment.url, with the order
-   *              reference appended. Use for a Stripe Payment Link, a PayPal
-   *              button, or a Shopify cart permalink.
-   *   'form'   — POSTs the order to BRAND.payment.endpoint, for a serverless
-   *              function that creates a real payment session.
+   * By design this does NOT place an order. The card fields above are a
+   * working front end with no back end behind them — there is no server on a
+   * static site, so nothing is charged, nothing is sent and no card value is
+   * stored or logged. The form stops here and says so.
+   *
+   * When a provider is connected, BRAND.payment takes over:
+   *   'link' — hand the basket to BRAND.payment.url (Stripe Payment Link,
+   *            PayPal, a Shopify permalink). The card fields should be
+   *            removed at that point; the provider collects them.
+   *   'form' — POST the order to BRAND.payment.endpoint for a serverless
+   *            function that opens a real payment session.
    */
-  function placeOrder(form) {
+  function submitOrder(form) {
     var lines = Cart.items();
     if (!lines.length) return;
 
-    var ref = orderRef();
-    var total = Cart.total();
     var pay = (BRAND.payment) || {};
-
-    if (typeof Tracking !== 'undefined' && Tracking.purchase) {
-      Tracking.purchase(lines, total, ref);
-    }
+    var total = Cart.total();
 
     if (pay.provider === 'link' && pay.url) {
+      if (typeof Tracking !== 'undefined' && Tracking.purchase) {
+        Tracking.purchase(lines, total, orderRef());
+      }
       Cart.clear();
-      window.location.href = pay.url + (pay.url.indexOf('?') === -1 ? '?' : '&') +
-        'ref=' + encodeURIComponent(ref);
+      window.location.href = pay.url;
       return;
     }
 
     if (pay.provider === 'form' && pay.endpoint) {
+      if (typeof Tracking !== 'undefined' && Tracking.purchase) {
+        Tracking.purchase(lines, total, orderRef());
+      }
       form.action = pay.endpoint;
       form.method = 'POST';
-      var hidden = document.createElement('input');
-      hidden.type = 'hidden';
-      hidden.name = 'order';
-      hidden.value = JSON.stringify({ ref: ref, total: total, lines: lines.map(function (l) {
-        return { sku: l.product.sku, name: l.product.name, option: l.option, qty: l.qty, price: l.price };
-      }) });
-      form.appendChild(hidden);
       form.submit();
       return;
     }
 
-    /* No provider configured: confirm the order and be honest about it. */
-    showConfirmation(ref, total, pay.provider !== 'none' && pay.provider);
-    Cart.clear();
+    /* No provider: stop, and be plain about why. The basket is left intact so
+       nothing is lost, and no purchase event fires — nothing was bought. */
+    showStop(total);
   }
 
-  function showConfirmation(ref, total, misconfigured) {
-    var host = el('#checkout-main');
+  function orderRef() {
+    return 'LN-' + Date.now().toString(36).toUpperCase().slice(-6);
+  }
+
+  function showStop(total) {
+    var host = el('#form-stop');
     if (!host) return;
 
+    host.hidden = false;
+    host.className = 'form-stop';
+    host.setAttribute('role', 'status');
     host.innerHTML =
-      '<div class="confirm">' +
-        '<span class="confirm__tick">' + icon('check') + '</span>' +
-        '<h1>Thank you</h1>' +
-        '<p class="text-muted">Your order has been recorded. A confirmation will follow by email.</p>' +
-        '<span class="confirm__ref">' + esc(ref) + '</span>' +
-        '<div class="pay-note" style="text-align:left">' +
-          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-          '<path d="M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L14.7 3.9a2 2 0 00-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>' +
-          '<div><strong>[[PLACEHOLDER]] No payment was taken.</strong>' +
-          (misconfigured
-            ? 'BRAND.payment names the provider &ldquo;' + esc(misconfigured) + '&rdquo; but its url or endpoint is missing.'
-            : 'This site has no payment provider connected yet. Set BRAND.payment in js/brand-config.js — see README.') +
-          '</div>' +
-        '</div>' +
-        '<div class="btn-row" style="justify-content:center;margin-top:2rem">' +
-          '<a class="btn btn--primary btn--lg" href="shop.html">Continue shopping</a>' +
-        '</div>' +
-      '</div>';
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" ' +
+      'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+      '<path d="M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L14.7 3.9a2 2 0 00-3.4 0z"/>' +
+      '<path d="M12 9v4M12 17h.01"/></svg>' +
+      '<div><strong>[[PLACEHOLDER]] The form stops here — no order was placed.</strong>' +
+      'Your details check out and the basket is still intact, but nothing was ' +
+      'submitted or charged. Connect a provider in <code>BRAND.payment</code> ' +
+      '(js/brand-config.js) to take real payments.</div>';
 
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    Site.syncCartCount();
+    var btn = el('#place-order');
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = 'Nothing was submitted';
+    }
+
+    host.scrollIntoView({ block: 'center', behavior: 'smooth' });
   }
 
   function initCheckout() {
@@ -284,6 +460,7 @@ var Checkout = (function () {
     }
 
     renderSummaryLines();
+    initCardFields();
 
     if (typeof Tracking !== 'undefined' && Tracking.beginCheckout) {
       Tracking.beginCheckout(Cart.items(), Cart.total());
@@ -291,8 +468,11 @@ var Checkout = (function () {
 
     form.addEventListener('submit', function (ev) {
       ev.preventDefault();
+      /* Generic required-field pass first, then the card-specific rules, so
+         the visitor is not told about a bad CVC while the email is empty. */
       if (!validate(form)) return;
-      placeOrder(form);
+      if (!validateCard()) return;
+      submitOrder(form);
     });
   }
 
