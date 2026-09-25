@@ -185,8 +185,8 @@ var BRAND = {
   spotlightSlug: "silk-pillowcase-champagne",
   promo: {
   "tag": "This week",
-  "heading": "[[PLACEHOLDER]] Buy 3, get 1 free",
-  "text": "[[PLACEHOLDER]] Mix any colours and any sizes. The cheapest of the four comes off at checkout.",
+  "heading": "Buy 3, get 1 free",
+  "text": "Mix any colours and any sizes. The cheapest of the four comes off at checkout.",
   "code": "SILK4",
   "cta": "Shop the offer"
 },
@@ -211,15 +211,15 @@ var BRAND = {
   howItWorks: [
   {
     "title": "Pick your colour",
-    "text": "[[PLACEHOLDER]] Ten silk colours, three sizes. Swatches on every product page."
+    "text": "Every colour, in three sizes. Swatches on each product page."
   },
   {
     "title": "We box it up",
-    "text": "[[PLACEHOLDER]] Gift box and ribbon as standard, note optional at checkout."
+    "text": "Gift box and ribbon as standard, note optional at checkout."
   },
   {
     "title": "Sleep on it",
-    "text": "[[PLACEHOLDER]] Sixty nights to decide. Send it back if it is not for you."
+    "text": "Sixty nights to decide. Send it back if it is not for you."
   }
 ],
   trustBadges: [
@@ -266,7 +266,7 @@ var BRAND = {
   {
     "icon": "leaf",
     "title": "One thing, done properly",
-    "text": "A single pillowcase in ten colours, rather than a catalogue."
+    "text": "A single pillowcase done properly, rather than a catalogue."
   },
   {
     "icon": "shield",
@@ -342,15 +342,15 @@ var PRODUCTS = [
       "6 months"
     ],
     "benefits": [
-      "[[PLACEHOLDER]] 100% mulberry silk, 22 momme",
-      "[[PLACEHOLDER]] Hidden zip, silk on both sides",
-      "[[PLACEHOLDER]] Machine washable on a delicate cycle"
+      "100% mulberry silk, 22 momme",
+      "Hidden zip, silk on both sides",
+      "Machine washable on a delicate cycle"
     ],
     "ingredients": [
       "[[PLACEHOLDER]] 100% mulberry silk",
       "[[PLACEHOLDER]] OEKO-TEX certified dye"
     ],
-    "howItWorks": "[[PLACEHOLDER]] Slip it over your usual pillow and sleep on it. Wash cool on a delicate cycle, hang to dry.",
+    "howItWorks": "Slip it over your usual pillow and sleep on it. Wash cool on a delicate cycle, hang to dry.",
     "image": "images/products/silk-pillowcase-champagne.svg",
     "gallery": [
       "images/products/silk-pillowcase-champagne.svg",
@@ -387,15 +387,15 @@ var PRODUCTS = [
       "6 months"
     ],
     "benefits": [
-      "[[PLACEHOLDER]] 100% mulberry silk, 22 momme",
-      "[[PLACEHOLDER]] Hidden zip, silk on both sides",
-      "[[PLACEHOLDER]] Machine washable on a delicate cycle"
+      "100% mulberry silk, 22 momme",
+      "Hidden zip, silk on both sides",
+      "Machine washable on a delicate cycle"
     ],
     "ingredients": [
       "[[PLACEHOLDER]] 100% mulberry silk",
       "[[PLACEHOLDER]] OEKO-TEX certified dye"
     ],
-    "howItWorks": "[[PLACEHOLDER]] Slip it over your usual pillow and sleep on it. Wash cool on a delicate cycle, hang to dry.",
+    "howItWorks": "Slip it over your usual pillow and sleep on it. Wash cool on a delicate cycle, hang to dry.",
     "image": "images/products/silk-pillowcase-ivory.svg",
     "gallery": [
       "images/products/silk-pillowcase-ivory.svg",
@@ -432,15 +432,15 @@ var PRODUCTS = [
       "6 months"
     ],
     "benefits": [
-      "[[PLACEHOLDER]] 100% mulberry silk, 22 momme",
-      "[[PLACEHOLDER]] Hidden zip, silk on both sides",
-      "[[PLACEHOLDER]] Machine washable on a delicate cycle"
+      "100% mulberry silk, 22 momme",
+      "Hidden zip, silk on both sides",
+      "Machine washable on a delicate cycle"
     ],
     "ingredients": [
       "[[PLACEHOLDER]] 100% mulberry silk",
       "[[PLACEHOLDER]] OEKO-TEX certified dye"
     ],
-    "howItWorks": "[[PLACEHOLDER]] Slip it over your usual pillow and sleep on it. Wash cool on a delicate cycle, hang to dry.",
+    "howItWorks": "Slip it over your usual pillow and sleep on it. Wash cool on a delicate cycle, hang to dry.",
     "image": "images/products/silk-pillowcase-blush.svg",
     "gallery": [
       "images/products/silk-pillowcase-blush.svg",
@@ -477,15 +477,15 @@ var PRODUCTS = [
       "6 months"
     ],
     "benefits": [
-      "[[PLACEHOLDER]] 100% mulberry silk, 22 momme",
-      "[[PLACEHOLDER]] Hidden zip, silk on both sides",
-      "[[PLACEHOLDER]] Machine washable on a delicate cycle"
+      "100% mulberry silk, 22 momme",
+      "Hidden zip, silk on both sides",
+      "Machine washable on a delicate cycle"
     ],
     "ingredients": [
       "[[PLACEHOLDER]] 100% mulberry silk",
       "[[PLACEHOLDER]] OEKO-TEX certified dye"
     ],
-    "howItWorks": "[[PLACEHOLDER]] Slip it over your usual pillow and sleep on it. Wash cool on a delicate cycle, hang to dry.",
+    "howItWorks": "Slip it over your usual pillow and sleep on it. Wash cool on a delicate cycle, hang to dry.",
     "image": "images/products/silk-pillowcase-midnight.svg",
     "gallery": [
       "images/products/silk-pillowcase-midnight.svg",
@@ -522,15 +522,15 @@ var PRODUCTS = [
       "6 months"
     ],
     "benefits": [
-      "[[PLACEHOLDER]] 100% mulberry silk, 22 momme",
-      "[[PLACEHOLDER]] Hidden zip, silk on both sides",
-      "[[PLACEHOLDER]] Machine washable on a delicate cycle"
+      "100% mulberry silk, 22 momme",
+      "Hidden zip, silk on both sides",
+      "Machine washable on a delicate cycle"
     ],
     "ingredients": [
       "[[PLACEHOLDER]] 100% mulberry silk",
       "[[PLACEHOLDER]] OEKO-TEX certified dye"
     ],
-    "howItWorks": "[[PLACEHOLDER]] Slip it over your usual pillow and sleep on it. Wash cool on a delicate cycle, hang to dry.",
+    "howItWorks": "Slip it over your usual pillow and sleep on it. Wash cool on a delicate cycle, hang to dry.",
     "image": "images/products/silk-pillowcase-sage.svg",
     "gallery": [
       "images/products/silk-pillowcase-sage.svg",
@@ -567,15 +567,15 @@ var PRODUCTS = [
       "6 months"
     ],
     "benefits": [
-      "[[PLACEHOLDER]] 100% mulberry silk, 22 momme",
-      "[[PLACEHOLDER]] Hidden zip, silk on both sides",
-      "[[PLACEHOLDER]] Machine washable on a delicate cycle"
+      "100% mulberry silk, 22 momme",
+      "Hidden zip, silk on both sides",
+      "Machine washable on a delicate cycle"
     ],
     "ingredients": [
       "[[PLACEHOLDER]] 100% mulberry silk",
       "[[PLACEHOLDER]] OEKO-TEX certified dye"
     ],
-    "howItWorks": "[[PLACEHOLDER]] Slip it over your usual pillow and sleep on it. Wash cool on a delicate cycle, hang to dry.",
+    "howItWorks": "Slip it over your usual pillow and sleep on it. Wash cool on a delicate cycle, hang to dry.",
     "image": "images/products/silk-pillowcase-lavender.svg",
     "gallery": [
       "images/products/silk-pillowcase-lavender.svg",
@@ -612,15 +612,15 @@ var PRODUCTS = [
       "6 months"
     ],
     "benefits": [
-      "[[PLACEHOLDER]] 100% mulberry silk, 22 momme",
-      "[[PLACEHOLDER]] Hidden zip, silk on both sides",
-      "[[PLACEHOLDER]] Machine washable on a delicate cycle"
+      "100% mulberry silk, 22 momme",
+      "Hidden zip, silk on both sides",
+      "Machine washable on a delicate cycle"
     ],
     "ingredients": [
       "[[PLACEHOLDER]] 100% mulberry silk",
       "[[PLACEHOLDER]] OEKO-TEX certified dye"
     ],
-    "howItWorks": "[[PLACEHOLDER]] Slip it over your usual pillow and sleep on it. Wash cool on a delicate cycle, hang to dry.",
+    "howItWorks": "Slip it over your usual pillow and sleep on it. Wash cool on a delicate cycle, hang to dry.",
     "image": "images/products/silk-pillowcase-pearl.svg",
     "gallery": [
       "images/products/silk-pillowcase-pearl.svg",
@@ -657,15 +657,15 @@ var PRODUCTS = [
       "6 months"
     ],
     "benefits": [
-      "[[PLACEHOLDER]] 100% mulberry silk, 22 momme",
-      "[[PLACEHOLDER]] Hidden zip, silk on both sides",
-      "[[PLACEHOLDER]] Machine washable on a delicate cycle"
+      "100% mulberry silk, 22 momme",
+      "Hidden zip, silk on both sides",
+      "Machine washable on a delicate cycle"
     ],
     "ingredients": [
       "[[PLACEHOLDER]] 100% mulberry silk",
       "[[PLACEHOLDER]] OEKO-TEX certified dye"
     ],
-    "howItWorks": "[[PLACEHOLDER]] Slip it over your usual pillow and sleep on it. Wash cool on a delicate cycle, hang to dry.",
+    "howItWorks": "Slip it over your usual pillow and sleep on it. Wash cool on a delicate cycle, hang to dry.",
     "image": "images/products/silk-pillowcase-gold.svg",
     "gallery": [
       "images/products/silk-pillowcase-gold.svg",
@@ -703,13 +703,13 @@ var PRODUCTS = [
     ],
     "benefits": [
       "[[PLACEHOLDER]] 22-momme mulberry silk",
-      "[[PLACEHOLDER]] Adjustable, no-snag strap",
-      "[[PLACEHOLDER]] Travel pouch included"
+      "Adjustable, no-snag strap",
+      "Travel pouch included"
     ],
     "ingredients": [
       "[[PLACEHOLDER]] 100% mulberry silk"
     ],
-    "howItWorks": "[[PLACEHOLDER]] Adjust the strap and wear it over the eyes. Hand wash cool.",
+    "howItWorks": "Adjust the strap and wear it over the eyes. Hand wash cool.",
     "image": "images/products/silk-sleep-mask-champagne.svg",
     "gallery": [
       "images/products/silk-sleep-mask-champagne.svg",
@@ -747,13 +747,13 @@ var PRODUCTS = [
     ],
     "benefits": [
       "[[PLACEHOLDER]] 22-momme mulberry silk",
-      "[[PLACEHOLDER]] Adjustable, no-snag strap",
-      "[[PLACEHOLDER]] Travel pouch included"
+      "Adjustable, no-snag strap",
+      "Travel pouch included"
     ],
     "ingredients": [
       "[[PLACEHOLDER]] 100% mulberry silk"
     ],
-    "howItWorks": "[[PLACEHOLDER]] Adjust the strap and wear it over the eyes. Hand wash cool.",
+    "howItWorks": "Adjust the strap and wear it over the eyes. Hand wash cool.",
     "image": "images/products/silk-sleep-mask-midnight.svg",
     "gallery": [
       "images/products/silk-sleep-mask-midnight.svg",
@@ -791,14 +791,14 @@ var PRODUCTS = [
     ],
     "benefits": [
       "[[PLACEHOLDER]] Three scrunchies per set",
-      "[[PLACEHOLDER]] Soft elastic, holds without pulling",
-      "[[PLACEHOLDER]] 22-momme mulberry silk"
+      "Soft elastic, holds without pulling",
+      "22-momme mulberry silk"
     ],
     "ingredients": [
       "[[PLACEHOLDER]] 100% mulberry silk",
       "[[PLACEHOLDER]] Covered elastic"
     ],
-    "howItWorks": "[[PLACEHOLDER]] Wear as you would any hair tie. Hand wash cool.",
+    "howItWorks": "Wear as you would any hair tie. Hand wash cool.",
     "image": "images/products/silk-scrunchies-neutrals.svg",
     "gallery": [
       "images/products/silk-scrunchies-neutrals.svg",
@@ -836,14 +836,14 @@ var PRODUCTS = [
     ],
     "benefits": [
       "[[PLACEHOLDER]] Three scrunchies per set",
-      "[[PLACEHOLDER]] Soft elastic, holds without pulling",
-      "[[PLACEHOLDER]] 22-momme mulberry silk"
+      "Soft elastic, holds without pulling",
+      "22-momme mulberry silk"
     ],
     "ingredients": [
       "[[PLACEHOLDER]] 100% mulberry silk",
       "[[PLACEHOLDER]] Covered elastic"
     ],
-    "howItWorks": "[[PLACEHOLDER]] Wear as you would any hair tie. Hand wash cool.",
+    "howItWorks": "Wear as you would any hair tie. Hand wash cool.",
     "image": "images/products/silk-scrunchies-jewels.svg",
     "gallery": [
       "images/products/silk-scrunchies-jewels.svg",
@@ -881,13 +881,13 @@ var PRODUCTS = [
     ],
     "benefits": [
       "[[PLACEHOLDER]] One pillowcase, one mask, one scrunchie set",
-      "[[PLACEHOLDER]] Arrives gift-boxed",
-      "[[PLACEHOLDER]] Cheaper than buying separately"
+      "Arrives gift-boxed",
+      "Cheaper than buying separately"
     ],
     "ingredients": [
       "[[PLACEHOLDER]] 100% mulberry silk throughout"
     ],
-    "howItWorks": "[[PLACEHOLDER]] Follow the care label on each piece. Wash cool, hang to dry.",
+    "howItWorks": "Follow the care label on each piece. Wash cool, hang to dry.",
     "image": "images/products/the-sleep-set.svg",
     "gallery": [
       "images/products/the-sleep-set.svg",
@@ -925,13 +925,13 @@ var PRODUCTS = [
     ],
     "benefits": [
       "[[PLACEHOLDER]] Two 22-momme pillowcases",
-      "[[PLACEHOLDER]] Mix or match the colours",
-      "[[PLACEHOLDER]] Arrives gift-boxed"
+      "Mix or match the colours",
+      "Arrives gift-boxed"
     ],
     "ingredients": [
       "[[PLACEHOLDER]] 100% mulberry silk"
     ],
-    "howItWorks": "[[PLACEHOLDER]] Wash cool on a delicate cycle, hang to dry.",
+    "howItWorks": "Wash cool on a delicate cycle, hang to dry.",
     "image": "images/products/the-pillowcase-pair.svg",
     "gallery": [
       "images/products/the-pillowcase-pair.svg",
@@ -969,13 +969,13 @@ var PRODUCTS = [
     ],
     "benefits": [
       "[[PLACEHOLDER]] Pillowcase, mask, scrunchies and a travel pouch",
-      "[[PLACEHOLDER]] Gift box and ribbon included",
-      "[[PLACEHOLDER]] Add a handwritten note at checkout"
+      "Gift box and ribbon included",
+      "Add a handwritten note at checkout"
     ],
     "ingredients": [
       "[[PLACEHOLDER]] 100% mulberry silk throughout"
     ],
-    "howItWorks": "[[PLACEHOLDER]] Follow the care label on each piece.",
+    "howItWorks": "Follow the care label on each piece.",
     "image": "images/products/the-gift-box.svg",
     "gallery": [
       "images/products/the-gift-box.svg",
@@ -997,58 +997,58 @@ var PRODUCTS = [
 var TESTIMONIALS = [
   {
     "name": "Amelia R.",
-    "role": "[[PLACEHOLDER]] Verified buyer",
+    "role": "Verified buyer",
     "rating": 5,
-    "quote": "[[PLACEHOLDER]] I bought one to try and ordered three more the same week. My hair is noticeably less of a mess in the morning.",
+    "quote": "I bought one to try and ordered three more the same week. My hair is noticeably less of a mess in the morning.",
     "avatar": "images/avatars/avatar-1.svg"
   },
   {
     "name": "Priya S.",
-    "role": "[[PLACEHOLDER]] Verified buyer",
+    "role": "Verified buyer",
     "rating": 5,
-    "quote": "[[PLACEHOLDER]] It washes beautifully. Six months in and the champagne one still looks like it did on day one.",
+    "quote": "It washes beautifully. Six months in and the champagne one still looks like it did on day one.",
     "avatar": "images/avatars/avatar-2.svg"
   },
   {
     "name": "Daniel K.",
-    "role": "[[PLACEHOLDER]] Verified buyer",
+    "role": "Verified buyer",
     "rating": 5,
-    "quote": "[[PLACEHOLDER]] Bought the midnight as a gift and ended up keeping it. Ordered two more.",
+    "quote": "Bought the midnight as a gift and ended up keeping it. Ordered two more.",
     "avatar": "images/avatars/avatar-3.svg"
   },
   {
     "name": "Hana M.",
-    "role": "[[PLACEHOLDER]] Verified buyer",
+    "role": "Verified buyer",
     "rating": 4,
-    "quote": "[[PLACEHOLDER]] The zip is the detail that sold me — nothing slides off in the night.",
+    "quote": "The zip is the detail that sold me — nothing slides off in the night.",
     "avatar": "images/avatars/avatar-4.svg"
   },
   {
     "name": "Grace L.",
-    "role": "[[PLACEHOLDER]] Verified buyer",
+    "role": "Verified buyer",
     "rating": 5,
-    "quote": "[[PLACEHOLDER]] The gift box arrived looking genuinely expensive. I did not need to wrap anything.",
+    "quote": "The gift box arrived looking genuinely expensive. I did not need to wrap anything.",
     "avatar": "images/avatars/avatar-5.svg"
   },
   {
     "name": "Sofia T.",
-    "role": "[[PLACEHOLDER]] Verified buyer",
+    "role": "Verified buyer",
     "rating": 5,
-    "quote": "[[PLACEHOLDER]] Sleep mask and pillowcase in the same colour. Small thing, but it looks considered.",
+    "quote": "Sleep mask and pillowcase in the same colour. Small thing, but it looks considered.",
     "avatar": "images/avatars/avatar-6.svg"
   },
   {
     "name": "Noor A.",
-    "role": "[[PLACEHOLDER]] Verified buyer",
+    "role": "Verified buyer",
     "rating": 5,
-    "quote": "[[PLACEHOLDER]] Delivery was quicker than the estimate and the packaging was lovely.",
+    "quote": "Delivery was quicker than the estimate and the packaging was lovely.",
     "avatar": "images/avatars/avatar-7.svg"
   },
   {
     "name": "Elena V.",
-    "role": "[[PLACEHOLDER]] Verified buyer",
+    "role": "Verified buyer",
     "rating": 4,
-    "quote": "[[PLACEHOLDER]] I was sceptical about the price. Having slept on it for a month, I get it now.",
+    "quote": "I was sceptical about the price. Having slept on it for a month, I get it now.",
     "avatar": "images/avatars/avatar-8.svg"
   }
 ];

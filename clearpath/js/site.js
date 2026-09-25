@@ -1165,6 +1165,52 @@ var Site = (function () {
     }).join('');
   }
 
+  /**
+   * The reasons-to-buy list beside a product shot. Reads the same
+   * BRAND.trustBadges the old icon grid used, so the data did not move —
+   * only the way it is presented, which previously had almost no weight.
+   */
+  function renderFeatures(listSelector, mediaSelector) {
+    var list = el(listSelector);
+    if (!list) return;
+
+    list.innerHTML = (BRAND.trustBadges || []).map(function (b) {
+      return '<li class="feature-item">' +
+        '<span class="feature-item__icon">' + icon(b.icon) + '</span>' +
+        '<span><h3>' + esc(b.title) + '</h3><p>' + esc(b.text) + '</p></span>' +
+      '</li>';
+    }).join('');
+
+    var media = el(mediaSelector);
+    if (!media) return;
+
+    /* The hero product supplies both the shot and the tint behind it. */
+    var p = (BRAND.spotlightSlug && productBySlug(BRAND.spotlightSlug)) || PRODUCTS[0];
+    if (!p) return;
+    if (p.tint) media.setAttribute('style', '--feature-tint:' + p.tint);
+
+    /* A few of the colours it comes in, as chips over the corner. */
+    var seen = {};
+    var chips = PRODUCTS.filter(function (x) {
+      if (!x.swatch || !x.colour || x.category !== p.category) return false;
+      if (seen[x.colour]) return false;
+      seen[x.colour] = true;
+      return true;
+    });
+
+    media.innerHTML =
+      '<img src="' + esc(p.image) + '" alt="' + esc(p.imageAlt || p.name) +
+      '" width="800" height="840" loading="lazy" decoding="async">' +
+      (chips.length
+        ? '<span class="feature-split__chips">' +
+            chips.slice(0, 5).map(function (x) {
+              return '<i style="background:' + esc(x.swatch) + '"></i>';
+            }).join('') +
+            '<span>' + chips.length + ' colours</span>' +
+          '</span>'
+        : '');
+  }
+
   function renderTrust(selector) {
     var host = el(selector);
     if (!host) return;
@@ -1533,6 +1579,7 @@ var Site = (function () {
     renderFaq: renderFaq,
     emitFaqSchema: emitFaqSchema,
     renderTrust: renderTrust,
+    renderFeatures: renderFeatures,
     renderAwards: renderAwards,
     renderPress: renderPress,
     renderSwatches: renderSwatches,

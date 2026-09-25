@@ -32,8 +32,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="css/base.css?v=22340891">
-<link rel="stylesheet" href="css/brand.css?v=22340891">
+<link rel="stylesheet" href="css/base.css?v=7e02cc84">
+<link rel="stylesheet" href="css/brand.css?v=7e02cc84">
 
 <!--
   Load order matters. brand-config.js first (data), theme-init.js second
@@ -41,10 +41,10 @@
   tracking.js (inert until you add pixel IDs). All synchronous and tiny —
   that is what lets inline render calls run during parse with zero layout shift.
 -->
-<script src="js/brand-config.js?v=22340891"></script>
-<script src="js/theme-init.js?v=22340891"></script>
-<script src="js/site.js?v=22340891"></script>
-<script src="js/tracking.js?v=22340891"></script>
+<script src="js/brand-config.js?v=7e02cc84"></script>
+<script src="js/theme-init.js?v=7e02cc84"></script>
+<script src="js/site.js?v=7e02cc84"></script>
+<script src="js/tracking.js?v=7e02cc84"></script>
 <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
 <script type="application/ld+json">
 {
@@ -175,7 +175,7 @@
       </span>
 
       <h1 class="is-placeholder">A little silk. <em>A lot to love.</em></h1>
-      <p class="hero__lede is-placeholder">[[PLACEHOLDER]] One pillowcase, ten colours, silk on both sides. Kinder to hair and skin than cotton, and it washes at home.</p>
+      <p class="hero__lede is-placeholder">One pillowcase, every colour we make, silk on both sides. Kinder to hair and skin than cotton, and it washes at home.</p>
 
       <div class="btn-row">
         <a class="btn btn--primary btn--lg" href="shop.html">Shop pillowcases</a>
@@ -236,7 +236,7 @@
     <div class="collection">
       <span class="collection__eyebrow is-placeholder">The collection</span>
       <h2 class="is-placeholder">A little silk. A lot to love.</h2>
-      <p class="collection__lede is-placeholder">[[PLACEHOLDER]] Ten colours of 22-momme mulberry silk, plus the mask and scrunchies that match them.</p>
+      <p class="collection__lede is-placeholder">Every colour we make, in 22-momme mulberry silk, plus the mask and scrunchies that match them.</p>
 
       <div class="swatches" id="swatches"></div>
       <script>Site.renderSwatches('#swatches');</script>
@@ -253,7 +253,7 @@
     <div class="section-head">
       <span class="eyebrow">How it works</span>
       <h2 class="is-placeholder">From order to first night</h2>
-      <p class="is-placeholder">[[PLACEHOLDER]] Three steps, and then you sleep on it.</p>
+      <p class="is-placeholder">Three steps, and then you sleep on it.</p>
     </div>
     <div class="steps" id="steps"></div>
     <script>Site.renderSteps('#steps');</script>
@@ -268,7 +268,7 @@
     <div class="section-head">
       <span class="eyebrow">Best sellers</span>
       <h2 class="is-placeholder">Best Sellers — Pillowcases</h2>
-      <p class="is-placeholder">[[PLACEHOLDER]] The colours that go out the door fastest.</p>
+      <p class="is-placeholder">The colours that go out the door fastest.</p>
     </div>
     <div class="product-grid product-grid--4" id="featured-products"></div>
     <script>Site.renderProducts('#featured-products', { featured: true, limit: 8 });</script>
@@ -289,8 +289,8 @@
   <div class="container promo__inner">
     <div>
       <span class="promo__tag" data-promo-tag>This week</span>
-      <h2 class="is-placeholder" data-promo-heading>[[PLACEHOLDER]] Buy 3, get 1 free</h2>
-      <p class="is-placeholder" data-promo-text>[[PLACEHOLDER]] Mix any colours and any sizes. The cheapest of the four comes off at checkout.</p>
+      <h2 class="is-placeholder" data-promo-heading>Buy 3, get 1 free</h2>
+      <p class="is-placeholder" data-promo-text>Mix any colours and any sizes. The cheapest of the four comes off at checkout.</p>
       <span class="promo__code" data-promo-code>SILK4</span>
     </div>
     <a class="btn btn--light btn--lg" href="shop.html" data-promo-cta>Shop the offer</a>
@@ -299,15 +299,21 @@
 
 <section class="section">
   <div class="container">
-    <div class="section-head">
-      <h2 class="is-placeholder">Why people keep reordering</h2>
-      <p class="is-placeholder">[[PLACEHOLDER]] The things that matter once it is actually on your pillow.</p>
+    <div class="feature-split">
+      <div class="feature-split__media is-placeholder" id="feature-media"></div>
+      <div>
+        <span class="eyebrow">Why silk</span>
+        <h2 class="is-placeholder">Why people keep reordering</h2>
+        <p class="is-placeholder" style="color:var(--color-muted);font-size:var(--fs-lead);margin-top:0.75rem">
+          The things that matter once it is actually on your pillow.
+        </p>
+        <ul class="feature-list" id="features"></ul>
+        <div class="btn-row mt-3">
+          <a class="btn btn--primary btn--lg" href="shop.html">Shop pillowcases</a>
+        </div>
+      </div>
     </div>
-    <div class="trust-grid" id="trust-badges"></div>
-    <script>Site.renderTrust('#trust-badges');</script>
-    <p class="text-center text-muted mt-2" style="font-size:0.8125rem">
-      [[PLACEHOLDER: trust badge icons and claims — replace with badges you can actually substantiate before launch.]]
-    </p>
+    <script>Site.renderFeatures('#features', '#feature-media');</script>
   </div>
 </section>
 
@@ -316,7 +322,7 @@
     <div class="section-head">
       <span class="eyebrow">New arrivals</span>
       <h2>New Arrivals</h2>
-      <p class="is-placeholder">[[PLACEHOLDER]] The newest colours in the collection.</p>
+      <p class="is-placeholder">The newest colours in the collection.</p>
     </div>
     <div class="arrivals" id="arrivals"></div>
     <script>Site.renderArrivals('#arrivals');</script>
@@ -330,7 +336,7 @@
         <span class="eyebrow">Quality</span>
         <h2>Discover our quality products</h2>
         <p class="is-placeholder" style="color:var(--color-muted);font-size:var(--fs-lead);margin-top:0.75rem">
-          [[PLACEHOLDER]] The three our customers rate highest, and the ones we would gift first.
+          The three our customers rate highest, and the ones we would gift first.
         </p>
         <div class="picks__list mt-2" id="picks"></div>
         <div class="btn-row mt-3">
@@ -348,7 +354,7 @@
     <div class="section-head">
       <span class="eyebrow">Our testimonial</span>
       <h2 class="is-placeholder">What people say</h2>
-      <p class="is-placeholder">[[PLACEHOLDER]] Fictional reviews shown for layout. Replace with a real review source before launch.</p>
+      <p class="is-placeholder">Fictional reviews shown for layout. Replace with a real review source before launch.</p>
     </div>
 
     <div class="slider" id="reviews-slider" data-autoplay="4500">
@@ -394,7 +400,7 @@
   <div class="container">
     <div class="cta-banner">
       <h2 class="is-placeholder">Sleep on it tonight</h2>
-      <p class="is-placeholder">[[PLACEHOLDER]] Pick a colour, check out securely, and it arrives gift-boxed.</p>
+      <p class="is-placeholder">Pick a colour, check out securely, and it arrives gift-boxed.</p>
       <div class="btn-row">
         <a class="btn btn--light btn--lg" href="shop.html">Shop pillowcases</a>
       </div>

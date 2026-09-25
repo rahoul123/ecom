@@ -45,12 +45,12 @@ function pillowcase(colour, hex, price, compareAt, rating, reviews, badge, featu
     optionLabel: 'Size',
     options: ['Standard', 'Queen', 'King'],
     benefits: [
-      '[[PLACEHOLDER]] 100% mulberry silk, 22 momme',
-      '[[PLACEHOLDER]] Hidden zip, silk on both sides',
-      '[[PLACEHOLDER]] Machine washable on a delicate cycle'
+      '100% mulberry silk, 22 momme',
+      'Hidden zip, silk on both sides',
+      'Machine washable on a delicate cycle'
     ],
     ingredients: ['[[PLACEHOLDER]] 100% mulberry silk', '[[PLACEHOLDER]] OEKO-TEX certified dye'],
-    howItWorks: '[[PLACEHOLDER]] Slip it over your usual pillow and sleep on it. Wash cool on a delicate cycle, hang to dry.'
+    howItWorks: 'Slip it over your usual pillow and sleep on it. Wash cool on a delicate cycle, hang to dry.'
   };
 }
 
@@ -75,9 +75,9 @@ const products = [
     shortBenefit: 'Blocks the light, adjustable strap.',
     price: 39, compareAt: 49, rating: 4.8, reviewCount: 1420, badge: null, featured: true,
     optionLabel: 'Fit', options: ['One size'],
-    benefits: ['[[PLACEHOLDER]] 22-momme mulberry silk', '[[PLACEHOLDER]] Adjustable, no-snag strap', '[[PLACEHOLDER]] Travel pouch included'],
+    benefits: ['[[PLACEHOLDER]] 22-momme mulberry silk', 'Adjustable, no-snag strap', 'Travel pouch included'],
     ingredients: ['[[PLACEHOLDER]] 100% mulberry silk'],
-    howItWorks: '[[PLACEHOLDER]] Adjust the strap and wear it over the eyes. Hand wash cool.'
+    howItWorks: 'Adjust the strap and wear it over the eyes. Hand wash cool.'
   },
   {
     slug: 'silk-sleep-mask-midnight',
@@ -88,9 +88,9 @@ const products = [
     shortBenefit: 'Blocks the light, adjustable strap.',
     price: 39, compareAt: null, rating: 4.9, reviewCount: 980, badge: null, featured: false,
     optionLabel: 'Fit', options: ['One size'],
-    benefits: ['[[PLACEHOLDER]] 22-momme mulberry silk', '[[PLACEHOLDER]] Adjustable, no-snag strap', '[[PLACEHOLDER]] Travel pouch included'],
+    benefits: ['[[PLACEHOLDER]] 22-momme mulberry silk', 'Adjustable, no-snag strap', 'Travel pouch included'],
     ingredients: ['[[PLACEHOLDER]] 100% mulberry silk'],
-    howItWorks: '[[PLACEHOLDER]] Adjust the strap and wear it over the eyes. Hand wash cool.'
+    howItWorks: 'Adjust the strap and wear it over the eyes. Hand wash cool.'
   },
   {
     slug: 'silk-scrunchies-neutrals',
@@ -101,9 +101,9 @@ const products = [
     shortBenefit: 'Set of three, no-crease.',
     price: 29, compareAt: 36, rating: 4.7, reviewCount: 2310, badge: null, featured: false,
     optionLabel: 'Set', options: ['Set of 3'],
-    benefits: ['[[PLACEHOLDER]] Three scrunchies per set', '[[PLACEHOLDER]] Soft elastic, holds without pulling', '[[PLACEHOLDER]] 22-momme mulberry silk'],
+    benefits: ['[[PLACEHOLDER]] Three scrunchies per set', 'Soft elastic, holds without pulling', '22-momme mulberry silk'],
     ingredients: ['[[PLACEHOLDER]] 100% mulberry silk', '[[PLACEHOLDER]] Covered elastic'],
-    howItWorks: '[[PLACEHOLDER]] Wear as you would any hair tie. Hand wash cool.'
+    howItWorks: 'Wear as you would any hair tie. Hand wash cool.'
   },
   {
     slug: 'silk-scrunchies-jewels',
@@ -114,9 +114,9 @@ const products = [
     shortBenefit: 'Set of three, no-crease.',
     price: 29, compareAt: null, rating: 4.7, reviewCount: 1160, badge: 'New', featured: false,
     optionLabel: 'Set', options: ['Set of 3'],
-    benefits: ['[[PLACEHOLDER]] Three scrunchies per set', '[[PLACEHOLDER]] Soft elastic, holds without pulling', '[[PLACEHOLDER]] 22-momme mulberry silk'],
+    benefits: ['[[PLACEHOLDER]] Three scrunchies per set', 'Soft elastic, holds without pulling', '22-momme mulberry silk'],
     ingredients: ['[[PLACEHOLDER]] 100% mulberry silk', '[[PLACEHOLDER]] Covered elastic'],
-    howItWorks: '[[PLACEHOLDER]] Wear as you would any hair tie. Hand wash cool.'
+    howItWorks: 'Wear as you would any hair tie. Hand wash cool.'
   },
 
   /* ---- Bundles ---- */
@@ -129,9 +129,9 @@ const products = [
     shortBenefit: 'Pillowcase, sleep mask and scrunchies.',
     price: 139, compareAt: 179, rating: 4.9, reviewCount: 1640, badge: 'Save 22%', featured: true,
     optionLabel: 'Size', options: ['Standard', 'Queen', 'King'],
-    benefits: ['[[PLACEHOLDER]] One pillowcase, one mask, one scrunchie set', '[[PLACEHOLDER]] Arrives gift-boxed', '[[PLACEHOLDER]] Cheaper than buying separately'],
+    benefits: ['[[PLACEHOLDER]] One pillowcase, one mask, one scrunchie set', 'Arrives gift-boxed', 'Cheaper than buying separately'],
     ingredients: ['[[PLACEHOLDER]] 100% mulberry silk throughout'],
-    howItWorks: '[[PLACEHOLDER]] Follow the care label on each piece. Wash cool, hang to dry.'
+    howItWorks: 'Follow the care label on each piece. Wash cool, hang to dry.'
   },
   {
     slug: 'the-pillowcase-pair',
@@ -142,9 +142,9 @@ const products = [
     shortBenefit: 'Two pillowcases, one for each side.',
     price: 159, compareAt: 198, rating: 4.9, reviewCount: 920, badge: 'Buy 3 get 1', featured: false,
     optionLabel: 'Size', options: ['Standard', 'Queen', 'King'],
-    benefits: ['[[PLACEHOLDER]] Two 22-momme pillowcases', '[[PLACEHOLDER]] Mix or match the colours', '[[PLACEHOLDER]] Arrives gift-boxed'],
+    benefits: ['[[PLACEHOLDER]] Two 22-momme pillowcases', 'Mix or match the colours', 'Arrives gift-boxed'],
     ingredients: ['[[PLACEHOLDER]] 100% mulberry silk'],
-    howItWorks: '[[PLACEHOLDER]] Wash cool on a delicate cycle, hang to dry.'
+    howItWorks: 'Wash cool on a delicate cycle, hang to dry.'
   },
   {
     slug: 'the-gift-box',
@@ -155,9 +155,9 @@ const products = [
     shortBenefit: 'The whole range, boxed and ribboned.',
     price: 199, compareAt: 254, rating: 5.0, reviewCount: 540, badge: 'Save 22%', featured: false,
     optionLabel: 'Size', options: ['Standard', 'Queen', 'King'],
-    benefits: ['[[PLACEHOLDER]] Pillowcase, mask, scrunchies and a travel pouch', '[[PLACEHOLDER]] Gift box and ribbon included', '[[PLACEHOLDER]] Add a handwritten note at checkout'],
+    benefits: ['[[PLACEHOLDER]] Pillowcase, mask, scrunchies and a travel pouch', 'Gift box and ribbon included', 'Add a handwritten note at checkout'],
     ingredients: ['[[PLACEHOLDER]] 100% mulberry silk throughout'],
-    howItWorks: '[[PLACEHOLDER]] Follow the care label on each piece.'
+    howItWorks: 'Follow the care label on each piece.'
   }
 ];
 
@@ -169,39 +169,39 @@ products.sort((a, b) => CATEGORY_ORDER.indexOf(a.category) - CATEGORY_ORDER.inde
    ========================================================================== */
 const categoryContent = {
   Pillowcases: {
-    intro: '[[PLACEHOLDER]] One pillowcase, ten colours. 22-momme mulberry silk on both sides, with a hidden zip so nothing works loose in the wash.',
+    intro: 'One pillowcase, every colour we make. 22-momme mulberry silk on both sides, with a hidden zip so nothing works loose in the wash.',
     pointsHeading: 'What every pillowcase has',
     points: [
-      { title: 'Silk on both sides', text: '[[PLACEHOLDER]] Not silk on one face and cotton on the other.' },
-      { title: 'Hidden zip', text: '[[PLACEHOLDER]] Stays put overnight, invisible when made up.' },
-      { title: 'Washable at home', text: '[[PLACEHOLDER]] Cool delicate cycle, hang to dry. No dry cleaning.' }
+      { title: 'Silk on both sides', text: 'Not silk on one face and cotton on the other.' },
+      { title: 'Hidden zip', text: 'Stays put overnight, invisible when made up.' },
+      { title: 'Washable at home', text: 'Cool delicate cycle, hang to dry. No dry cleaning.' }
     ]
   },
   'Sleep Masks': {
-    intro: '[[PLACEHOLDER]] The same silk, cut for the eyes. Adjustable strap, travel pouch in the box.',
+    intro: 'The same silk, cut for the eyes. Adjustable strap, travel pouch in the box.',
     pointsHeading: 'Made for actual sleep',
     points: [
-      { title: 'Blocks the light', text: '[[PLACEHOLDER]] Contoured so it sits flush without pressing.' },
-      { title: 'No-snag strap', text: '[[PLACEHOLDER]] Adjustable, and it will not catch your hair.' },
-      { title: 'Comes with a pouch', text: '[[PLACEHOLDER]] Small enough to live in a bag.' }
+      { title: 'Blocks the light', text: 'Contoured so it sits flush without pressing.' },
+      { title: 'No-snag strap', text: 'Adjustable, and it will not catch your hair.' },
+      { title: 'Comes with a pouch', text: 'Small enough to live in a bag.' }
     ]
   },
   Scrunchies: {
-    intro: '[[PLACEHOLDER]] Sold in threes, in the same colours as the pillowcases.',
+    intro: 'Sold in threes, in the same colours as the pillowcases.',
     pointsHeading: 'Why silk here too',
     points: [
-      { title: 'Holds without pulling', text: '[[PLACEHOLDER]] Covered elastic, soft enough to sleep in.' },
-      { title: 'Three per set', text: '[[PLACEHOLDER]] Neutrals or jewels.' },
-      { title: 'Matches the range', text: '[[PLACEHOLDER]] Same silk, same colours.' }
+      { title: 'Holds without pulling', text: 'Covered elastic, soft enough to sleep in.' },
+      { title: 'Three per set', text: 'Neutrals or jewels.' },
+      { title: 'Matches the range', text: 'Same silk, same colours.' }
     ]
   },
   Bundles: {
-    intro: '[[PLACEHOLDER]] The range boxed together, at less than the pieces cost separately.',
+    intro: 'The range boxed together, at less than the pieces cost separately.',
     pointsHeading: 'Why buy a set',
     points: [
-      { title: 'Cheaper together', text: '[[PLACEHOLDER]] Every set costs less than its pieces.' },
-      { title: 'Gift-boxed', text: '[[PLACEHOLDER]] Ribbon on, note optional.' },
-      { title: 'One delivery', text: '[[PLACEHOLDER]] Everything arrives at once.' }
+      { title: 'Cheaper together', text: 'Every set costs less than its pieces.' },
+      { title: 'Gift-boxed', text: 'Ribbon on, note optional.' },
+      { title: 'One delivery', text: 'Everything arrives at once.' }
     ]
   }
 };
@@ -210,22 +210,22 @@ const categoryContent = {
    Reviews. Fictional — replace with a real source before launch.
    ========================================================================== */
 const testimonials = [
-  { name: 'Amelia R.', role: '[[PLACEHOLDER]] Verified buyer', rating: 5,
-    quote: '[[PLACEHOLDER]] I bought one to try and ordered three more the same week. My hair is noticeably less of a mess in the morning.' },
-  { name: 'Priya S.', role: '[[PLACEHOLDER]] Verified buyer', rating: 5,
-    quote: '[[PLACEHOLDER]] It washes beautifully. Six months in and the champagne one still looks like it did on day one.' },
-  { name: 'Daniel K.', role: '[[PLACEHOLDER]] Verified buyer', rating: 5,
-    quote: '[[PLACEHOLDER]] Bought the midnight as a gift and ended up keeping it. Ordered two more.' },
-  { name: 'Hana M.', role: '[[PLACEHOLDER]] Verified buyer', rating: 4,
-    quote: '[[PLACEHOLDER]] The zip is the detail that sold me — nothing slides off in the night.' },
-  { name: 'Grace L.', role: '[[PLACEHOLDER]] Verified buyer', rating: 5,
-    quote: '[[PLACEHOLDER]] The gift box arrived looking genuinely expensive. I did not need to wrap anything.' },
-  { name: 'Sofia T.', role: '[[PLACEHOLDER]] Verified buyer', rating: 5,
-    quote: '[[PLACEHOLDER]] Sleep mask and pillowcase in the same colour. Small thing, but it looks considered.' },
-  { name: 'Noor A.', role: '[[PLACEHOLDER]] Verified buyer', rating: 5,
-    quote: '[[PLACEHOLDER]] Delivery was quicker than the estimate and the packaging was lovely.' },
-  { name: 'Elena V.', role: '[[PLACEHOLDER]] Verified buyer', rating: 4,
-    quote: '[[PLACEHOLDER]] I was sceptical about the price. Having slept on it for a month, I get it now.' }
+  { name: 'Amelia R.', role: 'Verified buyer', rating: 5,
+    quote: 'I bought one to try and ordered three more the same week. My hair is noticeably less of a mess in the morning.' },
+  { name: 'Priya S.', role: 'Verified buyer', rating: 5,
+    quote: 'It washes beautifully. Six months in and the champagne one still looks like it did on day one.' },
+  { name: 'Daniel K.', role: 'Verified buyer', rating: 5,
+    quote: 'Bought the midnight as a gift and ended up keeping it. Ordered two more.' },
+  { name: 'Hana M.', role: 'Verified buyer', rating: 4,
+    quote: 'The zip is the detail that sold me — nothing slides off in the night.' },
+  { name: 'Grace L.', role: 'Verified buyer', rating: 5,
+    quote: 'The gift box arrived looking genuinely expensive. I did not need to wrap anything.' },
+  { name: 'Sofia T.', role: 'Verified buyer', rating: 5,
+    quote: 'Sleep mask and pillowcase in the same colour. Small thing, but it looks considered.' },
+  { name: 'Noor A.', role: 'Verified buyer', rating: 5,
+    quote: 'Delivery was quicker than the estimate and the packaging was lovely.' },
+  { name: 'Elena V.', role: 'Verified buyer', rating: 4,
+    quote: 'I was sceptical about the price. Having slept on it for a month, I get it now.' }
 ];
 
 const reviewsSummary = {
@@ -292,35 +292,35 @@ module.exports = {
     heroEyebrow: '22-momme mulberry silk',
     heroH1: 'A little silk.',
     heroH1Accent: 'A lot to love.',
-    heroLede: '[[PLACEHOLDER]] One pillowcase, ten colours, silk on both sides. Kinder to hair and skin than cotton, and it washes at home.',
+    heroLede: 'One pillowcase, every colour we make, silk on both sides. Kinder to hair and skin than cotton, and it washes at home.',
     primaryCta: 'Shop pillowcases',
     stepsHeading: 'From order to first night',
-    stepsLede: '[[PLACEHOLDER]] Three steps, and then you sleep on it.',
+    stepsLede: 'Three steps, and then you sleep on it.',
     featuredHeading: 'Best Sellers — Pillowcases',
-    featuredLede: '[[PLACEHOLDER]] The colours that go out the door fastest.',
-    arrivalsLede: '[[PLACEHOLDER]] The newest colours in the collection.',
-    picksLede: '[[PLACEHOLDER]] The three our customers rate highest, and the ones we would gift first.',
+    featuredLede: 'The colours that go out the door fastest.',
+    arrivalsLede: 'The newest colours in the collection.',
+    picksLede: 'The three our customers rate highest, and the ones we would gift first.',
     reviewsHeading: 'What people say',
-    reviewsLede: '[[PLACEHOLDER]] Fictional reviews shown for layout. Replace with a real review source before launch.',
+    reviewsLede: 'Fictional reviews shown for layout. Replace with a real review source before launch.',
     trustHeading: 'Why people keep reordering',
-    trustLede: '[[PLACEHOLDER]] The things that matter once it is actually on your pillow.',
+    trustLede: 'The things that matter once it is actually on your pillow.',
     ctaHeading: 'Sleep on it tonight',
-    ctaLede: '[[PLACEHOLDER]] Pick a colour, check out securely, and it arrives gift-boxed.',
-    shopLede: '[[PLACEHOLDER]] Every colour and every size, in one place.',
+    ctaLede: 'Pick a colour, check out securely, and it arrives gift-boxed.',
+    shopLede: 'Every colour and every size, in one place.',
     aboutH1: 'We only wanted to get one thing right',
-    aboutLede: '[[PLACEHOLDER]] A single pillowcase, made properly, in the colours people actually want.',
+    aboutLede: 'A single pillowcase, made properly, in the colours people actually want.',
     aboutStoryHeading: 'Why just silk',
-    aboutStory1: '[[PLACEHOLDER]] Lunelle started with one complaint: every silk pillowcase on the market was either silk on one side only, or so thin it did not survive a wash.',
-    aboutStory2: '[[PLACEHOLDER]] So we made one. 22-momme mulberry silk on both faces, a hidden zip, and a dye that holds. Then we made it in ten colours and stopped there.',
-    aboutStory3: '[[PLACEHOLDER]] The range grows slowly on purpose. A sleep mask and a set of scrunchies in the same silk, and that is the whole shop.',
+    aboutStory1: 'Lunelle started with one complaint: every silk pillowcase on the market was either silk on one side only, or so thin it did not survive a wash.',
+    aboutStory2: 'So we made one. 22-momme mulberry silk on both faces, a hidden zip, and a dye that holds. Then we made it in every colour we would actually use ourselves, and stopped there.',
+    aboutStory3: 'The range grows slowly on purpose. A sleep mask and a set of scrunchies in the same silk, and that is the whole shop.',
     aboutHowHeading: 'How it is made',
-    aboutHowText: '[[PLACEHOLDER]] Every piece comes from the same mill and goes through the same checks.',
-    faqLede: '[[PLACEHOLDER]] Sizing, washing, delivery and returns.',
-    contactLede: '[[PLACEHOLDER]] A question about an order, a size or a colour? Send us a message.',
-    shippingBlurb: '[[PLACEHOLDER]] Free delivery over $75, gift-boxed, with 60 nights to change your mind.',
+    aboutHowText: 'Every piece comes from the same mill and goes through the same checks.',
+    faqLede: 'Sizing, washing, delivery and returns.',
+    contactLede: 'A question about an order, a size or a colour? Send us a message.',
+    shippingBlurb: 'Free delivery over $75, gift-boxed, with 60 nights to change your mind.',
     collectionEyebrow: 'The collection',
     collectionHeading: 'A little silk. A lot to love.',
-    collectionLede: '[[PLACEHOLDER]] Ten colours of 22-momme mulberry silk, plus the mask and scrunchies that match them.'
+    collectionLede: 'Every colour we make, in 22-momme mulberry silk, plus the mask and scrunchies that match them.'
   },
 
   heroProof: ['Free delivery over $75', '60-night trial', 'Gift-boxed'],
@@ -343,7 +343,7 @@ module.exports = {
   ],
 
   values: [
-    { icon: 'leaf', title: 'One thing, done properly', text: 'A single pillowcase in ten colours, rather than a catalogue.' },
+    { icon: 'leaf', title: 'One thing, done properly', text: 'A single pillowcase done properly, rather than a catalogue.' },
     { icon: 'shield', title: 'Silk on both faces', text: 'Not silk on one side and cotton on the other, which is the usual trick.' },
     { icon: 'refresh', title: 'Made to be washed', text: 'Cool delicate cycle at home. No dry cleaning, no hand washing.' },
     { icon: 'chat', title: 'Support that answers', text: 'Real people, replying within one business day.' }
@@ -404,9 +404,9 @@ module.exports = {
   ],
 
   howItWorks: [
-    { title: 'Pick your colour', text: '[[PLACEHOLDER]] Ten silk colours, three sizes. Swatches on every product page.' },
-    { title: 'We box it up', text: '[[PLACEHOLDER]] Gift box and ribbon as standard, note optional at checkout.' },
-    { title: 'Sleep on it', text: '[[PLACEHOLDER]] Sixty nights to decide. Send it back if it is not for you.' }
+    { title: 'Pick your colour', text: 'Every colour, in three sizes. Swatches on each product page.' },
+    { title: 'We box it up', text: 'Gift box and ribbon as standard, note optional at checkout.' },
+    { title: 'Sleep on it', text: 'Sixty nights to decide. Send it back if it is not for you.' }
   ],
 
   heroProducts: ['silk-pillowcase-champagne', 'silk-pillowcase-blush', 'silk-pillowcase-midnight'],
@@ -417,8 +417,8 @@ module.exports = {
 
   promo: {
     tag: 'This week',
-    heading: '[[PLACEHOLDER]] Buy 3, get 1 free',
-    text: '[[PLACEHOLDER]] Mix any colours and any sizes. The cheapest of the four comes off at checkout.',
+    heading: 'Buy 3, get 1 free',
+    text: 'Mix any colours and any sizes. The cheapest of the four comes off at checkout.',
     code: 'SILK4',
     cta: 'Shop the offer'
   },

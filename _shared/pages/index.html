@@ -130,15 +130,21 @@
 
 <section class="section">
   <div class="container">
-    <div class="section-head">
-      <h2 class="is-placeholder">{{copy.trustHeading}}</h2>
-      <p class="is-placeholder">{{copy.trustLede}}</p>
+    <div class="feature-split">
+      <div class="feature-split__media is-placeholder" id="feature-media"></div>
+      <div>
+        <span class="eyebrow">Why silk</span>
+        <h2 class="is-placeholder">{{copy.trustHeading}}</h2>
+        <p class="is-placeholder" style="color:var(--color-muted);font-size:var(--fs-lead);margin-top:0.75rem">
+          {{copy.trustLede}}
+        </p>
+        <ul class="feature-list" id="features"></ul>
+        <div class="btn-row mt-3">
+          <a class="btn btn--primary btn--lg" href="shop.html">{{copy.primaryCta}}</a>
+        </div>
+      </div>
     </div>
-    <div class="trust-grid" id="trust-badges"></div>
-    <script>Site.renderTrust('#trust-badges');</script>
-    <p class="text-center text-muted mt-2" style="font-size:0.8125rem">
-      [[PLACEHOLDER: trust badge icons and claims — replace with badges you can actually substantiate before launch.]]
-    </p>
+    <script>Site.renderFeatures('#features', '#feature-media');</script>
   </div>
 </section>
 
